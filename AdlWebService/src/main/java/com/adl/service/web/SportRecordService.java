@@ -2,14 +2,13 @@ package com.adl.service.web;
 
 import android.text.TextUtils;
 
-import com.adl.service.common.IDefine;
 import com.adl.service.common.InnerUtil;
 import com.adl.service.common.RequestResult;
 import com.adl.service.entity.SportIndicatorsEntity;
-import com.adl.service.entity.SportPlanEntity;
 import com.adl.service.entity.SportRecordEntity;
 import com.adl.service.entity.SportRecordResultEntity;
 import com.adl.service.entity.TeacherSportLocalEntity;
+import com.adl.service.web.constants.Platform;
 import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
@@ -38,7 +37,12 @@ public class SportRecordService extends BaseHttpService {
             String param = InnerUtil.toJson(sportRecord);
 
             // 请求
-            String url = wrapperUrl("/busi/terminal/sport/result/upload");
+            String url;
+            if (Platform.V3.equals(getConfigService().getPlatform())) {
+                url = wrapperUrl("/v3/gateway/api/tis/device/sport/result/reportStudentSport");
+            } else {
+                url = wrapperUrl("/busi/terminal/sport/result/upload");
+            }
             Request request = new Request.Builder().url(url)
                     .post(RequestBody.create(param, jsonType)).build();
             return parserResponse(mClient.newCall(request).execute());
@@ -56,7 +60,12 @@ public class SportRecordService extends BaseHttpService {
             String param = InnerUtil.toJson(sportRecord);
 
             // 请求
-            String url = wrapperUrl("/busi/terminal/sport/result/update");
+            String url;
+            if (Platform.V3.equals(getConfigService().getPlatform())) {
+                url = wrapperUrl("/v3/gateway/api/tis/device/sport/result/updateStudentSport");
+            } else {
+                url = wrapperUrl("/busi/terminal/sport/result/update");
+            }
             Request request = new Request.Builder().url(url)
                     .post(RequestBody.create(param, jsonType)).build();
             return parserResponse(mClient.newCall(request).execute());
@@ -91,7 +100,12 @@ public class SportRecordService extends BaseHttpService {
             String param = InnerUtil.toJson(sportRecord);
 
             // 请求
-            String url = wrapperUrl("/busi/terminal/sport/teacher/result/upload");
+            String url;
+            if (Platform.V3.equals(getConfigService().getPlatform())) {
+                url = wrapperUrl("/v3/gateway/api/tis/device/sport/result/reportTeacherSport");
+            } else {
+                url = wrapperUrl("/busi/terminal/sport/teacher/result/upload");
+            }
             Request request = new Request.Builder().url(url)
                     .post(RequestBody.create(param, jsonType)).build();
             return parserResponse(mClient.newCall(request).execute());
@@ -124,10 +138,14 @@ public class SportRecordService extends BaseHttpService {
             }
             String param = InnerUtil.toJson(map);
 
-            // 获取组织测试列表  http://172.16.2.102:8082/gateway/api/busi/terminal/sport/result/record
-            String url = wrapperUrl("/busi/terminal/sport/result/record");
-
             // 请求
+            String url;
+            if (Platform.V3.equals(getConfigService().getPlatform())) {
+                url = wrapperUrl("/v3/gateway/api/tis/device/sport/result/getAccountRecordPage");
+            } else {
+                url = wrapperUrl("/busi/terminal/sport/result/record");
+            }
+
             Request request = new Request.Builder().url(url)
                     .post(RequestBody.create(param, jsonType)).build();
             RequestResult result = parserResponse(mClient.newCall(request).execute());

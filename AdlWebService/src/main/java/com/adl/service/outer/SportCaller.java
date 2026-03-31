@@ -14,6 +14,7 @@ import com.adl.service.db.SceneSportDao;
 import com.adl.service.entity.DictEntity;
 import com.adl.service.entity.SceneEntity;
 import com.adl.service.entity.SceneSportEntity;
+import com.adl.service.web.CommonService;
 import com.adl.service.web.SportService;
 import com.adl.service.web.UserService;
 
@@ -102,7 +103,7 @@ public class SportCaller extends BaseService {
                 dictDao.clearByDictCode(IDefine.DirctSportUnit);
 
                 // 在线查询
-                List<DictEntity> list = SportService.getDicts(IDefine.DirctSportUnit);
+                List<DictEntity> list = CommonService.getDicts(IDefine.DirctSportUnit);
                 if (list != null && !list.isEmpty()) {
                     tempList.addAll(list);
                 }
@@ -167,7 +168,7 @@ public class SportCaller extends BaseService {
 
                     ////////////// 3.同步运动单位 ////////////
                     adlService.getDictDao().clearByDictCode(IDefine.DirctSportUnit);
-                    List<DictEntity> dictList = SportService.getDicts(IDefine.DirctSportUnit);
+                    List<DictEntity> dictList = CommonService.getDicts(IDefine.DirctSportUnit);
                     if (dictList != null && !dictList.isEmpty()) {
                         adlService.getDictDao().insertAll(dictList);
                     }

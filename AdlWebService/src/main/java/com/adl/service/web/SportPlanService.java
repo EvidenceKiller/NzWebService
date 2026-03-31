@@ -7,6 +7,7 @@ import com.adl.service.entity.ClassInfoEntity;
 import com.adl.service.entity.SportPlanEntity;
 import com.adl.service.entity.SportPlanStudentEntity;
 import com.adl.service.entity.StandardConfigEntity;
+import com.adl.service.web.constants.Platform;
 import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
@@ -44,10 +45,12 @@ public class SportPlanService extends BaseHttpService {
 
             // 获取组织测试列表
             String url;
-            if (IDefine.PlatformGx.equals(getConfigService().getPlatform())) {
+            if (Platform.GX.equals(getConfigService().getPlatform())) {
                 url = wrapperUrl("/busi/terminal/gx/organizeTest/getPlanList");
-            } else {
+            } else if (Platform.K12.equals(getConfigService().getPlatform())) {
                 url = wrapperUrl("/busi/terminal/k12/organizeTest/getPlanList");
+            } else {
+                url = wrapperUrl("/v3/gateway/api/tis/device/pte/organizeTest/getPlanList");
             }
 
             // 请求
@@ -81,10 +84,12 @@ public class SportPlanService extends BaseHttpService {
 
             // 获取组织测试列表
             String url;
-            if (IDefine.PlatformGx.equals(getConfigService().getPlatform())) {
+            if (Platform.GX.equals(getConfigService().getPlatform())) {
                 url = wrapperUrl("/busi/terminal/gx/organizeTest/getPlanList");
-            } else {
+            } else if (Platform.K12.equals(getConfigService().getPlatform())) {
                 url = wrapperUrl("/busi/terminal/k12/organizeTest/getPlanList");
+            } else {
+                url = wrapperUrl("/v3/gateway/api/tis/device/pte/organizeTest/getPlanList");
             }
 
             // 请求
@@ -120,10 +125,12 @@ public class SportPlanService extends BaseHttpService {
 
             // 获取组织测试列表
             String url;
-            if (IDefine.PlatformGx.equals(getConfigService().getPlatform())) {
+            if (Platform.GX.equals(getConfigService().getPlatform())) {
                 url = wrapperUrl("/busi/terminal/gx/organizeTest/planInfo");
-            } else {
+            } else if (Platform.K12.equals(getConfigService().getPlatform())) {
                 url = wrapperUrl("/busi/terminal/k12/organizeTest/planInfo");
+            } else {
+                url = wrapperUrl("/v3/gateway/api/tis/device/pte/organizeTest/getPlanInfo");
             }
 
             // 请求
@@ -154,10 +161,12 @@ public class SportPlanService extends BaseHttpService {
 
             // 获取计划下学生列表
             String url;
-            if (IDefine.PlatformGx.equals(getConfigService().getPlatform())) {
+            if (Platform.GX.equals(getConfigService().getPlatform())) {
                 url = wrapperUrl("/busi/terminal/gx/organizeTest/getPlanStudents");
-            } else {
+            } else if (Platform.K12.equals(getConfigService().getPlatform())) {
                 url = wrapperUrl("/busi/terminal/k12/organizeTest/getPlanStudents");
+            } else {
+                url = wrapperUrl("/v3/gateway/api/tis/device/pte/organizeTest/getPlanStudents");
             }
 
             // 请求
@@ -188,10 +197,12 @@ public class SportPlanService extends BaseHttpService {
 
             // 获取计划下学生列表
             String url;
-            if (IDefine.PlatformGx.equals(getConfigService().getPlatform())) {
+            if (Platform.GX.equals(getConfigService().getPlatform())) {
                 url = wrapperUrl("/busi/terminal/gx/organizeTest/checkStudent");
-            } else {
+            } else if (Platform.K12.equals(getConfigService().getPlatform())) {
                 url = wrapperUrl("/busi/terminal/k12/organizeTest/checkStudent");
+            } else {
+                throw new RuntimeException("Unsupport platform!");
             }
 
             // 请求
@@ -220,10 +231,12 @@ public class SportPlanService extends BaseHttpService {
 
             // 获取计划下学生列表
             String url;
-            if (IDefine.PlatformGx.equals(getConfigService().getPlatform())) {
+            if (Platform.GX.equals(getConfigService().getPlatform())) {
                 url = wrapperUrl("/busi/terminal/gx/organizeTest/getPlanClassList");
+            } else if (Platform.K12.equals(getConfigService().getPlatform())) {
+                url = wrapperUrl("/busi/terminal/k12/organizeTest/checkStudent");
             } else {
-                url = wrapperUrl("/busi/terminal/k12/organizeTest/getPlanClassList");
+                throw new RuntimeException("Unsupport platform!");
             }
 
             // 请求
@@ -253,11 +266,13 @@ public class SportPlanService extends BaseHttpService {
             String param = InnerUtil.toJson(map);
 
             // 运动标准
-            String url = wrapperUrl("/busi/terminal/gx/organizeTest/getStandardConfig");
-            if (IDefine.PlatformGx.equals(getConfigService().getPlatform())) {
+            String url;
+            if (Platform.GX.equals(getConfigService().getPlatform())) {
                 url = wrapperUrl("/busi/terminal/gx/organizeTest/getStandardConfig");
-            } else {
+            } else if (Platform.K12.equals(getConfigService().getPlatform())) {
                 url = wrapperUrl("/busi/terminal/k12/organizeTest/getStandardConfig");
+            } else {
+                url = wrapperUrl("/v3/gateway/api/tis/device/pte/organizeTest/getStandardConfig");
             }
 
             // 请求

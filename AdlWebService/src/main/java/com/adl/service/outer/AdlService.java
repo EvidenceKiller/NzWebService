@@ -3,11 +3,6 @@ package com.adl.service.outer;
 import android.content.Context;
 import android.text.TextUtils;
 
-import androidx.room.Room;
-
-import com.adl.auth.common.AdlConfig;
-import com.adl.base.common.AdlDeviceHelper;
-import com.adl.base.common.AdlDevicePlatform;
 import com.adl.base.file.AdlFileHelper;
 import com.adl.base.log.AdlLogger;
 import com.adl.service.common.BaseService;
@@ -19,7 +14,6 @@ import com.adl.service.common.InnerPreferences;
 import com.adl.service.common.NzConfig;
 import com.adl.service.common.NzConfigBusiness;
 import com.adl.service.common.NzConfigNode;
-import com.adl.service.common.OssType;
 import com.adl.service.db.CitizenDao;
 import com.adl.service.db.DaoManager;
 import com.adl.service.db.DictDao;
@@ -40,13 +34,15 @@ import com.adl.service.db.TeacherDao;
 import com.adl.service.db.TeacherSportDao;
 import com.adl.service.db.migration.Migration_17_to_18;
 import com.adl.service.upload.OssFileUploadService;
+import com.adl.service.web.constants.Platform;
 import com.google.gson.Gson;
-import com.ssp.oss.sdk.core.OssClient;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
+
+import androidx.room.Room;
 
 /**
  * ProjectName: AiPowerAuth
@@ -74,7 +70,7 @@ public final class AdlService {
         setHost("http://112.19.167.50:18082/gateway/api");
         setQiNiuHost(IDefine.DefaultHost);
         setQiNiuBucket(IDefine.QiNiuPublicBucket);
-        setPlatform(IDefine.PlatformK12);
+        setPlatform(Platform.K12);
 
         // preferences 存储
         InnerPreferences pf = InnerPreferences.instance();
@@ -179,7 +175,7 @@ public final class AdlService {
         return this;
     }
 
-    public AdlService setPlatform(String platform) {
+    public AdlService setPlatform(Platform platform) {
         mConfig.setPlatform(platform);
         return this;
     }
@@ -368,7 +364,7 @@ public final class AdlService {
                     }
 
                     setDebug(business.isEnableDebug());
-                    setPlatform(busType);
+                    setPlatform(Platform.fromString(busType));
                     setHost(busHost);
                 }
                 d("~~~~~~~~~ 本地化配置 ~~~~~~~~~~");
@@ -386,7 +382,7 @@ public final class AdlService {
             d("ossConfigHost:" + getOssConfigHost());
             d("ossTokenHost:" + getOssTokenHost());
             d("facePrefix:" + getFacePrefix());
-            d("platform:" + mConfig.getPlatform());
+            d("platform:" + Platform.toString(mConfig.getPlatform()));
 
             String prefix = OssFileUploadService.instance().getPrefix();
             if (!TextUtils.isEmpty(prefix) && TextUtils.isEmpty(AdlService.getService().getFacePrefix())) {

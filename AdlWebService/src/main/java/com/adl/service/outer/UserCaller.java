@@ -54,7 +54,7 @@ public final class UserCaller extends BaseService {
     }
 
     public void syncBaseInfo(boolean forceUpdate, RequestUserCallback callback) {
-        syncBaseInfo(false, PAGE_SIZE, callback);
+        syncBaseInfo(forceUpdate, PAGE_SIZE, callback);
     }
 
     // 同步基础信息

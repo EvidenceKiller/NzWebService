@@ -4,7 +4,7 @@ import com.adl.service.common.InnerUtil;
 import com.adl.service.common.RequestResult;
 import com.adl.service.entity.TrainEntity;
 import com.adl.service.entity.TrainSportInfoEntity;
-import com.adl.service.entity.WikiTypeEntity;
+import com.adl.service.web.constants.Platform;
 import com.google.gson.reflect.TypeToken;
 
 import java.util.HashMap;
@@ -23,9 +23,13 @@ public class TrainService extends BaseHttpService {
             map.put("accountId", accountId);
             map.put("timeStatus", timeStatus);
             String param = InnerUtil.toJson(map);
-            // 增量更新学生信息
-            //http://172.16.0.206:8082/gateway/api/busi/terminal/k12/train/plan/getTrainPlanInfoList
-            String url = wrapperUrl("/busi/terminal/k12/train/plan/getTrainPlanInfoList");
+
+            String url;
+            if (Platform.V3.equals(getConfigService().getPlatform())) {
+                url = wrapperUrl("/busi/train/plan/getTrainPlanInfoList");
+            } else {
+                url = wrapperUrl("/busi/terminal/k12/train/plan/getTrainPlanInfoList");
+            }
             Request request = new Request.Builder().url(url)
                     .post(RequestBody.create(param, jsonType)).build();
             RequestResult result = parserResponse(mClient.newCall(request).execute());

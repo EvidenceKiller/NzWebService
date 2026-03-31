@@ -9,7 +9,7 @@ def properties = new Properties()
 properties.load(inputStream)
 
 android {
-    namespace 'com.adl.ts.general.web'
+    namespace 'com.adl.ts.general'
 
     compileSdk 34
     packagingOptions{

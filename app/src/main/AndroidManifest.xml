@@ -226,6 +226,11 @@
             android:screenOrientation="landscape"
             android:theme="@style/AppBaseTheme" />
 
+        <activity
+            android:name="com.ai.test.TempTestActivity"
+            android:screenOrientation="landscape"
+            android:theme="@style/AppBaseTheme" />
+
     </application>
 
 </manifest>

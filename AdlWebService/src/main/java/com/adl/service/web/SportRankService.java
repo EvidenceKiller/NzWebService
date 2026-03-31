@@ -2,14 +2,12 @@ package com.adl.service.web;
 
 import android.text.TextUtils;
 
-import com.adl.service.common.IDefine;
 import com.adl.service.common.InnerUtil;
 import com.adl.service.common.RequestResult;
 import com.adl.service.entity.PersonRankEntity;
-import com.adl.service.entity.SportCompetitionEntity;
-import com.adl.service.entity.SportCompetitionInfoEntity;
 import com.adl.service.entity.SportOverviewEntity;
 import com.adl.service.entity.SumScoreRankEntity;
+import com.adl.service.web.constants.Platform;
 import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
@@ -40,7 +38,12 @@ public class SportRankService extends BaseHttpService {
             String param = InnerUtil.toJson(map);
 
             // 请求/terminal/statistics/sport/personRank
-            String url = wrapperUrl("/busi/terminal/statistics/sport/personRank");
+            String url;
+            if (Platform.V3.equals(getConfigService().getPlatform())) {
+                url = wrapperUrl("/statistics/account/sport/personRank");
+            } else {
+                url = wrapperUrl("/busi/terminal/statistics/sport/personRank");
+            }
             Request request = new Request.Builder().url(url)
                     .post(RequestBody.create(param, jsonType)).build();
             RequestResult result = parserResponse(mClient.newCall(request).execute());
@@ -69,7 +72,12 @@ public class SportRankService extends BaseHttpService {
             String param = InnerUtil.toJson(map);
 
             ///terminal/statistics/sport/sumScoreRank
-            String url = wrapperUrl("/busi/terminal/statistics/sport/sumScoreRank");
+            String url;
+            if (Platform.V3.equals(getConfigService().getPlatform())) {
+                url = wrapperUrl("/statistics/exercise/sport/sumScoreRank");
+            } else {
+                url = wrapperUrl("/busi/terminal/statistics/sport/sumScoreRank");
+            }
             Request request = new Request.Builder().url(url)
                     .post(RequestBody.create(param, jsonType)).build();
             RequestResult result = parserResponse(mClient.newCall(request).execute());
@@ -92,7 +100,12 @@ public class SportRankService extends BaseHttpService {
             String param = InnerUtil.toJson(map);
 
             //terminal/home/sport/overview
-            String url = wrapperUrl("/busi/terminal/home/sport/overview");
+            String url;
+            if (Platform.V3.equals(getConfigService().getPlatform())) {
+                url = wrapperUrl("/statistics/home/sport/overview");
+            } else {
+                url = wrapperUrl("/busi/terminal/home/sport/overview");
+            }
             Request request = new Request.Builder().url(url)
                     .post(RequestBody.create(param, jsonType)).build();
             RequestResult result = parserResponse(mClient.newCall(request).execute());

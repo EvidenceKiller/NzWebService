@@ -1,5 +1,7 @@
 package com.adl.service.outer;
 
+import com.adl.service.web.constants.Platform;
+
 /**
  * ProjectName: AiPowerAuth
  * Author     : 南山
@@ -17,7 +19,7 @@ public class ConfigService {
     private String mSdcardRoot;
     private String mFacePrefix;
     //  平台(k12、gx)
-    private String mPlatform;
+    private Platform mPlatform = Platform.K12;
     // 读取本地配置文件
     private boolean readConfig;
 
@@ -88,11 +90,11 @@ public class ConfigService {
         this.mFacePrefix = mFacePrefix;
     }
 
-    public String getPlatform() {
+    public Platform getPlatform() {
         return mPlatform;
     }
 
-    public void setPlatform(String mPlatform) {
+    public void setPlatform(Platform mPlatform) {
         this.mPlatform = mPlatform;
     }
 

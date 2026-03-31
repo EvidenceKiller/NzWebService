@@ -9,6 +9,7 @@ import com.adl.service.common.RequestResult;
 import com.adl.service.entity.DeviceFocusEntity;
 import com.adl.service.entity.DeviceInfoEntity;
 import com.adl.service.entity.StandardConfigEntity;
+import com.adl.service.web.constants.Platform;
 import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
@@ -111,8 +112,12 @@ public class DeviceService extends BaseHttpService {
             map.put("deviceId", deviceId);// registerCode
             String param = InnerUtil.toJson(map);
 
-            // 请求  http://172.16.0.206:8082/gateway/api/busi/terminal/device/getDeviceFocus
-            String url = wrapperUrl("/busi/terminal/device/getDeviceFocus");
+            String url;
+            if (Platform.V3.equals(getConfigService().getPlatform())) {
+                url = wrapperUrl("/v3/gateway/api/tis/device/oper/device/getDeviceFocusList");
+            } else {
+                url = wrapperUrl("/busi/terminal/device/getDeviceFocus");
+            }
             Request request = new Request.Builder().url(url)
                     .post(RequestBody.create(param, jsonType)).build();
             RequestResult result = parserResponse(mClient.newCall(request).execute());

@@ -139,5 +139,9 @@ public class MainActivity extends BaseActivity {
         findViewById(R.id.bnt_20_3).setOnClickListener(v -> {
             NextWriter.with(MainActivity.this, HKCameraPreviewActivity.class).go();
         });
+
+        findViewById(R.id.bnt_30).setOnClickListener(v -> {
+            NextWriter.with(MainActivity.this, TempTestActivity.class).go();
+        });
     }
 }

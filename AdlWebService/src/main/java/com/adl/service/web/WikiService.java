@@ -2,14 +2,12 @@ package com.adl.service.web;
 
 import com.adl.service.common.InnerUtil;
 import com.adl.service.common.RequestResult;
-import com.adl.service.entity.OrgResInfoEntity;
 import com.adl.service.entity.WikiDetailEntity;
 import com.adl.service.entity.WikiEntity;
 import com.adl.service.entity.WikiTypeEntity;
 import com.google.gson.reflect.TypeToken;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import okhttp3.Request;
@@ -114,34 +112,5 @@ public class WikiService extends BaseHttpService {
         }
         return null;
     }
-
-    /**
-     * 获取校本和备课助手详情信息
-     * @param resId
-     * @return
-     */
-    public static OrgResInfoEntity getOrgResInfo(String resId) {
-        try {
-            d("From Http 获取百科详情");
-            Map<String, Object> map = new HashMap<>();
-            map.put("id", resId);
-            String param = InnerUtil.toJson(map);
-            // 增量更新学生信息
-            //http://172.16.0.206:8082/gateway/api/oper/terminal/org/res/v1/info
-            //gateway/api/busi/terminal/org/res/v1/info
-            String url = wrapperUrl("/busi/terminal/org/res/v1/info");
-            Request request = new Request.Builder().url(url)
-                    .post(RequestBody.create(param, jsonType)).build();
-            RequestResult result = parserResponse(mClient.newCall(request).execute());
-            if (result.isOk()) {
-                return InnerUtil.jsonToType(result.getContent().toString(), new TypeToken<OrgResInfoEntity>() {
-                });
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
 
 }

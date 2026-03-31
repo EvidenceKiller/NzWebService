@@ -7,6 +7,7 @@ import com.adl.service.entity.OrganizationEntity;
 import com.adl.service.entity.StudentEntity;
 import com.adl.service.entity.StudentGradeClassEntity;
 import com.adl.service.entity.TeacherEntity;
+import com.adl.service.web.constants.Platform;
 import com.alibaba.fastjson.JSON;
 import com.google.gson.reflect.TypeToken;
 
@@ -83,7 +84,12 @@ public class UserService extends BaseHttpService {
                 d("请求学生数据: index=" + pageIndex + ";param:" + param);
 
                 // 增量更新学生信息
-                String url = wrapperUrl("/busi/terminal/account/list_V1");
+                String url;
+                if (Platform.V3.equals(getConfigService().getPlatform())) {
+                    url = wrapperUrl("/v3/gateway/api/tis/device/base/account/getStudentList");
+                } else {
+                    url = wrapperUrl("/busi/terminal/account/list_V1");
+                }
                 Request request = new Request.Builder().url(url)
                         .post(RequestBody.create(param, jsonType)).build();
 
@@ -125,7 +131,12 @@ public class UserService extends BaseHttpService {
             String param = InnerUtil.toJson(map);
 
             // 增量更新老师信息
-            String url = wrapperUrl("/busi/terminal/account/teacher/list");
+            String url;
+            if (Platform.V3.equals(getConfigService().getPlatform())) {
+                url = wrapperUrl("/v3/gateway/api/tis/device/base/account/getTeacherLlist");
+            } else {
+                url = wrapperUrl("/busi/terminal/account/teacher/list");
+            }
 
             // 请求
             Request request = new Request.Builder().url(url)
@@ -235,7 +246,12 @@ public class UserService extends BaseHttpService {
             d("+++++++++++++++机构信息++++++++++++++++");
 
             // 当前登录机构信息
-            String url = wrapperUrl("/busi/terminal/org/v1/login/info");
+            String url;
+            if (Platform.V3.equals(getConfigService().getPlatform())) {
+                url = wrapperUrl("/v3/gateway/api/sso/login");
+            } else {
+                url = wrapperUrl("/busi/terminal/org/v1/login/info");
+            }
 
             // 请求
             Request request = new Request.Builder().url(url)
@@ -255,7 +271,12 @@ public class UserService extends BaseHttpService {
             d("+++++++++++++++机构信息++++++++++++++++");
 
             // 当前登录机构信息
-            String url = wrapperUrl("/busi/terminal/org/v1/login/info");
+            String url;
+            if (Platform.V3.equals(getConfigService().getPlatform())) {
+                url = wrapperUrl("/v3/gateway/api/sso/login");
+            } else {
+                url = wrapperUrl("/busi/terminal/org/v1/login/info");
+            }
 
             // 请求
             Request request = new Request.Builder().url(url)
@@ -282,7 +303,12 @@ public class UserService extends BaseHttpService {
             d("From Http 查询年级班级列表");
 
             // 年级树
-            String url = wrapperUrl("/busi/terminal/grade/v1/getGradeTree");
+            String url;
+            if (Platform.V3.equals(getConfigService().getPlatform())) {
+                url = wrapperUrl("/v3/gateway/api/tis/device/base/org/grade/getGradeTree");
+            } else {
+                url = wrapperUrl("/busi/terminal/grade/v1/getGradeTree");
+            }
 
             // 请求
             Request request = new Request.Builder().url(url)

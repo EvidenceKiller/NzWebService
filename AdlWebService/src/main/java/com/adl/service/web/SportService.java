@@ -9,6 +9,7 @@ import com.adl.service.entity.SceneEntity;
 import com.adl.service.entity.SceneSportEntity;
 import com.adl.service.entity.SceneSportInfoEntity;
 import com.adl.service.entity.SportDetailEntity;
+import com.adl.service.web.constants.Platform;
 import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
@@ -42,7 +43,12 @@ public class SportService extends BaseHttpService {
             String param = InnerUtil.toJson(map);
 
             // 请求
-            String url = wrapperUrl("/oper/terminal/scene/v1/getSceneList");
+            String url;
+            if (Platform.V3.equals(getConfigService().getPlatform())) {
+                url = wrapperUrl("/v3/gateway/api/tis/device/oper/scene/getSceneList");
+            } else {
+                url = wrapperUrl("/oper/terminal/scene/v1/getSceneList");
+            }
             Request request = new Request.Builder().url(url)
                     .post(RequestBody.create(param, jsonType)).build();
             RequestResult result = parserResponse(mClient.newCall(request).execute());
@@ -73,7 +79,12 @@ public class SportService extends BaseHttpService {
             String param = InnerUtil.toJson(map);
 
             // 请求
-            String url = wrapperUrl("/oper/terminal/sportSku/v1/getSportSkuList");
+            String url;
+            if (Platform.V3.equals(getConfigService().getPlatform())) {
+                url = wrapperUrl("/v3/gateway/api/tis/device/oper/sku/getSportSkuList");
+            } else {
+                url = wrapperUrl("/oper/terminal/sportSku/v1/getSportSkuList");
+            }
             Request request = new Request.Builder().url(url)
                     .post(RequestBody.create(param, jsonType)).build();
             RequestResult result = parserResponse(mClient.newCall(request).execute());
@@ -99,38 +110,17 @@ public class SportService extends BaseHttpService {
             String param = InnerUtil.toJson(map);
 
             // 请求
-            String url = wrapperUrl("/oper/terminal/sportSku/v1/getSportSkuDetail");
+            String url;
+            if (Platform.V3.equals(getConfigService().getPlatform())) {
+                url = wrapperUrl("/v3/gateway/api/tis/device/oper/sku/getSportSkuDetail");
+            } else {
+                url = wrapperUrl("/oper/terminal/sportSku/v1/getSportSkuDetail");
+            }
             Request request = new Request.Builder().url(url)
                     .post(RequestBody.create(param, jsonType)).build();
             RequestResult result = parserResponse(mClient.newCall(request).execute());
             if (result.isOk()) {
                 return InnerUtil.jsonToObject(result.getContent().toString(), SceneSportInfoEntity.class);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    ////////// 字典查询
-    public static List<DictEntity> getDicts(String dictId) {
-        try {
-            d("From Http 字典查询");
-
-            Map<String, Object> map = new HashMap<>();
-            map.put("dictId", dictId);
-
-            String param = InnerUtil.toJson(map);
-
-            // 请求
-            String url = wrapperUrl("/uc/web/dict/getDicts");
-            Request request = new Request.Builder().url(url)
-                    .post(RequestBody.create(param, jsonType)).build();
-            RequestResult result = parserResponse(mClient.newCall(request).execute());
-            if (result.isOk()) {
-                String str = InnerUtil.readRecords(result.getContent().toString());
-                return InnerUtil.jsonToType(str, new TypeToken<ArrayList<DictEntity>>() {
-                });
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -149,7 +139,12 @@ public class SportService extends BaseHttpService {
             String param = InnerUtil.toJson(map);
 
             // 请求
-            String url = wrapperUrl("/oper/terminal/sportSku/v1/getDictMap");
+            String url;
+            if (Platform.V3.equals(getConfigService().getPlatform())) {
+                url = wrapperUrl("/v3/gateway/api/tis/device/oper/sku/getDictMap");
+            } else {
+                url = wrapperUrl("/oper/terminal/sportSku/v1/getDictMap");
+            }
             Request request = new Request.Builder().url(url)
                     .post(RequestBody.create(param, jsonType)).build();
             RequestResult result = parserResponse(mClient.newCall(request).execute());
@@ -203,7 +198,12 @@ public class SportService extends BaseHttpService {
             PageInfo<SportDetailEntity> pageInfo = new PageInfo<>();
 
             // 请求
-            String url = wrapperUrl("/busi/terminal/sunshineRunning/sportDetailList");
+            String url;
+            if (Platform.V3.equals(getConfigService().getPlatform())) {
+                url = wrapperUrl("/h5/org/sunshineRunning/sportDetailList");
+            } else {
+                url = wrapperUrl("/busi/terminal/sunshineRunning/sportDetailList");
+            }
             Request request = new Request.Builder().url(url)
                     .post(RequestBody.create(param, jsonType)).build();
             RequestResult result = parserResponse(mClient.newCall(request).execute());

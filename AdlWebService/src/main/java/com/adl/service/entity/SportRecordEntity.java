@@ -380,7 +380,7 @@ public class SportRecordEntity implements Serializable {
     }
 
     public List<SportImageEntity> getSportImages() {
-        if (sportImages == null){
+        if (sportImages == null) {
             sportImages = new ArrayList<>();
         }
         return sportImages;
@@ -391,7 +391,7 @@ public class SportRecordEntity implements Serializable {
     }
 
     public List<SportVideoEntity> getSportVideos() {
-        if (sportVideos == null){
+        if (sportVideos == null) {
             sportVideos = new ArrayList<>();
         }
         return sportVideos;
@@ -410,7 +410,7 @@ public class SportRecordEntity implements Serializable {
     }
 
     public RecordMeeting getSportMeet() {
-        if (sportMeet == null){
+        if (sportMeet == null) {
             sportMeet = new RecordMeeting();
         }
         return sportMeet;
@@ -421,7 +421,7 @@ public class SportRecordEntity implements Serializable {
     }
 
     public RecordPlan getSportPlan() {
-        if (sportPlan == null){
+        if (sportPlan == null) {
             sportPlan = new RecordPlan();
         }
         return sportPlan;
@@ -448,7 +448,7 @@ public class SportRecordEntity implements Serializable {
     }
 
     public SportTrainPlan getTrainPlan() {
-        if (trainPlan == null){
+        if (trainPlan == null) {
             trainPlan = new SportTrainPlan();
         }
         return trainPlan;
@@ -461,6 +461,7 @@ public class SportRecordEntity implements Serializable {
     public String getSportSkuSubType() {
         return sportSkuSubType;
     }
+
     public void setSportSkuSubType(String sportSkuSubType) {
         this.sportSkuSubType = sportSkuSubType;
     }
@@ -482,7 +483,7 @@ public class SportRecordEntity implements Serializable {
     }
 
     public List<SportIndicatorsEntity<?, ?>> getSportIndicators() {
-        if (sportIndicators == null){
+        if (sportIndicators == null) {
             sportIndicators = new ArrayList<>();
         }
         return sportIndicators;
@@ -507,7 +508,6 @@ public class SportRecordEntity implements Serializable {
     public void setCircle(int circle) {
         this.circle = circle;
     }
-
 
 
     //  是否违规
