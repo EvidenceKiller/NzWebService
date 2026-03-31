@@ -3,12 +3,10 @@ package com.adl.service.web;
 import android.text.TextUtils;
 
 import com.adl.auth.common.AdlUpgradeInfo;
-import com.adl.service.common.IDefine;
 import com.adl.service.common.InnerUtil;
 import com.adl.service.common.RequestResult;
 import com.adl.service.entity.DeviceFocusEntity;
 import com.adl.service.entity.DeviceInfoEntity;
-import com.adl.service.entity.StandardConfigEntity;
 import com.adl.service.web.constants.Platform;
 import com.google.gson.reflect.TypeToken;
 
@@ -41,7 +39,7 @@ public class DeviceService extends BaseHttpService {
             String url = wrapperUrl("/busi/terminal/device/info/mine");
             Request request = new Request.Builder().url(url)
                     .post(RequestBody.create(param, jsonType)).build();
-            RequestResult result = parserResponse(mClient.newCall(request).execute());
+            RequestResult result = parserResponse(getHttpClient().newCall(request).execute());
             if (result.isOk()) {
                 return InnerUtil.jsonToObject(result.getContent().toString(), DeviceInfoEntity.class);
             }
@@ -63,7 +61,7 @@ public class DeviceService extends BaseHttpService {
             String url = wrapperUrl("/busi/terminal/home/device/qrcode");
             Request request = new Request.Builder().url(url)
                     .post(RequestBody.create(param, jsonType)).build();
-            RequestResult result = parserResponse(mClient.newCall(request).execute());
+            RequestResult result = parserResponse(getHttpClient().newCall(request).execute());
             if (result.isOk()) {
                 return result.getContent().toString();
             }
@@ -86,7 +84,7 @@ public class DeviceService extends BaseHttpService {
             String url = wrapperUrl("/busi/terminal/device/upload/deviceInfo");
             Request request = new Request.Builder().url(url)
                     .post(RequestBody.create(param, jsonType)).build();
-            RequestResult result = parserResponse(mClient.newCall(request).execute());
+            RequestResult result = parserResponse(getHttpClient().newCall(request).execute());
             if (result.isOk() && result.getContent() != null) {
                 return InnerUtil.jsonToObject(result.getContent().toString(), Boolean.class);
             }
@@ -120,7 +118,7 @@ public class DeviceService extends BaseHttpService {
             }
             Request request = new Request.Builder().url(url)
                     .post(RequestBody.create(param, jsonType)).build();
-            RequestResult result = parserResponse(mClient.newCall(request).execute());
+            RequestResult result = parserResponse(getHttpClient().newCall(request).execute());
             if (result.isOk()) {
                 String str = InnerUtil.readRecords(result.getContent().toString());
                 return InnerUtil.jsonToType(str, new TypeToken<ArrayList<DeviceFocusEntity>>() {
@@ -154,7 +152,7 @@ public class DeviceService extends BaseHttpService {
             String url = wrapperUrl("/dc/upgradePlan/getUpgradePlanByDevice");
             Request request = new Request.Builder().url(url)
                     .post(RequestBody.create(param, jsonType)).build();
-            RequestResult result = parserResponse(mClient.newCall(request).execute());
+            RequestResult result = parserResponse(getHttpClient().newCall(request).execute());
             if (result.isOk()) {
                 String str = InnerUtil.readRecords(result.getContent().toString());
                 return InnerUtil.jsonToType(str, new TypeToken<ArrayList<AdlUpgradeInfo>>() {

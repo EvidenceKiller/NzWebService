@@ -50,7 +50,7 @@ public class CommonService extends BaseHttpService {
             String url = wrapperUrl("/dc/device/log/addBatch");
             Request request = new Request.Builder().url(url)
                     .post(RequestBody.create(param, jsonType)).build();
-            return parserResponse(mClient.newCall(request).execute());
+            return parserResponse(getHttpClient().newCall(request).execute());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -64,7 +64,7 @@ public class CommonService extends BaseHttpService {
             // 请求
             String url = wrapperUrl("/busi/terminal/home/weather/now?location=" + location);
             Request request = new Request.Builder().url(url).get().build();
-            RequestResult result = parserResponse(mClient.newCall(request).execute());
+            RequestResult result = parserResponse(getHttpClient().newCall(request).execute());
             if (result.isOk()) {
                 return InnerUtil.jsonToObject(result.getContent().toString(), WeatherEntity.class);
             }
@@ -88,7 +88,7 @@ public class CommonService extends BaseHttpService {
             String url = wrapperUrl("/uc/web/dict/getDicts");
             Request request = new Request.Builder().url(url)
                     .post(RequestBody.create(param, jsonType)).build();
-            RequestResult result = parserResponse(mClient.newCall(request).execute());
+            RequestResult result = parserResponse(getHttpClient().newCall(request).execute());
             if (result.isOk()) {
                 String str = InnerUtil.readRecords(result.getContent().toString());
                 return InnerUtil.jsonToType(str, new TypeToken<ArrayList<DictEntity>>() {

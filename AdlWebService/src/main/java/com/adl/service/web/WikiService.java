@@ -33,7 +33,7 @@ public class WikiService extends BaseHttpService {
             String url = wrapperUrl("/oper/terminal/cs/wiki/type/v1/getWikiTypeList");
             Request request = new Request.Builder().url(url)
                     .post(RequestBody.create("{}", jsonType)).build();
-            RequestResult result = parserResponse(mClient.newCall(request).execute());
+            RequestResult result = parserResponse(getHttpClient().newCall(request).execute());
             if (result.isOk()) {
                 return InnerUtil.jsonToType(result.getContent().toString(), new TypeToken<WikiTypeEntity>() {
                 });
@@ -56,7 +56,7 @@ public class WikiService extends BaseHttpService {
             String url = wrapperUrl("/oper/terminal/cs/wiki/v1/getWikiList");
             Request request = new Request.Builder().url(url)
                     .post(RequestBody.create(param, jsonType)).build();
-            RequestResult result = parserResponse(mClient.newCall(request).execute());
+            RequestResult result = parserResponse(getHttpClient().newCall(request).execute());
             if (result.isOk()) {
                 return InnerUtil.jsonToType(result.getContent().toString(), new TypeToken<WikiEntity>() {
                 });
@@ -80,7 +80,7 @@ public class WikiService extends BaseHttpService {
             String url = wrapperUrl("/oper/terminal/cs/wiki/v1/getWikiList");
             Request request = new Request.Builder().url(url)
                     .post(RequestBody.create(param, jsonType)).build();
-            RequestResult result = parserResponse(mClient.newCall(request).execute());
+            RequestResult result = parserResponse(getHttpClient().newCall(request).execute());
             if (result.isOk()) {
                 return InnerUtil.jsonToType(result.getContent().toString(), new TypeToken<WikiEntity>() {
                 });
@@ -102,7 +102,7 @@ public class WikiService extends BaseHttpService {
             String url = wrapperUrl("/oper/terminal/cs/wiki/v1/getWikiDetail");
             Request request = new Request.Builder().url(url)
                     .post(RequestBody.create(param, jsonType)).build();
-            RequestResult result = parserResponse(mClient.newCall(request).execute());
+            RequestResult result = parserResponse(getHttpClient().newCall(request).execute());
             if (result.isOk()) {
                 return InnerUtil.jsonToType(result.getContent().toString(), new TypeToken<WikiDetailEntity>() {
                 });

@@ -1,4 +1,4 @@
-package com.adl.service.web;
+package com.adl.service.http.interceptor;
 
 import com.adl.auth.core.AdlAuthFactory;
 import com.adl.service.common.CommonUtil;
@@ -16,7 +16,7 @@ import okhttp3.Response;
 /**
  * 全局自动刷新Token的拦截器
  */
-public class TokenInterceptor implements Interceptor {
+public class TokenRefreshInterceptor implements Interceptor {
 
     private int autoLoginFailNum = 0;
 

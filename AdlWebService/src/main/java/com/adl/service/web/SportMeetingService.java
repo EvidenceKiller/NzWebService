@@ -2,7 +2,6 @@ package com.adl.service.web;
 
 import android.text.TextUtils;
 
-import com.adl.service.common.IDefine;
 import com.adl.service.common.InnerUtil;
 import com.adl.service.common.RequestResult;
 import com.adl.service.entity.MeetGroupDetailsEntity;
@@ -61,7 +60,7 @@ public class SportMeetingService extends BaseHttpService {
 
             Request request = new Request.Builder().url(url)
                     .post(RequestBody.create(param, jsonType)).build();
-            RequestResult result = parserResponse(mClient.newCall(request).execute());
+            RequestResult result = parserResponse(getHttpClient().newCall(request).execute());
             if (result.isOk()) {
                 String str = InnerUtil.readRecords(result.getContent().toString());
                 return InnerUtil.jsonToType(str, new TypeToken<ArrayList<SportMeetingEntity>>() {
@@ -107,7 +106,7 @@ public class SportMeetingService extends BaseHttpService {
 
             Request request = new Request.Builder().url(url)
                     .post(RequestBody.create(param, jsonType)).build();
-            RequestResult result = parserResponse(mClient.newCall(request).execute());
+            RequestResult result = parserResponse(getHttpClient().newCall(request).execute());
             if (result.isOk()) {
                 String str = InnerUtil.readRecords(result.getContent().toString());
                 return InnerUtil.jsonToType(str, new TypeToken<ArrayList<MeetGroupTeamEntity>>() {
@@ -157,7 +156,7 @@ public class SportMeetingService extends BaseHttpService {
 
             Request request = new Request.Builder().url(url)
                     .post(RequestBody.create(param, jsonType)).build();
-            RequestResult result = parserResponse(mClient.newCall(request).execute());
+            RequestResult result = parserResponse(getHttpClient().newCall(request).execute());
             if (result.isOk()) {
                 String str = InnerUtil.readRecords(result.getContent().toString());
                 return InnerUtil.jsonToType(str, new TypeToken<ArrayList<MeetGroupDetailsEntity>>() {

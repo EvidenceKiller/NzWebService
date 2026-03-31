@@ -32,7 +32,7 @@ public class TrainService extends BaseHttpService {
             }
             Request request = new Request.Builder().url(url)
                     .post(RequestBody.create(param, jsonType)).build();
-            RequestResult result = parserResponse(mClient.newCall(request).execute());
+            RequestResult result = parserResponse(getHttpClient().newCall(request).execute());
             if (result.isOk()) {
                 return InnerUtil.jsonToType(result.getContent().toString(), new TypeToken<TrainEntity>() {
                 });
@@ -68,7 +68,7 @@ public class TrainService extends BaseHttpService {
             String url = wrapperUrl("/busi/terminal/train/plan/v1/getTrainPlanOneDayProjectList");
             Request request = new Request.Builder().url(url)
                     .post(RequestBody.create(param, jsonType)).build();
-            RequestResult result = parserResponse(mClient.newCall(request).execute());
+            RequestResult result = parserResponse(getHttpClient().newCall(request).execute());
             if (result.isOk()) {
                 return InnerUtil.jsonToType(result.getContent().toString(), new TypeToken<List<TrainSportInfoEntity>>() {
                 });

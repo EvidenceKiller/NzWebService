@@ -40,7 +40,7 @@ public class ResService extends BaseHttpService {
             }
             Request request = new Request.Builder().url(url)
                     .post(RequestBody.create(param, jsonType)).build();
-            RequestResult result = parserResponse(mClient.newCall(request).execute());
+            RequestResult result = parserResponse(getHttpClient().newCall(request).execute());
             if (result.isOk()) {
                 return InnerUtil.jsonToType(result.getContent().toString(), new TypeToken<OrgResInfoEntity>() {
                 });
@@ -74,7 +74,7 @@ public class ResService extends BaseHttpService {
             }
             Request request = new Request.Builder().url(url)
                     .post(RequestBody.create(param, jsonType)).build();
-            RequestResult result = parserResponse(mClient.newCall(request).execute());
+            RequestResult result = parserResponse(getHttpClient().newCall(request).execute());
             if (result.isOk()) {
                 return InnerUtil.jsonToType(result.getContent().toString(), new TypeToken<TeacherResEntity>() {
                 });
@@ -125,7 +125,7 @@ public class ResService extends BaseHttpService {
             }
             Request request = new Request.Builder().url(url)
                     .post(RequestBody.create(param, jsonType)).build();
-            RequestResult result = parserResponse(mClient.newCall(request).execute());
+            RequestResult result = parserResponse(getHttpClient().newCall(request).execute());
             if (result.isOk()) {
                 String str = InnerUtil.readRecords(result.getContent().toString());
                 return InnerUtil.jsonToType(str, new TypeToken<TeacherResEntity>() {
@@ -157,7 +157,7 @@ public class ResService extends BaseHttpService {
             }
             Request request = new Request.Builder().url(url)
                     .post(RequestBody.create(param, jsonType)).build();
-            RequestResult result = parserResponse(mClient.newCall(request).execute());
+            RequestResult result = parserResponse(getHttpClient().newCall(request).execute());
             if (result.isOk()) {
                 return InnerUtil.jsonToType(result.getContent().toString(), new TypeToken<ArrayList<WikiTypeEntity.WikiTypeInfo>>() {
                 });

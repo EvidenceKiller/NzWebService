@@ -46,7 +46,7 @@ public class SportRankService extends BaseHttpService {
             }
             Request request = new Request.Builder().url(url)
                     .post(RequestBody.create(param, jsonType)).build();
-            RequestResult result = parserResponse(mClient.newCall(request).execute());
+            RequestResult result = parserResponse(getHttpClient().newCall(request).execute());
             if (result.isOk()) {
                 return InnerUtil.jsonToObject(result.getContent().toString(), PersonRankEntity.class);
             }
@@ -80,7 +80,7 @@ public class SportRankService extends BaseHttpService {
             }
             Request request = new Request.Builder().url(url)
                     .post(RequestBody.create(param, jsonType)).build();
-            RequestResult result = parserResponse(mClient.newCall(request).execute());
+            RequestResult result = parserResponse(getHttpClient().newCall(request).execute());
             if (result.isOk()) {
                 return InnerUtil.jsonToType(result.getContent().toString(), new TypeToken<ArrayList<SumScoreRankEntity>>() {
                 });
@@ -108,7 +108,7 @@ public class SportRankService extends BaseHttpService {
             }
             Request request = new Request.Builder().url(url)
                     .post(RequestBody.create(param, jsonType)).build();
-            RequestResult result = parserResponse(mClient.newCall(request).execute());
+            RequestResult result = parserResponse(getHttpClient().newCall(request).execute());
             if (result.isOk()) {
                 return InnerUtil.jsonToObject(result.getContent().toString(), SportOverviewEntity.class);
             }

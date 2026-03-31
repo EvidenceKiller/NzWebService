@@ -3,7 +3,6 @@ package com.adl.service.web;
 import android.text.TextUtils;
 
 import com.adl.service.common.BaseService;
-import com.adl.service.common.CommonUtil;
 import com.adl.service.common.FileDownCallback;
 import com.adl.service.common.FileDownManager;
 import com.adl.service.common.IDefine;
@@ -11,6 +10,8 @@ import com.adl.service.common.InnerPreferences;
 import com.adl.service.common.InnerUtil;
 import com.adl.service.common.RequestResult;
 import com.adl.service.http.interceptor.SmartCacheInterceptor;
+import com.adl.service.http.interceptor.TokenInjectionInterceptor;
+import com.adl.service.http.interceptor.TokenRefreshInterceptor;
 import com.adl.service.outer.AdlService;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -44,59 +45,53 @@ public class BaseHttpService extends BaseService {
     // json 类型
     protected static MediaType jsonType = MediaType.parse("application/json; charset=utf-8");
 
-    protected static OkHttpClient mClient;
+    private static volatile OkHttpClient HTTP_CLIENT;
 
     private static long httpCacheTime = 30 * 24 * 60 * 60; //接口缓存时间
 
-    ////////////////////////////////////////////////////////
-    static {
+    protected BaseHttpService() {
+    }
+
+    protected static OkHttpClient getHttpClient() {
+        if (HTTP_CLIENT == null) {
+            synchronized (BaseHttpService.class) {
+                if (HTTP_CLIENT == null) {
+                    HTTP_CLIENT = createOkHttpClient();
+                }
+            }
+        }
+        return HTTP_CLIENT;
+    }
+
+    private static OkHttpClient createOkHttpClient() {
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
 //        builder.retryOnConnectionFailure(false);
         builder.connectTimeout(30, TimeUnit.SECONDS);
         builder.readTimeout(60, TimeUnit.SECONDS);
         builder.writeTimeout(60, TimeUnit.SECONDS);
-        builder.addInterceptor(chain -> {
-            Request request = chain.request();
-            d("执行请求: " + request);
-
-            String token = InnerPreferences.instance().readString(IDefine.SpToken);
-
-            if (!TextUtils.isEmpty(token)) {
-                // 设置Token
-                Request.Builder reqBuilder = request.newBuilder();
-                reqBuilder.addHeader("Authorization", "Bearer " + token);
-                reqBuilder.addHeader("Accept-Language", CommonUtil.getLocaleLanguage());
-                // next
-                return chain.proceed(reqBuilder.build());
-            } else {
-                return chain.proceed(request);
-            }
-        });
-        builder.addInterceptor(new TokenInterceptor());
+        builder.addInterceptor(new TokenInjectionInterceptor());
+        builder.addInterceptor(new TokenRefreshInterceptor());
 
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor(message -> d("SPORT_HTTP -> message:" + message));
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 //        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.HEADERS);
         builder.addInterceptor(loggingInterceptor);
         builder.addInterceptor(new SmartCacheInterceptor(AdlService.getService().getContext(), true, httpCacheTime));
-        mClient = builder.build();
+        return builder.build();
     }
 
-    protected BaseHttpService() {
-
-    }
 
     protected static String wrapperUrl(String path) {
         return getConfigService() != null ? (getConfigService().getHost() + path) : "";
     }
 
-    // 下载公共文件，通过Get可直接访问
+    // 下载公共文件，通过 Get 可直接访问
     public static boolean downloadCommonFile(FileDownManager.FileDownTask bean,
                                              FileDownCallback callback) {
         try {
             String url = bean.url;
             Request request = new Request.Builder().url(url).build();
-            Response response = mClient.newCall(request).execute();
+            Response response = getHttpClient().newCall(request).execute();
             if (response.isSuccessful() && response.body() != null) {
                 ResponseBody respBody = response.body();
                 MediaType mediaType = respBody.contentType();
@@ -172,7 +167,7 @@ public class BaseHttpService extends BaseService {
             String ipHost = getIpHost();
 
             Request request = new Request.Builder().url(ipHost + "/time").build();
-            Response response = mClient.newCall(request).execute();
+            Response response = getHttpClient().newCall(request).execute();
             if (response.isSuccessful() && response.body() != null) {
                 String content = response.body().string();
                 JSONObject jo = JSON.parseObject(content);
@@ -224,10 +219,10 @@ public class BaseHttpService extends BaseService {
             map.put("bucket", bucket);
             String param = InnerUtil.toJson(map);
 
-            //  post请求
+            //  post 请求
             Request request = new Request.Builder().url(url)
                     .post(RequestBody.create(param, jsonType)).build();
-            Response response = mClient.newCall(request).execute();
+            Response response = getHttpClient().newCall(request).execute();
             if (response.isSuccessful() && response.body() != null) {
                 String content = response.body().string();
                 //  去除双引号

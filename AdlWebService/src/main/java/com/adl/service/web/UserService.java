@@ -49,7 +49,7 @@ public class UserService extends BaseHttpService {
             String url = wrapperUrl("/busi/terminal/account/list");
             Request request = new Request.Builder().url(url)
                     .post(RequestBody.create(param, jsonType)).build();
-            RequestResult result = parserResponse(mClient.newCall(request).execute());
+            RequestResult result = parserResponse(getHttpClient().newCall(request).execute());
             if (result.isOk()) {
                 return JSON.parseArray(result.getContent().toString(), StudentEntity.class);
             }
@@ -94,7 +94,7 @@ public class UserService extends BaseHttpService {
                         .post(RequestBody.create(param, jsonType)).build();
 
                 List<StudentEntity> tempList = null;
-                RequestResult result = parserPageResponse(mClient.newCall(request).execute());
+                RequestResult result = parserPageResponse(getHttpClient().newCall(request).execute());
 
                 if (result.isOk()) {
                     tempList = JSON.parseArray(result.getContent().toString(), StudentEntity.class);
@@ -141,7 +141,7 @@ public class UserService extends BaseHttpService {
             // 请求
             Request request = new Request.Builder().url(url)
                     .post(RequestBody.create(param, jsonType)).build();
-            RequestResult result = parserResponse(mClient.newCall(request).execute());
+            RequestResult result = parserResponse(getHttpClient().newCall(request).execute());
             if (result.isOk()) {
                 return JSON.parseArray(result.getContent().toString(), TeacherEntity.class);
             }
@@ -175,7 +175,7 @@ public class UserService extends BaseHttpService {
             String url = wrapperUrl("/busi/terminal/account/citizen/list");
             Request request = new Request.Builder().url(url)
                     .post(RequestBody.create(param, jsonType)).build();
-            RequestResult result = parserResponse(mClient.newCall(request).execute());
+            RequestResult result = parserResponse(getHttpClient().newCall(request).execute());
             if (result.isOk()) {
                 return JSON.parseArray(result.getContent().toString(), CitizenEntity.class);
             }
@@ -222,7 +222,7 @@ public class UserService extends BaseHttpService {
                         .post(RequestBody.create(param, jsonType)).build();
 
                 List<CitizenEntity> tempList = null;
-                RequestResult result = parserPageResponse(mClient.newCall(request).execute());
+                RequestResult result = parserPageResponse(getHttpClient().newCall(request).execute());
                 if (result.isOk()) {
                     tempList = JSON.parseArray(result.getContent().toString(), CitizenEntity.class);
                     if (tempList != null && tempList.size() > 0) {
@@ -256,7 +256,7 @@ public class UserService extends BaseHttpService {
             // 请求
             Request request = new Request.Builder().url(url)
                     .post(RequestBody.create("{}", jsonType)).build();
-            RequestResult result = parserResponse(mClient.newCall(request).execute());
+            RequestResult result = parserResponse(getHttpClient().newCall(request).execute());
             if (result.isOk()) {
                 return InnerUtil.jsonToObject(result.getContent().toString(), OrganizationEntity.class);
             }
@@ -281,7 +281,7 @@ public class UserService extends BaseHttpService {
             // 请求
             Request request = new Request.Builder().url(url)
                     .post(RequestBody.create("{}", jsonType)).build();
-            RequestResult result = parserResponse(mClient.newCall(request).execute());
+            RequestResult result = parserResponse(getHttpClient().newCall(request).execute());
             if (result.isOk()) {
                 d("机构同步成功");
             }
@@ -313,7 +313,7 @@ public class UserService extends BaseHttpService {
             // 请求
             Request request = new Request.Builder().url(url)
                     .post(RequestBody.create("{}", jsonType)).build();
-            RequestResult result = parserResponse(mClient.newCall(request).execute());
+            RequestResult result = parserResponse(getHttpClient().newCall(request).execute());
             if (result.isOk()) {
                 return InnerUtil.jsonToType(result.getContent().toString(), new TypeToken<ArrayList<StudentGradeClassEntity>>() {
                 });

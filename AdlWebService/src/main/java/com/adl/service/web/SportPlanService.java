@@ -1,6 +1,5 @@
 package com.adl.service.web;
 
-import com.adl.service.common.IDefine;
 import com.adl.service.common.InnerUtil;
 import com.adl.service.common.RequestResult;
 import com.adl.service.entity.ClassInfoEntity;
@@ -56,7 +55,7 @@ public class SportPlanService extends BaseHttpService {
             // 请求
             Request request = new Request.Builder().url(url)
                     .post(RequestBody.create(param, jsonType)).build();
-            RequestResult result = parserResponse(mClient.newCall(request).execute());
+            RequestResult result = parserResponse(getHttpClient().newCall(request).execute());
             if (result.isOk()) {
                 String str = InnerUtil.readRecords(result.getContent().toString());
                 return InnerUtil.jsonToType(str, new TypeToken<ArrayList<SportPlanEntity>>() {
@@ -95,7 +94,7 @@ public class SportPlanService extends BaseHttpService {
             // 请求
             Request request = new Request.Builder().url(url)
                     .post(RequestBody.create(param, jsonType)).build();
-            RequestResult result = parserResponse(mClient.newCall(request).execute());
+            RequestResult result = parserResponse(getHttpClient().newCall(request).execute());
             if (result.isOk()) {
                 String str = InnerUtil.readRecords(result.getContent().toString());
                 return InnerUtil.jsonToType(str, new TypeToken<ArrayList<SportPlanEntity>>() {
@@ -136,7 +135,7 @@ public class SportPlanService extends BaseHttpService {
             // 请求
             Request request = new Request.Builder().url(url)
                     .post(RequestBody.create(param, jsonType)).build();
-            RequestResult result = parserResponse(mClient.newCall(request).execute());
+            RequestResult result = parserResponse(getHttpClient().newCall(request).execute());
             if (result.isOk()) {
                 return InnerUtil.jsonToObject(result.getContent().toString(), SportPlanEntity.class);
             }
@@ -172,7 +171,7 @@ public class SportPlanService extends BaseHttpService {
             // 请求
             Request request = new Request.Builder().url(url)
                     .post(RequestBody.create(param, jsonType)).build();
-            RequestResult result = parserResponse(mClient.newCall(request).execute());
+            RequestResult result = parserResponse(getHttpClient().newCall(request).execute());
             if (result.isOk()) {
                 String str = InnerUtil.readRecords(result.getContent().toString());
                 return InnerUtil.jsonToType(str, new TypeToken<ArrayList<SportPlanStudentEntity>>() {
@@ -208,7 +207,7 @@ public class SportPlanService extends BaseHttpService {
             // 请求
             Request request = new Request.Builder().url(url)
                     .post(RequestBody.create(param, jsonType)).build();
-            RequestResult result = parserResponse(mClient.newCall(request).execute());
+            RequestResult result = parserResponse(getHttpClient().newCall(request).execute());
             if (result.isOk()) {
                 return InnerUtil.jsonToType(result.getContent().toString(), new TypeToken<Boolean>() {
                 });
@@ -242,7 +241,7 @@ public class SportPlanService extends BaseHttpService {
             // 请求
             Request request = new Request.Builder().url(url)
                     .post(RequestBody.create(param, jsonType)).build();
-            RequestResult result = parserResponse(mClient.newCall(request).execute());
+            RequestResult result = parserResponse(getHttpClient().newCall(request).execute());
             if (result.isOk()) {
                 return InnerUtil.jsonToType(result.getContent().toString(), new TypeToken<ArrayList<ClassInfoEntity>>() {
                 });
@@ -278,7 +277,7 @@ public class SportPlanService extends BaseHttpService {
             // 请求
             Request request = new Request.Builder().url(url)
                     .post(RequestBody.create(param, jsonType)).build();
-            RequestResult result = parserResponse(mClient.newCall(request).execute());
+            RequestResult result = parserResponse(getHttpClient().newCall(request).execute());
             if (result.isOk()) {
                 String str = InnerUtil.readRecords(result.getContent().toString());
                 return InnerUtil.jsonToType(str, new TypeToken<ArrayList<StandardConfigEntity>>() {

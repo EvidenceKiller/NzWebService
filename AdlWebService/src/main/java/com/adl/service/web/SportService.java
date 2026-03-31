@@ -2,7 +2,6 @@ package com.adl.service.web;
 
 import com.adl.service.common.InnerUtil;
 import com.adl.service.common.RequestResult;
-import com.adl.service.entity.DictEntity;
 import com.adl.service.entity.DictExcelEntity;
 import com.adl.service.entity.PageInfo;
 import com.adl.service.entity.SceneEntity;
@@ -51,7 +50,7 @@ public class SportService extends BaseHttpService {
             }
             Request request = new Request.Builder().url(url)
                     .post(RequestBody.create(param, jsonType)).build();
-            RequestResult result = parserResponse(mClient.newCall(request).execute());
+            RequestResult result = parserResponse(getHttpClient().newCall(request).execute());
             if (result.isOk()) {
                 String str = InnerUtil.readRecords(result.getContent().toString());
                 return InnerUtil.jsonToType(str, new TypeToken<ArrayList<SceneEntity>>() {
@@ -87,7 +86,7 @@ public class SportService extends BaseHttpService {
             }
             Request request = new Request.Builder().url(url)
                     .post(RequestBody.create(param, jsonType)).build();
-            RequestResult result = parserResponse(mClient.newCall(request).execute());
+            RequestResult result = parserResponse(getHttpClient().newCall(request).execute());
             if (result.isOk()) {
                 String str = InnerUtil.readRecords(result.getContent().toString());
                 return InnerUtil.jsonToType(str, new TypeToken<ArrayList<SceneSportEntity>>() {
@@ -118,7 +117,7 @@ public class SportService extends BaseHttpService {
             }
             Request request = new Request.Builder().url(url)
                     .post(RequestBody.create(param, jsonType)).build();
-            RequestResult result = parserResponse(mClient.newCall(request).execute());
+            RequestResult result = parserResponse(getHttpClient().newCall(request).execute());
             if (result.isOk()) {
                 return InnerUtil.jsonToObject(result.getContent().toString(), SceneSportInfoEntity.class);
             }
@@ -147,7 +146,7 @@ public class SportService extends BaseHttpService {
             }
             Request request = new Request.Builder().url(url)
                     .post(RequestBody.create(param, jsonType)).build();
-            RequestResult result = parserResponse(mClient.newCall(request).execute());
+            RequestResult result = parserResponse(getHttpClient().newCall(request).execute());
             if (result.isOk()) {
                 String str = InnerUtil.readRecords(result.getContent().toString());
                 return InnerUtil.jsonToType(str, new TypeToken<ArrayList<DictExcelEntity>>() {
@@ -206,7 +205,7 @@ public class SportService extends BaseHttpService {
             }
             Request request = new Request.Builder().url(url)
                     .post(RequestBody.create(param, jsonType)).build();
-            RequestResult result = parserResponse(mClient.newCall(request).execute());
+            RequestResult result = parserResponse(getHttpClient().newCall(request).execute());
             if (result.isOk()) {
                 String str = InnerUtil.readRecords(result.getContent().toString(), pageInfo);
                 List<SportDetailEntity> list = InnerUtil.jsonToType(str, new TypeToken<ArrayList<SportDetailEntity>>() {

@@ -45,7 +45,7 @@ public class SportRecordService extends BaseHttpService {
             }
             Request request = new Request.Builder().url(url)
                     .post(RequestBody.create(param, jsonType)).build();
-            return parserResponse(mClient.newCall(request).execute());
+            return parserResponse(getHttpClient().newCall(request).execute());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -68,7 +68,7 @@ public class SportRecordService extends BaseHttpService {
             }
             Request request = new Request.Builder().url(url)
                     .post(RequestBody.create(param, jsonType)).build();
-            return parserResponse(mClient.newCall(request).execute());
+            return parserResponse(getHttpClient().newCall(request).execute());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -86,7 +86,7 @@ public class SportRecordService extends BaseHttpService {
             String url = wrapperUrl("/busi/terminal/sport/result/uploadIndicators");
             Request request = new Request.Builder().url(url)
                     .post(RequestBody.create(param, jsonType)).build();
-            return parserResponse(mClient.newCall(request).execute());
+            return parserResponse(getHttpClient().newCall(request).execute());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -108,7 +108,7 @@ public class SportRecordService extends BaseHttpService {
             }
             Request request = new Request.Builder().url(url)
                     .post(RequestBody.create(param, jsonType)).build();
-            return parserResponse(mClient.newCall(request).execute());
+            return parserResponse(getHttpClient().newCall(request).execute());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -148,7 +148,7 @@ public class SportRecordService extends BaseHttpService {
 
             Request request = new Request.Builder().url(url)
                     .post(RequestBody.create(param, jsonType)).build();
-            RequestResult result = parserResponse(mClient.newCall(request).execute());
+            RequestResult result = parserResponse(getHttpClient().newCall(request).execute());
             if (result.isOk()) {
                 String str = InnerUtil.readRecords(result.getContent().toString());
                 return InnerUtil.jsonToType(str, new TypeToken<ArrayList<SportRecordResultEntity>>() {

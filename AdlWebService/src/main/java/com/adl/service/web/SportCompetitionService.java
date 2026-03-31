@@ -2,7 +2,6 @@ package com.adl.service.web;
 
 import android.text.TextUtils;
 
-import com.adl.service.common.IDefine;
 import com.adl.service.common.InnerUtil;
 import com.adl.service.common.RequestResult;
 import com.adl.service.entity.SportCompetitionEntity;
@@ -58,7 +57,7 @@ public class SportCompetitionService extends BaseHttpService {
 
             Request request = new Request.Builder().url(url)
                     .post(RequestBody.create(param, jsonType)).build();
-            RequestResult result = parserResponse(mClient.newCall(request).execute());
+            RequestResult result = parserResponse(getHttpClient().newCall(request).execute());
             if (result.isOk()) {
                 String str = InnerUtil.readRecords(result.getContent().toString());
                 return InnerUtil.jsonToType(str, new TypeToken<ArrayList<SportCompetitionEntity>>() {
@@ -97,7 +96,7 @@ public class SportCompetitionService extends BaseHttpService {
 
             Request request = new Request.Builder().url(url)
                     .post(RequestBody.create(param, jsonType)).build();
-            RequestResult result = parserResponse(mClient.newCall(request).execute());
+            RequestResult result = parserResponse(getHttpClient().newCall(request).execute());
             if (result.isOk()) {
                 return InnerUtil.jsonToObject(result.getContent().toString(), SportCompetitionInfoEntity.class);
             }
@@ -132,7 +131,7 @@ public class SportCompetitionService extends BaseHttpService {
 
             Request request = new Request.Builder().url(url)
                     .post(RequestBody.create(param, jsonType)).build();
-            RequestResult result = parserResponse(mClient.newCall(request).execute());
+            RequestResult result = parserResponse(getHttpClient().newCall(request).execute());
             return result;
         } catch (Exception e) {
             return RequestResult.error(e.toString());
