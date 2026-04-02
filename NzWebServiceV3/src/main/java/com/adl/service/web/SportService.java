@@ -44,7 +44,7 @@ public class SportService extends BaseHttpService {
             // 请求
             String url;
             if (Platform.V3.equals(getConfigService().getPlatform())) {
-                url = wrapperUrl("/v3/gateway/api/tis/device/oper/scene/getSceneList");
+                url = wrapperUrl("/tis/device/oper/scene/getSceneList");
             } else {
                 url = wrapperUrl("/oper/terminal/scene/v1/getSceneList");
             }
@@ -80,7 +80,7 @@ public class SportService extends BaseHttpService {
             // 请求
             String url;
             if (Platform.V3.equals(getConfigService().getPlatform())) {
-                url = wrapperUrl("/v3/gateway/api/tis/device/oper/sku/getSportSkuList");
+                url = wrapperUrl("/tis/device/oper/sku/getSportSkuList");
             } else {
                 url = wrapperUrl("/oper/terminal/sportSku/v1/getSportSkuList");
             }
@@ -111,7 +111,7 @@ public class SportService extends BaseHttpService {
             // 请求
             String url;
             if (Platform.V3.equals(getConfigService().getPlatform())) {
-                url = wrapperUrl("/v3/gateway/api/tis/device/oper/sku/getSportSkuDetail");
+                url = wrapperUrl("/tis/device/oper/sku/getSportSkuDetail");
             } else {
                 url = wrapperUrl("/oper/terminal/sportSku/v1/getSportSkuDetail");
             }
@@ -140,7 +140,7 @@ public class SportService extends BaseHttpService {
             // 请求
             String url;
             if (Platform.V3.equals(getConfigService().getPlatform())) {
-                url = wrapperUrl("/v3/gateway/api/tis/device/oper/sku/getDictMap");
+                url = wrapperUrl("/tis/device/oper/sku/getDictMap");
             } else {
                 url = wrapperUrl("/oper/terminal/sportSku/v1/getDictMap");
             }
@@ -199,7 +199,7 @@ public class SportService extends BaseHttpService {
             // 请求
             String url;
             if (Platform.V3.equals(getConfigService().getPlatform())) {
-                url = wrapperUrl("/h5/org/sunshineRunning/sportDetailList");
+                url = wrapperUrl("/tis/device/h5/org/sunshineRunning/sportDetailList");
             } else {
                 url = wrapperUrl("/busi/terminal/sunshineRunning/sportDetailList");
             }

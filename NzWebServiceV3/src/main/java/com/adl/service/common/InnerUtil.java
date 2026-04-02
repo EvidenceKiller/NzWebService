@@ -1,5 +1,7 @@
 package com.adl.service.common;
 
+import android.util.Log;
+
 import com.adl.service.entity.PageInfo;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -82,6 +84,7 @@ public class InnerUtil {
     }
 
     public static <T> T jsonToObject(String json, Class<T> cls) {
+        Log.i("ZXN_TEST", "jsonToObject: " + json);
         if (json != null && cls != null) {
             try {
                 return new Gson().fromJson(json, cls);
@@ -95,6 +98,7 @@ public class InnerUtil {
     }
 
     public static <T> T jsonToType(String json, TypeToken typeToken) {
+        Log.i("ZXN_TEST", "jsonToType: " + json);
         if (json != null && typeToken != null) {
             try {
                 return new Gson().fromJson(json, typeToken.getType());

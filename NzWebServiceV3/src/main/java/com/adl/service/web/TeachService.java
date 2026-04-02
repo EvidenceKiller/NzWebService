@@ -34,7 +34,7 @@ public class TeachService extends BaseHttpService {
             String param = InnerUtil.toJson(map);
             String url;
             if (Platform.V3.equals(getConfigService().getPlatform())) {
-                url = wrapperUrl("/h5/org/teach/course/detail/list");
+                url = wrapperUrl("/tis/device/h5/org/teach/course/detail/list");
             } else {
                 url = wrapperUrl("/busi/terminal/teach/course/v1/detail/list");
             }
@@ -65,7 +65,7 @@ public class TeachService extends BaseHttpService {
             String param = InnerUtil.toJson(map);
             String url;
             if (Platform.V3.equals(getConfigService().getPlatform())) {
-                url = wrapperUrl("/h5/org/teach/course/courseTimes");
+                url = wrapperUrl("/tis/device/h5/org/teach/course/courseTimes");
             } else {
                 url = wrapperUrl("/busi/terminal/teach/course/v1/courseTimes");
             }
@@ -91,7 +91,7 @@ public class TeachService extends BaseHttpService {
             String param = InnerUtil.toJson(map);
             String url;
             if (Platform.V3.equals(getConfigService().getPlatform())) {
-                url = wrapperUrl("/h5/org/teach/course/click/teachButton");
+                url = wrapperUrl("/tis/device/h5/org/teach/course/click/teachButton");
             } else {
                 url = wrapperUrl("/busi/terminal/teach/course/v1/click/teachButton");
             }
@@ -119,7 +119,7 @@ public class TeachService extends BaseHttpService {
             String param = InnerUtil.toJson(map);
             String url;
             if (Platform.V3.equals(getConfigService().getPlatform())) {
-                url = wrapperUrl("/h5/org/sunshineRunning/getClassroomCompetitionRecordList");
+                url = wrapperUrl("/tis/device/h5/org/sunshineRunning/getClassroomCompetitionRecordList");
             } else {
                 url = wrapperUrl("/busi/terminal/physical/teaching/v1/getClassroomCompetitionRecordList");
             }
@@ -212,7 +212,7 @@ public class TeachService extends BaseHttpService {
             String param = InnerUtil.toJson(map);
             String url;
             if (Platform.V3.equals(getConfigService().getPlatform())) {
-                url = wrapperUrl("/h5/org/teach/course/dataDates");
+                url = wrapperUrl("/tis/device/h5/org/teach/course/dataDates");
             } else {
                 url = wrapperUrl("/busi/terminal/teach/course/v1/dataDates");
             }

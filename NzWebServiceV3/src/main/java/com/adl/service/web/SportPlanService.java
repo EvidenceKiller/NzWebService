@@ -49,7 +49,7 @@ public class SportPlanService extends BaseHttpService {
             } else if (Platform.K12.equals(getConfigService().getPlatform())) {
                 url = wrapperUrl("/busi/terminal/k12/organizeTest/getPlanList");
             } else {
-                url = wrapperUrl("/v3/gateway/api/tis/device/pte/organizeTest/getPlanList");
+                url = wrapperUrl("/tis/device/pte/organizeTest/getPlanList");
             }
 
             // 请求
@@ -88,7 +88,7 @@ public class SportPlanService extends BaseHttpService {
             } else if (Platform.K12.equals(getConfigService().getPlatform())) {
                 url = wrapperUrl("/busi/terminal/k12/organizeTest/getPlanList");
             } else {
-                url = wrapperUrl("/v3/gateway/api/tis/device/pte/organizeTest/getPlanList");
+                url = wrapperUrl("/tis/device/pte/organizeTest/getPlanList");
             }
 
             // 请求
@@ -129,7 +129,7 @@ public class SportPlanService extends BaseHttpService {
             } else if (Platform.K12.equals(getConfigService().getPlatform())) {
                 url = wrapperUrl("/busi/terminal/k12/organizeTest/planInfo");
             } else {
-                url = wrapperUrl("/v3/gateway/api/tis/device/pte/organizeTest/getPlanInfo");
+                url = wrapperUrl("/tis/device/pte/organizeTest/getPlanInfo");
             }
 
             // 请求
@@ -165,7 +165,7 @@ public class SportPlanService extends BaseHttpService {
             } else if (Platform.K12.equals(getConfigService().getPlatform())) {
                 url = wrapperUrl("/busi/terminal/k12/organizeTest/getPlanStudents");
             } else {
-                url = wrapperUrl("/v3/gateway/api/tis/device/pte/organizeTest/getPlanStudents");
+                url = wrapperUrl("/tis/device/pte/organizeTest/getPlanStudents");
             }
 
             // 请求
@@ -271,7 +271,7 @@ public class SportPlanService extends BaseHttpService {
             } else if (Platform.K12.equals(getConfigService().getPlatform())) {
                 url = wrapperUrl("/busi/terminal/k12/organizeTest/getStandardConfig");
             } else {
-                url = wrapperUrl("/v3/gateway/api/tis/device/pte/organizeTest/getStandardConfig");
+                url = wrapperUrl("/tis/device/pte/organizeTest/getStandardConfig");
             }
 
             // 请求

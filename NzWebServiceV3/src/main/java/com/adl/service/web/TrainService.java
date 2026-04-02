@@ -26,7 +26,7 @@ public class TrainService extends BaseHttpService {
 
             String url;
             if (Platform.V3.equals(getConfigService().getPlatform())) {
-                url = wrapperUrl("/busi/train/plan/getTrainPlanInfoList");
+                url = wrapperUrl("/tis/device/busi/train/plan/getTrainPlanInfoList");
             } else {
                 url = wrapperUrl("/busi/terminal/k12/train/plan/getTrainPlanInfoList");
             }

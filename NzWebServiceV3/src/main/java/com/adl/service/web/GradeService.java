@@ -19,7 +19,7 @@ public class GradeService extends BaseHttpService {
 
             String url;
             if (Platform.V3.equals(getConfigService().getPlatform())) {
-                url = wrapperUrl("/v3/gateway/api/tis/device/base/org/grade/getGradeTree");
+                url = wrapperUrl("/tis/device/base/org/grade/getGradeTree");
             } else {
                 url = wrapperUrl("/busi/terminal/grade/v1/getGradeTree");
             }

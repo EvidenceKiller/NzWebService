@@ -112,7 +112,7 @@ public class DeviceService extends BaseHttpService {
 
             String url;
             if (Platform.V3.equals(getConfigService().getPlatform())) {
-                url = wrapperUrl("/v3/gateway/api/tis/device/oper/device/getDeviceFocusList");
+                url = wrapperUrl("/tis/device/oper/device/getDeviceFocusList");
             } else {
                 url = wrapperUrl("/busi/terminal/device/getDeviceFocus");
             }

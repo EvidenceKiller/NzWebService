@@ -35,7 +35,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.adl.ts.general.web"
+        applicationId "com.adl.ts.general.web.v3"
         minSdkVersion 26
         targetSdkVersion 29
         versionCode 4
@@ -201,9 +201,9 @@ dependencies {
 
     // 授权相关
     implementation 'org.bouncycastle:bcprov-jdk15to18:1.66'
+    implementation project(path: ':NzWebServiceV3')
 
     //implementation project(path: ':AdlBase')
-    implementation project(path: ':AdlWebService')
 
     implementation(name: 'AdlPose-2025-04-29', ext: 'aar')
     implementation(name: 'AdlPoseCore-2026-01-26', ext: 'aar')
@@ -211,7 +211,7 @@ dependencies {
     implementation(name: 'AdlPoseSdk-2025-11-07', ext: 'aar')
     implementation(name: 'AdlPoseGt-2025-10-17', ext: 'aar')
 
-    implementation(name: 'NzAuthCore-v2.0.1-2026-02-02', ext: 'aar')
+    implementation(name: 'NzAuthCore-v2.0.1-2026-04-01', ext: 'aar')
     implementation(name: 'AdlSportGeneral-2025-12-05', ext: 'aar')
     implementation(name: 'ZySportCore-2025-04-21', ext: 'aar')
 

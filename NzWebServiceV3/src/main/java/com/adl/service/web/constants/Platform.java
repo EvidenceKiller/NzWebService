@@ -29,19 +29,19 @@ public final class Platform {
         } else if (platform == V3) {
             return PLATFORM_V3;
         } else {
-            throw new IllegalArgumentException("Invalid argument toString : " + platform);
+            throw new IllegalArgumentException("Invalid platform toString : " + platform);
         }
     }
 
     public static Platform fromString(String platform) {
-        if (PLATFORM_K12.equals(platform)) {
+        if (PLATFORM_K12.equalsIgnoreCase(platform)) {
             return K12;
-        } else if (PLATFORM_GX.equals(platform)) {
+        } else if (PLATFORM_GX.equalsIgnoreCase(platform)) {
             return GX;
-        } else if (PLATFORM_V3.equals(platform)) {
+        } else if (PLATFORM_V3.equalsIgnoreCase(platform)) {
             return V3;
         } else {
-            throw new IllegalArgumentException("Invalid argument fromString : " + platform);
+            throw new IllegalArgumentException("Invalid platform fromString : " + platform);
         }
     }
 

@@ -35,7 +35,7 @@ public class BannerService extends BaseHttpService {
 
             String url;
             if (Platform.V3.equals(getConfigService().getPlatform())) {
-                url = wrapperUrl("/v3/gateway/api/tis/device/oper/banner/getDetailList");
+                url = wrapperUrl("/tis/device/oper/banner/getDetailList");
             } else {
                 url = wrapperUrl("/busi/terminal/k12/banner/v1/detail/list");
             }

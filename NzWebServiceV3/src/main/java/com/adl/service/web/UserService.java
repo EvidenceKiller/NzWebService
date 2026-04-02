@@ -86,7 +86,7 @@ public class UserService extends BaseHttpService {
                 // 增量更新学生信息
                 String url;
                 if (Platform.V3.equals(getConfigService().getPlatform())) {
-                    url = wrapperUrl("/v3/gateway/api/tis/device/base/account/getStudentList");
+                    url = wrapperUrl("/tis/device/base/account/getStudentList");
                 } else {
                     url = wrapperUrl("/busi/terminal/account/list_V1");
                 }
@@ -133,7 +133,7 @@ public class UserService extends BaseHttpService {
             // 增量更新老师信息
             String url;
             if (Platform.V3.equals(getConfigService().getPlatform())) {
-                url = wrapperUrl("/v3/gateway/api/tis/device/base/account/getTeacherLlist");
+                url = wrapperUrl("/tis/device/base/account/getTeacherLlist");
             } else {
                 url = wrapperUrl("/busi/terminal/account/teacher/list");
             }
@@ -248,7 +248,7 @@ public class UserService extends BaseHttpService {
             // 当前登录机构信息
             String url;
             if (Platform.V3.equals(getConfigService().getPlatform())) {
-                url = wrapperUrl("/v3/gateway/api/sso/login");
+                url = wrapperUrl("/sso/login");
             } else {
                 url = wrapperUrl("/busi/terminal/org/v1/login/info");
             }
@@ -273,7 +273,7 @@ public class UserService extends BaseHttpService {
             // 当前登录机构信息
             String url;
             if (Platform.V3.equals(getConfigService().getPlatform())) {
-                url = wrapperUrl("/v3/gateway/api/sso/login");
+                url = wrapperUrl("/sso/login");
             } else {
                 url = wrapperUrl("/busi/terminal/org/v1/login/info");
             }
@@ -305,7 +305,7 @@ public class UserService extends BaseHttpService {
             // 年级树
             String url;
             if (Platform.V3.equals(getConfigService().getPlatform())) {
-                url = wrapperUrl("/v3/gateway/api/tis/device/base/org/grade/getGradeTree");
+                url = wrapperUrl("/tis/device/base/org/grade/getGradeTree");
             } else {
                 url = wrapperUrl("/busi/terminal/grade/v1/getGradeTree");
             }

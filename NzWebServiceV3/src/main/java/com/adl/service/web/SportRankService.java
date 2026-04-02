@@ -40,7 +40,7 @@ public class SportRankService extends BaseHttpService {
             // 请求/terminal/statistics/sport/personRank
             String url;
             if (Platform.V3.equals(getConfigService().getPlatform())) {
-                url = wrapperUrl("/statistics/account/sport/personRank");
+                url = wrapperUrl("/tis/device/statistics/account/sport/personRank");
             } else {
                 url = wrapperUrl("/busi/terminal/statistics/sport/personRank");
             }
@@ -74,7 +74,7 @@ public class SportRankService extends BaseHttpService {
             ///terminal/statistics/sport/sumScoreRank
             String url;
             if (Platform.V3.equals(getConfigService().getPlatform())) {
-                url = wrapperUrl("/statistics/exercise/sport/sumScoreRank");
+                url = wrapperUrl("/tis/device/statistics/exercise/sport/sumScoreRank");
             } else {
                 url = wrapperUrl("/busi/terminal/statistics/sport/sumScoreRank");
             }
@@ -102,7 +102,7 @@ public class SportRankService extends BaseHttpService {
             //terminal/home/sport/overview
             String url;
             if (Platform.V3.equals(getConfigService().getPlatform())) {
-                url = wrapperUrl("/statistics/home/sport/overview");
+                url = wrapperUrl("/tis/device/statistics/home/sport/overview");
             } else {
                 url = wrapperUrl("/busi/terminal/home/sport/overview");
             }

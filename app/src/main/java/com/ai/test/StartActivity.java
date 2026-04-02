@@ -16,8 +16,10 @@ import com.yanzhenjie.permission.AndPermission;
 
 public class StartActivity extends BaseActivity {
 
-    private String testHost = "http://172.16.2.102:18005/gateway/api/device/auth";
-    private String testBusHost = "http://172.16.0.206:8082/gateway/api";
+    private String testAuthHost_V2 = "http://172.16.2.102:18005/gateway/api/device/auth";
+    private String testBusHost_V2 = "http://172.16.0.206:8082/gateway/api";
+    // v3 host
+    private String testBusHost_V3 = "http://172.16.2.102:9082/v3/gateway/api";
 
 //    private static String testHost = "http://112.19.167.50:18005/gateway/api/device/auth";
 //    private static String testBusHost = "http://112.19.167.50:18082/gateway/api";
@@ -25,7 +27,6 @@ public class StartActivity extends BaseActivity {
     //生产环境
     private static String host = "http://globalauth.nezhasport.com/gateway/api/device/auth";
     private static String busHost = "https://ssp.nezhasport.com/gateway/api";
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,8 +53,10 @@ public class StartActivity extends BaseActivity {
         final boolean readConfig = true;
         final boolean debug = true;
         AdlAuthFactory authFactory = AdlAuthFactory.create(getApplicationContext());
-        authFactory.setAuthHost(testHost);
-        authFactory.setBusinessHost(testBusHost);
+        authFactory.setAuthHost(testAuthHost_V2);
+        authFactory.setBusinessHost(testBusHost_V2);
+        authFactory.setBusinessHostV3(testBusHost_V3);
+        authFactory.setUseV3Host(true);
         authFactory.setChipType(3);// 1.高通， 2.天山， 3.自动识别
         authFactory.setDebug(debug);
         authFactory.setDebugApp(AdlAppCode.SmartScreenApp);
@@ -70,9 +73,9 @@ public class StartActivity extends BaseActivity {
                 String regCode = authFactory.getRegisterCode();
 
                 AdlService.getService()
-                        .setPlatform(Platform.K12)
+                        .setPlatform(Platform.V3)
                         .setSdcard("com.adl.sport")
-                        .setHost(testBusHost)
+                        .setHost(testBusHost_V3)
                         .setQiNiuHost("http://172.16.0.206:8082/gateway/api")
                         .setQiNiuBucket("adl-publicres")
                         .setFacePrefix("https://f.nezhasport.com/")

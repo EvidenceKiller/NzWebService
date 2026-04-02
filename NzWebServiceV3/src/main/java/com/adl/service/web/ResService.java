@@ -34,7 +34,7 @@ public class ResService extends BaseHttpService {
 
             String url;
             if (Platform.V3.equals(getConfigService().getPlatform())) {
-                url = wrapperUrl("/v3/gateway/api/tis/device/org/res/getResInfo");
+                url = wrapperUrl("/tis/device/org/res/getResInfo");
             } else {
                 url = wrapperUrl("/busi/terminal/org/res/v1/info");
             }
@@ -68,7 +68,7 @@ public class ResService extends BaseHttpService {
             String param = InnerUtil.toJson(map);
             String url;
             if (Platform.V3.equals(getConfigService().getPlatform())) {
-                url = wrapperUrl("/v3/gateway/api/tis/device/org/res/getResList");
+                url = wrapperUrl("/tis/device/org/res/getResList");
             } else {
                 url = wrapperUrl("/busi/terminal/org/res/v1/list");
             }
@@ -119,7 +119,7 @@ public class ResService extends BaseHttpService {
 
             String url;
             if (Platform.V3.equals(getConfigService().getPlatform())) {
-                url = wrapperUrl("/v3/gateway/api/tis/device/org/res/getResList");
+                url = wrapperUrl("/tis/device/org/res/getResList");
             } else {
                 url = wrapperUrl("/busi/terminal/org/res/v1/list");
             }
@@ -151,7 +151,7 @@ public class ResService extends BaseHttpService {
 
             String url;
             if (Platform.V3.equals(getConfigService().getPlatform())) {
-                url = wrapperUrl("/v3/gateway/api/tis/device/org/res/getResTypeList");
+                url = wrapperUrl("/tis/device/org/res/getResTypeList");
             } else {
                 url = wrapperUrl("/busi/terminal/org/res/v1/list/type");
             }

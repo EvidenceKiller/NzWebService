@@ -52,7 +52,7 @@ public class SportStatisticsService extends BaseHttpService {
             // 请求
             String url;
             if (Platform.V3.equals(getConfigService().getPlatform())) {
-                url = wrapperUrl("/statistics/exercise/sport/physicalTrainingRank");
+                url = wrapperUrl("/tis/device/statistics/exercise/sport/physicalTrainingRank");
             } else {
                 url = wrapperUrl("/busi/terminal/statistics/sport/physicalTrainingRank");
             }
@@ -86,7 +86,7 @@ public class SportStatisticsService extends BaseHttpService {
             // 请求
             String url;
             if (Platform.V3.equals(getConfigService().getPlatform())) {
-                url = wrapperUrl("/statistics/exercise/sport/exerciseSumTimeRank");
+                url = wrapperUrl("/tis/device/statistics/exercise/sport/exerciseSumTimeRank");
             } else {
                 url = wrapperUrl("/busi/terminal/statistics/sport/exerciseSumTimeRank");
             }
@@ -119,7 +119,7 @@ public class SportStatisticsService extends BaseHttpService {
             // 请求
             String url;
             if (Platform.V3.equals(getConfigService().getPlatform())) {
-                url = wrapperUrl("/statistics/exercise/sport/sportSkuRank");
+                url = wrapperUrl("/tis/device/statistics/exercise/sport/sportSkuRank");
             } else {
                 url = wrapperUrl("/busi/terminal/statistics/sport/sportSkuRank");
             }
@@ -153,7 +153,7 @@ public class SportStatisticsService extends BaseHttpService {
             // 请求
             String url;
             if (Platform.V3.equals(getConfigService().getPlatform())) {
-                url = wrapperUrl("/statistics/exercise/sport/sportRankKing");
+                url = wrapperUrl("/tis/device/statistics/exercise/sport/sportRankKing");
             } else {
                 url = wrapperUrl("/busi/terminal/statistics/sport/sportRankKing");
             }
@@ -189,7 +189,7 @@ public class SportStatisticsService extends BaseHttpService {
             // 请求
             String url;
             if (Platform.V3.equals(getConfigService().getPlatform())) {
-                url = wrapperUrl("/statistics/pco/sport/competitionRank");
+                url = wrapperUrl("/tis/device/statistics/pco/sport/competitionRank");
             } else {
                 url = wrapperUrl("/busi/terminal/statistics/sport/competitionRank");
             }
@@ -220,7 +220,7 @@ public class SportStatisticsService extends BaseHttpService {
             // 请求
             String url;
             if (Platform.V3.equals(getConfigService().getPlatform())) {
-                url = wrapperUrl("/statistics/account/sport/warRecordRank");
+                url = wrapperUrl("/tis/device/statistics/account/sport/warRecordRank");
             } else {
                 url = wrapperUrl("/busi/terminal/statistics/sport/warRecordRank");
             }
@@ -275,7 +275,7 @@ public class SportStatisticsService extends BaseHttpService {
             // 请求
             String url;
             if (Platform.V3.equals(getConfigService().getPlatform())) {
-                url = wrapperUrl("/statistics/exercise/sport/bestRankTop");
+                url = wrapperUrl("/tis/device/statistics/exercise/sport/bestRankTop");
             } else {
                 url = wrapperUrl("/busi/terminal/statistics/sport/bestRankTop");
             }
@@ -309,7 +309,7 @@ public class SportStatisticsService extends BaseHttpService {
             // 请求
             String url;
             if (Platform.V3.equals(getConfigService().getPlatform())) {
-                url = wrapperUrl("/statistics/account/sport/morePeopleRecordRank");
+                url = wrapperUrl("/tis/device/statistics/account/sport/morePeopleRecordRank");
             } else {
                 url = wrapperUrl("/busi/terminal/statistics/sport/morePeopleRecordRank");
             }
@@ -347,7 +347,7 @@ public class SportStatisticsService extends BaseHttpService {
             // 请求
             String url;
             if (Platform.V3.equals(getConfigService().getPlatform())) {
-                url = wrapperUrl("/statistics/account/sport/morePeopleVictoryRank");
+                url = wrapperUrl("/tis/device/statistics/account/sport/morePeopleVictoryRank");
             } else {
                 url = wrapperUrl("/busi/terminal/statistics/sport/morePeopleVictoryRank");
             }

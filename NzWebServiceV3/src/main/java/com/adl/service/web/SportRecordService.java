@@ -39,7 +39,7 @@ public class SportRecordService extends BaseHttpService {
             // 请求
             String url;
             if (Platform.V3.equals(getConfigService().getPlatform())) {
-                url = wrapperUrl("/v3/gateway/api/tis/device/sport/result/reportStudentSport");
+                url = wrapperUrl("/tis/device/sport/result/reportStudentSport");
             } else {
                 url = wrapperUrl("/busi/terminal/sport/result/upload");
             }
@@ -62,7 +62,7 @@ public class SportRecordService extends BaseHttpService {
             // 请求
             String url;
             if (Platform.V3.equals(getConfigService().getPlatform())) {
-                url = wrapperUrl("/v3/gateway/api/tis/device/sport/result/updateStudentSport");
+                url = wrapperUrl("/tis/device/sport/result/updateStudentSport");
             } else {
                 url = wrapperUrl("/busi/terminal/sport/result/update");
             }
@@ -102,7 +102,7 @@ public class SportRecordService extends BaseHttpService {
             // 请求
             String url;
             if (Platform.V3.equals(getConfigService().getPlatform())) {
-                url = wrapperUrl("/v3/gateway/api/tis/device/sport/result/reportTeacherSport");
+                url = wrapperUrl("/tis/device/sport/result/reportTeacherSport");
             } else {
                 url = wrapperUrl("/busi/terminal/sport/teacher/result/upload");
             }
@@ -141,7 +141,7 @@ public class SportRecordService extends BaseHttpService {
             // 请求
             String url;
             if (Platform.V3.equals(getConfigService().getPlatform())) {
-                url = wrapperUrl("/v3/gateway/api/tis/device/sport/result/getAccountRecordPage");
+                url = wrapperUrl("/tis/device/sport/result/getAccountRecordPage");
             } else {
                 url = wrapperUrl("/busi/terminal/sport/result/record");
             }
