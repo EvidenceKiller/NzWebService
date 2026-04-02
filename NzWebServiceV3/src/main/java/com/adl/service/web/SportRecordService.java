@@ -8,7 +8,6 @@ import com.adl.service.entity.SportIndicatorsEntity;
 import com.adl.service.entity.SportRecordEntity;
 import com.adl.service.entity.SportRecordResultEntity;
 import com.adl.service.entity.TeacherSportLocalEntity;
-import com.adl.service.web.constants.Platform;
 import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
@@ -37,12 +36,7 @@ public class SportRecordService extends BaseHttpService {
             String param = InnerUtil.toJson(sportRecord);
 
             // 请求
-            String url;
-            if (Platform.V3.equals(getConfigService().getPlatform())) {
-                url = wrapperUrl("/tis/device/sport/result/reportStudentSport");
-            } else {
-                url = wrapperUrl("/busi/terminal/sport/result/upload");
-            }
+            String url = wrapperUrl("/tis/device/sport/result/reportStudentSport");
             Request request = new Request.Builder().url(url)
                     .post(RequestBody.create(param, jsonType)).build();
             return parserResponse(getHttpClient().newCall(request).execute());
@@ -60,12 +54,7 @@ public class SportRecordService extends BaseHttpService {
             String param = InnerUtil.toJson(sportRecord);
 
             // 请求
-            String url;
-            if (Platform.V3.equals(getConfigService().getPlatform())) {
-                url = wrapperUrl("/tis/device/sport/result/updateStudentSport");
-            } else {
-                url = wrapperUrl("/busi/terminal/sport/result/update");
-            }
+            String url = wrapperUrl("/tis/device/sport/result/updateStudentSport");
             Request request = new Request.Builder().url(url)
                     .post(RequestBody.create(param, jsonType)).build();
             return parserResponse(getHttpClient().newCall(request).execute());
@@ -100,12 +89,7 @@ public class SportRecordService extends BaseHttpService {
             String param = InnerUtil.toJson(sportRecord);
 
             // 请求
-            String url;
-            if (Platform.V3.equals(getConfigService().getPlatform())) {
-                url = wrapperUrl("/tis/device/sport/result/reportTeacherSport");
-            } else {
-                url = wrapperUrl("/busi/terminal/sport/teacher/result/upload");
-            }
+            String url = wrapperUrl("/tis/device/sport/result/reportTeacherSport");
             Request request = new Request.Builder().url(url)
                     .post(RequestBody.create(param, jsonType)).build();
             return parserResponse(getHttpClient().newCall(request).execute());
@@ -139,13 +123,7 @@ public class SportRecordService extends BaseHttpService {
             String param = InnerUtil.toJson(map);
 
             // 请求
-            String url;
-            if (Platform.V3.equals(getConfigService().getPlatform())) {
-                url = wrapperUrl("/tis/device/sport/result/getAccountRecordPage");
-            } else {
-                url = wrapperUrl("/busi/terminal/sport/result/record");
-            }
-
+            String url = wrapperUrl("/tis/device/sport/result/getAccountRecordPage");
             Request request = new Request.Builder().url(url)
                     .post(RequestBody.create(param, jsonType)).build();
             RequestResult result = parserResponse(getHttpClient().newCall(request).execute());

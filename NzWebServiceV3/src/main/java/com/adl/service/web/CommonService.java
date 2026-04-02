@@ -2,11 +2,8 @@ package com.adl.service.web;
 
 import com.adl.service.common.InnerUtil;
 import com.adl.service.common.RequestResult;
-import com.adl.service.entity.DictEntity;
 import com.adl.service.entity.WeatherEntity;
-import com.google.gson.reflect.TypeToken;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -67,32 +64,6 @@ public class CommonService extends BaseHttpService {
             RequestResult result = parserResponse(getHttpClient().newCall(request).execute());
             if (result.isOk()) {
                 return InnerUtil.jsonToObject(result.getContent().toString(), WeatherEntity.class);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    ////////// 字典查询
-    public static List<DictEntity> getDicts(String dictId) {
-        try {
-            d("From Http 字典查询");
-
-            Map<String, Object> map = new HashMap<>();
-            map.put("dictId", dictId);
-
-            String param = InnerUtil.toJson(map);
-
-            // 请求
-            String url = wrapperUrl("/uc/web/dict/getDicts");
-            Request request = new Request.Builder().url(url)
-                    .post(RequestBody.create(param, jsonType)).build();
-            RequestResult result = parserResponse(getHttpClient().newCall(request).execute());
-            if (result.isOk()) {
-                String str = InnerUtil.readRecords(result.getContent().toString());
-                return InnerUtil.jsonToType(str, new TypeToken<ArrayList<DictEntity>>() {
-                });
             }
         } catch (Exception e) {
             e.printStackTrace();

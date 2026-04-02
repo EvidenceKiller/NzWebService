@@ -3,7 +3,6 @@ package com.adl.service.web;
 import com.adl.service.common.InnerUtil;
 import com.adl.service.common.RequestResult;
 import com.adl.service.entity.BannerEntity;
-import com.adl.service.web.constants.Platform;
 import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
@@ -33,12 +32,7 @@ public class BannerService extends BaseHttpService {
             map.put("id", id);
             String param = InnerUtil.toJson(map);
 
-            String url;
-            if (Platform.V3.equals(getConfigService().getPlatform())) {
-                url = wrapperUrl("/tis/device/oper/banner/getDetailList");
-            } else {
-                url = wrapperUrl("/busi/terminal/k12/banner/v1/detail/list");
-            }
+            String url = wrapperUrl("/tis/device/oper/banner/getDetailList");
             Request request = new Request.Builder().url(url)
                     .post(RequestBody.create(param, jsonType)).build();
             RequestResult result = parserResponse(getHttpClient().newCall(request).execute());

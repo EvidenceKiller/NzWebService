@@ -43,16 +43,7 @@ public class SportPlanService extends BaseHttpService {
             String param = InnerUtil.toJson(map);
 
             // 获取组织测试列表
-            String url;
-            if (Platform.GX.equals(getConfigService().getPlatform())) {
-                url = wrapperUrl("/busi/terminal/gx/organizeTest/getPlanList");
-            } else if (Platform.K12.equals(getConfigService().getPlatform())) {
-                url = wrapperUrl("/busi/terminal/k12/organizeTest/getPlanList");
-            } else {
-                url = wrapperUrl("/tis/device/pte/organizeTest/getPlanList");
-            }
-
-            // 请求
+            String url = wrapperUrl("/tis/device/pte/organizeTest/getPlanList");
             Request request = new Request.Builder().url(url)
                     .post(RequestBody.create(param, jsonType)).build();
             RequestResult result = parserResponse(getHttpClient().newCall(request).execute());
@@ -82,16 +73,7 @@ public class SportPlanService extends BaseHttpService {
             String param = InnerUtil.toJson(map);
 
             // 获取组织测试列表
-            String url;
-            if (Platform.GX.equals(getConfigService().getPlatform())) {
-                url = wrapperUrl("/busi/terminal/gx/organizeTest/getPlanList");
-            } else if (Platform.K12.equals(getConfigService().getPlatform())) {
-                url = wrapperUrl("/busi/terminal/k12/organizeTest/getPlanList");
-            } else {
-                url = wrapperUrl("/tis/device/pte/organizeTest/getPlanList");
-            }
-
-            // 请求
+            String url = wrapperUrl("/tis/device/pte/organizeTest/getPlanList");
             Request request = new Request.Builder().url(url)
                     .post(RequestBody.create(param, jsonType)).build();
             RequestResult result = parserResponse(getHttpClient().newCall(request).execute());
@@ -123,16 +105,7 @@ public class SportPlanService extends BaseHttpService {
             String param = InnerUtil.toJson(map);
 
             // 获取组织测试列表
-            String url;
-            if (Platform.GX.equals(getConfigService().getPlatform())) {
-                url = wrapperUrl("/busi/terminal/gx/organizeTest/planInfo");
-            } else if (Platform.K12.equals(getConfigService().getPlatform())) {
-                url = wrapperUrl("/busi/terminal/k12/organizeTest/planInfo");
-            } else {
-                url = wrapperUrl("/tis/device/pte/organizeTest/getPlanInfo");
-            }
-
-            // 请求
+            String url = wrapperUrl("/tis/device/pte/organizeTest/getPlanInfo");
             Request request = new Request.Builder().url(url)
                     .post(RequestBody.create(param, jsonType)).build();
             RequestResult result = parserResponse(getHttpClient().newCall(request).execute());
@@ -159,16 +132,7 @@ public class SportPlanService extends BaseHttpService {
             String param = InnerUtil.toJson(map);
 
             // 获取计划下学生列表
-            String url;
-            if (Platform.GX.equals(getConfigService().getPlatform())) {
-                url = wrapperUrl("/busi/terminal/gx/organizeTest/getPlanStudents");
-            } else if (Platform.K12.equals(getConfigService().getPlatform())) {
-                url = wrapperUrl("/busi/terminal/k12/organizeTest/getPlanStudents");
-            } else {
-                url = wrapperUrl("/tis/device/pte/organizeTest/getPlanStudents");
-            }
-
-            // 请求
+            String url = wrapperUrl("/tis/device/pte/organizeTest/getPlanStudents");
             Request request = new Request.Builder().url(url)
                     .post(RequestBody.create(param, jsonType)).build();
             RequestResult result = parserResponse(getHttpClient().newCall(request).execute());
@@ -233,7 +197,7 @@ public class SportPlanService extends BaseHttpService {
             if (Platform.GX.equals(getConfigService().getPlatform())) {
                 url = wrapperUrl("/busi/terminal/gx/organizeTest/getPlanClassList");
             } else if (Platform.K12.equals(getConfigService().getPlatform())) {
-                url = wrapperUrl("/busi/terminal/k12/organizeTest/checkStudent");
+                url = wrapperUrl("/busi/terminal/k12/organizeTest/getPlanClassList");
             } else {
                 throw new RuntimeException("Unsupport platform!");
             }
@@ -265,16 +229,7 @@ public class SportPlanService extends BaseHttpService {
             String param = InnerUtil.toJson(map);
 
             // 运动标准
-            String url;
-            if (Platform.GX.equals(getConfigService().getPlatform())) {
-                url = wrapperUrl("/busi/terminal/gx/organizeTest/getStandardConfig");
-            } else if (Platform.K12.equals(getConfigService().getPlatform())) {
-                url = wrapperUrl("/busi/terminal/k12/organizeTest/getStandardConfig");
-            } else {
-                url = wrapperUrl("/tis/device/pte/organizeTest/getStandardConfig");
-            }
-
-            // 请求
+            String url = wrapperUrl("/tis/device/pte/organizeTest/getStandardConfig");
             Request request = new Request.Builder().url(url)
                     .post(RequestBody.create(param, jsonType)).build();
             RequestResult result = parserResponse(getHttpClient().newCall(request).execute());

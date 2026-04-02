@@ -7,7 +7,6 @@ import com.adl.service.common.RequestResult;
 import com.adl.service.entity.MeetGroupDetailsEntity;
 import com.adl.service.entity.MeetGroupTeamEntity;
 import com.adl.service.entity.SportMeetingEntity;
-import com.adl.service.web.constants.Platform;
 import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
@@ -49,15 +48,7 @@ public class SportMeetingService extends BaseHttpService {
             String param = InnerUtil.toJson(map);
 
             // 请求
-            String url;
-            if (Platform.GX.equals(getConfigService().getPlatform())) {
-                url = wrapperUrl("/busi/terminal/gx/sportMeet/v1/getSportMeetList");
-            } else if (Platform.K12.equals(getConfigService().getPlatform())) {
-                url = wrapperUrl("/busi/terminal/k12/sportMeet/v1/getSportMeetList");
-            } else {
-                url = wrapperUrl("/busi/org/meet/getSportMeetList");
-            }
-
+            String url = wrapperUrl("/busi/org/meet/getSportMeetList");
             Request request = new Request.Builder().url(url)
                     .post(RequestBody.create(param, jsonType)).build();
             RequestResult result = parserResponse(getHttpClient().newCall(request).execute());
@@ -95,15 +86,7 @@ public class SportMeetingService extends BaseHttpService {
             String param = InnerUtil.toJson(map);
 
             // 请求
-            String url;
-            if (Platform.GX.equals(getConfigService().getPlatform())) {
-                url = wrapperUrl("/busi/terminal/gx/sportMeet/group/downloadGroupTeam");
-            } else if (Platform.K12.equals(getConfigService().getPlatform())) {
-                url = wrapperUrl("/busi/terminal/k12/sportMeet/group/downloadGroupTeam");
-            } else {
-                url = wrapperUrl("/busi/org/meet/downloadGroupTeam");
-            }
-
+            String url = wrapperUrl("/busi/org/meet/downloadGroupTeam");
             Request request = new Request.Builder().url(url)
                     .post(RequestBody.create(param, jsonType)).build();
             RequestResult result = parserResponse(getHttpClient().newCall(request).execute());
@@ -145,15 +128,7 @@ public class SportMeetingService extends BaseHttpService {
             String param = InnerUtil.toJson(map);
 
             // 请求
-            String url;
-            if (Platform.GX.equals(getConfigService().getPlatform())) {
-                url = wrapperUrl("/busi/terminal/gx/sportMeet/group/downloadGroupTeamDetail");
-            } else if (Platform.K12.equals(getConfigService().getPlatform())) {
-                url = wrapperUrl("/busi/terminal/k12/sportMeet/group/downloadGroupTeamDetail");
-            } else {
-                url = wrapperUrl("/busi/org/meet/downloadGroupTeamDetail");
-            }
-
+            String url = wrapperUrl("/busi/org/meet/downloadGroupTeamDetail");
             Request request = new Request.Builder().url(url)
                     .post(RequestBody.create(param, jsonType)).build();
             RequestResult result = parserResponse(getHttpClient().newCall(request).execute());

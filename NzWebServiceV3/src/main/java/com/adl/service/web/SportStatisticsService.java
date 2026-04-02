@@ -11,7 +11,6 @@ import com.adl.service.entity.SportRankKingEntity;
 import com.adl.service.entity.SportSkuRankEntity;
 import com.adl.service.entity.VictoryRankEntity;
 import com.adl.service.entity.WarRecordRankEntity;
-import com.adl.service.web.constants.Platform;
 import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
@@ -50,12 +49,7 @@ public class SportStatisticsService extends BaseHttpService {
             String param = InnerUtil.toJson(map);
 
             // 请求
-            String url;
-            if (Platform.V3.equals(getConfigService().getPlatform())) {
-                url = wrapperUrl("/tis/device/statistics/exercise/sport/physicalTrainingRank");
-            } else {
-                url = wrapperUrl("/busi/terminal/statistics/sport/physicalTrainingRank");
-            }
+            String url = wrapperUrl("/tis/device/statistics/exercise/sport/physicalTrainingRank");
             Request request = new Request.Builder().url(url)
                     .post(RequestBody.create(param, jsonType)).build();
             RequestResult result = parserResponse(getHttpClient().newCall(request).execute());
@@ -84,12 +78,7 @@ public class SportStatisticsService extends BaseHttpService {
             String param = InnerUtil.toJson(map);
 
             // 请求
-            String url;
-            if (Platform.V3.equals(getConfigService().getPlatform())) {
-                url = wrapperUrl("/tis/device/statistics/exercise/sport/exerciseSumTimeRank");
-            } else {
-                url = wrapperUrl("/busi/terminal/statistics/sport/exerciseSumTimeRank");
-            }
+            String url = wrapperUrl("/tis/device/statistics/exercise/sport/exerciseSumTimeRank");
             Request request = new Request.Builder().url(url)
                     .post(RequestBody.create(param, jsonType)).build();
             RequestResult result = parserResponse(getHttpClient().newCall(request).execute());
@@ -117,12 +106,7 @@ public class SportStatisticsService extends BaseHttpService {
             String param = InnerUtil.toJson(map);
 
             // 请求
-            String url;
-            if (Platform.V3.equals(getConfigService().getPlatform())) {
-                url = wrapperUrl("/tis/device/statistics/exercise/sport/sportSkuRank");
-            } else {
-                url = wrapperUrl("/busi/terminal/statistics/sport/sportSkuRank");
-            }
+            String url = wrapperUrl("/tis/device/statistics/exercise/sport/sportSkuRank");
             Request request = new Request.Builder().url(url)
                     .post(RequestBody.create(param, jsonType)).build();
             RequestResult result = parserResponse(getHttpClient().newCall(request).execute());
@@ -151,12 +135,7 @@ public class SportStatisticsService extends BaseHttpService {
             String param = InnerUtil.toJson(map);
 
             // 请求
-            String url;
-            if (Platform.V3.equals(getConfigService().getPlatform())) {
-                url = wrapperUrl("/tis/device/statistics/exercise/sport/sportRankKing");
-            } else {
-                url = wrapperUrl("/busi/terminal/statistics/sport/sportRankKing");
-            }
+            String url = wrapperUrl("/tis/device/statistics/exercise/sport/sportRankKing");
             Request request = new Request.Builder().url(url)
                     .post(RequestBody.create(param, jsonType)).build();
             RequestResult result = parserResponse(getHttpClient().newCall(request).execute());
@@ -187,12 +166,7 @@ public class SportStatisticsService extends BaseHttpService {
             String param = InnerUtil.toJson(map);
 
             // 请求
-            String url;
-            if (Platform.V3.equals(getConfigService().getPlatform())) {
-                url = wrapperUrl("/tis/device/statistics/pco/sport/competitionRank");
-            } else {
-                url = wrapperUrl("/busi/terminal/statistics/sport/competitionRank");
-            }
+            String url = wrapperUrl("/tis/device/statistics/pco/sport/competitionRank");
             Request request = new Request.Builder().url(url)
                     .post(RequestBody.create(param, jsonType)).build();
             RequestResult result = parserResponse(getHttpClient().newCall(request).execute());
@@ -218,12 +192,7 @@ public class SportStatisticsService extends BaseHttpService {
             String param = InnerUtil.toJson(map);
 
             // 请求
-            String url;
-            if (Platform.V3.equals(getConfigService().getPlatform())) {
-                url = wrapperUrl("/tis/device/statistics/account/sport/warRecordRank");
-            } else {
-                url = wrapperUrl("/busi/terminal/statistics/sport/warRecordRank");
-            }
+            String url = wrapperUrl("/tis/device/statistics/account/sport/warRecordRank");
             Request request = new Request.Builder().url(url)
                     .post(RequestBody.create(param, jsonType)).build();
             RequestResult result = parserResponse(getHttpClient().newCall(request).execute());
@@ -273,12 +242,7 @@ public class SportStatisticsService extends BaseHttpService {
             String param = InnerUtil.toJson(map);
 
             // 请求
-            String url;
-            if (Platform.V3.equals(getConfigService().getPlatform())) {
-                url = wrapperUrl("/tis/device/statistics/exercise/sport/bestRankTop");
-            } else {
-                url = wrapperUrl("/busi/terminal/statistics/sport/bestRankTop");
-            }
+            String url = wrapperUrl("/tis/device/statistics/exercise/sport/bestRankTop");
             Request request = new Request.Builder().url(url)
                     .post(RequestBody.create(param, jsonType)).build();
             RequestResult result = parserResponse(getHttpClient().newCall(request).execute());
@@ -307,12 +271,7 @@ public class SportStatisticsService extends BaseHttpService {
             String param = InnerUtil.toJson(map);
 
             // 请求
-            String url;
-            if (Platform.V3.equals(getConfigService().getPlatform())) {
-                url = wrapperUrl("/tis/device/statistics/account/sport/morePeopleRecordRank");
-            } else {
-                url = wrapperUrl("/busi/terminal/statistics/sport/morePeopleRecordRank");
-            }
+            String url = wrapperUrl("/tis/device/statistics/account/sport/morePeopleRecordRank");
             Request request = new Request.Builder().url(url)
                     .post(RequestBody.create(param, jsonType)).build();
             RequestResult result = parserResponse(getHttpClient().newCall(request).execute());
@@ -345,12 +304,7 @@ public class SportStatisticsService extends BaseHttpService {
             map.put("top", top);            //  排名的数量（传多少名排多少名）
             String param = InnerUtil.toJson(map);
             // 请求
-            String url;
-            if (Platform.V3.equals(getConfigService().getPlatform())) {
-                url = wrapperUrl("/tis/device/statistics/account/sport/morePeopleVictoryRank");
-            } else {
-                url = wrapperUrl("/busi/terminal/statistics/sport/morePeopleVictoryRank");
-            }
+            String url = wrapperUrl("/tis/device/statistics/account/sport/morePeopleVictoryRank");
             Request request = new Request.Builder().url(url)
                     .post(RequestBody.create(param, jsonType)).build();
             RequestResult result = parserResponse(getHttpClient().newCall(request).execute());

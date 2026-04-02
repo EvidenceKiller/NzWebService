@@ -3,7 +3,6 @@ package com.adl.service.web;
 import com.adl.service.common.InnerUtil;
 import com.adl.service.common.RequestResult;
 import com.adl.service.entity.GradeInfoEntity;
-import com.adl.service.web.constants.Platform;
 import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
@@ -17,12 +16,7 @@ public class GradeService extends BaseHttpService {
         try {
             d("From Http 获取年级树");
 
-            String url;
-            if (Platform.V3.equals(getConfigService().getPlatform())) {
-                url = wrapperUrl("/tis/device/base/org/grade/getGradeTree");
-            } else {
-                url = wrapperUrl("/busi/terminal/grade/v1/getGradeTree");
-            }
+            String url = wrapperUrl("/tis/device/base/org/grade/getGradeTree");
             Request request = new Request.Builder().url(url)
                     .post(RequestBody.create("{}", jsonType)).build();
             RequestResult result = parserResponse(getHttpClient().newCall(request).execute());

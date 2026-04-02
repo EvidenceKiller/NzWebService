@@ -6,8 +6,8 @@ import com.adl.service.common.InnerUtil;
 import com.adl.service.common.RequestResult;
 import com.adl.service.entity.ClassCompetitionEntity;
 import com.adl.service.entity.GroupTeachEntity;
+import com.adl.service.entity.TeacherResEntity;
 import com.adl.service.entity.TempGroupTeachEntity;
-import com.adl.service.web.constants.Platform;
 import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
@@ -32,12 +32,7 @@ public class TeachService extends BaseHttpService {
             map.put("times", times);
             map.put("date", date);
             String param = InnerUtil.toJson(map);
-            String url;
-            if (Platform.V3.equals(getConfigService().getPlatform())) {
-                url = wrapperUrl("/tis/device/h5/org/teach/course/detail/list");
-            } else {
-                url = wrapperUrl("/busi/terminal/teach/course/v1/detail/list");
-            }
+            String url = wrapperUrl("/tis/device/h5/org/teach/course/detail/list");
             Request request = new Request.Builder().url(url)
                     .post(RequestBody.create(param, jsonType)).build();
             RequestResult result = parserResponse(getHttpClient().newCall(request).execute());
@@ -63,12 +58,7 @@ public class TeachService extends BaseHttpService {
             }
             map.put("date", date);
             String param = InnerUtil.toJson(map);
-            String url;
-            if (Platform.V3.equals(getConfigService().getPlatform())) {
-                url = wrapperUrl("/tis/device/h5/org/teach/course/courseTimes");
-            } else {
-                url = wrapperUrl("/busi/terminal/teach/course/v1/courseTimes");
-            }
+            String url = wrapperUrl("/tis/device/h5/org/teach/course/courseTimes");
             Request request = new Request.Builder().url(url)
                     .post(RequestBody.create(param, jsonType)).build();
             RequestResult result = parserResponse(getHttpClient().newCall(request).execute());
@@ -89,12 +79,7 @@ public class TeachService extends BaseHttpService {
             map.put("classId", classId);
             map.put("date", date);
             String param = InnerUtil.toJson(map);
-            String url;
-            if (Platform.V3.equals(getConfigService().getPlatform())) {
-                url = wrapperUrl("/tis/device/h5/org/teach/course/click/teachButton");
-            } else {
-                url = wrapperUrl("/busi/terminal/teach/course/v1/click/teachButton");
-            }
+            String url = wrapperUrl("/tis/device/h5/org/teach/course/click/teachButton");
             Request request = new Request.Builder().url(url)
                     .post(RequestBody.create(param, jsonType)).build();
             RequestResult result = parserResponse(getHttpClient().newCall(request).execute());
@@ -117,17 +102,72 @@ public class TeachService extends BaseHttpService {
             map.put("startDate", startDate);
             map.put("endDate", endDate);
             String param = InnerUtil.toJson(map);
-            String url;
-            if (Platform.V3.equals(getConfigService().getPlatform())) {
-                url = wrapperUrl("/tis/device/h5/org/sunshineRunning/getClassroomCompetitionRecordList");
-            } else {
-                url = wrapperUrl("/busi/terminal/physical/teaching/v1/getClassroomCompetitionRecordList");
-            }
+            String url = wrapperUrl("/tis/device/h5/org/sunshineRunning/getClassroomCompetitionRecordList");
             Request request = new Request.Builder().url(url)
                     .post(RequestBody.create(param, jsonType)).build();
             RequestResult result = parserResponse(getHttpClient().newCall(request).execute());
             if (result.isOk()) {
                 return InnerUtil.jsonToType(result.getContent().toString(), new TypeToken<ClassCompetitionEntity>() {
+                });
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * 获取资源列表
+     *
+     * @param createNum
+     * @param resType
+     * @return
+     */
+    public static TeacherResEntity getResList(String createNum, int resType, String appCode) {
+        try {
+            d("From Http 获取教师资源列表");
+            Map<String, Object> map = new HashMap<>();
+            map.put("createNum", createNum);
+            map.put("resType", resType);
+            map.put("appCode", appCode);
+            String param = InnerUtil.toJson(map);
+            String url = wrapperUrl("tis/device/org/res/getResList");
+            Request request = new Request.Builder().url(url)
+                    .post(RequestBody.create(param, jsonType)).build();
+            RequestResult result = parserResponse(getHttpClient().newCall(request).execute());
+            if (result.isOk()) {
+                return InnerUtil.jsonToType(result.getContent().toString(), new TypeToken<TeacherResEntity>() {
+                });
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * 获取资源列表
+     *
+     * @param createNum
+     * @param resType
+     * @return
+     */
+    public static TeacherResEntity getResListByPage(String createNum, int resType, String appCode, int current, int pageSize) {
+        try {
+            d("From Http 获取教师资源列表");
+            Map<String, Object> map = new HashMap<>();
+            map.put("createNum", createNum);
+            map.put("resType", resType);
+            map.put("appCode", appCode);
+            map.put("current", current);// 当前页
+            map.put("pageSize", pageSize); // 每页大小
+            String param = InnerUtil.toJson(map);
+            String url = wrapperUrl("tis/device/org/res/getResList");
+            Request request = new Request.Builder().url(url)
+                    .post(RequestBody.create(param, jsonType)).build();
+            RequestResult result = parserResponse(getHttpClient().newCall(request).execute());
+            if (result.isOk()) {
+                return InnerUtil.jsonToType(result.getContent().toString(), new TypeToken<TeacherResEntity>() {
                 });
             }
         } catch (Exception e) {
@@ -144,12 +184,7 @@ public class TeachService extends BaseHttpService {
         try {
             d("From Http 保存临时分组");
             String param = InnerUtil.toJson(tempGroupTeachEntity);
-            String url;
-            if (Platform.V3.equals(getConfigService().getPlatform())) {
-                throw new RuntimeException("Unsupport Platform!");
-            } else {
-                url = wrapperUrl("/busi/terminal/k12/class/group/v1/save/group");
-            }
+            String url = wrapperUrl("/busi/terminal/k12/class/group/v1/save/group");
             Request request = new Request.Builder().url(url)
                     .post(RequestBody.create(param, jsonType)).build();
             RequestResult result = parserResponse(getHttpClient().newCall(request).execute());
@@ -177,12 +212,7 @@ public class TeachService extends BaseHttpService {
             map.put("classId", classId);
             map.put("sceneCode", sceneCode);
             String param = InnerUtil.toJson(map);
-            String url;
-            if (Platform.V3.equals(getConfigService().getPlatform())) {
-                throw new RuntimeException("Unsupport Platform!");
-            } else {
-                url = wrapperUrl("/busi/terminal/k12/class/group/v1/get/group");
-            }
+            String url = wrapperUrl("/busi/terminal/k12/class/group/v1/get/group");
             Request request = new Request.Builder().url(url)
                     .post(RequestBody.create(param, jsonType)).build();
             RequestResult result = parserResponse(getHttpClient().newCall(request).execute());
@@ -210,12 +240,7 @@ public class TeachService extends BaseHttpService {
             map.put("skuIds", skuIds);
             map.put("sceneCodes", sceneCodes);
             String param = InnerUtil.toJson(map);
-            String url;
-            if (Platform.V3.equals(getConfigService().getPlatform())) {
-                url = wrapperUrl("/tis/device/h5/org/teach/course/dataDates");
-            } else {
-                url = wrapperUrl("/busi/terminal/teach/course/v1/dataDates");
-            }
+            String url = wrapperUrl("/tis/device/h5/org/teach/course/dataDates");
             Request request = new Request.Builder().url(url)
                     .post(RequestBody.create(param, jsonType)).build();
             RequestResult result = parserResponse(getHttpClient().newCall(request).execute());

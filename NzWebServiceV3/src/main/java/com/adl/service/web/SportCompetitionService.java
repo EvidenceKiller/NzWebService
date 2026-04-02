@@ -6,7 +6,6 @@ import com.adl.service.common.InnerUtil;
 import com.adl.service.common.RequestResult;
 import com.adl.service.entity.SportCompetitionEntity;
 import com.adl.service.entity.SportCompetitionInfoEntity;
-import com.adl.service.web.constants.Platform;
 import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
@@ -46,15 +45,7 @@ public class SportCompetitionService extends BaseHttpService {
             String param = InnerUtil.toJson(map);
 
             // 请求
-            String url;
-            if (Platform.GX.equals(getConfigService().getPlatform())) {
-                url = wrapperUrl("/busi/terminal/gx/competition/v1/getCompetitionList");
-            } else if (Platform.K12.equals(getConfigService().getPlatform())) {
-                url = wrapperUrl("/busi/terminal/k12/competition/v1/getCompetitionList");
-            } else {
-                url = wrapperUrl("/busi/org/competition/online/getCompetitionList");
-            }
-
+            String url = wrapperUrl("/busi/org/competition/online/getCompetitionList");
             Request request = new Request.Builder().url(url)
                     .post(RequestBody.create(param, jsonType)).build();
             RequestResult result = parserResponse(getHttpClient().newCall(request).execute());
@@ -85,15 +76,7 @@ public class SportCompetitionService extends BaseHttpService {
             String param = InnerUtil.toJson(map);
 
             // 请求
-            String url;
-            if (Platform.GX.equals(getConfigService().getPlatform())) {
-                url = wrapperUrl("/busi/terminal/gx/competition/v1/getCompetitionRankDetail");
-            } else if (Platform.K12.equals(getConfigService().getPlatform())) {
-                url = wrapperUrl("/busi/terminal/k12/competition/v1/getCompetitionRankDetail");
-            } else {
-                url = wrapperUrl("/busi/org/competition/online/getCompetitionRankDetail");
-            }
-
+            String url = wrapperUrl("/busi/org/competition/online/getCompetitionRankDetail");
             Request request = new Request.Builder().url(url)
                     .post(RequestBody.create(param, jsonType)).build();
             RequestResult result = parserResponse(getHttpClient().newCall(request).execute());
@@ -120,15 +103,7 @@ public class SportCompetitionService extends BaseHttpService {
             String param = InnerUtil.toJson(map);
 
             // 请求
-            String url;
-            if (Platform.GX.equals(getConfigService().getPlatform())) {
-                url = wrapperUrl("/busi/terminal/gx/competition/v1/joinCompetitionRank");
-            } else if (Platform.K12.equals(getConfigService().getPlatform())) {
-                url = wrapperUrl("/busi/terminal/k12/competition/v1/joinCompetitionRank");
-            } else {
-                url = wrapperUrl("/busi/org/competition/online/joinCompetitionRank");
-            }
-
+            String url = wrapperUrl("/busi/org/competition/online/joinCompetitionRank");
             Request request = new Request.Builder().url(url)
                     .post(RequestBody.create(param, jsonType)).build();
             RequestResult result = parserResponse(getHttpClient().newCall(request).execute());

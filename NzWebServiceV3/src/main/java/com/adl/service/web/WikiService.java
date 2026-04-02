@@ -2,6 +2,7 @@ package com.adl.service.web;
 
 import com.adl.service.common.InnerUtil;
 import com.adl.service.common.RequestResult;
+import com.adl.service.entity.OrgResInfoEntity;
 import com.adl.service.entity.WikiDetailEntity;
 import com.adl.service.entity.WikiEntity;
 import com.adl.service.entity.WikiTypeEntity;
@@ -112,5 +113,32 @@ public class WikiService extends BaseHttpService {
         }
         return null;
     }
+
+    /**
+     * 获取校本和备课助手详情信息
+     * @param resId
+     * @return
+     */
+    public static OrgResInfoEntity getOrgResInfo(String resId) {
+        try {
+            d("From Http 获取百科详情");
+            Map<String, Object> map = new HashMap<>();
+            map.put("id", resId);
+            String param = InnerUtil.toJson(map);
+            // 增量更新学生信息
+            String url = wrapperUrl("/tis/device/org/res/getResInfo");
+            Request request = new Request.Builder().url(url)
+                    .post(RequestBody.create(param, jsonType)).build();
+            RequestResult result = parserResponse(getHttpClient().newCall(request).execute());
+            if (result.isOk()) {
+                return InnerUtil.jsonToType(result.getContent().toString(), new TypeToken<OrgResInfoEntity>() {
+                });
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 
 }
