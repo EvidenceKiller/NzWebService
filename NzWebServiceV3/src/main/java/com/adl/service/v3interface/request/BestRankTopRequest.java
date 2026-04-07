@@ -4,6 +4,12 @@ import com.google.gson.annotations.SerializedName;
 
 
 
+/**
+ * Name : BestRankTopRequest
+ * Author : zhouxiangnan
+ * Date : 2026/4/7
+ * Describe : 定义接口请求参数结构
+ */
 public final class BestRankTopRequest {
     /** 产品应用标识码 */
     @SerializedName("appCode")

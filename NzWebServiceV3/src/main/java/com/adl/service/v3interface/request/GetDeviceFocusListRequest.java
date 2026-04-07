@@ -4,6 +4,12 @@ import com.google.gson.annotations.SerializedName;
 
 
 
+/**
+ * Name : GetDeviceFocusListRequest
+ * Author : zhouxiangnan
+ * Date : 2026/4/7
+ * Describe : 定义接口请求参数结构
+ */
 public final class GetDeviceFocusListRequest {
     @SerializedName("deviceId")
     private String deviceId;

@@ -5,6 +5,12 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 
+/**
+ * Name : GetSportSkuDetailData
+ * Author : zhouxiangnan
+ * Date : 2026/4/7
+ * Describe : 定义接口响应数据结构
+ */
 public final class GetSportSkuDetailData {
     /** sku标识码 {运动单项code} + {四位顺序号} */
     @SerializedName("sportSkuId")

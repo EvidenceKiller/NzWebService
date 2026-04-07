@@ -4,6 +4,12 @@ import com.google.gson.annotations.SerializedName;
 
 
 
+/**
+ * Name : OverviewRequest
+ * Author : zhouxiangnan
+ * Date : 2026/4/7
+ * Describe : 定义接口请求参数结构
+ */
 public final class OverviewRequest {
     /** 1-今日 2-本周 3-本月 4-本季度 5-本年度 */
     @SerializedName("timeType")

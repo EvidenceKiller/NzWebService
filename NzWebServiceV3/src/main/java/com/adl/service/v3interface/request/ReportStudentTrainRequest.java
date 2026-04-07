@@ -5,6 +5,12 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Name : ReportStudentTrainRequest
+ * Author : zhouxiangnan
+ * Date : 2026/4/7
+ * Describe : 定义接口请求参数结构
+ */
 public final class ReportStudentTrainRequest {
     /** 用户标识码 */
     @SerializedName("accountId")

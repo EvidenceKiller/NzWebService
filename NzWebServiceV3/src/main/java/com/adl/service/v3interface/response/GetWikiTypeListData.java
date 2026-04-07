@@ -5,6 +5,12 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 
+/**
+ * Name : GetWikiTypeListData
+ * Author : zhouxiangnan
+ * Date : 2026/4/7
+ * Describe : 定义接口响应数据结构
+ */
 public final class GetWikiTypeListData {
     @SerializedName("totalPages")
     private int totalPages;

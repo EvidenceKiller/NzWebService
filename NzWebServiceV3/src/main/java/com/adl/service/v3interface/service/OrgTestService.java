@@ -21,33 +21,38 @@ import io.reactivex.rxjava3.core.Single;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
 
-/** Auto-generated from v3interface HTML. */
+/**
+ * Name : OrgTestService
+ * Author : zhouxiangnan
+ * Date : 2026/4/7
+ * Describe : 提供Retrofit接口调用能力
+ */
 public interface OrgTestService {
-    /** 获取标准列表 — 来源:dev */
+    /** 获取标准列表 */
     @POST("tis/device/pte/organizeTest/getStandardConfig")
     Single<BaseResponse<List<GetStandardConfigData>>> getGetStandardConfig(@Body GetStandardConfigRequest request);
 
-    /** 获取组织测试记录详情 — 来源:dev */
+    /** 获取组织测试记录详情 */
     @POST("tis/device/pte/organizeTest/getRecordDetail")
     Single<BaseResponse<GetRecordDetailData>> getGetRecordDetail(@Body GetRecordDetailRequest request);
 
-    /** 获取计划下学生 — 来源:dev */
+    /** 获取计划下学生 */
     @POST("tis/device/pte/organizeTest/getPlanStudents")
     Single<BaseResponse<GetPlanStudentsData>> getGetPlanStudents(@Body GetPlanStudentsRequest request);
 
-    /** 获取计划列表 — 来源:dev */
+    /** 获取计划列表 */
     @POST("tis/device/pte/organizeTest/getPlanList")
     Single<BaseResponse<GetPlanListData>> getGetPlanList(@Body GetPlanListRequest request);
 
-    /** 获取组织测试计划详情 — 来源:dev */
+    /** 获取组织测试计划详情 */
     @POST("tis/device/pte/organizeTest/getPlanInfo")
     Single<BaseResponse<GetPlanInfoData>> getGetPlanInfo();
 
-    /** 获取计划班级列表 — 来源:dev */
+    /** 获取计划班级列表 */
     @POST("tis/device/pte/organizeTest/getPlanClassList")
     Single<BaseResponse<List<GetPlanClassListData>>> getGetPlanClassList(@Body GetPlanClassListRequest request);
 
-    /** 查询学生是否在计划下 — 来源:dev */
+    /** 查询学生是否在计划下 */
     @POST("tis/device/pte/organizeTest/checkStudent")
     Single<BaseResponse<CheckStudentData>> getCheckStudent(@Body CheckStudentRequest request);
 }

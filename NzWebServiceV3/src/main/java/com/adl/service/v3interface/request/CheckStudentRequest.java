@@ -4,6 +4,12 @@ import com.google.gson.annotations.SerializedName;
 
 
 
+/**
+ * Name : CheckStudentRequest
+ * Author : zhouxiangnan
+ * Date : 2026/4/7
+ * Describe : 定义接口请求参数结构
+ */
 public final class CheckStudentRequest {
     /** 计划 id */
     @SerializedName("planId")

@@ -4,6 +4,12 @@ import com.google.gson.annotations.SerializedName;
 
 
 
+/**
+ * Name : GetDictMapData
+ * Author : zhouxiangnan
+ * Date : 2026/4/7
+ * Describe : 定义接口响应数据结构
+ */
 public final class GetDictMapData {
     @SerializedName("dict")
     private String dict;

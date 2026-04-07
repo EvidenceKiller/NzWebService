@@ -4,6 +4,12 @@ import com.google.gson.annotations.SerializedName;
 
 
 
+/**
+ * Name : GetTrainPlanOneDayProjectListData
+ * Author : zhouxiangnan
+ * Date : 2026/4/7
+ * Describe : 定义接口响应数据结构
+ */
 public final class GetTrainPlanOneDayProjectListData {
     /** 训练计划 ID */
     @SerializedName("trainPlanId")

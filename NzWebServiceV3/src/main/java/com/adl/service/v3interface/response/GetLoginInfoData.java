@@ -5,6 +5,12 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 
+/**
+ * Name : GetLoginInfoData
+ * Author : zhouxiangnan
+ * Date : 2026/4/7
+ * Describe : 定义接口响应数据结构
+ */
 public final class GetLoginInfoData {
     /** 设备标识码（设备侧相关用户登录必传字段） */
     @SerializedName("deviceId")

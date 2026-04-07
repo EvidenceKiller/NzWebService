@@ -5,6 +5,12 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 
+/**
+ * Name : PhysicalTrainingRankRequest
+ * Author : zhouxiangnan
+ * Date : 2026/4/7
+ * Describe : 定义接口请求参数结构
+ */
 public final class PhysicalTrainingRankRequest {
     /** 场景code 1001 锻炼 */
     @SerializedName("sportSceneCodes")

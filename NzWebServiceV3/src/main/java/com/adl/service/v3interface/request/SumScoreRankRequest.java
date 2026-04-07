@@ -4,6 +4,12 @@ import com.google.gson.annotations.SerializedName;
 
 
 
+/**
+ * Name : SumScoreRankRequest
+ * Author : zhouxiangnan
+ * Date : 2026/4/7
+ * Describe : 定义接口请求参数结构
+ */
 public final class SumScoreRankRequest {
     /** 运动sku标识码 */
     @SerializedName("sportSkuId")
