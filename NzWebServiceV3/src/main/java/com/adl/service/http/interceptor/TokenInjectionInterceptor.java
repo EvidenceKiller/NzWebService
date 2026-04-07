@@ -26,8 +26,9 @@ public class TokenInjectionInterceptor implements Interceptor {
         if (!TextUtils.isEmpty(token)) {
             // 设置Token
             Request.Builder reqBuilder = request.newBuilder();
-//            reqBuilder.addHeader("Authorization", "Bearer " + token);
-            reqBuilder.addHeader("Authorization", "Bearer XB2r4uugDrxaU0KhfKTvIRxuPPhS9cIoxE38xQ3-g_W8YlUoYcXROt_9-Cdc9ftwBexz__zLAfDmGCvG3tnBm1gp---601aLTg3bg7JJ6Y2B7V-cn1clEZ0ZDAUTYVVo");
+            reqBuilder.addHeader("Authorization", "Bearer " + token);
+            // temp test token
+//            reqBuilder.addHeader("Authorization", "Bearer XB2r4uugDrxaU0KhfKTvIRxuPPhS9cIoxE38xQ3-g_W8YlUoYcXROt_9-Cdc9ftwBexz__zLAfDmGCvG3tnBm1gp---601aLTg3bg7JJ6Y2B7V-cn1clEZ0ZDAUTYVVo");
             reqBuilder.addHeader("Accept-Language", CommonUtil.getLocaleLanguage());
             // next
             return chain.proceed(reqBuilder.build());

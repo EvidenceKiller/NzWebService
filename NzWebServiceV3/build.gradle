@@ -61,13 +61,31 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.2.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.6.1'
 
-    implementation 'com.squareup.okhttp3:logging-interceptor:4.10.0'
-    implementation 'com.squareup.okhttp3:okhttp:4.10.0'
-    implementation 'com.google.code.gson:gson:2.9.0'
+    // Lombok 核心（编译期可见，不打包进 APK）
+    compileOnly 'org.projectlombok:lombok:1.18.34'
+    // 注解处理器（生成代码）
+    annotationProcessor 'org.projectlombok:lombok:1.18.34'
 
-    //  Room数据库
+    // OkHttp
+    implementation 'com.squareup.okhttp3:okhttp:4.12.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.12.0'
+
+    // Retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava3:2.9.0'
+
+    // RxJava3
+    implementation 'io.reactivex.rxjava3:rxjava:3.1.8'
+    implementation 'io.reactivex.rxjava3:rxandroid:3.0.2'
+
+    // Gson
+    implementation 'com.google.code.gson:gson:2.10.1'
+
+    // Room + RxJava3
     def room_version = "2.4.3"
     implementation "androidx.room:room-runtime:$room_version"
+    implementation "androidx.room:room-rxjava3:$room_version"
     annotationProcessor "androidx.room:room-compiler:$room_version"
 
     //  七牛云 latest: 8.5.1

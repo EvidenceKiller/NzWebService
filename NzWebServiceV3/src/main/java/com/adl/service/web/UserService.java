@@ -125,7 +125,7 @@ public class UserService extends BaseHttpService {
             String param = InnerUtil.toJson(map);
 
             // 增量更新老师信息
-            String url = wrapperUrl("/tis/device/base/account/getTeacherLlist");
+            String url = wrapperUrl("/tis/device/base/account/getTeacherList");
 
             // 请求
             Request request = new Request.Builder().url(url)

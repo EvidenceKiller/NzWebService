@@ -64,24 +64,6 @@ public class SportRecordService extends BaseHttpService {
         return null;
     }
 
-    ////////// 运动指标上报
-    public static RequestResult uploadIndicators(SportIndicatorsEntity<?, ?> sportIndicators) {
-        try {
-            d("From Http 运动指标上报");
-
-            String param = InnerUtil.toJson(sportIndicators);
-
-            // 请求
-            String url = wrapperUrl("/busi/terminal/sport/result/uploadIndicators");
-            Request request = new Request.Builder().url(url)
-                    .post(RequestBody.create(param, jsonType)).build();
-            return parserResponse(getHttpClient().newCall(request).execute());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
     public static RequestResult uploadTeacherData(TeacherSportLocalEntity sportRecord) {
         try {
             d("From Http 运动记录上报");
