@@ -4,92 +4,25 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-
-/**
- * Name : CompetitionRankData
- * Author : zhouxiangnan
- * Date : 2026/4/7
- * Describe : 定义接口响应数据结构
- */
 public final class CompetitionRankData {
-    /** 我的排名 */
+
+    /**
+     * 我的排名
+     */
     @SerializedName("myRank")
-    private Object myRank;
+    private CompetitionMyRankData myRank;
 
-    /** 用户标识码 */
-    @SerializedName("accountId")
-    private String accountId;
-
-    /** 学生姓名 */
-    @SerializedName("accountName")
-    private String accountName;
-
-    /** 学生头像 */
-    @SerializedName("accountAvatar")
-    private String accountAvatar;
-
-    /** 学生性别 1 男 2 女 */
-    @SerializedName("sex")
-    private String sex;
-
-    /** 成绩 */
-    @SerializedName("score")
-    private int score;
-
-    /** 运动结果 */
-    @SerializedName("sportResult")
-    private String sportResult;
-
-    /** 学校名 */
-    @SerializedName("orgName")
-    private String orgName;
-
-    /** 班级名（年级班级一起返回） */
-    @SerializedName("className")
-    private String className;
-
-    /** 排名 */
-    @SerializedName("rankNum")
-    private int rankNum;
-
-    /** 运动结束时间 */
-    @SerializedName("sportEndTime")
-    private long sportEndTime;
-
-    /** 运动得分 */
-    @SerializedName("sportScore")
-    private double sportScore;
-
-    /** 精度类型 */
-    @SerializedName("accuracyType")
-    private int accuracyType;
-
-    /** 精度方式 */
-    @SerializedName("accuracyMethod")
-    private int accuracyMethod;
-
-    /** 运动单位代码 */
-    @SerializedName("sportUnitCode")
-    private String sportUnitCode;
-
-    /** 排行榜列表 */
+    /**
+     * 排行榜列表
+     */
     @SerializedName("rankList")
     private List<Object> rankList;
 
-    public Object getMyRank() { return myRank; }
-    public String getAccountId() { return accountId; }
-    public String getAccountName() { return accountName; }
-    public String getAccountAvatar() { return accountAvatar; }
-    public String getSex() { return sex; }
-    public int getScore() { return score; }
-    public String getSportResult() { return sportResult; }
-    public String getOrgName() { return orgName; }
-    public String getClassName() { return className; }
-    public int getRankNum() { return rankNum; }
-    public long getSportEndTime() { return sportEndTime; }
-    public double getSportScore() { return sportScore; }
-    public int getAccuracyType() { return accuracyType; }
-    public int getAccuracyMethod() { return accuracyMethod; }
-    public String getSportUnitCode() { return sportUnitCode; }
-    public List<Object> getRankList() { return rankList; }
+    public Object getMyRank() {
+        return myRank;
+    }
+
+    public List<Object> getRankList() {
+        return rankList;
+    }
 }

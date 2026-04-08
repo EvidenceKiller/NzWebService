@@ -2,36 +2,36 @@ package com.adl.service.v3interface.request;
 
 import com.google.gson.annotations.SerializedName;
 
-
-
-/**
- * Name : MorePeopleVictoryRankRequest
- * Author : zhouxiangnan
- * Date : 2026/4/7
- * Describe : 定义接口请求参数结构
- */
 public final class MorePeopleVictoryRankRequest {
-    /** SKU ID */
+
+    /**
+     * SKU ID
+     */
     @SerializedName("skuId")
     private String skuId;
 
-    /** 上榜的最大排名 */
+    /**
+     * 上榜的最大排名
+     */
     @SerializedName("maxRank")
     private int maxRank;
 
-    /** 前N名 */
+    /**
+     * 前N名
+     */
     @SerializedName("top")
     private int top;
 
-    private MorePeopleVictoryRankRequest(Builder b) {
-        this.skuId = b.skuId;
-        this.maxRank = b.maxRank;
-        this.top = b.top;
+    private MorePeopleVictoryRankRequest(Builder builder) {
+        this.skuId = builder.skuId;
+        this.maxRank = builder.maxRank;
+        this.top = builder.top;
     }
 
     public static Builder builder(String skuId) {
         return new Builder(skuId);
     }
+
 
     public static class Builder {
         private String skuId;
@@ -42,14 +42,30 @@ public final class MorePeopleVictoryRankRequest {
             this.skuId = skuId;
         }
 
-        public Builder maxRank(int v) { this.maxRank = v; return this; }
+        public Builder maxRank(int maxRank) {
+            this.maxRank = maxRank;
+            return this;
+        }
 
-        public Builder top(int v) { this.top = v; return this; }
+        public Builder top(int top) {
+            this.top = top;
+            return this;
+        }
 
-        public MorePeopleVictoryRankRequest build() { return new MorePeopleVictoryRankRequest(this); }
+        public MorePeopleVictoryRankRequest build() {
+            return new MorePeopleVictoryRankRequest(this);
+        }
     }
 
-    public String getSkuId() { return skuId; }
-    public int getMaxRank() { return maxRank; }
-    public int getTop() { return top; }
+    public String getSkuId() {
+        return skuId;
+    }
+
+    public int getMaxRank() {
+        return maxRank;
+    }
+
+    public int getTop() {
+        return top;
+    }
 }

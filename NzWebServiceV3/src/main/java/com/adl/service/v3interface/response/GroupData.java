@@ -1,54 +1,87 @@
 package com.adl.service.v3interface.response;
 
+import com.adl.service.v3interface.request.BaseGroup;
+import com.adl.service.v3interface.request.BaseGroupRule;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-
-/**
- * Name : GroupData
- * Author : zhouxiangnan
- * Date : 2026/4/7
- * Describe : 定义接口响应数据结构
- */
 public final class GroupData {
-    /** 场景 code */
+
+    /**
+     * 场景 code
+     */
     @SerializedName("sceneCode")
     private String sceneCode;
 
-    /** 组织测试 Id */
+    /**
+     * 组织测试 Id
+     */
     @SerializedName("ptPlanId")
     private String ptPlanId;
 
-    /** 班级 Id */
+    /**
+     * 班级 Id
+     */
     @SerializedName("classId")
     private String classId;
 
-    /** 分组规则 */
+    /**
+     * 分组规则
+     */
     @SerializedName("groupRule")
-    private Object groupRule;
+    private BaseGroupRule groupRule;
 
     @SerializedName("empty")
     private boolean empty;
 
-    /** 运动 Id */
+    /**
+     * 运动 Id
+     */
     @SerializedName("sportSkuId")
     private String sportSkuId;
 
-    /** 分组信息 */
+    /**
+     * 分组信息
+     */
     @SerializedName("groups")
-    private List<Object> groups;
+    private List<BaseGroup> groups;
 
-    /** 长跑分组模式 1-号牌 2-人脸 - 邓工要求加的字段 */
+    /**
+     * 长跑分组模式 1-号牌 2-人脸 - 邓工要求加的字段
+     */
     @SerializedName("longModeType")
     private int longModeType;
 
-    public String getSceneCode() { return sceneCode; }
-    public String getPtPlanId() { return ptPlanId; }
-    public String getClassId() { return classId; }
-    public Object getGroupRule() { return groupRule; }
-    public boolean getEmpty() { return empty; }
-    public String getSportSkuId() { return sportSkuId; }
-    public List<Object> getGroups() { return groups; }
-    public int getLongModeType() { return longModeType; }
+    public String getSceneCode() {
+        return sceneCode;
+    }
+
+    public String getPtPlanId() {
+        return ptPlanId;
+    }
+
+    public String getClassId() {
+        return classId;
+    }
+
+    public BaseGroupRule getGroupRule() {
+        return groupRule;
+    }
+
+    public boolean getEmpty() {
+        return empty;
+    }
+
+    public String getSportSkuId() {
+        return sportSkuId;
+    }
+
+    public List<BaseGroup> getGroups() {
+        return groups;
+    }
+
+    public int getLongModeType() {
+        return longModeType;
+    }
 }

@@ -1,0 +1,197 @@
+package com.adl.service.v3interface.response;
+
+import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
+
+public final class TeachCourseDetailData {
+    /**
+     * 账户ID
+     */
+    @SerializedName("accountId")
+    private String accountId;
+
+    /**
+     * 账户名称
+     */
+    @SerializedName("accountName")
+    private String accountName;
+
+    /**
+     * 头像图片URL
+     */
+    @SerializedName("faceImgUrl")
+    private String faceImgUrl;
+
+    /**
+     * 运动分数
+     */
+    @SerializedName("sportScore")
+    private Double sportScore;
+
+    /**
+     * 运动结果
+     */
+    @SerializedName("sportResult")
+    private String sportResult;
+
+    /**
+     * 原始结果
+     */
+    @SerializedName("originalSportResult")
+    private String originalSportResult;
+
+    /**
+     * 上一次运动结果
+     */
+    @SerializedName("lastSportResult")
+    private String lastSportResult;
+
+    /**
+     * 上一次原始结果
+     */
+    @SerializedName("lastOriginalSportResult")
+    private String lastOriginalSportResult;
+
+    /**
+     * 记录标识码
+     */
+    @SerializedName("recordId")
+    private String recordId;
+
+    /**
+     * 课程次数
+     */
+    @SerializedName("courseTimes")
+    private Integer courseTimes;
+
+    /**
+     * 运动单位
+     */
+    @SerializedName("sportUnitCode")
+    private String sportUnitCode;
+
+    /**
+     * 运动时长
+     */
+    @SerializedName("sportTime")
+    private Long sportTime;
+
+    /**
+     * 运动开始时间
+     */
+    @SerializedName("sportStartTime")
+    private Long sportStartTime;
+
+    /**
+     * 运动结束时间
+     */
+    @SerializedName("sportEndTime")
+    private Long sportEndTime;
+
+    /**
+     * 运动测试时间
+     */
+    @SerializedName("sportTestTime")
+    private Long sportTestTime;
+
+    /**
+     * 账户性别
+     */
+    @SerializedName("sex")
+    private Integer sex;
+
+    /**
+     * 运动视频集合
+     */
+    @SerializedName("sportVideoUrls")
+    private List<String> sportVideoUrls;
+
+    /**
+     * 横向报告URL
+     */
+    @SerializedName("reportCrosswiseUrl")
+    private String reportCrosswiseUrl;
+
+    /**
+     * 竖向报告URL
+     */
+    @SerializedName("reportVerticalUrl")
+    private String reportVerticalUrl;
+
+    public String getAccountId() {
+        return accountId;
+    }
+
+    public String getAccountName() {
+        return accountName;
+    }
+
+    public String getFaceImgUrl() {
+        return faceImgUrl;
+    }
+
+    public Double getSportScore() {
+        return sportScore;
+    }
+
+    public String getSportResult() {
+        return sportResult;
+    }
+
+    public String getOriginalSportResult() {
+        return originalSportResult;
+    }
+
+    public String getLastSportResult() {
+        return lastSportResult;
+    }
+
+    public String getLastOriginalSportResult() {
+        return lastOriginalSportResult;
+    }
+
+    public String getRecordId() {
+        return recordId;
+    }
+
+    public Integer getCourseTimes() {
+        return courseTimes;
+    }
+
+    public String getSportUnitCode() {
+        return sportUnitCode;
+    }
+
+    public Long getSportTime() {
+        return sportTime;
+    }
+
+    public Long getSportStartTime() {
+        return sportStartTime;
+    }
+
+    public Long getSportEndTime() {
+        return sportEndTime;
+    }
+
+    public Long getSportTestTime() {
+        return sportTestTime;
+    }
+
+    public Integer getSex() {
+        return sex;
+    }
+
+    public List<String> getSportVideoUrls() {
+        return sportVideoUrls;
+    }
+
+    public String getReportCrosswiseUrl() {
+        return reportCrosswiseUrl;
+    }
+
+    public String getReportVerticalUrl() {
+        return reportVerticalUrl;
+    }
+}

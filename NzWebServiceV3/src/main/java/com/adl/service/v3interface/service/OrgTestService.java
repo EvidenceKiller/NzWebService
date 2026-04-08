@@ -1,19 +1,19 @@
 package com.adl.service.v3interface.service;
 
+import com.adl.service.v3interface.request.OrganizeTestCheckStudentRequest;
+import com.adl.service.v3interface.request.PlanClassListRequest;
+import com.adl.service.v3interface.request.PlanListRequest;
+import com.adl.service.v3interface.request.PlanStudentPageRequest;
+import com.adl.service.v3interface.request.RecordDetailPageRequest;
+import com.adl.service.v3interface.request.StandardConfigPageRequest;
+import com.adl.service.v3interface.response.OrganizeTestCheckStudentData;
+import com.adl.service.v3interface.response.PlanClassData;
+import com.adl.service.v3interface.response.PlanInfoData;
+import com.adl.service.v3interface.response.PlanPageData;
+import com.adl.service.v3interface.response.PlanStudentPageData;
+import com.adl.service.v3interface.response.RecordDetailPageData;
+import com.adl.service.v3interface.response.StandardConfigPageData;
 import com.example.rxsdk.response.BaseResponse;
-import com.example.rxsdk.v3interface.request.CheckStudentRequest;
-import com.example.rxsdk.v3interface.request.GetPlanClassListRequest;
-import com.example.rxsdk.v3interface.request.GetPlanListRequest;
-import com.example.rxsdk.v3interface.request.GetPlanStudentsRequest;
-import com.example.rxsdk.v3interface.request.GetRecordDetailRequest;
-import com.example.rxsdk.v3interface.request.GetStandardConfigRequest;
-import com.example.rxsdk.v3interface.response.CheckStudentData;
-import com.example.rxsdk.v3interface.response.GetPlanClassListData;
-import com.example.rxsdk.v3interface.response.GetPlanInfoData;
-import com.example.rxsdk.v3interface.response.GetPlanListData;
-import com.example.rxsdk.v3interface.response.GetPlanStudentsData;
-import com.example.rxsdk.v3interface.response.GetRecordDetailData;
-import com.example.rxsdk.v3interface.response.GetStandardConfigData;
 
 import java.util.List;
 
@@ -22,37 +22,48 @@ import retrofit2.http.Body;
 import retrofit2.http.POST;
 
 /**
- * Name : OrgTestService
- * Author : zhouxiangnan
- * Date : 2026/4/7
- * Describe : 提供Retrofit接口调用能力
+ * Retrofit API（v3new 生成）
  */
 public interface OrgTestService {
-    /** 获取标准列表 */
+    /**
+     * 获取标准列表
+     */
     @POST("tis/device/pte/organizeTest/getStandardConfig")
-    Single<BaseResponse<List<GetStandardConfigData>>> getGetStandardConfig(@Body GetStandardConfigRequest request);
+    Single<BaseResponse<List<StandardConfigPageData>>> getStandardConfigPage(@Body StandardConfigPageRequest request);
 
-    /** 获取组织测试记录详情 */
+    /**
+     * 获取组织测试记录详情
+     */
     @POST("tis/device/pte/organizeTest/getRecordDetail")
-    Single<BaseResponse<GetRecordDetailData>> getGetRecordDetail(@Body GetRecordDetailRequest request);
+    Single<BaseResponse<RecordDetailPageData>> getRecordDetailPage(@Body RecordDetailPageRequest request);
 
-    /** 获取计划下学生 */
+    /**
+     * 获取计划下学生
+     */
     @POST("tis/device/pte/organizeTest/getPlanStudents")
-    Single<BaseResponse<GetPlanStudentsData>> getGetPlanStudents(@Body GetPlanStudentsRequest request);
+    Single<BaseResponse<PlanStudentPageData>> getPlanStudentPage(@Body PlanStudentPageRequest request);
 
-    /** 获取计划列表 */
+    /**
+     * 获取计划列表
+     */
     @POST("tis/device/pte/organizeTest/getPlanList")
-    Single<BaseResponse<GetPlanListData>> getGetPlanList(@Body GetPlanListRequest request);
+    Single<BaseResponse<PlanPageData>> getPlanPage(@Body PlanListRequest request);
 
-    /** 获取组织测试计划详情 */
+    /**
+     * 获取组织测试计划详情
+     */
     @POST("tis/device/pte/organizeTest/getPlanInfo")
-    Single<BaseResponse<GetPlanInfoData>> getGetPlanInfo();
+    Single<BaseResponse<PlanInfoData>> getPlanInfo();
 
-    /** 获取计划班级列表 */
+    /**
+     * 获取计划班级列表
+     */
     @POST("tis/device/pte/organizeTest/getPlanClassList")
-    Single<BaseResponse<List<GetPlanClassListData>>> getGetPlanClassList(@Body GetPlanClassListRequest request);
+    Single<BaseResponse<List<PlanClassData>>> getPlanClassList(@Body PlanClassListRequest request);
 
-    /** 查询学生是否在计划下 */
+    /**
+     * 查询学生是否在计划下
+     */
     @POST("tis/device/pte/organizeTest/checkStudent")
-    Single<BaseResponse<CheckStudentData>> getCheckStudent(@Body CheckStudentRequest request);
+    Single<BaseResponse<OrganizeTestCheckStudentData>> getCheckStudent(@Body OrganizeTestCheckStudentRequest request);
 }

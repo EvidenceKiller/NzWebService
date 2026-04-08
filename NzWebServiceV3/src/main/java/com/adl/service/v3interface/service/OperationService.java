@@ -1,85 +1,92 @@
 package com.adl.service.v3interface.service;
 
+import com.adl.service.v3interface.request.BannerDetailListRequest;
+import com.adl.service.v3interface.request.DeviceFocusListRequest;
+import com.adl.service.v3interface.request.DictMapRequest;
+import com.adl.service.v3interface.request.SceneListRequest;
+import com.adl.service.v3interface.request.SportSkuDetailRequest;
+import com.adl.service.v3interface.request.SportSkuPageRequest;
+import com.adl.service.v3interface.request.UploadDeviceNameRequest;
+import com.adl.service.v3interface.request.WikiDetailRequest;
+import com.adl.service.v3interface.request.WikiPageRequest;
+import com.adl.service.v3interface.request.WikiTypePageRequest;
+import com.adl.service.v3interface.response.BannerDetailListData;
+import com.adl.service.v3interface.response.DeviceFocusData;
+import com.adl.service.v3interface.response.DictMapData;
+import com.adl.service.v3interface.response.SceneData;
+import com.adl.service.v3interface.response.SportSkuDetailData;
+import com.adl.service.v3interface.response.SportSkuPageData;
+import com.adl.service.v3interface.response.WikiDetailData;
+import com.adl.service.v3interface.response.WikiPageData;
 import com.example.rxsdk.response.BaseResponse;
-import com.example.rxsdk.v3interface.request.DeviceNameRequest;
-import com.example.rxsdk.v3interface.request.GetDetailListRequest;
-import com.example.rxsdk.v3interface.request.GetDeviceFocusListRequest;
-import com.example.rxsdk.v3interface.request.GetDictMapRequest;
-import com.example.rxsdk.v3interface.request.GetSceneListRequest;
-import com.example.rxsdk.v3interface.request.GetSportSkuDetailRequest;
-import com.example.rxsdk.v3interface.request.GetSportSkuListRequest;
-import com.example.rxsdk.v3interface.request.GetWikiDetailRequest;
-import com.example.rxsdk.v3interface.request.GetWikiListRequest;
-import com.example.rxsdk.v3interface.request.GetWikiTypeListRequest;
-import com.example.rxsdk.v3interface.response.DeviceNameData;
-import com.example.rxsdk.v3interface.response.GetDetailListData;
-import com.example.rxsdk.v3interface.response.GetDeviceFocusListData;
-import com.example.rxsdk.v3interface.response.GetDictMapData;
-import com.example.rxsdk.v3interface.response.GetSceneListData;
-import com.example.rxsdk.v3interface.response.GetSportSkuDetailData;
-import com.example.rxsdk.v3interface.response.GetSportSkuListData;
-import com.example.rxsdk.v3interface.response.GetWikiDetailData;
-import com.example.rxsdk.v3interface.response.GetWikiListData;
-import com.example.rxsdk.v3interface.response.GetWikiTypeListData;
 
 import java.util.List;
 
 import io.reactivex.rxjava3.core.Single;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
-import retrofit2.http.Path;
 
 /**
- * Name : OperationService
- * Author : zhouxiangnan
- * Date : 2026/4/7
- * Describe : 提供Retrofit接口调用能力
+ * Retrofit API（v3new 生成）
  */
 public interface OperationService {
-    /** 获取Banner详情列表 */
+    /**
+     * 获取Banner详情列表
+     */
     @POST("tis/device/oper/banner/getDetailList")
-    Single<BaseResponse<List<GetDetailListData>>> getGetDetailList(@Body GetDetailListRequest request);
+    Single<BaseResponse<List<BannerDetailListData>>> getDetailList(@Body BannerDetailListRequest request);
 
-    /** 获取项目库列表 */
+    /**
+     * 获取项目库列表
+     */
     @POST("tis/device/oper/sku/getSportSkuList")
-    Single<BaseResponse<GetSportSkuListData>> getGetSportSkuList(@Body GetSportSkuListRequest request);
+    Single<BaseResponse<SportSkuPageData>> getSportSkuPage(@Body SportSkuPageRequest request);
 
-    /** 获取项目详情 */
+    /**
+     * 获取项目详情
+     */
     @POST("tis/device/oper/sku/getSportSkuDetail")
-    Single<BaseResponse<GetSportSkuDetailData>> getGetSportSkuDetail(@Body GetSportSkuDetailRequest request);
+    Single<BaseResponse<SportSkuDetailData>> getSportSkuDetail(@Body SportSkuDetailRequest request);
 
-    /** 获取模板内容 */
+    /**
+     * 获取模板内容
+     */
     @POST("tis/device/oper/sku/getDictMap")
-    Single<BaseResponse<List<GetDictMapData>>> getGetDictMap(@Body GetDictMapRequest request);
+    Single<BaseResponse<List<DictMapData>>> getDictMap(@Body DictMapRequest request);
 
-    /** 获取场景列表 */
+    /**
+     * 获取场景列表
+     */
     @POST("tis/device/oper/scene/getSceneList")
-    Single<BaseResponse<List<GetSceneListData>>> getGetSceneList(@Body GetSceneListRequest request);
+    Single<BaseResponse<List<SceneData>>> getSceneList(@Body SceneListRequest request);
 
-    /** 获取百科分类列表 */
+    /**
+     * 获取百科分类列表
+     */
     @POST("tis/device/oper/wiki/type/getWikiTypeList")
-    Single<BaseResponse<GetWikiTypeListData>> getGetWikiTypeList(@Body GetWikiTypeListRequest request);
+    Single<BaseResponse<WikiPageData>> getWikiTypePage(@Body WikiTypePageRequest request);
 
-    /** 获取百科列表 */
+    /**
+     * 获取百科列表
+     */
     @POST("tis/device/oper/wiki/getWikiList")
-    Single<BaseResponse<GetWikiListData>> getGetWikiList(@Body GetWikiListRequest request);
+    Single<BaseResponse<WikiPageData>> getWikiPage(@Body WikiPageRequest request);
 
     /**
      * 获取运动百科详情
-     * Path wikiId: 百科id
      */
-    @POST("tis/device/oper/wiki/getWikiDetail/{wikiId}")
-    Single<BaseResponse<GetWikiDetailData>> getGetWikiDetail(@Path("wikiId") String wikiId);
-
-    /** 获取运动百科详情 */
     @POST("tis/device/oper/wiki/getWikiDetail")
-    Single<BaseResponse<GetWikiDetailData>> getGetWikiDetail(@Body GetWikiDetailRequest request);
+    Single<BaseResponse<WikiDetailData>> getWikiDetail(@Body WikiDetailRequest request);
 
-    /** 修改设备名称 */
+    /**
+     * 修改设备名称
+     */
     @POST("tis/device/oper/device/upload/deviceName")
-    Single<BaseResponse<DeviceNameData>> getDeviceName(@Body DeviceNameRequest request);
+    Single<BaseResponse<Boolean>> uploadDeviceName(@Body UploadDeviceNameRequest request);
 
-    /** 获取设备专注信息列表 */
+    /**
+     * 获取设备专注信息列表
+     */
     @POST("tis/device/oper/device/getDeviceFocusList")
-    Single<BaseResponse<List<GetDeviceFocusListData>>> getGetDeviceFocusList(@Body GetDeviceFocusListRequest request);
+    Single<BaseResponse<List<DeviceFocusData>>> getDeviceFocusList(@Body DeviceFocusListRequest request);
 }

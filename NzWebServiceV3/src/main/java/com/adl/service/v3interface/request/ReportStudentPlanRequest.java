@@ -3,346 +3,226 @@ package com.adl.service.v3interface.request;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
-import java.util.Map;
 
-/**
- * Name : ReportStudentPlanRequest
- * Author : zhouxiangnan
- * Date : 2026/4/7
- * Describe : 定义接口请求参数结构
- */
 public final class ReportStudentPlanRequest {
-    /** 用户标识码 */
+
+    /**
+     * 用户标识码
+     */
     @SerializedName("accountId")
     private String accountId;
 
-    /** 产品应用标识码 */
+    /**
+     * 产品应用标识码
+     */
     @SerializedName("appCode")
     private String appCode;
 
-    /** 运动完美个数 */
+    /**
+     * 运动完美个数
+     */
     @SerializedName("perfectCount")
     private int perfectCount;
 
-    /** 运动优秀个数 */
+    /**
+     * 运动优秀个数
+     */
     @SerializedName("bravoCount")
     private int bravoCount;
 
-    /** 运动良好个数 */
+    /**
+     * 运动良好个数
+     */
     @SerializedName("goodeviceount")
     private int goodeviceount;
 
-    /** 扩展JSON */
+    /**
+     * 扩展JSON
+     */
     @SerializedName("extraJson")
     private String extraJson;
 
-    /** 记录标识码 */
+    /**
+     * 记录标识码
+     */
     @SerializedName("id")
     private String id;
 
-    /** 记录有效标识位 */
+    /**
+     * 记录有效标识位
+     */
     @SerializedName("invalidFlag")
     private int invalidFlag;
 
-    /** 多人运动Id */
+    /**
+     * 多人运动Id
+     */
     @SerializedName("multiPersonId")
     private String multiPersonId;
 
-    /** 多人运动排名 */
+    /**
+     * 多人运动排名
+     */
     @SerializedName("multiPersonRank")
     private int multiPersonRank;
 
-    /** 运动统计字段 例：跳绳类为个数 阳光跑为mm */
+    /**
+     * 运动统计字段 例：跳绳类为个数 阳光跑为mm
+     */
     @SerializedName("sportCount")
     private long sportCount;
 
-    /** 运动开始时间，时间戳不能为空 */
+    /**
+     * 运动开始时间，时间戳不能为空
+     */
     @SerializedName("sportStartTime")
     private String sportStartTime;
 
-    /** 运动结束时间，时间戳不能为空 */
+    /**
+     * 运动结束时间，时间戳不能为空
+     */
     @SerializedName("sportEndTime")
     private String sportEndTime;
 
-    /** 运动图片集 */
+    /**
+     * 运动图片集
+     */
     @SerializedName("sportImages")
-    private List<Map<String, Object>> sportImages;
+    private List<BaseSportImage> sportImages;
 
-    /** 图片说明 */
-    @SerializedName("imageDesc")
-    private String imageDesc;
-
-    /** 图片相对地址 */
-    @SerializedName("imageUrl")
-    private String imageUrl;
-
-    /** 分组编号 */
-    @SerializedName("groupIndex")
-    private String groupIndex;
-
-    /** 运动视频集 */
+    /**
+     * 运动视频集
+     */
     @SerializedName("sportVideos")
-    private List<Map<String, Object>> sportVideos;
+    private List<BaseSportVideo> sportVideos;
 
-    /** 视频说明 */
-    @SerializedName("videoDesc")
-    private String videoDesc;
-
-    /** 视频相对地址 */
-    @SerializedName("videoUrl")
-    private String videoUrl;
-
-    /** 视频封面图 */
-    @SerializedName("videoCover")
-    private String videoCover;
-
-    /** 运动指标 */
+    /**
+     * 运动指标
+     */
     @SerializedName("sportIndicators")
-    private List<Map<String, Object>> sportIndicators;
+    private List<BaseSportIndicator> sportIndicators;
 
-    /** 运动指标编码，索引列 */
-    @SerializedName("indicatorsCode")
-    private String indicatorsCode;
-
-    /** 运动指标名称 */
-    @SerializedName("indicatorsName")
-    private String indicatorsName;
-
-    /** 指标说明 */
-    @SerializedName("indicatorsRemark")
-    private String indicatorsRemark;
-
-    /** 指标单位 */
-    @SerializedName("indicatorsUnit")
-    private String indicatorsUnit;
-
-    /** 指标值 */
-    @SerializedName("indicatorsValue")
-    private String indicatorsValue;
-
-    /** 运动图片 */
-    @SerializedName("indicatorsImages")
-    private List<Object> indicatorsImages;
-
-    /** 运动视频 */
-    @SerializedName("indicatorsVideos")
-    private List<Object> indicatorsVideos;
-
-    /** 运动结果 */
+    /**
+     * 运动结果
+     */
     @SerializedName("sportResult")
     private String sportResult;
 
-    /** 运动场景代码 */
+    /**
+     * 运动场景代码
+     */
     @SerializedName("sportSceneCode")
     private String sportSceneCode;
 
-    /** 运动得分 */
+    /**
+     * 运动得分
+     */
     @SerializedName("sportScore")
     private double sportScore;
 
-    /** 运动sku编码 */
+    /**
+     * 运动sku编码
+     */
     @SerializedName("sportSkuId")
     private String sportSkuId;
 
-    /** 运动标签 */
+    /**
+     * 运动标签
+     */
     @SerializedName("sportSkuSubType")
     private String sportSkuSubType;
 
-    /** 运动时长 */
+    /**
+     * 运动时长
+     */
     @SerializedName("sportTime")
     private long sportTime;
 
-    /** 原始运动结果 */
+    /**
+     * 原始运动结果
+     */
     @SerializedName("originalSportResult")
     private String originalSportResult;
 
-    /** 是否违规不能为空 1:违规 */
+    /**
+     * 是否违规不能为空 1:违规
+     */
     @SerializedName("sportViolationStatus")
     private int sportViolationStatus;
 
-    /** 多人运动机位排序 */
+    /**
+     * 多人运动机位排序
+     */
     @SerializedName("multiPersonIndex")
     private int multiPersonIndex;
 
-    /** 场所id */
+    /**
+     * 场所id
+     */
     @SerializedName("placeId")
     private String placeId;
 
-    /** 场所名称 */
+    /**
+     * 场所名称
+     */
     @SerializedName("placeName")
     private String placeName;
 
-    /** 报告编码 端分对运动分类，如跳绳 0201 分为并脚跳、单脚跳、花式跳绳等 */
+    /**
+     * 报告编码 端分对运动分类，如跳绳 0201 分为并脚跳、单脚跳、花式跳绳等
+     */
     @SerializedName("reportCode")
     private String reportCode;
 
-    /** 组织测试信息 */
+    /**
+     * 组织测试信息
+     */
     @SerializedName("sportPlan")
-    private Object sportPlan;
+    private BaseSportPlan sportPlan;
 
-    /** 组织测试计划ID */
-    @SerializedName("ptPlanId")
-    private String ptPlanId;
-
-    /** 组织测试标准ID */
-    @SerializedName("ptStandardId")
-    private String ptStandardId;
-
-    /** 组织测试标准类型 */
-    @SerializedName("ptStandardType")
-    private String ptStandardType;
-
-    /** 组织测试批次 */
-    @SerializedName("ptBatch")
-    private int ptBatch;
-
-    /** 组织测试运动标准分 */
-    @SerializedName("ptSportStandardScore")
-    private String ptSportStandardScore;
-
-    /** 组织测试运动标准等级 */
-    @SerializedName("ptSportStandardLevel")
-    private String ptSportStandardLevel;
-
-    /** 组织测试运动单项得分 */
-    @SerializedName("ptSportScore")
-    private String ptSportScore;
-
-    /** 组织测试运动单项附加分 */
-    @SerializedName("ptSportStandardAddScore")
-    private String ptSportStandardAddScore;
-
-    /** 是否违规 */
-    @SerializedName("sportViolationStatus")
-    private int sportViolationStatus;
-
-    /** 运动违规次数 */
-    @SerializedName("sportViolationNumber")
-    private int sportViolationNumber;
-
-    /** 组织测试运动成绩加减结果 */
-    @SerializedName("ptExtrasResult")
-    private String ptExtrasResult;
-
-    /** 组织测试运动成绩加减模式（+/-） */
-    @SerializedName("ptExtrasResultMod")
-    private String ptExtrasResultMod;
-
-    /** 组织测试运动加减分数 */
-    @SerializedName("ptExtrasScore")
-    private String ptExtrasScore;
-
-    /** 组织测试运动分数加减模式（+/-） */
-    @SerializedName("ptExtrasScoreMod")
-    private String ptExtrasScoreMod;
-
-    /** 测试类型 0校方测试 1自助测试 */
-    @SerializedName("ptTestType")
-    private int ptTestType;
-
-    /** 运动指标 */
+    /**
+     * 运动指标
+     */
     @SerializedName("reqDataSportIndicators")
-    private List<Map<String, Object>> reqDataSportIndicators;
+    private List<BaseSportIndicatorReqData> reqDataSportIndicators;
 
-    /** 运动指标编码，索引列 */
-    @SerializedName("indicatorsCode")
-    private String indicatorsCode;
-
-    /** 运动指标名称 */
-    @SerializedName("indicatorsName")
-    private String indicatorsName;
-
-    /** 指标说明 */
-    @SerializedName("indicatorsRemark")
-    private String indicatorsRemark;
-
-    /** 指标单位 */
-    @SerializedName("indicatorsUnit")
-    private String indicatorsUnit;
-
-    /** 指标值 */
-    @SerializedName("indicatorsValue")
-    private String indicatorsValue;
-
-    /** 运动图片 */
-    @SerializedName("indicatorsImages")
-    private List<Object> indicatorsImages;
-
-    /** 运动视频 */
-    @SerializedName("indicatorsVideos")
-    private List<Object> indicatorsVideos;
-
-    private ReportStudentPlanRequest(Builder b) {
-        this.accountId = b.accountId;
-        this.appCode = b.appCode;
-        this.perfectCount = b.perfectCount;
-        this.bravoCount = b.bravoCount;
-        this.goodeviceount = b.goodeviceount;
-        this.extraJson = b.extraJson;
-        this.id = b.id;
-        this.invalidFlag = b.invalidFlag;
-        this.multiPersonId = b.multiPersonId;
-        this.multiPersonRank = b.multiPersonRank;
-        this.sportCount = b.sportCount;
-        this.sportStartTime = b.sportStartTime;
-        this.sportEndTime = b.sportEndTime;
-        this.sportImages = b.sportImages;
-        this.imageDesc = b.imageDesc;
-        this.imageUrl = b.imageUrl;
-        this.groupIndex = b.groupIndex;
-        this.sportVideos = b.sportVideos;
-        this.videoDesc = b.videoDesc;
-        this.videoUrl = b.videoUrl;
-        this.videoCover = b.videoCover;
-        this.sportIndicators = b.sportIndicators;
-        this.indicatorsCode = b.indicatorsCode;
-        this.indicatorsName = b.indicatorsName;
-        this.indicatorsRemark = b.indicatorsRemark;
-        this.indicatorsUnit = b.indicatorsUnit;
-        this.indicatorsValue = b.indicatorsValue;
-        this.indicatorsImages = b.indicatorsImages;
-        this.indicatorsVideos = b.indicatorsVideos;
-        this.sportResult = b.sportResult;
-        this.sportSceneCode = b.sportSceneCode;
-        this.sportScore = b.sportScore;
-        this.sportSkuId = b.sportSkuId;
-        this.sportSkuSubType = b.sportSkuSubType;
-        this.sportTime = b.sportTime;
-        this.originalSportResult = b.originalSportResult;
-        this.sportViolationStatus = b.sportViolationStatus;
-        this.multiPersonIndex = b.multiPersonIndex;
-        this.placeId = b.placeId;
-        this.placeName = b.placeName;
-        this.reportCode = b.reportCode;
-        this.sportPlan = b.sportPlan;
-        this.ptPlanId = b.ptPlanId;
-        this.ptStandardId = b.ptStandardId;
-        this.ptStandardType = b.ptStandardType;
-        this.ptBatch = b.ptBatch;
-        this.ptSportStandardScore = b.ptSportStandardScore;
-        this.ptSportStandardLevel = b.ptSportStandardLevel;
-        this.ptSportScore = b.ptSportScore;
-        this.ptSportStandardAddScore = b.ptSportStandardAddScore;
-        this.sportViolationStatus = b.sportViolationStatus;
-        this.sportViolationNumber = b.sportViolationNumber;
-        this.ptExtrasResult = b.ptExtrasResult;
-        this.ptExtrasResultMod = b.ptExtrasResultMod;
-        this.ptExtrasScore = b.ptExtrasScore;
-        this.ptExtrasScoreMod = b.ptExtrasScoreMod;
-        this.ptTestType = b.ptTestType;
-        this.reqDataSportIndicators = b.reqDataSportIndicators;
-        this.indicatorsCode = b.indicatorsCode;
-        this.indicatorsName = b.indicatorsName;
-        this.indicatorsRemark = b.indicatorsRemark;
-        this.indicatorsUnit = b.indicatorsUnit;
-        this.indicatorsValue = b.indicatorsValue;
-        this.indicatorsImages = b.indicatorsImages;
-        this.indicatorsVideos = b.indicatorsVideos;
+    private ReportStudentPlanRequest(Builder builder) {
+        this.accountId = builder.accountId;
+        this.appCode = builder.appCode;
+        this.perfectCount = builder.perfectCount;
+        this.bravoCount = builder.bravoCount;
+        this.goodeviceount = builder.goodeviceount;
+        this.extraJson = builder.extraJson;
+        this.id = builder.id;
+        this.invalidFlag = builder.invalidFlag;
+        this.multiPersonId = builder.multiPersonId;
+        this.multiPersonRank = builder.multiPersonRank;
+        this.sportCount = builder.sportCount;
+        this.sportStartTime = builder.sportStartTime;
+        this.sportEndTime = builder.sportEndTime;
+        this.sportImages = builder.sportImages;
+        this.sportVideos = builder.sportVideos;
+        this.sportIndicators = builder.sportIndicators;
+        this.sportResult = builder.sportResult;
+        this.sportSceneCode = builder.sportSceneCode;
+        this.sportScore = builder.sportScore;
+        this.sportSkuId = builder.sportSkuId;
+        this.sportSkuSubType = builder.sportSkuSubType;
+        this.sportTime = builder.sportTime;
+        this.originalSportResult = builder.originalSportResult;
+        this.sportViolationStatus = builder.sportViolationStatus;
+        this.multiPersonIndex = builder.multiPersonIndex;
+        this.placeId = builder.placeId;
+        this.placeName = builder.placeName;
+        this.reportCode = builder.reportCode;
+        this.sportPlan = builder.sportPlan;
+        this.reqDataSportIndicators = builder.reqDataSportIndicators;
     }
 
-    public static Builder builder(String accountId, String appCode, int invalidFlag, long sportCount, String sportStartTime, String sportEndTime, String indicatorsCode, String indicatorsName, String indicatorsRemark, String indicatorsValue, String sportResult, String sportSceneCode, String sportSkuId, String sportSkuSubType, long sportTime, String indicatorsCode, String indicatorsName, String indicatorsRemark, String indicatorsValue) {
-        return new Builder(accountId, appCode, invalidFlag, sportCount, sportStartTime, sportEndTime, indicatorsCode, indicatorsName, indicatorsRemark, indicatorsValue, sportResult, sportSceneCode, sportSkuId, sportSkuSubType, sportTime, indicatorsCode, indicatorsName, indicatorsRemark, indicatorsValue);
+    public static Builder builder(String accountId, String appCode, int invalidFlag, long sportCount, String sportStartTime, String sportEndTime, String sportResult, String sportSceneCode, String sportSkuId, String sportSkuSubType, long sportTime) {
+        return new Builder(accountId, appCode, invalidFlag, sportCount, sportStartTime, sportEndTime, sportResult, sportSceneCode, sportSkuId, sportSkuSubType, sportTime);
     }
+
 
     public static class Builder {
         private String accountId;
@@ -358,22 +238,9 @@ public final class ReportStudentPlanRequest {
         private long sportCount;
         private String sportStartTime;
         private String sportEndTime;
-        private List<Map<String, Object>> sportImages;
-        private String imageDesc;
-        private String imageUrl;
-        private String groupIndex;
-        private List<Map<String, Object>> sportVideos;
-        private String videoDesc;
-        private String videoUrl;
-        private String videoCover;
-        private List<Map<String, Object>> sportIndicators;
-        private String indicatorsCode;
-        private String indicatorsName;
-        private String indicatorsRemark;
-        private String indicatorsUnit;
-        private String indicatorsValue;
-        private List<Object> indicatorsImages;
-        private List<Object> indicatorsVideos;
+        private List<BaseSportImage> sportImages;
+        private List<BaseSportVideo> sportVideos;
+        private List<BaseSportIndicator> sportIndicators;
         private String sportResult;
         private String sportSceneCode;
         private double sportScore;
@@ -386,211 +253,240 @@ public final class ReportStudentPlanRequest {
         private String placeId;
         private String placeName;
         private String reportCode;
-        private Object sportPlan;
-        private String ptPlanId;
-        private String ptStandardId;
-        private String ptStandardType;
-        private int ptBatch;
-        private String ptSportStandardScore;
-        private String ptSportStandardLevel;
-        private String ptSportScore;
-        private String ptSportStandardAddScore;
-        private int sportViolationStatus;
-        private int sportViolationNumber;
-        private String ptExtrasResult;
-        private String ptExtrasResultMod;
-        private String ptExtrasScore;
-        private String ptExtrasScoreMod;
-        private int ptTestType;
-        private List<Map<String, Object>> reqDataSportIndicators;
-        private String indicatorsCode;
-        private String indicatorsName;
-        private String indicatorsRemark;
-        private String indicatorsUnit;
-        private String indicatorsValue;
-        private List<Object> indicatorsImages;
-        private List<Object> indicatorsVideos;
+        private BaseSportPlan sportPlan;
+        private List<BaseSportIndicatorReqData> reqDataSportIndicators;
 
-        Builder(String accountId, String appCode, int invalidFlag, long sportCount, String sportStartTime, String sportEndTime, String indicatorsCode, String indicatorsName, String indicatorsRemark, String indicatorsValue, String sportResult, String sportSceneCode, String sportSkuId, String sportSkuSubType, long sportTime, String indicatorsCode, String indicatorsName, String indicatorsRemark, String indicatorsValue) {
+        Builder(String accountId, String appCode, int invalidFlag, long sportCount, String sportStartTime, String sportEndTime, String sportResult, String sportSceneCode, String sportSkuId, String sportSkuSubType, long sportTime) {
             this.accountId = accountId;
             this.appCode = appCode;
             this.invalidFlag = invalidFlag;
             this.sportCount = sportCount;
             this.sportStartTime = sportStartTime;
             this.sportEndTime = sportEndTime;
-            this.indicatorsCode = indicatorsCode;
-            this.indicatorsName = indicatorsName;
-            this.indicatorsRemark = indicatorsRemark;
-            this.indicatorsValue = indicatorsValue;
             this.sportResult = sportResult;
             this.sportSceneCode = sportSceneCode;
             this.sportSkuId = sportSkuId;
             this.sportSkuSubType = sportSkuSubType;
             this.sportTime = sportTime;
-            this.indicatorsCode = indicatorsCode;
-            this.indicatorsName = indicatorsName;
-            this.indicatorsRemark = indicatorsRemark;
-            this.indicatorsValue = indicatorsValue;
         }
 
-        public Builder perfectCount(int v) { this.perfectCount = v; return this; }
+        public Builder perfectCount(int perfectCount) {
+            this.perfectCount = perfectCount;
+            return this;
+        }
 
-        public Builder bravoCount(int v) { this.bravoCount = v; return this; }
+        public Builder bravoCount(int bravoCount) {
+            this.bravoCount = bravoCount;
+            return this;
+        }
 
-        public Builder goodeviceount(int v) { this.goodeviceount = v; return this; }
+        public Builder goodeviceount(int goodeviceount) {
+            this.goodeviceount = goodeviceount;
+            return this;
+        }
 
-        public Builder extraJson(String v) { this.extraJson = v; return this; }
+        public Builder extraJson(String extraJson) {
+            this.extraJson = extraJson;
+            return this;
+        }
 
-        public Builder id(String v) { this.id = v; return this; }
+        public Builder id(String id) {
+            this.id = id;
+            return this;
+        }
 
-        public Builder multiPersonId(String v) { this.multiPersonId = v; return this; }
+        public Builder multiPersonId(String multiPersonId) {
+            this.multiPersonId = multiPersonId;
+            return this;
+        }
 
-        public Builder multiPersonRank(int v) { this.multiPersonRank = v; return this; }
+        public Builder multiPersonRank(int multiPersonRank) {
+            this.multiPersonRank = multiPersonRank;
+            return this;
+        }
 
-        public Builder sportImages(List<Map<String, Object>> v) { this.sportImages = v; return this; }
+        public Builder sportImages(List<BaseSportImage> sportImages) {
+            this.sportImages = sportImages;
+            return this;
+        }
 
-        public Builder imageDesc(String v) { this.imageDesc = v; return this; }
+        public Builder sportVideos(List<BaseSportVideo> sportVideos) {
+            this.sportVideos = sportVideos;
+            return this;
+        }
 
-        public Builder imageUrl(String v) { this.imageUrl = v; return this; }
+        public Builder sportIndicators(List<BaseSportIndicator> sportIndicators) {
+            this.sportIndicators = sportIndicators;
+            return this;
+        }
 
-        public Builder groupIndex(String v) { this.groupIndex = v; return this; }
+        public Builder sportScore(double sportScore) {
+            this.sportScore = sportScore;
+            return this;
+        }
 
-        public Builder sportVideos(List<Map<String, Object>> v) { this.sportVideos = v; return this; }
+        public Builder originalSportResult(String originalSportResult) {
+            this.originalSportResult = originalSportResult;
+            return this;
+        }
 
-        public Builder videoDesc(String v) { this.videoDesc = v; return this; }
+        public Builder sportViolationStatus(int sportViolationStatus) {
+            this.sportViolationStatus = sportViolationStatus;
+            return this;
+        }
 
-        public Builder videoUrl(String v) { this.videoUrl = v; return this; }
+        public Builder multiPersonIndex(int multiPersonIndex) {
+            this.multiPersonIndex = multiPersonIndex;
+            return this;
+        }
 
-        public Builder videoCover(String v) { this.videoCover = v; return this; }
+        public Builder placeId(String placeId) {
+            this.placeId = placeId;
+            return this;
+        }
 
-        public Builder sportIndicators(List<Map<String, Object>> v) { this.sportIndicators = v; return this; }
+        public Builder placeName(String placeName) {
+            this.placeName = placeName;
+            return this;
+        }
 
-        public Builder indicatorsUnit(String v) { this.indicatorsUnit = v; return this; }
+        public Builder reportCode(String reportCode) {
+            this.reportCode = reportCode;
+            return this;
+        }
 
-        public Builder indicatorsImages(List<Object> v) { this.indicatorsImages = v; return this; }
+        public Builder sportPlan(BaseSportPlan sportPlan) {
+            this.sportPlan = sportPlan;
+            return this;
+        }
 
-        public Builder indicatorsVideos(List<Object> v) { this.indicatorsVideos = v; return this; }
+        public Builder reqDataSportIndicators(List<BaseSportIndicatorReqData> reqDataSportIndicators) {
+            this.reqDataSportIndicators = reqDataSportIndicators;
+            return this;
+        }
 
-        public Builder sportScore(double v) { this.sportScore = v; return this; }
-
-        public Builder originalSportResult(String v) { this.originalSportResult = v; return this; }
-
-        public Builder sportViolationStatus(int v) { this.sportViolationStatus = v; return this; }
-
-        public Builder multiPersonIndex(int v) { this.multiPersonIndex = v; return this; }
-
-        public Builder placeId(String v) { this.placeId = v; return this; }
-
-        public Builder placeName(String v) { this.placeName = v; return this; }
-
-        public Builder reportCode(String v) { this.reportCode = v; return this; }
-
-        public Builder sportPlan(Object v) { this.sportPlan = v; return this; }
-
-        public Builder ptPlanId(String v) { this.ptPlanId = v; return this; }
-
-        public Builder ptStandardId(String v) { this.ptStandardId = v; return this; }
-
-        public Builder ptStandardType(String v) { this.ptStandardType = v; return this; }
-
-        public Builder ptBatch(int v) { this.ptBatch = v; return this; }
-
-        public Builder ptSportStandardScore(String v) { this.ptSportStandardScore = v; return this; }
-
-        public Builder ptSportStandardLevel(String v) { this.ptSportStandardLevel = v; return this; }
-
-        public Builder ptSportScore(String v) { this.ptSportScore = v; return this; }
-
-        public Builder ptSportStandardAddScore(String v) { this.ptSportStandardAddScore = v; return this; }
-
-        public Builder sportViolationStatus(int v) { this.sportViolationStatus = v; return this; }
-
-        public Builder sportViolationNumber(int v) { this.sportViolationNumber = v; return this; }
-
-        public Builder ptExtrasResult(String v) { this.ptExtrasResult = v; return this; }
-
-        public Builder ptExtrasResultMod(String v) { this.ptExtrasResultMod = v; return this; }
-
-        public Builder ptExtrasScore(String v) { this.ptExtrasScore = v; return this; }
-
-        public Builder ptExtrasScoreMod(String v) { this.ptExtrasScoreMod = v; return this; }
-
-        public Builder ptTestType(int v) { this.ptTestType = v; return this; }
-
-        public Builder reqDataSportIndicators(List<Map<String, Object>> v) { this.reqDataSportIndicators = v; return this; }
-
-        public Builder indicatorsUnit(String v) { this.indicatorsUnit = v; return this; }
-
-        public Builder indicatorsImages(List<Object> v) { this.indicatorsImages = v; return this; }
-
-        public Builder indicatorsVideos(List<Object> v) { this.indicatorsVideos = v; return this; }
-
-        public ReportStudentPlanRequest build() { return new ReportStudentPlanRequest(this); }
+        public ReportStudentPlanRequest build() {
+            return new ReportStudentPlanRequest(this);
+        }
     }
 
-    public String getAccountId() { return accountId; }
-    public String getAppCode() { return appCode; }
-    public int getPerfectCount() { return perfectCount; }
-    public int getBravoCount() { return bravoCount; }
-    public int getGoodeviceount() { return goodeviceount; }
-    public String getExtraJson() { return extraJson; }
-    public String getId() { return id; }
-    public int getInvalidFlag() { return invalidFlag; }
-    public String getMultiPersonId() { return multiPersonId; }
-    public int getMultiPersonRank() { return multiPersonRank; }
-    public long getSportCount() { return sportCount; }
-    public String getSportStartTime() { return sportStartTime; }
-    public String getSportEndTime() { return sportEndTime; }
-    public List<Map<String, Object>> getSportImages() { return sportImages; }
-    public String getImageDesc() { return imageDesc; }
-    public String getImageUrl() { return imageUrl; }
-    public String getGroupIndex() { return groupIndex; }
-    public List<Map<String, Object>> getSportVideos() { return sportVideos; }
-    public String getVideoDesc() { return videoDesc; }
-    public String getVideoUrl() { return videoUrl; }
-    public String getVideoCover() { return videoCover; }
-    public List<Map<String, Object>> getSportIndicators() { return sportIndicators; }
-    public String getIndicatorsCode() { return indicatorsCode; }
-    public String getIndicatorsName() { return indicatorsName; }
-    public String getIndicatorsRemark() { return indicatorsRemark; }
-    public String getIndicatorsUnit() { return indicatorsUnit; }
-    public String getIndicatorsValue() { return indicatorsValue; }
-    public List<Object> getIndicatorsImages() { return indicatorsImages; }
-    public List<Object> getIndicatorsVideos() { return indicatorsVideos; }
-    public String getSportResult() { return sportResult; }
-    public String getSportSceneCode() { return sportSceneCode; }
-    public double getSportScore() { return sportScore; }
-    public String getSportSkuId() { return sportSkuId; }
-    public String getSportSkuSubType() { return sportSkuSubType; }
-    public long getSportTime() { return sportTime; }
-    public String getOriginalSportResult() { return originalSportResult; }
-    public int getSportViolationStatus() { return sportViolationStatus; }
-    public int getMultiPersonIndex() { return multiPersonIndex; }
-    public String getPlaceId() { return placeId; }
-    public String getPlaceName() { return placeName; }
-    public String getReportCode() { return reportCode; }
-    public Object getSportPlan() { return sportPlan; }
-    public String getPtPlanId() { return ptPlanId; }
-    public String getPtStandardId() { return ptStandardId; }
-    public String getPtStandardType() { return ptStandardType; }
-    public int getPtBatch() { return ptBatch; }
-    public String getPtSportStandardScore() { return ptSportStandardScore; }
-    public String getPtSportStandardLevel() { return ptSportStandardLevel; }
-    public String getPtSportScore() { return ptSportScore; }
-    public String getPtSportStandardAddScore() { return ptSportStandardAddScore; }
-    public int getSportViolationStatus() { return sportViolationStatus; }
-    public int getSportViolationNumber() { return sportViolationNumber; }
-    public String getPtExtrasResult() { return ptExtrasResult; }
-    public String getPtExtrasResultMod() { return ptExtrasResultMod; }
-    public String getPtExtrasScore() { return ptExtrasScore; }
-    public String getPtExtrasScoreMod() { return ptExtrasScoreMod; }
-    public int getPtTestType() { return ptTestType; }
-    public List<Map<String, Object>> getReqDataSportIndicators() { return reqDataSportIndicators; }
-    public String getIndicatorsCode() { return indicatorsCode; }
-    public String getIndicatorsName() { return indicatorsName; }
-    public String getIndicatorsRemark() { return indicatorsRemark; }
-    public String getIndicatorsUnit() { return indicatorsUnit; }
-    public String getIndicatorsValue() { return indicatorsValue; }
-    public List<Object> getIndicatorsImages() { return indicatorsImages; }
-    public List<Object> getIndicatorsVideos() { return indicatorsVideos; }
+    public String getAccountId() {
+        return accountId;
+    }
+
+    public String getAppCode() {
+        return appCode;
+    }
+
+    public int getPerfectCount() {
+        return perfectCount;
+    }
+
+    public int getBravoCount() {
+        return bravoCount;
+    }
+
+    public int getGoodeviceount() {
+        return goodeviceount;
+    }
+
+    public String getExtraJson() {
+        return extraJson;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public int getInvalidFlag() {
+        return invalidFlag;
+    }
+
+    public String getMultiPersonId() {
+        return multiPersonId;
+    }
+
+    public int getMultiPersonRank() {
+        return multiPersonRank;
+    }
+
+    public long getSportCount() {
+        return sportCount;
+    }
+
+    public String getSportStartTime() {
+        return sportStartTime;
+    }
+
+    public String getSportEndTime() {
+        return sportEndTime;
+    }
+
+    public List<BaseSportImage> getSportImages() {
+        return sportImages;
+    }
+
+    public List<BaseSportVideo> getSportVideos() {
+        return sportVideos;
+    }
+
+    public List<BaseSportIndicator> getSportIndicators() {
+        return sportIndicators;
+    }
+
+    public String getSportResult() {
+        return sportResult;
+    }
+
+    public String getSportSceneCode() {
+        return sportSceneCode;
+    }
+
+    public double getSportScore() {
+        return sportScore;
+    }
+
+    public String getSportSkuId() {
+        return sportSkuId;
+    }
+
+    public String getSportSkuSubType() {
+        return sportSkuSubType;
+    }
+
+    public long getSportTime() {
+        return sportTime;
+    }
+
+    public String getOriginalSportResult() {
+        return originalSportResult;
+    }
+
+    public int getSportViolationStatus() {
+        return sportViolationStatus;
+    }
+
+    public int getMultiPersonIndex() {
+        return multiPersonIndex;
+    }
+
+    public String getPlaceId() {
+        return placeId;
+    }
+
+    public String getPlaceName() {
+        return placeName;
+    }
+
+    public String getReportCode() {
+        return reportCode;
+    }
+
+    public BaseSportPlan getSportPlan() {
+        return sportPlan;
+    }
+
+    public List<BaseSportIndicatorReqData> getReqDataSportIndicators() {
+        return reqDataSportIndicators;
+    }
 }
