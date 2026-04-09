@@ -1,7 +1,7 @@
 package com.ai.test;
 
 import com.adl.base.AdlApp;
-import com.adl.service.outer.AdlService;
+import com.adl.service.AdlService;
 
 public class DemoApp extends AdlApp {
 

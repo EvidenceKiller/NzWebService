@@ -1,12 +1,17 @@
 package com.adl.service.common;
 
-import android.os.Handler;
-import android.os.Looper;
+import android.text.TextUtils;
 
-import com.adl.service.outer.ConfigService;
+import com.adl.service.ConfigService;
+import com.adl.service.internal.RetrofitClient;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.HashMap;
+import java.util.Map;
+
+import okhttp3.MediaType;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 /**
  * ProjectName: AiPowerAuth
@@ -16,17 +21,9 @@ import java.util.concurrent.Executors;
  */
 public abstract class BaseService implements IDefine {
 
-    private static Handler uiHandler;
-    private static ExecutorService mExecutors;
     private static ConfigService mConfig;
 
-    static {
-        uiHandler = new Handler(Looper.getMainLooper());
-        mExecutors = Executors.newFixedThreadPool(5);
-    }
-
     public BaseService() {
-
     }
 
     public static void setConfigService(ConfigService config) {
@@ -40,26 +37,6 @@ public abstract class BaseService implements IDefine {
         return mConfig;
     }
 
-    public static void postUI(Runnable runnable) {
-        if (runnable != null) {
-            uiHandler.post(runnable);
-        }
-    }
-
-    public static void postTask(Runnable runnable) {
-        if (runnable != null) {
-            mExecutors.execute(runnable);
-        }
-    }
-
-    public static void d(String msg) {
-        InnerLogger.logger().d(msg);
-    }
-
-    public static void e(String msg) {
-        InnerLogger.logger().e(msg);
-    }
-
     public static void waitSleep(long millis) {
         try {
             Thread.sleep(millis);
@@ -70,11 +47,49 @@ public abstract class BaseService implements IDefine {
         }
     }
 
-    // 访问异常处理
-    public static RequestResult parserException(Exception e) {
-        e.printStackTrace();
-        e(e.getMessage());
-        return RequestResult.error(e.toString());
+    // TODO 需优化
+    // 获取七牛云token
+    protected static String getQiNiuToken(String bucket) {
+        try {
+            InnerPreferences pf = InnerPreferences.instance();
+            final String keyTime = bucket + LastQiNiuTime;
+            final String keyToken = bucket + LastQiNiuToken;
+            long lastTime = pf.readLong(keyTime);
+            String token = pf.readString(keyToken);
+            // 30 分钟过期
+            if (System.currentTimeMillis() - lastTime < 5 * IDefine.Minute) {
+                if (!TextUtils.isEmpty(token)) {
+                    return token;
+                }
+            }
+
+            //  七牛云token地址
+            String url = "";
+            if (getConfigService() != null) {
+                url = getConfigService().getQiNiuHost() + "/uc/oss/v1/qiniu/token";
+            }
+
+            //  参数
+            Map<String, Object> map = new HashMap<>();
+            map.put("bucket", bucket);
+            String param = InnerUtil.toJson(map);
+
+            //  post 请求
+            Request request = new Request.Builder().url(url)
+                    .post(RequestBody.create(param, MediaType.parse("application/json; charset=utf-8"))).build();
+            Response response = RetrofitClient.getInstance("", false).getOkHttpClient().newCall(request).execute();
+            if (response.isSuccessful() && response.body() != null) {
+                String content = response.body().string();
+                //  去除双引号
+                token = content.replaceAll("\"", "");
+                pf.putString(keyToken, token);
+                pf.putLong(keyTime, System.currentTimeMillis());
+                return token;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 }

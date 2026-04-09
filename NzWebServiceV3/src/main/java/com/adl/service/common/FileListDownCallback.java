@@ -1,7 +1,5 @@
 package com.adl.service.common;
 
-import com.adl.service.entity.FileDownInfoEntity;
-
 /**
  * ProjectName: AiPowerAuth
  * Author     : 南山

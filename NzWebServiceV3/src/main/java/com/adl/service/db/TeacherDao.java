@@ -1,15 +1,14 @@
 package com.adl.service.db;
 
+import com.adl.service.entity.TeacherEntity;
+
+import java.util.List;
+
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
-
-import com.adl.service.entity.StudentEntity;
-import com.adl.service.entity.TeacherEntity;
-
-import java.util.List;
 
 /**
  * ProjectName: AiPowerAuth

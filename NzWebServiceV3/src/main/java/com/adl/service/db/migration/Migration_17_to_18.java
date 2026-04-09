@@ -3,12 +3,12 @@ package com.adl.service.db.migration;
 import android.database.Cursor;
 import android.util.Log;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import androidx.annotation.NonNull;
 import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
-
-import java.util.HashSet;
-import java.util.Set;
 
 public class Migration_17_to_18 extends Migration {
     public Migration_17_to_18() {

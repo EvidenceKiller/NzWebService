@@ -1,9 +1,9 @@
 package com.adl.service.http.interceptor;
 
 import com.adl.auth.core.AdlAuthFactory;
+import com.adl.service.AdlService;
 import com.adl.service.common.CommonUtil;
-import com.adl.service.common.InnerLogger;
-import com.adl.service.outer.AdlService;
+import com.adl.service.log.NzLog;
 import com.ssp.oss.sdk.core.OssClient;
 
 import java.io.IOException;
@@ -25,12 +25,12 @@ public class TokenRefreshInterceptor implements Interceptor {
         Request request = chain.request();
         Response response = chain.proceed(request);
 
-        InnerLogger.logger().d("response.code = " + response.code());
+        NzLog.d("response.code = " + response.code());
 
         if (isTokenExpired(response)) {
             autoLoginFailNum = 0;
             // 根据和服务端的约定判断token过期
-            InnerLogger.logger().d("静默自动刷新Token,然后重新请求数据");
+            NzLog.d("静默自动刷新Token,然后重新请求数据");
 
             // 同步请求方式，获取最新的Token
             String newSession = autoLogin();
@@ -50,7 +50,7 @@ public class TokenRefreshInterceptor implements Interceptor {
     //  自动登录
     private String autoLogin() {
         if (autoLoginFailNum > 10) {
-            InnerLogger.logger().d("自动登录失败");
+            NzLog.d("自动登录失败");
             return "";
         }
 

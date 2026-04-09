@@ -3,20 +3,28 @@ package com.adl.service.http.interceptor;
 import android.content.Context;
 import android.util.Log;
 
-import com.adl.service.common.InnerLogger;
 import com.adl.service.entity.CacheEntry;
+import com.adl.service.log.NzLog;
+import com.adl.service.utils.HttpCacheUtil;
 import com.adl.service.http.cache.CacheEventListener;
 import com.adl.service.http.cache.HttpFileCache;
 import com.adl.service.http.cache.IHttpCache;
-import com.adl.service.utils.HttpCacheUtil;
-
-import okhttp3.*;
-import okio.Buffer;
-import okio.BufferedSource;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
+
+import okhttp3.Interceptor;
+import okhttp3.MediaType;
+import okhttp3.Protocol;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+import okhttp3.ResponseBody;
+import okio.Buffer;
+import okio.BufferedSource;
 
 public class SmartCacheInterceptor implements Interceptor {
 
@@ -175,7 +183,7 @@ public class SmartCacheInterceptor implements Interceptor {
         notifyCacheEvent("HTTP_ERROR", cacheKey, false,
                 "Status: " + response.code());
         CacheEntry cacheEntry = customCache.get(cacheKey);
-        InnerLogger.logger().e("handleHttpError code: " + response.code() + ",message: " + response.message());
+        NzLog.e("handleHttpError code: " + response.code() + ",message: " + response.message());
         if (cacheEntry != null && !cacheEntry.isExpired()) {
             // 返回缓存数据
             notifyCacheEvent("CACHE_HIT", cacheKey, true,
@@ -206,7 +214,7 @@ public class SmartCacheInterceptor implements Interceptor {
         CacheEntry cacheEntry = customCache.get(cacheKey);
         notifyCacheEvent(errorType, cacheKey, false, e.getMessage());
 
-        InnerLogger.logger().e("handleNetworkError errorType: " + errorType + ",message: " + e.getMessage());
+        NzLog.e("handleNetworkError errorType: " + errorType + ",message: " + e.getMessage());
 
         if (cacheEntry != null && !cacheEntry.isExpired()) {
             // 返回缓存数据
@@ -253,7 +261,7 @@ public class SmartCacheInterceptor implements Interceptor {
                 }
             }
         }
-        InnerLogger.logger().d("网络请求出错：命中缓存，返回缓存数据: " + cacheEntry.getUrl());
+        NzLog.d("网络请求出错：命中缓存，返回缓存数据: " + cacheEntry.getUrl());
         return builder.build();
     }
 

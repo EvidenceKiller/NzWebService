@@ -1,12 +1,5 @@
 package com.adl.service.db;
 
-import androidx.room.Dao;
-import androidx.room.Delete;
-import androidx.room.Insert;
-import androidx.room.OnConflictStrategy;
-import androidx.room.Query;
-import androidx.room.Update;
-
 import com.adl.service.entity.ClassQueryInfo;
 import com.adl.service.entity.CollegeQueryInfo;
 import com.adl.service.entity.FacultyQueryInfo;
@@ -19,6 +12,13 @@ import com.adl.service.entity.StudentGradeClassResult;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
+
+import androidx.room.Dao;
+import androidx.room.Delete;
+import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
+import androidx.room.Query;
+import androidx.room.Update;
 
 /**
  * ProjectName: AiPowerAuth

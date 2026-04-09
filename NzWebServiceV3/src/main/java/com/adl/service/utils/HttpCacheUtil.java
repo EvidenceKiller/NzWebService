@@ -1,7 +1,8 @@
 package com.adl.service.utils;
 
-import com.adl.service.common.InnerLogger;
-import com.adl.service.outer.AdlService;
+
+import com.adl.service.AdlService;
+import com.adl.service.log.NzLog;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -63,7 +64,7 @@ public class HttpCacheUtil {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            InnerLogger.logger().e("saveCache error;" + e.getMessage());
+            NzLog.e("saveCache error;" + e.getMessage());
         }
     }
 

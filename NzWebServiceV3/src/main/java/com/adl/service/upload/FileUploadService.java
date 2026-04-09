@@ -2,12 +2,13 @@ package com.adl.service.upload;
 
 import android.text.TextUtils;
 
+import com.adl.service.AdlService;
+import com.adl.service.ConfigService;
+import com.adl.service.common.BaseService;
 import com.adl.service.common.IDefine;
 import com.adl.service.db.FileUploadDao;
 import com.adl.service.entity.FileUploadInfoEntity;
-import com.adl.service.outer.AdlService;
-import com.adl.service.outer.ConfigService;
-import com.adl.service.web.BaseHttpService;
+import com.adl.service.log.NzLog;
 import com.qiniu.android.common.FixedZone;
 import com.qiniu.android.http.ResponseInfo;
 import com.qiniu.android.storage.Configuration;
@@ -27,7 +28,7 @@ import java.util.concurrent.Executors;
  * 1. 视频文件
  * 2. 图片上传
  */
-public class FileUploadService extends BaseHttpService {
+public class FileUploadService extends BaseService {
 
     private static FileUploadService _instance;
     private ExecutorService mExecutors;
@@ -78,7 +79,7 @@ public class FileUploadService extends BaseHttpService {
 
                     File file = new File(entity.getLocalPath());
                     if (file.exists()) {
-                        d("正在上传: " + entity.getLocalPath());
+                        NzLog.d("正在上传: " + entity.getLocalPath());
                         startCallback(file);
                         String remoteFileName = entity.getRemoteFileName();
                         String bucket = entity.getRemoteBucket();
@@ -90,7 +91,7 @@ public class FileUploadService extends BaseHttpService {
                             entity.setRemoteUrl(url);
                             entity.setUploadStatus(FileUploadStatusDone);
                             entity.setRemark("上传完成");
-                            d("文件上传成功: " + url);
+                            NzLog.d("文件上传成功: " + url);
                         } else {
                             entity.setUploadStatus(FileUploadStatusNew);
                             entity.setRemark("上传失败，等待下次上传");
@@ -142,7 +143,7 @@ public class FileUploadService extends BaseHttpService {
                 String facePrefix = getConfigService().getFacePrefix();
                 return facePrefix + info.response.getString("key");
             } else {
-                e("七牛上传: " + info.error);
+                NzLog.e("七牛上传: " + info.error);
             }
         } catch (Exception e) {
             e.printStackTrace();

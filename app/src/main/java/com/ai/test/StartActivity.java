@@ -9,8 +9,7 @@ import com.adl.auth.core.AdlAuthCallback;
 import com.adl.auth.core.AdlAuthFactory;
 import com.adl.base.activity.NextWriter;
 import com.adl.base.log.AdlLogger;
-import com.adl.service.outer.AdlService;
-import com.adl.service.web.constants.Platform;
+import com.adl.service.AdlService;
 import com.adl.ts.general.R;
 import com.yanzhenjie.permission.AndPermission;
 
@@ -73,7 +72,6 @@ public class StartActivity extends BaseActivity {
                 String regCode = authFactory.getRegisterCode();
 
                 AdlService.getService()
-                        .setPlatform(Platform.V3)
                         .setSdcard("com.adl.sport")
                         .setHost(testBusHost_V3)
                         .setQiNiuHost("http://172.16.0.206:8082/gateway/api")

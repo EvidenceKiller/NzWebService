@@ -1,19 +1,8 @@
 package com.adl.service.db;
 
 
-import androidx.annotation.NonNull;
-import androidx.room.AutoMigration;
-import androidx.room.Database;
-import androidx.room.DeleteTable;
-import androidx.room.RenameColumn;
-import androidx.room.RoomDatabase;
-import androidx.room.TypeConverters;
-import androidx.room.migration.AutoMigrationSpec;
-import androidx.sqlite.db.SupportSQLiteDatabase;
-
 import com.adl.service.common.IDefine;
 import com.adl.service.common.InnerPreferences;
-import com.adl.service.db.converter.ListStringConverter;
 import com.adl.service.entity.CitizenEntity;
 import com.adl.service.entity.DictEntity;
 import com.adl.service.entity.FileDownInfoEntity;
@@ -32,6 +21,17 @@ import com.adl.service.entity.StandardConfigEntity;
 import com.adl.service.entity.StudentEntity;
 import com.adl.service.entity.TeacherEntity;
 import com.adl.service.entity.TeacherSportLocalEntity;
+import com.adl.service.db.converter.ListStringConverter;
+
+import androidx.annotation.NonNull;
+import androidx.room.AutoMigration;
+import androidx.room.Database;
+import androidx.room.DeleteTable;
+import androidx.room.RenameColumn;
+import androidx.room.RoomDatabase;
+import androidx.room.TypeConverters;
+import androidx.room.migration.AutoMigrationSpec;
+import androidx.sqlite.db.SupportSQLiteDatabase;
 
 /**
  * ProjectName: AiPowerAuth

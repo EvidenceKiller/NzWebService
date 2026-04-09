@@ -2,19 +2,28 @@ package com.adl.service.common;
 
 import android.text.TextUtils;
 
+import com.adl.service.AdlService;
+import com.adl.service.ConfigService;
 import com.adl.service.db.FileDownDao;
 import com.adl.service.entity.FileDownInfoEntity;
 import com.adl.service.entity.StudentEntity;
 import com.adl.service.entity.TeacherEntity;
-import com.adl.service.outer.AdlService;
-import com.adl.service.outer.ConfigService;
-import com.adl.service.web.BaseHttpService;
+import com.adl.service.internal.RetrofitClient;
+import com.adl.service.log.NzLog;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
+import okhttp3.MediaType;
+import okhttp3.Request;
+import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 /**
  * ProjectName: AiPowerAuth
@@ -144,7 +153,6 @@ public final class FileDownManager {
                 listCallback.onStart();
             }
 
-            InnerLogger logger = InnerLogger.logger();
             FileDownDao fileDao = AdlService.getService().getFileDownDao();
             List<FileDownInfoEntity> infoList = fileDao.getAll();
 
@@ -174,7 +182,7 @@ public final class FileDownManager {
 
                 FileDownInfoEntity entity = findDownInfo(infoList, fileName);
                 if (entity != null && file.exists() && file.length() == entity.getContentLength()) {
-                    logger.d("文件已经存在: " + file.getAbsolutePath());
+                    NzLog.d("文件已经存在: " + file.getAbsolutePath());
 
                     downSuccess++;
                     if (listCallback != null) {
@@ -187,7 +195,7 @@ public final class FileDownManager {
                     continue;
                 }
 
-                if (BaseHttpService.downloadCommonFile(task, callback)) {
+                if (downloadCommonFile(task, callback)) {
                     // 入库
                     if (entity != null) {
                         entity.setContentLength(task.contentLength);
@@ -260,7 +268,6 @@ public final class FileDownManager {
                 listCallback.onStart();
             }
 
-            InnerLogger logger = InnerLogger.logger();
             FileDownDao fileDao = AdlService.getService().getFileDownDao();
 
             FileDownSampleCallback callback = new FileDownSampleCallback() {
@@ -289,7 +296,7 @@ public final class FileDownManager {
 
                 FileDownInfoEntity entity = queryDownInfo(task.url);
                 if (entity != null && file.exists() && file.length() == entity.getContentLength()) {
-                    logger.d("文件已经存在: " + file.getAbsolutePath());
+                    NzLog.d("文件已经存在: " + file.getAbsolutePath());
 
                     downSuccess++;
                     if (listCallback != null) {
@@ -301,7 +308,7 @@ public final class FileDownManager {
                     continue;
                 }
 
-                if (BaseHttpService.downloadCommonFile(task, callback)) {
+                if (downloadCommonFile(task, callback)) {
                     // 入库
                     if (entity != null) {
                         entity.setContentLength(task.contentLength);
@@ -455,6 +462,84 @@ public final class FileDownManager {
             this.url = url;
             this.suffix = suffix;
             this.userId = userId;
+        }
+    }
+
+    // TODO 需要修改为使用Retrofit实现，目前先不做
+    // 下载公共文件，通过 Get 可直接访问
+    public static boolean downloadCommonFile(FileDownManager.FileDownTask bean,
+                                             FileDownCallback callback) {
+        try {
+            String url = bean.url;
+            Request request = new Request.Builder().url(url).build();
+            // TODO 临时写法，后续需优化
+            Response response = RetrofitClient.getInstance("", false).getOkHttpClient().newCall(request).execute();
+            if (response.isSuccessful() && response.body() != null) {
+                ResponseBody respBody = response.body();
+                MediaType mediaType = respBody.contentType();
+                if (mediaType == null) return false;
+
+                long length = respBody.contentLength();
+                InputStream input = respBody.byteStream();
+
+                File file = bean.localFile;
+                bean.contentLength = length;
+
+                // 文件是否存在
+                if (file.exists()) {
+                    file.delete();
+                }
+
+                OutputStream out = new FileOutputStream(file);
+                long totalRead = 0;
+                int read = -1;
+                byte[] buffer = new byte[64 * 1024];
+                while ((read = input.read(buffer)) > 0) {
+                    out.write(buffer, 0, read);
+                    out.flush();
+                    totalRead += read;
+                    if (callback != null) {
+                        callback.onProgress(length, totalRead);
+                    }
+                }
+                InnerUtil.close(out);
+                InnerUtil.close(input);
+                closeResponseBody(respBody);
+
+                // 是否读完
+                if (totalRead != length) {
+                    file.delete();
+                    if (callback != null) {
+                        callback.onError("文件下载失败");
+                    }
+                    return false;
+                }
+
+                NzLog.d("文件下载完成");
+
+                return true;
+            } else {
+                if (response.body() != null) {
+                    String content = response.body().string();
+                    callback.onError(content);
+                }
+            }
+        } catch (Exception e) {
+            if (callback != null) {
+                callback.onError(e.getMessage());
+            }
+        }
+
+        return false;
+    }
+
+    protected static void closeResponseBody(ResponseBody body) {
+        try {
+            if (body != null) {
+                body.close();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

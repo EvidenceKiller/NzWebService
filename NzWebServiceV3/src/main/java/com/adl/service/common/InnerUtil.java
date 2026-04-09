@@ -1,7 +1,5 @@
 package com.adl.service.common;
 
-import android.util.Log;
-
 import com.adl.service.entity.PageInfo;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;

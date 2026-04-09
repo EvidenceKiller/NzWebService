@@ -4,15 +4,13 @@ import android.os.Build;
 import android.text.TextUtils;
 import android.util.Pair;
 
-import androidx.annotation.RequiresApi;
-import androidx.lifecycle.MutableLiveData;
-
-import com.adl.base.log.AdlLogger;
+import com.adl.service.AdlService;
+import com.adl.service.ConfigService;
+import com.adl.service.common.BaseService;
 import com.adl.service.common.CommonUtil;
 import com.adl.service.common.IDefine;
 import com.adl.service.common.InnerUtil;
 import com.adl.service.common.OssType;
-import com.adl.service.common.RequestResult;
 import com.adl.service.db.FileUploadDao;
 import com.adl.service.db.RecordLocalDao;
 import com.adl.service.db.RecordUploadDao;
@@ -22,12 +20,15 @@ import com.adl.service.entity.SportRecordEntity;
 import com.adl.service.entity.SportRecordLocalEntity;
 import com.adl.service.entity.TeacherSportLocalEntity;
 import com.adl.service.entity.TempUploadRecord;
-import com.adl.service.outer.AdlService;
-import com.adl.service.outer.ConfigService;
+import com.adl.service.exception.NzBaseException;
+import com.adl.service.exception.NzEmptyDataException;
+import com.adl.service.exception.NzNetworkException;
+import com.adl.service.exception.NzUnknownException;
+import com.adl.service.log.NzLog;
 import com.adl.service.utils.DirectBufferMD5;
 import com.adl.service.utils.VideoThumbnailUtils;
-import com.adl.service.web.BaseHttpService;
-import com.adl.service.web.SportRecordService;
+import com.adl.service.web.request.ReportStudentSportRequest;
+import com.adl.service.web.request.ReportTeacherSportRequest;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -38,12 +39,13 @@ import com.qiniu.android.storage.UploadManager;
 import com.ssp.oss.sdk.model.SyncUploadResult;
 
 import java.io.File;
-import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+import androidx.annotation.RequiresApi;
+import androidx.lifecycle.MutableLiveData;
 
 /**
  * ProjectName: AiPowerAuth
@@ -61,7 +63,7 @@ import java.util.stream.Collectors;
  * 运动类型：四位
  */
 @RequiresApi(api = Build.VERSION_CODES.N)
-public class RecordUploadService extends BaseHttpService {
+public class RecordUploadService extends BaseService {
     private final String TAG = "RecordUpload";
     private final String errorRecordIdRepeat = "运动成绩上报记录id重复";
 
@@ -136,13 +138,13 @@ public class RecordUploadService extends BaseHttpService {
             while (mStart) {
                 if (Thread.currentThread().isInterrupted() || !mStart) {
                     postStatus(IDefine.RecordUploadStatusDone);
-                    d(TAG + " no start");
+                    NzLog.d(TAG + " no start");
                     break;
                 }
                 //  网络未连接
                 if (!CommonUtil.isNetworkConnected(AdlService.getService().getContext())) {
                     postStatus(IDefine.RecordUploadStatusNoNetwork);
-                    d(TAG + " No Network Connected");
+                    NzLog.d(TAG + " No Network Connected");
                     waitSleep(sleepTime);
                     continue;
                 }
@@ -152,7 +154,7 @@ public class RecordUploadService extends BaseHttpService {
 
                 if (configService == null || (TextUtils.isEmpty(configService.getQiNiuHost())
                         || TextUtils.isEmpty(configService.getOssConfigHost()))) {
-                    d(TAG + " 配置失败");
+                    NzLog.d(TAG + " 配置失败");
                     postStatus(IDefine.RecordUploadStatusDone);
                     waitSleep(sleepTime);
                     continue;
@@ -169,12 +171,12 @@ public class RecordUploadService extends BaseHttpService {
                     List<SportRecordLocalEntity> sportRecordList = recordLocalDao.queryNotUpload(mBelongId, mAppCode);
 
                     if (sportRecordList == null || sportRecordList.isEmpty()) {
-                        d(TAG + " 记录 为空 " );
+                        NzLog.d(TAG + " 记录 为空 ");
                         postStatus(IDefine.RecordUploadStatusDone);
                         waitSleep(sleepTime);
                         continue;
                     }
-                    d(TAG + " 记录size = " + sportRecordList.size());
+                    NzLog.d(TAG + " 记录size = " + sportRecordList.size());
 
                     postStatus(IDefine.RecordUploadStatusDoing);
 
@@ -187,7 +189,7 @@ public class RecordUploadService extends BaseHttpService {
                                 sportRecord.setUploadFileStatus(IDefine.RecordUploadFileDone);
                                 updateData(sportRecord, tempUploadRecord);
                             } else {
-                                d(TAG + " 视频上传失败");
+                                NzLog.d(TAG + " 视频上传失败");
                                 sportRecord.setUploadErrorMsg("视频上传失败");
                                 recordLocalDao.update(sportRecord);
                             }
@@ -199,7 +201,7 @@ public class RecordUploadService extends BaseHttpService {
                     waitSleep(sleepTime);
                 } catch (Exception e) {
                     e.printStackTrace();
-                    d(TAG + "上传失败" + e.getMessage().toString());
+                    NzLog.d(TAG + "上传失败" + e.getMessage().toString());
                     postStatus(IDefine.RecordUploadStatusDoing);
                 }
                 if (Thread.currentThread().isInterrupted() || !mStart) {
@@ -231,7 +233,7 @@ public class RecordUploadService extends BaseHttpService {
 
         //  对于失败的数据重传,每天失败三次后不再重传
         if (sportRecord.isTodayUploadDate() && uploadDataFailNum >= DAILY_UPLOAD_RETRY_LIMIT) {
-            d(TAG + " 记录 " + sportRecord.getId() + ": 达到今日重试上限，明日自动恢复");
+            NzLog.d(TAG + " 记录 " + sportRecord.getId() + ": 达到今日重试上限，明日自动恢复");
             if (uploadDataFailNum == DAILY_UPLOAD_RETRY_LIMIT) {
                 sportRecord.addUploadDataFailNum();
                 String uploadErrorMsg = sportRecord.getUploadErrorMsg();
@@ -247,20 +249,22 @@ public class RecordUploadService extends BaseHttpService {
             sportRecord.restUploadDataFailNum();
         }
 
+        // TODO 需重新优化
         //  注：上传过程中，可能修改成绩，所以需要上传过后再修改成绩
         if (uploadDataStatus == IDefine.RecordUploadDataNew) {
             //  未上传
-            RequestResult requestResult = uploadRecord(tempUploadRecord.getSportUploadRecord());
-            if (requestResult != null) {
-                String msg = requestResult.getMsg();
-                if (requestResult.isOk()) {
+            try {
+                boolean requestResult = uploadRecord(tempUploadRecord.getSportUploadRecord());
+                if (requestResult) {
                     //  上传成功
                     sportRecord.setUploadErrorMsg("");
                     sportRecord.setUploadDataStatus(IDefine.RecordUploadDataDone);
                     recordUploadDao.insert(tempUploadRecord.getSportUploadRecord());
-                } else if (requestResult.isCode500()) {
+                }
+            } catch (NzNetworkException e) {
+                if (e.getHttpCode() == 500) {
                     //  {"code":500,"msg":"运动成绩上报记录id重复"}
-                    if (errorRecordIdRepeat.equals(requestResult.getMsg())) {
+                    if (errorRecordIdRepeat.equals(e.getMessage())) {
                         //  运动成绩上报记录id重复 -> 处理为已上传
                         sportRecord.setUploadErrorMsg("");
                         sportRecord.setUploadDataStatus(IDefine.RecordUploadDataDone);
@@ -268,38 +272,43 @@ public class RecordUploadService extends BaseHttpService {
                     } else {
                         //  运动配置问题导致数据不合法
                         //  上传失败次数+1
-                        sportRecord.setUploadErrorMsg(msg);
+                        sportRecord.setUploadErrorMsg(e.getMessage());
                         sportRecord.addUploadDataFailNum();
                     }
-                } else if (requestResult.isCode50000()) {
+                } else if (e.getHttpCode() > 50000) {
                     //  脏数据(用户数据被删除或者其他目前数据错误),对于返回的3000,本地数据可以删除这条记录
-                    sportRecord.setUploadErrorMsg(msg);
+                    sportRecord.setUploadErrorMsg(e.getMessage());
                     sportRecord.setUploadDataStatus(IDefine.RecordUploadDataFail);
                     sportRecord.setUploadModifyStatus(IDefine.RecordUploadModifyNot);
                 }
+            } catch (NzUnknownException | NzEmptyDataException e) {
+                // TODO
             }
         } else if (uploadDataStatus == IDefine.RecordUploadDataDone) {
             //  已上传，且修改成绩
             if (uploadModifyStatus == IDefine.RecordUploadModifyExist) {
-                RequestResult requestResult = updateRecord(tempUploadRecord.getSportUploadRecord());
-                if (requestResult != null) {
-                    String msg = requestResult.getMsg();
-                    if (requestResult.isOk()) {
+                try {
+                    boolean requestResult = updateRecord(tempUploadRecord.getSportUploadRecord());
+                    if (requestResult) {
                         //  修改成功
                         sportRecord.setUploadErrorMsg("");
                         sportRecord.setUploadModifyStatus(IDefine.RecordUploadModifyNot);
                         recordUploadDao.insert(tempUploadRecord.getSportUploadRecord());
-                    } else if (requestResult.isCode500()) {
+                    }
+                } catch (NzNetworkException e) {
+                    if (e.getHttpCode() == 500) {
                         //  运动配置问题导致数据不合法
                         //  上传失败次数+1
-                        sportRecord.setUploadErrorMsg(msg);
+                        sportRecord.setUploadErrorMsg(e.getMessage());
                         sportRecord.addUploadDataFailNum();
-                    } else if (requestResult.isCode50000()) {
+                    } else if (e.getHttpCode() > 50000) {
                         //  脏数据(用户数据被删除或者其他目前数据错误),对于返回的3000,本地数据可以删除这条记录
-                        sportRecord.setUploadErrorMsg(msg);
+                        sportRecord.setUploadErrorMsg(e.getMessage());
                         sportRecord.setUploadDataStatus(IDefine.RecordUploadDataFail);
                         sportRecord.setUploadModifyStatus(IDefine.RecordUploadModifyNot);
                     }
+                } catch (NzUnknownException | NzEmptyDataException e) {
+                    // TODO
                 }
             }
         } else if (uploadDataStatus == IDefine.RecordUploadDataFail) {
@@ -340,7 +349,7 @@ public class RecordUploadService extends BaseHttpService {
 
         //  对于失败的数据重传,每天失败三次后不再重传
         if (teacherSport.isTodayUploadDate() && uploadDataFailNum == DAILY_UPLOAD_RETRY_LIMIT) {
-            d(TAG + " 记录 " + teacherSport.getAccountName() + ": 今日上传失败三次，不再重传");
+            NzLog.d(TAG + " 记录 " + teacherSport.getAccountName() + ": 今日上传失败三次，不再重传");
             return;
         }
 
@@ -352,42 +361,55 @@ public class RecordUploadService extends BaseHttpService {
 
         teacherSport.setOriginalSportResult(teacherSport.getSportResult());
 
+        // TODO
         //  注：上传过程中，可能修改成绩，所以需要上传过后再修改成绩
         if (uploadDataStatus == IDefine.RecordUploadDataNew) {
             //  未上传
-            RequestResult requestResult = SportRecordService.uploadTeacherData(teacherSport);
-            if (requestResult != null) {
-                if (requestResult.isOk()) {
+            ReportTeacherSportRequest request = ReportTeacherSportRequest.builder(teacherSport.getAccountId(), teacherSport.getAppCode(), teacherSport.getAppName(), 0, Long.parseLong(teacherSport.getSportCount()), teacherSport.getSportStartTime(), teacherSport.getSportEndTime(), teacherSport.getSportResult(), teacherSport.getSportSceneCode(), teacherSport.getSportSkuId(), "", Long.parseLong(teacherSport.getSportTime()))
+                    .build();
+            try {
+                boolean result = AdlService.getService().getSportInfoCaller().reportTeacherSportSync(request);
+                if (result) {
                     //  上传成功
                     teacherSport.setUploadDataStatus(IDefine.RecordUploadDataDone);
-                    d(teacherSport.getAccountName() + "教师记录已上传");
-                } else if (requestResult.isCode500()) {
+                    NzLog.d(teacherSport.getAccountName() + "教师记录已上传");
+                }
+            } catch (NzNetworkException e) {
+                if (e.getHttpCode() == 500) {
                     //  运动配置问题导致数据不合法
                     //  上传失败次数+1
                     teacherSport.addUploadDataFailNum();
-                } else if (requestResult.isCode50000()) {
+                } else if (e.getHttpCode() > 50000) {
                     //  脏数据(用户数据被删除或者其他目前数据错误),对于返回的3000,本地数据可以删除这条记录
                     teacherSport.setUploadDataStatus(IDefine.RecordUploadDataFail);
                     teacherSport.setUploadModifyStatus(IDefine.RecordUploadModifyNot);
                 }
+            } catch (NzUnknownException | NzEmptyDataException e) {
+                // TODO
             }
         } else if (uploadDataStatus == IDefine.RecordUploadDataDone) {
             //  已上传，且修改成绩
             if (uploadModifyStatus == IDefine.RecordUploadModifyExist) {
-                RequestResult requestResult = SportRecordService.uploadTeacherData(teacherSport);
-                if (requestResult != null) {
-                    if (requestResult.isOk()) {
-                        //  修改成功
+                ReportTeacherSportRequest request = ReportTeacherSportRequest.builder(teacherSport.getAccountId(), teacherSport.getAppCode(), teacherSport.getAppName(), 0, Long.parseLong(teacherSport.getSportCount()), teacherSport.getSportStartTime(), teacherSport.getSportEndTime(), teacherSport.getSportResult(), teacherSport.getSportSceneCode(), teacherSport.getSportSkuId(), "", Long.parseLong(teacherSport.getSportTime()))
+                        .build();
+                try {
+                    boolean result = AdlService.getService().getSportInfoCaller().reportTeacherSportSync(request);
+                    if (result) {
+                        //  上传成功
                         teacherSport.setUploadModifyStatus(IDefine.RecordUploadModifyNot);
-                    } else if (requestResult.isCode500()) {
+                    }
+                } catch (NzNetworkException e) {
+                    if (e.getHttpCode() == 500) {
                         //  运动配置问题导致数据不合法
                         //  上传失败次数+1
                         teacherSport.addUploadDataFailNum();
-                    } else if (requestResult.isCode50000()) {
+                    } else if (e.getHttpCode() > 50000) {
                         //  脏数据(用户数据被删除或者其他目前数据错误),对于返回的3000,本地数据可以删除这条记录
                         teacherSport.setUploadDataStatus(IDefine.RecordUploadDataFail);
                         teacherSport.setUploadModifyStatus(IDefine.RecordUploadModifyNot);
                     }
+                } catch (NzUnknownException | NzEmptyDataException e) {
+                    // TODO
                 }
             }
         } else if (uploadDataStatus == IDefine.RecordUploadDataFail) {
@@ -621,7 +643,7 @@ public class RecordUploadService extends BaseHttpService {
                 entity.setRemoteUrl(url);
                 entity.setUploadStatus(FileUploadStatusDone);
                 entity.setRemark("上传完成");
-                d(TAG + " 文件上传成功 QiNiuYun: " + url);
+                NzLog.d(TAG + " 文件上传成功 QiNiuYun: " + url);
                 isSuccess = true;
             } else {
                 entity.setUploadStatus(FileUploadStatusNew);
@@ -650,18 +672,18 @@ public class RecordUploadService extends BaseHttpService {
                 entity.setRemoteUrl(url);
                 entity.setUploadStatus(FileUploadStatusDone);
                 entity.setRemark("上传完成");
-                d(TAG + " 文件上传成功 Oss: " + url);
+                NzLog.d(TAG + " 文件上传成功 Oss: " + url);
                 isSuccess = true;
             } else {
                 entity.setUploadStatus(FileUploadStatusNew);
                 entity.setRemark("上传失败，等待下次上传");
-                d(TAG + " 文件上传失败 Oss:" );
+                NzLog.d(TAG + " 文件上传失败 Oss:");
                 isSuccess = false;
             }
         } else {
             entity.setUploadStatus(FileUploadStatusError);
             entity.setRemark("文件路径不存在");
-            d(TAG + " 文件上传失败 Oss: 文件不存在" );
+            NzLog.d(TAG + " 文件上传失败 Oss: 文件不存在");
             isSuccess = true;
         }
 
@@ -670,25 +692,31 @@ public class RecordUploadService extends BaseHttpService {
     }
 
     //  上传记录
-    private RequestResult uploadRecord(SportRecordEntity sportRecord) {
+    private boolean uploadRecord(SportRecordEntity sportRecord) {
         /// 上传之前的数据处理
         //  游客
         if (IDefine.AccountTypeVisitor.equals(sportRecord.getAccountType())) {
             sportRecord.setAccountId("");
         }
 
-        return SportRecordService.uploadRecord(sportRecord);
+//        return SportRecordService.uploadRecord(sportRecord);
+        ReportStudentSportRequest request = ReportStudentSportRequest.builder(sportRecord.getAccountId(), sportRecord.getAppCode(), sportRecord.getInvalidFlag(), Long.parseLong(sportRecord.getSportCount()), sportRecord.getSportStartTime(), sportRecord.getSportEndTime(), sportRecord.getSportResult(), sportRecord.getSportSceneCode(), sportRecord.getSportSkuId(), sportRecord.getSportSkuSubType(), Long.parseLong(sportRecord.getSportTime()))
+                .build();
+        return AdlService.getService().getSportInfoCaller().reportStudentSportSync(request);
     }
 
     //  修改记录
-    private RequestResult updateRecord(SportRecordEntity sportRecord) {
+    private boolean updateRecord(SportRecordEntity sportRecord) {
         /// 上传之前的数据处理
         //  游客
         if (IDefine.AccountTypeVisitor.equals(sportRecord.getAccountType())) {
             sportRecord.setAccountId("");
         }
 
-        return SportRecordService.updateRecord(sportRecord);
+//        return SportRecordService.updateRecord(sportRecord);
+        ReportStudentSportRequest request = ReportStudentSportRequest.builder(sportRecord.getAccountId(), sportRecord.getAppCode(), sportRecord.getInvalidFlag(), Long.parseLong(sportRecord.getSportCount()), sportRecord.getSportStartTime(), sportRecord.getSportEndTime(), sportRecord.getSportResult(), sportRecord.getSportSceneCode(), sportRecord.getSportSkuId(), sportRecord.getSportSkuSubType(), Long.parseLong(sportRecord.getSportTime()))
+                .build();
+        return AdlService.getService().getSportInfoCaller().updateStudentSportSync(request);
     }
 
 
@@ -713,8 +741,8 @@ public class RecordUploadService extends BaseHttpService {
     }
 
     /*
-    * 因为minio 本地部署，上传记录时的文件地址必须带buketName,但是在上传文件时又不需要buketName
-    * */
+     * 因为minio 本地部署，上传记录时的文件地址必须带buketName,但是在上传文件时又不需要buketName
+     * */
     private String createBuketName() {
         try {
             OssFileUploadService oss = OssFileUploadService.instance();
@@ -732,14 +760,14 @@ public class RecordUploadService extends BaseHttpService {
 
     private String syncUploadFileToQiNiuYun(File file, String name, String token) {
         try {
-            e(TAG + " 七牛上传: " + file.getAbsolutePath() + "; name: " + name + "; token: " + token);
+            NzLog.e(TAG + " 七牛上传: " + file.getAbsolutePath() + "; name: " + name + "; token: " + token);
             ResponseInfo info = uploadManager.syncPut(file, name, token, null);
             if (info.isOK()) {
                 //  绝对路径
                 String facePrefix = getConfigService().getFacePrefix();
                 return facePrefix + info.response.getString("key");
             } else {
-                e(TAG + " 七牛上传: " + info.error);
+                NzLog.e(TAG + " 七牛上传: " + info.error);
             }
         } catch (Exception e) {
             e.printStackTrace();

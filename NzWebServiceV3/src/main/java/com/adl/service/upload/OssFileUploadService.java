@@ -1,13 +1,10 @@
 package com.adl.service.upload;
 
-import androidx.annotation.NonNull;
-
 import com.adl.base.log.AdlLogger;
+import com.adl.service.AdlService;
+import com.adl.service.common.BaseService;
 import com.adl.service.common.OssType;
-import com.adl.service.outer.AdlService;
-import com.adl.service.web.BaseHttpService;
-import com.adl.web.service.BuildConfig;
-import com.qiniu.android.utils.LogUtil;
+import com.adl.service.log.NzLog;
 import com.ssp.oss.sdk.callback.OssSwitchCallback;
 import com.ssp.oss.sdk.callback.UploadCallback;
 import com.ssp.oss.sdk.core.OssClient;
@@ -27,7 +24,7 @@ import java.io.File;
  * 1. 视频文件
  * 2. 图片上传
  */
-public class OssFileUploadService extends BaseHttpService {
+public class OssFileUploadService extends BaseService {
     private static OssFileUploadService _instance;
 
     private OssFileUploadService() {
@@ -68,12 +65,12 @@ public class OssFileUploadService extends BaseHttpService {
     public String getPrefix() {
         OssConfigList ossConfigList = getOssConfigList();
         if (ossConfigList == null) {
-            e("未找到对应的OSS配置");
+            NzLog.e("未找到对应的OSS配置");
             return "";
         }
         OssConfig config = ossConfigList.findConfig(OssClient.getCurrentOssType());
         if (config != null) {
-            d("该配置下的前缀：" + config.getCdnBaseUrl());
+            NzLog.d("该配置下的前缀：" + config.getCdnBaseUrl());
             return config.getCdnBaseUrl();
         }
         return "";
@@ -163,15 +160,15 @@ public class OssFileUploadService extends BaseHttpService {
         try {
             OssConfig ossConfig = getOssConfigList().findConfig(ossType.value());
             if (ossConfig == null) {
-                e("未找到对应的OSS配置：" + ossType.value());
+                NzLog.e("未找到对应的OSS配置：" + ossType.value());
                 return;
             }
             // 切换OSS(会自动获取新的凭证)
             OssClient.switchOss(ossType.value());
-            d("已切换到 " + ossType.value());
+            NzLog.d("已切换到 " + ossType.value());
         } catch (Exception e) {
             e.printStackTrace();
-            e("切换失败：" + e.getMessage());
+            NzLog.e("切换失败：" + e.getMessage());
         }
     }
 
@@ -186,7 +183,7 @@ public class OssFileUploadService extends BaseHttpService {
         OssConfig ossConfig = getOssConfigList().findConfig(ossType.value());
         if (ossConfig == null) {
             callback.onError(ossType.value(), "未找到对应的OSS配置：" + ossType.value(), null);
-            e("未找到对应的OSS配置：" + ossType.value());
+            NzLog.e("未找到对应的OSS配置：" + ossType.value());
             return;
         }
         OssClient.switchOssAsync(ossType.value(), callback);

@@ -1,9 +1,9 @@
 package com.adl.service.db.converter;
 
-import androidx.room.TypeConverter;
-
 import com.adl.service.entity.SportRecordEntity;
 import com.google.gson.Gson;
+
+import androidx.room.TypeConverter;
 
 public class RecordPlanConverter {
 

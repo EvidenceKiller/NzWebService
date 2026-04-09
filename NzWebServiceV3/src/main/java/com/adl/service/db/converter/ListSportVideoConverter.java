@@ -1,14 +1,13 @@
 package com.adl.service.db.converter;
 
-import androidx.room.TypeConverter;
-
-import com.adl.service.entity.SportImageEntity;
 import com.adl.service.entity.SportVideoEntity;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.List;
+
+import androidx.room.TypeConverter;
 
 public class ListSportVideoConverter {
 

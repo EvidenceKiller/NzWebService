@@ -141,7 +141,7 @@ public class MainActivity extends BaseActivity {
         });
 
         findViewById(R.id.bnt_30).setOnClickListener(v -> {
-            NextWriter.with(MainActivity.this, TempTestActivity.class).go();
+            NextWriter.with(MainActivity.this, V3InterfaceTestActivity.class).go();
         });
     }
 }

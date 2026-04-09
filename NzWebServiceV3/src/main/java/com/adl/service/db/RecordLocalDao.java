@@ -1,18 +1,18 @@
 package com.adl.service.db;
 
-import androidx.room.Dao;
-import androidx.room.Delete;
-import androidx.room.Insert;
-import androidx.room.OnConflictStrategy;
-import androidx.room.Query;
-import androidx.room.Update;
-
 import com.adl.service.entity.PlanQueryInfo;
 import com.adl.service.entity.SportRecordLocalEntity;
 import com.adl.service.entity.SportRecordModifyEntity;
 import com.adl.service.entity.SportRecordResult;
 
 import java.util.List;
+
+import androidx.room.Dao;
+import androidx.room.Delete;
+import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
+import androidx.room.Query;
+import androidx.room.Update;
 
 /**
  * ProjectName: AiPowerAuth

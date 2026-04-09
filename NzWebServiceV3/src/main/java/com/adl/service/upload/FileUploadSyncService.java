@@ -2,10 +2,13 @@ package com.adl.service.upload;
 
 import android.text.TextUtils;
 
+import com.adl.service.ConfigService;
+import com.adl.service.common.BaseService;
 import com.adl.service.common.IDefine;
-import com.adl.service.common.RequestResult;
-import com.adl.service.outer.ConfigService;
-import com.adl.service.web.BaseHttpService;
+import com.adl.service.exception.NzBaseException;
+import com.adl.service.exception.NzNetworkException;
+import com.adl.service.exception.NzUnknownException;
+import com.adl.service.log.NzLog;
 import com.qiniu.android.common.FixedZone;
 import com.qiniu.android.http.ResponseInfo;
 import com.qiniu.android.storage.Configuration;
@@ -20,7 +23,7 @@ import java.io.File;
  * Date       : 2024/7/4
  * Describe   : 同步文件上传
  */
-public class FileUploadSyncService extends BaseHttpService {
+public class FileUploadSyncService extends BaseService {
 
     private static FileUploadSyncService _instance;
 
@@ -47,26 +50,26 @@ public class FileUploadSyncService extends BaseHttpService {
         return _instance;
     }
 
-    public RequestResult syncUploadFile(File file, String remoteFileName) {
+    public String syncUploadFile(File file, String remoteFileName) {
         ConfigService configService = getConfigService();
         if (configService == null || TextUtils.isEmpty(configService.getQiNiuHost())) {
-            return RequestResult.error("上传配置错误");
+            throw new NzUnknownException("上传配置错误");
         }
 
         if (file != null && file.exists()) {
             if (TextUtils.isEmpty(remoteFileName)) {
-                return RequestResult.error("远端文件名为空");
+                throw new NzUnknownException("远端文件名为空");
             }
 
             String token = getQiNiuToken(IDefine.QiNiuPublicBucket);
             String url = syncUploadFileToQiNiuYun(file, remoteFileName, token);
             if (url != null) {
-                return RequestResult.okContent(url);
+                return url;
             } else {
-                return RequestResult.error("上传失败");
+                throw new NzUnknownException("上传失败");
             }
         } else {
-            return RequestResult.error("文件路径不存在");
+            throw new NzUnknownException("文件路径不存在");
         }
     }
 
@@ -77,7 +80,7 @@ public class FileUploadSyncService extends BaseHttpService {
                 String facePrefix = getConfigService().getFacePrefix();
                 return facePrefix + info.response.getString("key");
             } else {
-                e("七牛上传: token: " + token + ", code: " + info.statusCode + ", error: " + info.error);
+                NzLog.e("七牛上传: token: " + token + ", code: " + info.statusCode + ", error: " + info.error);
             }
         } catch (Exception e) {
             e.printStackTrace();

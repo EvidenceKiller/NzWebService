@@ -4,8 +4,8 @@ import android.text.TextUtils;
 
 import com.adl.service.common.CommonUtil;
 import com.adl.service.common.IDefine;
-import com.adl.service.common.InnerLogger;
 import com.adl.service.common.InnerPreferences;
+import com.adl.service.log.NzLog;
 
 import java.io.IOException;
 
@@ -19,7 +19,7 @@ public class TokenInjectionInterceptor implements Interceptor {
     @Override
     public Response intercept(@NonNull Chain chain) throws IOException {
         Request request = chain.request();
-        InnerLogger.logger().d("执行请求: " + request);
+        NzLog.d("执行请求: " + request);
 
         String token = InnerPreferences.instance().readString(IDefine.SpToken);
 
@@ -28,7 +28,7 @@ public class TokenInjectionInterceptor implements Interceptor {
             Request.Builder reqBuilder = request.newBuilder();
             reqBuilder.addHeader("Authorization", "Bearer " + token);
             // temp test token
-//            reqBuilder.addHeader("Authorization", "Bearer XB2r4uugDrxaU0KhfKTvIRxuPPhS9cIoxE38xQ3-g_W8YlUoYcXROt_9-Cdc9ftwBexz__zLAfDmGCvG3tnBm1gp---601aLTg3bg7JJ6Y2B7V-cn1clEZ0ZDAUTYVVo");
+//            reqBuilder.addHeader("Authorization", "Bearer F_WgWTj2KvExrO7FbVcUxZEK-mthkqWLw0a0L9syA_1zyjz5xdn03XkYeLkjzuZ9QzunoVRlEuFQ-hqf_uzYZu42v0qLdLFlKk0umRNOTzrBN6OOvAAk3vX7xApveY2F");
             reqBuilder.addHeader("Accept-Language", CommonUtil.getLocaleLanguage());
             // next
             return chain.proceed(reqBuilder.build());

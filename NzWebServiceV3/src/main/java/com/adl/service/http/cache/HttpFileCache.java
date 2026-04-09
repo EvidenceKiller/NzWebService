@@ -2,8 +2,8 @@ package com.adl.service.http.cache;
 
 import android.content.Context;
 
-import com.adl.service.common.InnerLogger;
 import com.adl.service.entity.CacheEntry;
+import com.adl.service.log.NzLog;
 import com.google.gson.Gson;
 
 import java.io.BufferedReader;
@@ -47,7 +47,7 @@ public class HttpFileCache implements IHttpCache {
                 }
             } catch (Exception e) {
                 e.printStackTrace();
-                InnerLogger.logger().e("saveCache error;" + e.getMessage());
+                NzLog.e("saveCache error;" + e.getMessage());
             }
         }).start();
     }
