@@ -1,7 +1,9 @@
 package com.adl.service.web.response;
 
 import com.google.gson.annotations.SerializedName;
+import lombok.ToString;
 
+@ToString
 class GradeClassData {
     /**
      * 班级全称 班级全称 小学一年级一班

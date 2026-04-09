@@ -13,4 +13,10 @@ public class DemoApp extends AdlApp {
         SoundUtil.getInstance().init(this);
         AdlService.create(this).setDebug(true);
     }
+
+    @Override
+    public void onTerminate() {
+        super.onTerminate();
+        AdlService.getService().release();
+    }
 }

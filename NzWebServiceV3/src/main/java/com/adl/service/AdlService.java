@@ -519,5 +519,6 @@ public final class AdlService {
 
     public void release() {
         OssFileUploadService.instance().release();
+        NzLog.shutdown();
     }
 }

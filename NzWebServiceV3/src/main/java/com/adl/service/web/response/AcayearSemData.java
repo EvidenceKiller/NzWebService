@@ -1,7 +1,9 @@
 package com.adl.service.web.response;
 
 import com.google.gson.annotations.SerializedName;
+import lombok.ToString;
 
+@ToString
 public final class AcayearSemData {
     /**
      * 学年编码 2022-2023

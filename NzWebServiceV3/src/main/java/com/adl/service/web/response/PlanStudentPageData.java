@@ -1,9 +1,11 @@
 package com.adl.service.web.response;
 
 import com.google.gson.annotations.SerializedName;
+import lombok.ToString;
 
 import java.util.List;
 
+@ToString
 public final class PlanStudentPageData {
 
     @SerializedName("records")

@@ -1,5 +1,7 @@
 package com.adl.service.web.response;
 
+import lombok.ToString;
+
 /**
  * 统一返回结构
  * 对应后端 JSON：
@@ -13,6 +15,7 @@ package com.adl.service.web.response;
  *
  * @param <T> 业务数据类型
  */
+@ToString
 public final class BaseResponse<T> {
 
     /** 业务状态码 */

@@ -1,6 +1,7 @@
 package com.adl.service.web.response;
 
 import com.google.gson.annotations.SerializedName;
+import lombok.ToString;
 
 import java.util.List;
 
@@ -11,6 +12,7 @@ import java.util.List;
  * Date : 2026/4/7
  * Describe : 定义接口响应数据结构
  */
+@ToString
 public final class SunshineRunningSportDetailPageData {
     @SerializedName("records")
     private List<Object> records;

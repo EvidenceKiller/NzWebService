@@ -3,9 +3,11 @@ package com.adl.service.web.response;
 import com.adl.service.web.request.BaseGroup;
 import com.adl.service.web.request.BaseGroupRule;
 import com.google.gson.annotations.SerializedName;
+import lombok.ToString;
 
 import java.util.List;
 
+@ToString
 public final class GroupData {
 
     /**

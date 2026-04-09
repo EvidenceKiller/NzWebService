@@ -1,7 +1,9 @@
 package com.adl.service.web.response;
 
 import com.google.gson.annotations.SerializedName;
+import lombok.ToString;
 
+@ToString
 public final class CompetitionMyRankData {
     /** 用户标识码 */
     @SerializedName("accountId")
