@@ -30,10 +30,10 @@ public final class CompetitionRankDetailData {
     private String coverCustom;
 
     @SerializedName("onlineType")
-    private int onlineType;
+    private Integer onlineType;
 
     @SerializedName("orgLevel")
-    private int orgLevel;
+    private Integer orgLevel;
 
     @SerializedName("orgLevelName")
     private String orgLevelName;
@@ -54,7 +54,7 @@ public final class CompetitionRankDetailData {
     private List<Object> orgNames;
 
     @SerializedName("rankRule")
-    private int rankRule;
+    private Integer rankRule;
 
     @SerializedName("competitionItem")
     private List<Object> competitionItem;
@@ -63,17 +63,17 @@ public final class CompetitionRankDetailData {
     private String remark;
 
     @SerializedName("joinFlag")
-    private boolean joinFlag;
+    private Boolean joinFlag;
 
     @SerializedName("orgType")
-    private int orgType;
+    private Integer orgType;
 
     @SerializedName("competitionEnabled")
-    private int competitionEnabled;
+    private Integer competitionEnabled;
 
     @SerializedName("orgId")
     private String orgId;
 
     @SerializedName("editFlag")
-    private boolean editFlag;
+    private Boolean editFlag;
 }

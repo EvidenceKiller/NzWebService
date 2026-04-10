@@ -16,7 +16,7 @@ public final class PersonRankData {
      * 排名
      */
     @SerializedName("rankNum")
-    private long rankNum;
+    private Long rankNum;
 
     /**
      * 运动结果

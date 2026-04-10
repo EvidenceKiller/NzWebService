@@ -48,37 +48,37 @@ public final class GroupTeamData {
      * 组数
      */
     @SerializedName("teamNum")
-    private int teamNum;
+    private Integer teamNum;
 
     /**
      * 人数
      */
     @SerializedName("number")
-    private int number;
+    private Integer number;
 
     /**
      * 比赛状态 0未完赛 1已完赛
      */
     @SerializedName("competitionStatus")
-    private int competitionStatus;
+    private Integer competitionStatus;
 
     /**
      * tis_competition_meet_type 1集体 2个人
      */
     @SerializedName("competitionType")
-    private int competitionType;
+    private Integer competitionType;
 
     /**
      * 轮次
      */
     @SerializedName("competitionRound")
-    private int competitionRound;
+    private Integer competitionRound;
 
     /**
      * 是否可以编辑成绩 0可以 1不可以
      */
     @SerializedName("disabled")
-    private int disabled;
+    private Integer disabled;
 
     /**
      * 人员详情

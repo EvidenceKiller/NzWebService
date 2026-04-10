@@ -18,23 +18,23 @@ public final class StudentPageData {
     private List<Object> records;
 
     @SerializedName("total")
-    private long total;
+    private Long total;
 
     @SerializedName("size")
-    private long size;
+    private Long size;
 
     @SerializedName("current")
-    private long current;
+    private Long current;
 
     @SerializedName("optimizeJoinOfCountSql")
-    private boolean optimizeJoinOfCountSql;
+    private Boolean optimizeJoinOfCountSql;
 
     @SerializedName("maxLimit")
-    private long maxLimit;
+    private Long maxLimit;
 
     @SerializedName("countId")
     private String countId;
 
     @SerializedName("pages")
-    private long pages;
+    private Long pages;
 }

@@ -15,35 +15,35 @@ import lombok.ToString;
 public final class WikiPageData {
 
     @SerializedName("totalPages")
-    private int totalPages;
+    private Integer totalPages;
 
     @SerializedName("totalElements")
-    private long totalElements;
+    private Long totalElements;
 
     @SerializedName("size")
-    private int size;
+    private Integer size;
 
     @SerializedName("content")
     private List<Object> content;
 
     @SerializedName("number")
-    private int number;
+    private Integer number;
 
     @SerializedName("sort")
     private Object sort;
 
     @SerializedName("first")
-    private boolean first;
+    private Boolean first;
 
     @SerializedName("last")
-    private boolean last;
+    private Boolean last;
 
     @SerializedName("numberOfElements")
-    private int numberOfElements;
+    private Integer numberOfElements;
 
     @SerializedName("pageable")
     private Object pageable;
 
     @SerializedName("empty")
-    private boolean empty;
+    private Boolean empty;
 }

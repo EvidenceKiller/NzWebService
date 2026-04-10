@@ -28,7 +28,7 @@ public final class ResTypeData {
      * 排序
      */
     @SerializedName("sort")
-    private int sort;
+    private Integer sort;
 
     /**
      * 机构id
@@ -40,7 +40,7 @@ public final class ResTypeData {
      * 1 - 备课助手 2-校本资源
      */
     @SerializedName("resType")
-    private int resType;
+    private Integer resType;
 
     /**
      * 创建时间

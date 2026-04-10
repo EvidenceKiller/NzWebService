@@ -39,7 +39,7 @@ public final class CompetitionMyRankData {
      * 成绩
      */
     @SerializedName("score")
-    private int score;
+    private Integer score;
 
     /**
      * 运动结果
@@ -63,31 +63,31 @@ public final class CompetitionMyRankData {
      * 排名
      */
     @SerializedName("rankNum")
-    private int rankNum;
+    private Integer rankNum;
 
     /**
      * 运动结束时间
      */
     @SerializedName("sportEndTime")
-    private long sportEndTime;
+    private Long sportEndTime;
 
     /**
      * 运动得分
      */
     @SerializedName("sportScore")
-    private double sportScore;
+    private Double sportScore;
 
     /**
      * 精度类型
      */
     @SerializedName("accuracyType")
-    private int accuracyType;
+    private Integer accuracyType;
 
     /**
      * 精度方式
      */
     @SerializedName("accuracyMethod")
-    private int accuracyMethod;
+    private Integer accuracyMethod;
 
     /**
      * 运动单位代码

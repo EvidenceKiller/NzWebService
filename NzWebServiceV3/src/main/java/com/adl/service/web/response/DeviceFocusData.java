@@ -51,7 +51,7 @@ public final class DeviceFocusData {
      * 专注时间类型
      */
     @SerializedName("timeType")
-    private int timeType;
+    private Integer timeType;
 
     /**
      * 专注开始时间

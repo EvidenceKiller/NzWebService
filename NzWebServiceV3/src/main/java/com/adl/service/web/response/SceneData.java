@@ -40,7 +40,7 @@ public final class SceneData {
      * 序号
      */
     @SerializedName("sceneSort")
-    private long sceneSort;
+    private Long sceneSort;
 
     /**
      * 场景类型 场景类型 1 锻炼 测试
@@ -49,5 +49,5 @@ public final class SceneData {
     private String sceneType;
 
     @SerializedName("enabled")
-    private boolean enabled;
+    private Boolean enabled;
 }

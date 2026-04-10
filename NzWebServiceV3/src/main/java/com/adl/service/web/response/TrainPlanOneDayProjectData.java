@@ -22,13 +22,13 @@ public final class TrainPlanOneDayProjectData {
      * 排序
      */
     @SerializedName("sort")
-    private int sort;
+    private Integer sort;
 
     /**
      * 运动个数
      */
     @SerializedName("sportCount")
-    private int sportCount;
+    private Integer sportCount;
 
     /**
      * 1 计时 2 计数 99 其他
@@ -40,7 +40,7 @@ public final class TrainPlanOneDayProjectData {
      * 运动时间 (ms)
      */
     @SerializedName("sportTime")
-    private int sportTime;
+    private Integer sportTime;
 
     /**
      * 运动成绩
@@ -52,7 +52,7 @@ public final class TrainPlanOneDayProjectData {
      * 打卡完成，0 待完成 1 已完成
      */
     @SerializedName("checkStatus")
-    private boolean checkStatus;
+    private Boolean checkStatus;
 
     /**
      * sku 唯一标识

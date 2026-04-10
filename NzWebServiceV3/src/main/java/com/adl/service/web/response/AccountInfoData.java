@@ -144,25 +144,25 @@ public final class AccountInfoData {
      * 头像标识
      */
     @SerializedName("avatarFlag")
-    private boolean avatarFlag;
+    private Boolean avatarFlag;
 
     /**
      * 记录标识
      */
     @SerializedName("recordFlag")
-    private boolean recordFlag;
+    private Boolean recordFlag;
 
     /**
      * 是否启用
      */
     @SerializedName("enabled")
-    private boolean enabled;
+    private Boolean enabled;
 
     /**
      * 删除标识位 0 可用 1 删除
      */
     @SerializedName("delFlag")
-    private boolean delFlag;
+    private Boolean delFlag;
 
     /**
      * 创建时间
@@ -192,10 +192,10 @@ public final class AccountInfoData {
     private String accountId;
 
     @SerializedName("roleType")
-    private int roleType;
+    private Integer roleType;
 
     @SerializedName("orgType")
-    private int orgType;
+    private Integer orgType;
 
     /**
      * 业务平台-公众用户表
@@ -231,5 +231,5 @@ public final class AccountInfoData {
     private String classId;
 
     @SerializedName("sex")
-    private int sex;
+    private Integer sex;
 }

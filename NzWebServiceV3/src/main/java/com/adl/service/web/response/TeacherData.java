@@ -28,7 +28,7 @@ public final class TeacherData {
     private String accountPhoneNum;
 
     @SerializedName("userSex")
-    private int userSex;
+    private Integer userSex;
 
     @SerializedName("jobNum")
     private String jobNum;
@@ -55,11 +55,11 @@ public final class TeacherData {
     private String updateTime;
 
     @SerializedName("avatarFlag")
-    private boolean avatarFlag;
+    private Boolean avatarFlag;
 
     @SerializedName("recordFlag")
-    private boolean recordFlag;
+    private Boolean recordFlag;
 
     @SerializedName("delFlag")
-    private boolean delFlag;
+    private Boolean delFlag;
 }

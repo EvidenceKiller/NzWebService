@@ -34,17 +34,17 @@ public final class MorePeopleVictoryRankData {
      * 胜利次数
      */
     @SerializedName("victoryNumber")
-    private int victoryNumber;
+    private Integer victoryNumber;
 
     /**
      * 胜率
      */
     @SerializedName("victoryRate")
-    private double victoryRate;
+    private Double victoryRate;
 
     /**
      * 性别
      */
     @SerializedName("sex")
-    private int sex;
+    private Integer sex;
 }

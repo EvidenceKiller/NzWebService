@@ -16,23 +16,23 @@ public final class OverviewData {
      * 运动总人次
      */
     @SerializedName("totalSportAccountNum")
-    private long totalSportAccountNum;
+    private Long totalSportAccountNum;
 
     /**
      * 今日运动人次
      */
     @SerializedName("todaySportAccountNum")
-    private long todaySportAccountNum;
+    private Long todaySportAccountNum;
 
     /**
      * 运动总时长 ms
      */
     @SerializedName("totalSportTime")
-    private long totalSportTime;
+    private Long totalSportTime;
 
     /**
      * 今日运动时长 ms
      */
     @SerializedName("todaySportTime")
-    private long todaySportTime;
+    private Long todaySportTime;
 }

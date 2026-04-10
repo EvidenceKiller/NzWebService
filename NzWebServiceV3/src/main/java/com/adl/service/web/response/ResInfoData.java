@@ -15,19 +15,19 @@ import lombok.ToString;
 public final class ResInfoData {
 
     @SerializedName("noPaging")
-    private boolean noPaging;
+    private Boolean noPaging;
 
     @SerializedName("pageSize")
-    private long pageSize;
+    private Long pageSize;
 
     @SerializedName("current")
-    private long current;
+    private Long current;
 
     @SerializedName("detail")
-    private boolean detail;
+    private Boolean detail;
 
     @SerializedName("enableSort")
-    private boolean enableSort;
+    private Boolean enableSort;
 
     @SerializedName("sorts")
     private List<Object> sorts;
@@ -78,13 +78,13 @@ public final class ResInfoData {
      * 启停用 参考枚举 adl_tis_enabled
      */
     @SerializedName("enabled")
-    private boolean enabled;
+    private Boolean enabled;
 
     /**
      * 排序
      */
     @SerializedName("sortNum")
-    private int sortNum;
+    private Integer sortNum;
 
     /**
      * 资源内容
@@ -102,13 +102,13 @@ public final class ResInfoData {
      * 资源文件类型 参考枚举 adl_tis_res_type
      */
     @SerializedName("type")
-    private int type;
+    private Integer type;
 
     /**
      * 资源类型 1-备课助手 2-校本资源
      */
     @SerializedName("resType")
-    private int resType;
+    private Integer resType;
 
     /**
      * 创建者账号

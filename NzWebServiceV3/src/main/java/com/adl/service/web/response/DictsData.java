@@ -15,19 +15,19 @@ import lombok.ToString;
 public final class DictsData {
 
     @SerializedName("noPaging")
-    private boolean noPaging;
+    private Boolean noPaging;
 
     @SerializedName("pageSize")
-    private long pageSize;
+    private Long pageSize;
 
     @SerializedName("current")
-    private long current;
+    private Long current;
 
     @SerializedName("detail")
-    private boolean detail;
+    private Boolean detail;
 
     @SerializedName("enableSort")
-    private boolean enableSort;
+    private Boolean enableSort;
 
     @SerializedName("sorts")
     private List<Object> sorts;
@@ -72,7 +72,7 @@ public final class DictsData {
      * 排序 升序
      */
     @SerializedName("sortNum")
-    private int sortNum;
+    private Integer sortNum;
 
     /**
      * 是否默认
@@ -114,5 +114,5 @@ public final class DictsData {
      * 字典数据类型 1-string 2-number 3-bool
      */
     @SerializedName("dataType")
-    private int dataType;
+    private Integer dataType;
 }

@@ -78,37 +78,37 @@ public final class SportSkuDetailData {
      * 测量范围结束值
      */
     @SerializedName("rangeEndValue")
-    private double rangeEndValue;
+    private Double rangeEndValue;
 
     /**
      * 测量范围起始值
      */
     @SerializedName("rangeStartValue")
-    private double rangeStartValue;
+    private Double rangeStartValue;
 
     /**
      * 精度类型 详见码表
      */
     @SerializedName("accuracyType")
-    private int accuracyType;
+    private Integer accuracyType;
 
     /**
      * 结束类型 参考字典编码：adl_bms_sport_sku_end_type
      */
     @SerializedName("endType")
-    private int endType;
+    private Integer endType;
 
     /**
      * 精度方式 详见码表
      */
     @SerializedName("accuracyMethod")
-    private int accuracyMethod;
+    private Integer accuracyMethod;
 
     /**
      * 结束方式 参考字典编码：adl_sport_end_unit
      */
     @SerializedName("endValue")
-    private long endValue;
+    private Long endValue;
 
     /**
      * 结束方式为其他时的备注
@@ -204,25 +204,25 @@ public final class SportSkuDetailData {
      * 启停用 参考字典编码：adl_bms_enabled（1 启用 0 禁用）
      */
     @SerializedName("enabled")
-    private boolean enabled;
+    private Boolean enabled;
 
     /**
      * 删除标记为
      */
     @SerializedName("delFlag")
-    private boolean delFlag;
+    private Boolean delFlag;
 
     /**
      * 项目高低优 参考字典编码：adl_bms_sport_priority
      */
     @SerializedName("sportPriority")
-    private int sportPriority;
+    private Integer sportPriority;
 
     /**
      * 测试人数 空为不限制
      */
     @SerializedName("testCount")
-    private int testCount;
+    private Integer testCount;
 
     /**
      * 场景运动Id
@@ -240,7 +240,7 @@ public final class SportSkuDetailData {
      * 场景运动排序
      */
     @SerializedName("sceneSkuSort")
-    private int sceneSkuSort;
+    private Integer sceneSkuSort;
 
     @SerializedName("appCodes")
     private List<String> appCodes;

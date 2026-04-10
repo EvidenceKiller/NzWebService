@@ -30,5 +30,5 @@ public final class AcayearData {
      * 是否当前学年 1：是 0 不是
      */
     @SerializedName("isNowAcayear")
-    private int isNowAcayear;
+    private Integer isNowAcayear;
 }

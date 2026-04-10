@@ -48,7 +48,7 @@ public final class WikiDetailData {
      * 状态
      */
     @SerializedName("enabled")
-    private boolean enabled;
+    private Boolean enabled;
 
     /**
      * 排序

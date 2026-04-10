@@ -36,7 +36,7 @@ public final class DetailListData {
      * 运动分数
      */
     @SerializedName("sportScore")
-    private double sportScore;
+    private Double sportScore;
 
     /**
      * 运动结果
@@ -72,7 +72,7 @@ public final class DetailListData {
      * 课程次数
      */
     @SerializedName("courseTimes")
-    private int courseTimes;
+    private Integer courseTimes;
 
     /**
      * 运动单位
@@ -84,31 +84,31 @@ public final class DetailListData {
      * 运动时长
      */
     @SerializedName("sportTime")
-    private long sportTime;
+    private Long sportTime;
 
     /**
      * 运动开始时间
      */
     @SerializedName("sportStartTime")
-    private long sportStartTime;
+    private Long sportStartTime;
 
     /**
      * 运动结束时间
      */
     @SerializedName("sportEndTime")
-    private long sportEndTime;
+    private Long sportEndTime;
 
     /**
      * 运动测试时间
      */
     @SerializedName("sportTestTime")
-    private long sportTestTime;
+    private Long sportTestTime;
 
     /**
      * 账户性别
      */
     @SerializedName("sex")
-    private int sex;
+    private Integer sex;
 
     /**
      * 运动视频集合

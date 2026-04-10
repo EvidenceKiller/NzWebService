@@ -52,7 +52,7 @@ public final class ExerciseSumTimeRankData {
      * 运动得分
      */
     @SerializedName("sportScore")
-    private double sportScore;
+    private Double sportScore;
 
     /**
      * 运动结果
@@ -70,13 +70,13 @@ public final class ExerciseSumTimeRankData {
      * 运动时间
      */
     @SerializedName("sportTime")
-    private int sportTime;
+    private Integer sportTime;
 
     /**
      * 运动计数
      */
     @SerializedName("sportCount")
-    private int sportCount;
+    private Integer sportCount;
 
     /**
      * 运动打卡日期
@@ -100,5 +100,5 @@ public final class ExerciseSumTimeRankData {
      * 霸榜项目数
      */
     @SerializedName("count")
-    private int count;
+    private Integer count;
 }

@@ -41,7 +41,7 @@ public final class GroupData {
     private BaseGroupRule groupRule;
 
     @SerializedName("empty")
-    private boolean empty;
+    private Boolean empty;
 
     /**
      * 运动 Id
@@ -59,5 +59,5 @@ public final class GroupData {
      * 长跑分组模式 1-号牌 2-人脸 - 邓工要求加的字段
      */
     @SerializedName("longModeType")
-    private int longModeType;
+    private Integer longModeType;
 }

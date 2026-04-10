@@ -28,7 +28,7 @@ public final class BestRankTopData {
      * 账户性别
      */
     @SerializedName("sex")
-    private int sex;
+    private Integer sex;
 
     /**
      * 学籍号
@@ -82,5 +82,5 @@ public final class BestRankTopData {
      * 运动结束时间
      */
     @SerializedName("sportEndTime")
-    private long sportEndTime;
+    private Long sportEndTime;
 }

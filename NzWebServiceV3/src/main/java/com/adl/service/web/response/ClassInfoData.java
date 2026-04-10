@@ -22,7 +22,7 @@ public final class ClassInfoData {
      * 班级代码 1 2 3 4 5
      */
     @SerializedName("classNum")
-    private int classNum;
+    private Integer classNum;
 
     /**
      * 班级名称
@@ -46,7 +46,7 @@ public final class ClassInfoData {
      * 班级状态 1. 进行中 2. 未开学 3. 已毕业
      */
     @SerializedName("status")
-    private int status;
+    private Integer status;
 
     /**
      * 专业ID

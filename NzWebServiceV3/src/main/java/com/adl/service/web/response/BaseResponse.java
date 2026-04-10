@@ -26,7 +26,7 @@ public final class BaseResponse<T> {
     /**
      * 业务状态码
      */
-    private int code;
+    private Integer code;
 
     /**
      * 提示信息
@@ -36,7 +36,7 @@ public final class BaseResponse<T> {
     /**
      * 是否成功标志位
      */
-    private boolean succeed;
+    private Boolean succeed;
 
     /**
      * 业务数据

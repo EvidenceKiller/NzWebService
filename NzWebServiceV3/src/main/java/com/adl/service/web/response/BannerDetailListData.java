@@ -58,7 +58,7 @@ public final class BannerDetailListData {
      * 排序
      */
     @SerializedName("bannerSort")
-    private int bannerSort;
+    private Integer bannerSort;
 
     @SerializedName("createTime")
     private String createTime;
@@ -67,8 +67,8 @@ public final class BannerDetailListData {
     private String updateTime;
 
     @SerializedName("bannerEnable")
-    private boolean bannerEnable;
+    private Boolean bannerEnable;
 
     @SerializedName("currentFlag")
-    private boolean currentFlag;
+    private Boolean currentFlag;
 }

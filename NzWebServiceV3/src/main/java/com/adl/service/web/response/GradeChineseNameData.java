@@ -24,13 +24,13 @@ public final class GradeChineseNameData {
      * 入学年份 入学年份 入学时间（2019）
      */
     @SerializedName("enterYear")
-    private int enterYear;
+    private Integer enterYear;
 
     /**
      * 毕业年份 毕业年份 毕业时间（2020）
      */
     @SerializedName("graduationYear")
-    private int graduationYear;
+    private Integer graduationYear;
 
     /**
      * 年级编码 org_code_enter_year
@@ -54,7 +54,7 @@ public final class GradeChineseNameData {
      * 是否毕业 参考字典编码：adl_tis_graduation_flag（1 毕业 0 未毕业）
      */
     @SerializedName("graduationFlag")
-    private int graduationFlag;
+    private Integer graduationFlag;
 
     @SerializedName("classList")
     private List<GradeClassData> classList;
@@ -63,13 +63,13 @@ public final class GradeChineseNameData {
      * 年级序号（根据当前学段）
      */
     @SerializedName("gradeNumByStage")
-    private int gradeNumByStage;
+    private Integer gradeNumByStage;
 
     /**
      * 年级序号（总年级编号）
      */
     @SerializedName("gradeNum")
-    private int gradeNum;
+    private Integer gradeNum;
 
     /**
      * 学段代码

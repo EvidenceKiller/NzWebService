@@ -28,7 +28,7 @@ public final class SumScoreRankData {
      * 账户性别
      */
     @SerializedName("sex")
-    private int sex;
+    private Integer sex;
 
     /**
      * 学籍号

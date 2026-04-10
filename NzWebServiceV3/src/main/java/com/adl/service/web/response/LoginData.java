@@ -30,7 +30,7 @@ public final class LoginData {
     private String refreshToken;
 
     @SerializedName("expiresIn")
-    private double expiresIn;
+    private Double expiresIn;
 
     @SerializedName("scope")
     private List<Object> scope;

@@ -59,7 +59,7 @@ public final class AccountUserData {
      * 性别 参考字典编码:adltis_user_sex(1男2女9未知)
      */
     @SerializedName("sex")
-    private int sex;
+    private Integer sex;
 
     /**
      * 民族代码
@@ -77,7 +77,7 @@ public final class AccountUserData {
      * 证件类型 参考字典编码:adlbms_cert_type(1.身份证)
      */
     @SerializedName("certType")
-    private int certType;
+    private Integer certType;
 
     /**
      * 证件号
@@ -107,7 +107,7 @@ public final class AccountUserData {
      * 删除标识位0可用1删除
      */
     @SerializedName("delFlag")
-    private boolean delFlag;
+    private Boolean delFlag;
 
     /**
      * 创建时间

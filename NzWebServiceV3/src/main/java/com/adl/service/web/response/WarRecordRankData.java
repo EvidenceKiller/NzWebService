@@ -40,19 +40,19 @@ public final class WarRecordRankData {
      * 胜者成绩
      */
     @SerializedName("winnerAchievement")
-    private int winnerAchievement;
+    private Integer winnerAchievement;
 
     /**
      * 胜者个数
      */
     @SerializedName("winnerCount")
-    private int winnerCount;
+    private Integer winnerCount;
 
     /**
      * 胜者时间
      */
     @SerializedName("winnerTime")
-    private int winnerTime;
+    private Integer winnerTime;
 
     /**
      * 败者用户ID
@@ -76,17 +76,17 @@ public final class WarRecordRankData {
      * 败者成绩
      */
     @SerializedName("loserAchievement")
-    private int loserAchievement;
+    private Integer loserAchievement;
 
     /**
      * 败者个数
      */
     @SerializedName("loserCount")
-    private int loserCount;
+    private Integer loserCount;
 
     /**
      * 败者时间
      */
     @SerializedName("loserTime")
-    private int loserTime;
+    private Integer loserTime;
 }

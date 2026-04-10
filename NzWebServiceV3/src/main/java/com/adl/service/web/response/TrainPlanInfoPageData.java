@@ -18,13 +18,13 @@ public final class TrainPlanInfoPageData {
     private List<Object> records;
 
     @SerializedName("total")
-    private long total;
+    private Long total;
 
     @SerializedName("size")
-    private long size;
+    private Long size;
 
     @SerializedName("current")
-    private long current;
+    private Long current;
 
     @SerializedName("orders")
     private List<Object> orders;
@@ -36,14 +36,14 @@ public final class TrainPlanInfoPageData {
     private Object searchCount;
 
     @SerializedName("optimizeJoinOfCountSql")
-    private boolean optimizeJoinOfCountSql;
+    private Boolean optimizeJoinOfCountSql;
 
     @SerializedName("maxLimit")
-    private long maxLimit;
+    private Long maxLimit;
 
     @SerializedName("countId")
     private String countId;
 
     @SerializedName("pages")
-    private long pages;
+    private Long pages;
 }

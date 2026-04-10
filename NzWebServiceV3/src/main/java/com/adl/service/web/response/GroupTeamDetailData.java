@@ -28,13 +28,13 @@ public final class GroupTeamDetailData {
      * 组号
      */
     @SerializedName("groupNo")
-    private int groupNo;
+    private Integer groupNo;
 
     /**
      * 识别类型 参考字典编码：adl_tis_competition_meet_identify_type（0跑道识别 1运动员编码 2序号识别）
      */
     @SerializedName("identifyType")
-    private int identifyType;
+    private Integer identifyType;
 
     /**
      * 跑道号
@@ -94,13 +94,13 @@ public final class GroupTeamDetailData {
      * 性别
      */
     @SerializedName("sex")
-    private int sex;
+    private Integer sex;
 
     /**
      * 团体人数
      */
     @SerializedName("studentNum")
-    private int studentNum;
+    private Integer studentNum;
 
     /**
      * 运动结果

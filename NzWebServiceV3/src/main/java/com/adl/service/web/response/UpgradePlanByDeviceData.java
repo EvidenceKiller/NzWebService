@@ -34,7 +34,7 @@ public final class UpgradePlanByDeviceData {
      * 文件大小
      */
     @SerializedName("fileSize")
-    private int fileSize;
+    private Integer fileSize;
 
     /**
      * 主键id
@@ -94,7 +94,7 @@ public final class UpgradePlanByDeviceData {
      * 升级方式 参考字典编码：adl_bms_device_ota_upgrade_method 10 自动升级 11 自动升级-强制更新 12 自动升级-非强制更新 13 自动升级-静默更新 20 手动升级
      */
     @SerializedName("upgradeMethod")
-    private int upgradeMethod;
+    private Integer upgradeMethod;
 
     /**
      * 升级版本号
