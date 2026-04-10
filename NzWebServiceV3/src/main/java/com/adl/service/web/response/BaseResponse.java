@@ -1,5 +1,8 @@
 package com.adl.service.web.response;
 
+import com.adl.service.internal.StrictJsonDeserializer;
+import com.google.gson.annotations.JsonAdapter;
+
 import lombok.Getter;
 import lombok.ToString;
 
@@ -20,15 +23,23 @@ import lombok.ToString;
 @ToString
 public final class BaseResponse<T> {
 
-    /** 业务状态码 */
+    /**
+     * 业务状态码
+     */
     private int code;
 
-    /** 提示信息 */
+    /**
+     * 提示信息
+     */
     private String msg;
 
-    /** 是否成功标志位 */
+    /**
+     * 是否成功标志位
+     */
     private boolean succeed;
 
-    /** 业务数据 */
+    /**
+     * 业务数据
+     */
     private T data;
 }

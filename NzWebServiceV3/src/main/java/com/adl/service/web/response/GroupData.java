@@ -1,14 +1,19 @@
 package com.adl.service.web.response;
 
+import com.adl.service.internal.StrictJsonDeserializer;
 import com.adl.service.web.request.BaseGroup;
 import com.adl.service.web.request.BaseGroupRule;
+import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
+
 import lombok.Getter;
 import lombok.ToString;
-import java.util.List;
 
 @Getter
 @ToString
+@JsonAdapter(StrictJsonDeserializer.class)
 public final class GroupData {
 
     /**

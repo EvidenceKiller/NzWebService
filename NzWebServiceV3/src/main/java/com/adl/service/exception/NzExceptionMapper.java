@@ -1,5 +1,9 @@
 package com.adl.service.exception;
 
+import android.util.Log;
+
+import com.adl.service.log.NzLog;
+
 import java.io.IOException;
 
 import retrofit2.HttpException;
@@ -27,7 +31,7 @@ public final class NzExceptionMapper {
         }
 
         if (root instanceof IOException) {
-            return new NzIOException(root.getMessage() != null ? root.getMessage() : "network error", root);
+            return new NzIOException(root.getMessage() != null ? root.getMessage() : "io error", root);
         }
         if (root instanceof HttpException) {
             HttpException he = (HttpException) root;
@@ -40,9 +44,10 @@ public final class NzExceptionMapper {
     }
 
     public static String toMessage(Throwable throwable) {
+        NzLog.i("NzExceptionMapper", "exception : " + throwable);
         NzBaseException ex = map(throwable);
         String msg = ex.getMessage();
-        String safeMsg = msg != null ? msg : ex.toString();
+        String safeMsg = throwable.getClass().getSimpleName() + ": " + (msg != null ? msg : ex.toString());
         if (ex.getErrorCode() == null || ex.getErrorCode().isEmpty()) {
             return safeMsg;
         }

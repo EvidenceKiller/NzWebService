@@ -4,6 +4,7 @@ import com.adl.service.AdlService;
 import com.adl.service.http.interceptor.SmartCacheInterceptor;
 import com.adl.service.http.interceptor.TokenInjectionInterceptor;
 import com.adl.service.http.interceptor.TokenRefreshInterceptor;
+import com.google.gson.Gson;
 
 import java.util.concurrent.TimeUnit;
 

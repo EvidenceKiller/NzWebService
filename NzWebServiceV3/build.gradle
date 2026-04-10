@@ -24,9 +24,15 @@ android {
     }
 
     buildTypes {
+        debug {
+            // Debug：不启用 StrictJsonDeserializer 严格字段校验，走 Gson 默认反序列化
+            buildConfigField "boolean", "ENABLE_STRICT_JSON_DESERIALIZATION", "true"
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            // Release：启用严格校验（与 BuildType 绑定，勿用运行时 isDebug）
+            buildConfigField "boolean", "ENABLE_STRICT_JSON_DESERIALIZATION", "false"
 
             android.libraryVariants.all { variant ->
                 variant.outputs.all {

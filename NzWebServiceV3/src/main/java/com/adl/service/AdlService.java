@@ -69,7 +69,9 @@ public final class AdlService {
 
     private final static String DB_NAME = "_local_service_1";
     private final static int DB_VERSION = 4;
-    private static AdlService _instance;
+
+    /** 懒加载、双重检查锁定的单例 */
+    private static volatile AdlService _instance;
     private ConfigService mConfig;
     private DaoManager mDaoManager;
     private Context mContext;
@@ -123,7 +125,11 @@ public final class AdlService {
 
     public static AdlService create(Context context) {
         if (_instance == null) {
-            _instance = new AdlService(context.getApplicationContext());
+            synchronized (AdlService.class) {
+                if (_instance == null) {
+                    _instance = new AdlService(context.getApplicationContext());
+                }
+            }
         }
         return _instance;
     }
