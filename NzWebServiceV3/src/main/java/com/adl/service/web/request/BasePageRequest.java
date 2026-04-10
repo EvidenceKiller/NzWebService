@@ -10,34 +10,34 @@ import java.util.List;
 public class BasePageRequest {
 
     @SerializedName("noPaging")
-    protected boolean noPaging;
+    private Boolean noPaging;
 
     @SerializedName("pageSize")
-    protected long pageSize;
+    private Long pageSize;
 
     @SerializedName("current")
-    protected long current;
+    private Long current;
 
     @SerializedName("detail")
-    protected boolean detail;
+    private Boolean detail;
 
     @SerializedName("enableSort")
-    protected boolean enableSort;
+    private Boolean enableSort;
 
     @SerializedName("sorts")
-    protected List<BaseSort> sorts;
+    private List<BaseSort> sorts;
 
     @SerializedName("sortsStr")
-    protected String sortsStr;
+    private String sortsStr;
 
     @SerializedName("ignoreColumns")
-    protected List<String> ignoreColumns;
+    private List<String> ignoreColumns;
 
     @SerializedName("containColumns")
-    protected List<String> containColumns;
+    private List<String> containColumns;
 
     @SerializedName("moduleStr")
-    protected String moduleStr;
+    private String moduleStr;
 
     protected BasePageRequest() {
     }
@@ -56,11 +56,11 @@ public class BasePageRequest {
     }
 
     public static abstract class Builder<T extends Builder<T>> {
-        protected boolean noPaging;
-        protected long pageSize;
-        protected long current;
-        protected boolean detail;
-        protected boolean enableSort;
+        protected Boolean noPaging;
+        protected Long pageSize;
+        protected Long current;
+        protected Boolean detail;
+        protected Boolean enableSort;
         protected List<BaseSort> sorts;
         protected String sortsStr;
         protected List<String> ignoreColumns;
@@ -69,27 +69,27 @@ public class BasePageRequest {
 
         protected abstract T self();
 
-        public T noPaging(boolean noPaging) {
+        public T noPaging(Boolean noPaging) {
             this.noPaging = noPaging;
             return self();
         }
 
-        public T pageSize(long pageSize) {
+        public T pageSize(Long pageSize) {
             this.pageSize = pageSize;
             return self();
         }
 
-        public T current(long current) {
+        public T current(Long current) {
             this.current = current;
             return self();
         }
 
-        public T detail(boolean detail) {
+        public T detail(Boolean detail) {
             this.detail = detail;
             return self();
         }
 
-        public T enableSort(boolean enableSort) {
+        public T enableSort(Boolean enableSort) {
             this.enableSort = enableSort;
             return self();
         }
@@ -120,11 +120,11 @@ public class BasePageRequest {
         }
     }
 
-    public boolean getNoPaging() { return noPaging; }
-    public long getPageSize() { return pageSize; }
-    public long getCurrent() { return current; }
-    public boolean getDetail() { return detail; }
-    public boolean getEnableSort() { return enableSort; }
+    public Boolean getNoPaging() { return noPaging; }
+    public Long getPageSize() { return pageSize; }
+    public Long getCurrent() { return current; }
+    public Boolean getDetail() { return detail; }
+    public Boolean getEnableSort() { return enableSort; }
     public List<BaseSort> getSorts() { return sorts; }
     public String getSortsStr() { return sortsStr; }
     public List<String> getIgnoreColumns() { return ignoreColumns; }

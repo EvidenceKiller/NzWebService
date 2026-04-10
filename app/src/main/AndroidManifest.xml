@@ -236,6 +236,46 @@
             android:screenOrientation="landscape"
             android:theme="@style/AppBaseTheme" />
 
+        <activity
+            android:name="com.ai.test.V3SportInfoCallerTestActivity"
+            android:screenOrientation="landscape"
+            android:theme="@style/AppBaseTheme" />
+
+        <activity
+            android:name="com.ai.test.V3OrgTestCallerTestActivity"
+            android:screenOrientation="landscape"
+            android:theme="@style/AppBaseTheme" />
+
+        <activity
+            android:name="com.ai.test.V3OperationCallerTestActivity"
+            android:screenOrientation="landscape"
+            android:theme="@style/AppBaseTheme" />
+
+        <activity
+            android:name="com.ai.test.V3BusinessCallerTestActivity"
+            android:screenOrientation="landscape"
+            android:theme="@style/AppBaseTheme" />
+
+        <activity
+            android:name="com.ai.test.V3LoginAuthCallerTestActivity"
+            android:screenOrientation="landscape"
+            android:theme="@style/AppBaseTheme" />
+
+        <activity
+            android:name="com.ai.test.V3BigScreenStatsCallerTestActivity"
+            android:screenOrientation="landscape"
+            android:theme="@style/AppBaseTheme" />
+
+        <activity
+            android:name="com.ai.test.V3BigScreenH5CallerTestActivity"
+            android:screenOrientation="landscape"
+            android:theme="@style/AppBaseTheme" />
+
+        <activity
+            android:name="com.ai.test.V3OpsMaintCallerTestActivity"
+            android:screenOrientation="landscape"
+            android:theme="@style/AppBaseTheme" />
+
     </application>
 
 </manifest>

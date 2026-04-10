@@ -1,6 +1,5 @@
 package com.adl.service.web.service;
 
-import com.adl.service.web.request.AccountInfoRequest;
 import com.adl.service.web.request.AddBatchPageRequest;
 import com.adl.service.web.request.CitizenPageRequest;
 import com.adl.service.web.request.ClassInfoRequest;
@@ -85,12 +84,6 @@ public interface CommonInfoService {
      */
     @POST("tis/device/base/account/getCitizenList")
     Single<BaseResponse<CitizenPageData>> getCitizenPage(@Body CitizenPageRequest request);
-
-    /**
-     * 获取用户信息
-     */
-    @POST("tis/device/base/account/getAccountInfo")
-    Single<BaseResponse<AccountInfoData>> getAccountInfo(@Body AccountInfoRequest request);
 
     /**
      * 获取系统字典

@@ -50,7 +50,7 @@ public final class GetGroupRequest {
      * 长跑分组模式 - 邓工要求加的字段
      */
     @SerializedName("longModeType")
-    private int longModeType;
+    private Integer longModeType;
 
     private GetGroupRequest(Builder builder) {
         this.sceneCode = builder.sceneCode;
@@ -76,7 +76,7 @@ public final class GetGroupRequest {
         private String groupClassId;
         private String groupNumber;
         private String sportSkuId;
-        private int longModeType;
+        private Integer longModeType;
 
         public Builder sceneCode(String sceneCode) {
             this.sceneCode = sceneCode;
@@ -113,7 +113,7 @@ public final class GetGroupRequest {
             return this;
         }
 
-        public Builder longModeType(int longModeType) {
+        public Builder longModeType(Integer longModeType) {
             this.longModeType = longModeType;
             return this;
         }
@@ -151,7 +151,7 @@ public final class GetGroupRequest {
         return sportSkuId;
     }
 
-    public int getLongModeType() {
+    public Integer getLongModeType() {
         return longModeType;
     }
 }

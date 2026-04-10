@@ -46,7 +46,7 @@ public final class SaveGroupRequest {
      * 长跑分组模式 1-号牌 2-人脸 - 邓工要求加的字段
      */
     @SerializedName("longModeType")
-    private int longModeType;
+    private Integer longModeType;
 
     private SaveGroupRequest(Builder builder) {
         this.sceneCode = builder.sceneCode;
@@ -70,7 +70,7 @@ public final class SaveGroupRequest {
         private BaseGroupRule groupRule;
         private String sportSkuId;
         private List<BaseGroup> groups;
-        private int longModeType;
+        private Integer longModeType;
 
         Builder(String sceneCode, List<BaseGroup> groups) {
             this.sceneCode = sceneCode;
@@ -97,7 +97,7 @@ public final class SaveGroupRequest {
             return this;
         }
 
-        public Builder longModeType(int longModeType) {
+        public Builder longModeType(Integer longModeType) {
             this.longModeType = longModeType;
             return this;
         }
@@ -131,7 +131,7 @@ public final class SaveGroupRequest {
         return groups;
     }
 
-    public int getLongModeType() {
+    public Integer getLongModeType() {
         return longModeType;
     }
 }

@@ -20,13 +20,13 @@ public final class DownloadGroupTeamDetailPageRequest extends BasePageRequest {
      * 比赛方式 1集体 2个人
      */
     @SerializedName("competitionType")
-    private int competitionType;
+    private Integer competitionType;
 
     /**
      * 比赛轮次
      */
     @SerializedName("competitionRound")
-    private int competitionRound;
+    private Integer competitionRound;
 
     /**
      * 查看版本时间
@@ -61,8 +61,8 @@ public final class DownloadGroupTeamDetailPageRequest extends BasePageRequest {
         }
         private String meetId;
         private String meetSportSkuId;
-        private int competitionType;
-        private int competitionRound;
+        private Integer competitionType;
+        private Integer competitionRound;
         private String checkTime;
         private String teamUnitCode;
 
@@ -76,12 +76,12 @@ public final class DownloadGroupTeamDetailPageRequest extends BasePageRequest {
             return this;
         }
 
-        public Builder competitionType(int competitionType) {
+        public Builder competitionType(Integer competitionType) {
             this.competitionType = competitionType;
             return this;
         }
 
-        public Builder competitionRound(int competitionRound) {
+        public Builder competitionRound(Integer competitionRound) {
             this.competitionRound = competitionRound;
             return this;
         }
@@ -109,11 +109,11 @@ public final class DownloadGroupTeamDetailPageRequest extends BasePageRequest {
         return meetSportSkuId;
     }
 
-    public int getCompetitionType() {
+    public Integer getCompetitionType() {
         return competitionType;
     }
 
-    public int getCompetitionRound() {
+    public Integer getCompetitionRound() {
         return competitionRound;
     }
 

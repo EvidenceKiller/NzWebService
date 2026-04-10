@@ -60,27 +60,27 @@ public final class RecordDetailPageRequest extends BasePageRequest {
 
     /** 导出Excel标志 */
     @SerializedName("exportExcelFlag")
-    private boolean exportExcelFlag;
+    private Boolean exportExcelFlag;
 
     /** 转换单位标志，默认为true */
     @SerializedName("convertUnitFlag")
-    private boolean convertUnitFlag;
+    private Boolean convertUnitFlag;
 
     /** 无效标志 */
     @SerializedName("invalidFlag")
-    private int invalidFlag;
+    private Integer invalidFlag;
 
     /** 是否违规不能为空 1:违规 */
     @SerializedName("sportViolationStatus")
-    private int sportViolationStatus;
+    private Integer sportViolationStatus;
 
     /** 项目高低优 参考字典编码：adl_bms_sport_priority（1 高优 2 低优 9 其它） */
     @SerializedName("sportPriority")
-    private int sportPriority;
+    private Integer sportPriority;
 
     /** 是否查询报告 */
     @SerializedName("reportFlag")
-    private boolean reportFlag;
+    private Boolean reportFlag;
 
     /** 开始时间排序 */
     @SerializedName("startTimeOrder")
@@ -96,7 +96,7 @@ public final class RecordDetailPageRequest extends BasePageRequest {
 
     /** 不显示视频URL标志，默认为false */
     @SerializedName("dontShowVideoUrl")
-    private boolean dontShowVideoUrl;
+    private Boolean dontShowVideoUrl;
 
     private RecordDetailPageRequest(Builder builder) {
         super(builder);
@@ -147,16 +147,16 @@ public final class RecordDetailPageRequest extends BasePageRequest {
         private String planId;
         private String recordId;
         private List<String> accountIds;
-        private boolean exportExcelFlag;
-        private boolean convertUnitFlag;
-        private int invalidFlag;
-        private int sportViolationStatus;
-        private int sportPriority;
-        private boolean reportFlag;
+        private Boolean exportExcelFlag;
+        private Boolean convertUnitFlag;
+        private Integer invalidFlag;
+        private Integer sportViolationStatus;
+        private Integer sportPriority;
+        private Boolean reportFlag;
         private String startTimeOrder;
         private String sportStartTime;
         private String sportEndTime;
-        private boolean dontShowVideoUrl;
+        private Boolean dontShowVideoUrl;
         public Builder orgId(String orgId) {
             this.orgId = orgId;
             return this;
@@ -209,27 +209,27 @@ public final class RecordDetailPageRequest extends BasePageRequest {
             this.accountIds = accountIds;
             return this;
         }
-        public Builder exportExcelFlag(boolean exportExcelFlag) {
+        public Builder exportExcelFlag(Boolean exportExcelFlag) {
             this.exportExcelFlag = exportExcelFlag;
             return this;
         }
-        public Builder convertUnitFlag(boolean convertUnitFlag) {
+        public Builder convertUnitFlag(Boolean convertUnitFlag) {
             this.convertUnitFlag = convertUnitFlag;
             return this;
         }
-        public Builder invalidFlag(int invalidFlag) {
+        public Builder invalidFlag(Integer invalidFlag) {
             this.invalidFlag = invalidFlag;
             return this;
         }
-        public Builder sportViolationStatus(int sportViolationStatus) {
+        public Builder sportViolationStatus(Integer sportViolationStatus) {
             this.sportViolationStatus = sportViolationStatus;
             return this;
         }
-        public Builder sportPriority(int sportPriority) {
+        public Builder sportPriority(Integer sportPriority) {
             this.sportPriority = sportPriority;
             return this;
         }
-        public Builder reportFlag(boolean reportFlag) {
+        public Builder reportFlag(Boolean reportFlag) {
             this.reportFlag = reportFlag;
             return this;
         }
@@ -245,7 +245,7 @@ public final class RecordDetailPageRequest extends BasePageRequest {
             this.sportEndTime = sportEndTime;
             return this;
         }
-        public Builder dontShowVideoUrl(boolean dontShowVideoUrl) {
+        public Builder dontShowVideoUrl(Boolean dontShowVideoUrl) {
             this.dontShowVideoUrl = dontShowVideoUrl;
             return this;
         }
@@ -265,14 +265,14 @@ public final class RecordDetailPageRequest extends BasePageRequest {
     public String getPlanId() { return planId; }
     public String getRecordId() { return recordId; }
     public List<String> getAccountIds() { return accountIds; }
-    public boolean getExportExcelFlag() { return exportExcelFlag; }
-    public boolean getConvertUnitFlag() { return convertUnitFlag; }
-    public int getInvalidFlag() { return invalidFlag; }
-    public int getSportViolationStatus() { return sportViolationStatus; }
-    public int getSportPriority() { return sportPriority; }
-    public boolean getReportFlag() { return reportFlag; }
+    public Boolean getExportExcelFlag() { return exportExcelFlag; }
+    public Boolean getConvertUnitFlag() { return convertUnitFlag; }
+    public Integer getInvalidFlag() { return invalidFlag; }
+    public Integer getSportViolationStatus() { return sportViolationStatus; }
+    public Integer getSportPriority() { return sportPriority; }
+    public Boolean getReportFlag() { return reportFlag; }
     public String getStartTimeOrder() { return startTimeOrder; }
     public String getSportStartTime() { return sportStartTime; }
     public String getSportEndTime() { return sportEndTime; }
-    public boolean getDontShowVideoUrl() { return dontShowVideoUrl; }
+    public Boolean getDontShowVideoUrl() { return dontShowVideoUrl; }
 }

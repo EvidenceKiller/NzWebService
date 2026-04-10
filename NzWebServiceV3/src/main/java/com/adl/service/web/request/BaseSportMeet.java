@@ -26,7 +26,7 @@ public final class BaseSportMeet {
      * tis_competition_meet_type  1团体 2个人
      */
     @SerializedName("meetGroupType")
-    private int meetGroupType;
+    private Integer meetGroupType;
 
     /**
      * 运动会运动员编码
@@ -61,7 +61,7 @@ public final class BaseSportMeet {
      * 运动结果同步标识
      */
     @SerializedName("resultSyncFlag")
-    private boolean resultSyncFlag;
+    private Boolean resultSyncFlag;
 
     /**
      * 运动会运动sku关系标识码

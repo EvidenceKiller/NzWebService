@@ -9,8 +9,6 @@ import android.widget.TextView;
 
 import com.adl.service.AdlService;
 import com.adl.service.callback.RequestCallback;
-import com.adl.service.exception.NzBaseException;
-import com.adl.service.web.request.AccountInfoRequest;
 import com.adl.service.web.request.AddBatchPageRequest;
 import com.adl.service.web.request.BaseDirection;
 import com.adl.service.web.request.BaseSort;
@@ -23,7 +21,6 @@ import com.adl.service.web.request.RequestScope;
 import com.adl.service.web.request.StudentPageRequest;
 import com.adl.service.web.request.TeacherListRequest;
 import com.adl.service.web.response.AcayearData;
-import com.adl.service.web.response.AccountInfoData;
 import com.adl.service.web.response.CitizenPageData;
 import com.adl.service.web.response.ClassInfoData;
 import com.adl.service.web.response.ClassListData;
@@ -36,7 +33,6 @@ import com.adl.service.web.response.TeacherData;
 import com.adl.ts.general.R;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -84,9 +80,6 @@ public class V3CommonInfoCallerTestActivity extends AppCompatActivity {
 
         createButton("getCitizenPageAsync").setOnClickListener(v -> getCitizenPageAsync());
         createButton("getCitizenPageSync").setOnClickListener(v -> getCitizenPageSync());
-
-        createButton("getAccountInfoAsync").setOnClickListener(v -> getAccountInfoAsync());
-        createButton("getAccountInfoSync").setOnClickListener(v -> getAccountInfoSync());
 
         createButton("getDictsAsync").setOnClickListener(v -> getDictsAsync());
         createButton("getDictsSync").setOnClickListener(v -> getDictsSync());
@@ -504,6 +497,7 @@ public class V3CommonInfoCallerTestActivity extends AppCompatActivity {
 
     private void getStudentPageAsync() {
         StudentPageRequest request = StudentPageRequest.builder()
+                .faceType(2)
                 .build();
         AdlService.getService().getCommonInfoCaller().getStudentPageAsync(RequestScope.of(this), request, new RequestCallback<StudentPageData>() {
             @Override
@@ -613,62 +607,6 @@ public class V3CommonInfoCallerTestActivity extends AppCompatActivity {
             @Override
             public void onError(String error) {
                 Log.d(TAG, "CommonInfoCallerTestActivity::getCitizenPageSync::onError : error : " + error);
-                resultView.setText(error);
-            }
-        });
-    }
-
-    private void getAccountInfoAsync() {
-        AccountInfoRequest request = AccountInfoRequest.builder("").build();
-        AdlService.getService().getCommonInfoCaller().getAccountInfoAsync(RequestScope.of(this), request, new RequestCallback<AccountInfoData>() {
-            @Override
-            public void onSuccess(AccountInfoData data) {
-                if (data != null) {
-                    Log.d(TAG, "CommonInfoCallerTestActivity::getAccountInfoAsync::onSuccess : data : " + data);
-                    resultView.setText(data.toString());
-                } else {
-                    Log.d(TAG, "CommonInfoCallerTestActivity::getAccountInfoAsync::onSuccess : data is null");
-                }
-            }
-
-            @Override
-            public void onFail(int code, String msg) {
-                Log.d(TAG, "CommonInfoCallerTestActivity::getAccountInfoAsync::onFail : code : " + code + ", msg : " + msg);
-                resultView.setText(msg);
-            }
-
-            @Override
-            public void onError(String error) {
-                Log.d(TAG, "CommonInfoCallerTestActivity::getAccountInfoAsync::onError : error : " + error);
-                resultView.setText(error);
-            }
-        });
-    }
-
-    private void getAccountInfoSync() {
-        AdlService.getService().executeSyncOnIo(RequestScope.of(this), () -> {
-            AccountInfoRequest request = AccountInfoRequest.builder("").build();
-            return AdlService.getService().getCommonInfoCaller().getAccountInfoSync(request);
-        }, new RequestCallback<AccountInfoData>() {
-            @Override
-            public void onSuccess(AccountInfoData data) {
-                if (data != null) {
-                    Log.d(TAG, "CommonInfoCallerTestActivity::getAccountInfoSync::onSuccess : data : " + data);
-                    resultView.setText(data.toString());
-                } else {
-                    Log.d(TAG, "CommonInfoCallerTestActivity::getAccountInfoSync::onSuccess : data is null");
-                }
-            }
-
-            @Override
-            public void onFail(int code, String msg) {
-                Log.d(TAG, "CommonInfoCallerTestActivity::getAccountInfoSync::onFail : code : " + code + ", msg : " + msg);
-                resultView.setText(msg);
-            }
-
-            @Override
-            public void onError(String error) {
-                Log.d(TAG, "CommonInfoCallerTestActivity::getAccountInfoSync::onError : error : " + error);
                 resultView.setText(error);
             }
         });

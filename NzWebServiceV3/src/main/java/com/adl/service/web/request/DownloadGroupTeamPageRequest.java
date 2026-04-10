@@ -14,7 +14,7 @@ public final class DownloadGroupTeamPageRequest extends BasePageRequest {
 
     /** 比赛轮次 */
     @SerializedName("competitionRound")
-    private int competitionRound;
+    private Integer competitionRound;
 
     /** 查看版本时间 */
     @SerializedName("checkTime")
@@ -22,19 +22,19 @@ public final class DownloadGroupTeamPageRequest extends BasePageRequest {
 
     /** 是否显示详情,false不显示 true显示 默认不显示 */
     @SerializedName("showDetail")
-    private boolean showDetail;
+    private Boolean showDetail;
 
     /** tis_competition_meet__type 1集体 2个人 */
     @SerializedName("competitionType")
-    private int competitionType;
+    private Integer competitionType;
 
     /** 来源是否是终端 */
     @SerializedName("deviceFlag")
-    private boolean deviceFlag;
+    private Boolean deviceFlag;
 
     /** 结果标识 */
     @SerializedName("result")
-    private boolean result;
+    private Boolean result;
 
     private DownloadGroupTeamPageRequest(Builder builder) {
         super(builder);
@@ -59,12 +59,12 @@ public final class DownloadGroupTeamPageRequest extends BasePageRequest {
         }
         private String meetId;
         private String meetSportSkuId;
-        private int competitionRound;
+        private Integer competitionRound;
         private String checkTime;
-        private boolean showDetail;
-        private int competitionType;
-        private boolean deviceFlag;
-        private boolean result;
+        private Boolean showDetail;
+        private Integer competitionType;
+        private Boolean deviceFlag;
+        private Boolean result;
         public Builder meetId(String meetId) {
             this.meetId = meetId;
             return this;
@@ -73,7 +73,7 @@ public final class DownloadGroupTeamPageRequest extends BasePageRequest {
             this.meetSportSkuId = meetSportSkuId;
             return this;
         }
-        public Builder competitionRound(int competitionRound) {
+        public Builder competitionRound(Integer competitionRound) {
             this.competitionRound = competitionRound;
             return this;
         }
@@ -81,19 +81,19 @@ public final class DownloadGroupTeamPageRequest extends BasePageRequest {
             this.checkTime = checkTime;
             return this;
         }
-        public Builder showDetail(boolean showDetail) {
+        public Builder showDetail(Boolean showDetail) {
             this.showDetail = showDetail;
             return this;
         }
-        public Builder competitionType(int competitionType) {
+        public Builder competitionType(Integer competitionType) {
             this.competitionType = competitionType;
             return this;
         }
-        public Builder deviceFlag(boolean deviceFlag) {
+        public Builder deviceFlag(Boolean deviceFlag) {
             this.deviceFlag = deviceFlag;
             return this;
         }
-        public Builder result(boolean result) {
+        public Builder result(Boolean result) {
             this.result = result;
             return this;
         }
@@ -102,10 +102,10 @@ public final class DownloadGroupTeamPageRequest extends BasePageRequest {
     }
     public String getMeetId() { return meetId; }
     public String getMeetSportSkuId() { return meetSportSkuId; }
-    public int getCompetitionRound() { return competitionRound; }
+    public Integer getCompetitionRound() { return competitionRound; }
     public String getCheckTime() { return checkTime; }
-    public boolean getShowDetail() { return showDetail; }
-    public int getCompetitionType() { return competitionType; }
-    public boolean getDeviceFlag() { return deviceFlag; }
-    public boolean getResult() { return result; }
+    public Boolean getShowDetail() { return showDetail; }
+    public Integer getCompetitionType() { return competitionType; }
+    public Boolean getDeviceFlag() { return deviceFlag; }
+    public Boolean getResult() { return result; }
 }

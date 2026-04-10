@@ -20,7 +20,7 @@ public final class MorePeopleRecordRankRequest {
      * 对战组数
      */
     @SerializedName("rankNumber")
-    private long rankNumber;
+    private Long rankNumber;
 
     private MorePeopleRecordRankRequest(Builder builder) {
         this.sportSkuId = builder.sportSkuId;
@@ -36,7 +36,7 @@ public final class MorePeopleRecordRankRequest {
     public static class Builder {
         private String sportSkuId;
         private String orgId;
-        private long rankNumber;
+        private Long rankNumber;
 
         public Builder sportSkuId(String sportSkuId) {
             this.sportSkuId = sportSkuId;
@@ -48,7 +48,7 @@ public final class MorePeopleRecordRankRequest {
             return this;
         }
 
-        public Builder rankNumber(long rankNumber) {
+        public Builder rankNumber(Long rankNumber) {
             this.rankNumber = rankNumber;
             return this;
         }
@@ -66,7 +66,7 @@ public final class MorePeopleRecordRankRequest {
         return orgId;
     }
 
-    public long getRankNumber() {
+    public Long getRankNumber() {
         return rankNumber;
     }
 }

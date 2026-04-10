@@ -20,7 +20,7 @@ public final class SumScoreRankRequest {
      * 1-今日 2-本周 3-本月 4-本季度 5-本年度
      */
     @SerializedName("timeType")
-    private int timeType;
+    private Integer timeType;
 
     /**
      * 班级标识码
@@ -62,7 +62,7 @@ public final class SumScoreRankRequest {
      * 前几的排行榜
      */
     @SerializedName("topLimit")
-    private int topLimit;
+    private Integer topLimit;
 
     private SumScoreRankRequest(Builder builder) {
         this.sportSkuId = builder.sportSkuId;
@@ -77,7 +77,7 @@ public final class SumScoreRankRequest {
         this.topLimit = builder.topLimit;
     }
 
-    public static Builder builder(String sportSkuId, int timeType) {
+    public static Builder builder(String sportSkuId, Integer timeType) {
         return new Builder(sportSkuId, timeType);
     }
 
@@ -85,14 +85,14 @@ public final class SumScoreRankRequest {
     public static class Builder {
         private String sportSkuId;
         private String sportSkuSubType;
-        private int timeType;
+        private Integer timeType;
         private String classId;
         private String gradeId;
         private String orgId;
         private String collegeId;
         private String facultyId;
         private String majorId;
-        private int topLimit;
+        private Integer topLimit;
 
         Builder(String sportSkuId, int timeType) {
             this.sportSkuId = sportSkuId;
@@ -134,7 +134,7 @@ public final class SumScoreRankRequest {
             return this;
         }
 
-        public Builder topLimit(int topLimit) {
+        public Builder topLimit(Integer topLimit) {
             this.topLimit = topLimit;
             return this;
         }
@@ -152,7 +152,7 @@ public final class SumScoreRankRequest {
         return sportSkuSubType;
     }
 
-    public int getTimeType() {
+    public Integer getTimeType() {
         return timeType;
     }
 
@@ -180,7 +180,7 @@ public final class SumScoreRankRequest {
         return majorId;
     }
 
-    public int getTopLimit() {
+    public Integer getTopLimit() {
         return topLimit;
     }
 }

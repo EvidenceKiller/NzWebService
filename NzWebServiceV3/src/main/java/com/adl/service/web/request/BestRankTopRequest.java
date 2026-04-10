@@ -56,19 +56,19 @@ public final class BestRankTopRequest {
      * 账户性别
      */
     @SerializedName("sex")
-    private int sex;
+    private Integer sex;
 
     /**
      * 前几的排行榜
      */
     @SerializedName("top")
-    private int top;
+    private Integer top;
 
     /**
      * 1-今日 2-本周 3-本月 4-本季度 5-本年度
      */
     @SerializedName("timeType")
-    private int timeType;
+    private Integer timeType;
 
     /**
      * 运动场景代码
@@ -98,7 +98,7 @@ public final class BestRankTopRequest {
         this.sportSceneType = builder.sportSceneType;
     }
 
-    public static Builder builder(String sportSkuId, int timeType) {
+    public static Builder builder(String sportSkuId, Integer timeType) {
         return new Builder(sportSkuId, timeType);
     }
 
@@ -112,13 +112,13 @@ public final class BestRankTopRequest {
         private String collegeId;
         private String facultyId;
         private String majorId;
-        private int sex;
-        private int top;
-        private int timeType;
+        private Integer sex;
+        private Integer top;
+        private Integer timeType;
         private String sportSceneCode;
         private String sportSceneType;
 
-        Builder(String sportSkuId, int timeType) {
+        Builder(String sportSkuId, Integer timeType) {
             this.sportSkuId = sportSkuId;
             this.timeType = timeType;
         }
@@ -158,12 +158,12 @@ public final class BestRankTopRequest {
             return this;
         }
 
-        public Builder sex(int sex) {
+        public Builder sex(Integer sex) {
             this.sex = sex;
             return this;
         }
 
-        public Builder top(int top) {
+        public Builder top(Integer top) {
             this.top = top;
             return this;
         }
@@ -215,15 +215,15 @@ public final class BestRankTopRequest {
         return majorId;
     }
 
-    public int getSex() {
+    public Integer getSex() {
         return sex;
     }
 
-    public int getTop() {
+    public Integer getTop() {
         return top;
     }
 
-    public int getTimeType() {
+    public Integer getTimeType() {
         return timeType;
     }
 

@@ -40,7 +40,7 @@ public final class AddBatchPageRequest extends BasePageRequest {
      * 日志过期时间，单位秒，范围在 86400 到 86400*60 即 1-7 天之间，如果不传默认存储 1 天
      */
     @SerializedName("expireTime")
-    private long expireTime;
+    private Long expireTime;
 
     private AddBatchPageRequest(Builder builder) {
         super(builder);
@@ -66,7 +66,7 @@ public final class AddBatchPageRequest extends BasePageRequest {
         private String level;
         private List<String> tags;
         private String content;
-        private long expireTime;
+        private Long expireTime;
 
         public Builder productCode(String productCode) {
             this.productCode = productCode;
@@ -93,7 +93,7 @@ public final class AddBatchPageRequest extends BasePageRequest {
             return this;
         }
 
-        public Builder expireTime(long expireTime) {
+        public Builder expireTime(Long expireTime) {
             this.expireTime = expireTime;
             return this;
         }
@@ -123,7 +123,7 @@ public final class AddBatchPageRequest extends BasePageRequest {
         return content;
     }
 
-    public long getExpireTime() {
+    public Long getExpireTime() {
         return expireTime;
     }
 }

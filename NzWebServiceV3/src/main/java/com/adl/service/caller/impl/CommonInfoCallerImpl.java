@@ -6,7 +6,6 @@ import com.adl.service.caller.CommonInfoCaller;
 import com.adl.service.exception.NzBaseException;
 import com.adl.service.internal.RxCallbackScheduler;
 import com.adl.service.internal.SubscriptionManager;
-import com.adl.service.web.request.AccountInfoRequest;
 import com.adl.service.web.request.AddBatchPageRequest;
 import com.adl.service.web.request.CitizenPageRequest;
 import com.adl.service.web.request.ClassInfoRequest;
@@ -159,19 +158,6 @@ public final class CommonInfoCallerImpl implements CommonInfoCaller {
     @Override
     public CitizenPageData getCitizenPageSync(CitizenPageRequest request) throws NzBaseException {
         return RxCallbackScheduler.blockingGetData(commonInfoService.getCitizenPage(request));
-    }
-
-    @Override
-    public long getAccountInfoAsync(RequestScope scope, AccountInfoRequest request, RequestCallback<AccountInfoData> callback) {
-        CallerScopeUtils.requireScope(scope);
-        Disposable disposable = RxCallbackScheduler.scheduleBaseResponse(commonInfoService.getAccountInfo(request), callback);
-        SubscriptionManager.getInstance().add(scope.owner(), disposable);
-        return disposable.hashCode();
-    }
-
-    @Override
-    public AccountInfoData getAccountInfoSync(AccountInfoRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGetData(commonInfoService.getAccountInfo(request));
     }
 
     @Override

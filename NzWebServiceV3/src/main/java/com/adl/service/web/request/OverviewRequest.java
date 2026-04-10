@@ -8,7 +8,7 @@ public final class OverviewRequest {
      * 1-今日 2-本周 3-本月 4-本季度 5-本年度
      */
     @SerializedName("timeType")
-    private int timeType;
+    private Integer timeType;
 
     /**
      * 班级标识码
@@ -55,14 +55,14 @@ public final class OverviewRequest {
 
 
     public static class Builder {
-        private int timeType;
+        private Integer timeType;
         private String classId;
         private String gradeId;
         private String collegeId;
         private String facultyId;
         private String majorId;
 
-        public Builder timeType(int timeType) {
+        public Builder timeType(Integer timeType) {
             this.timeType = timeType;
             return this;
         }
@@ -97,7 +97,7 @@ public final class OverviewRequest {
         }
     }
 
-    public int getTimeType() {
+    public Integer getTimeType() {
         return timeType;
     }
 

@@ -52,7 +52,7 @@ public final class WarRecordRankRequest {
      * 排行数
      */
     @SerializedName("rankNumber")
-    private long rankNumber;
+    private Long rankNumber;
 
     /**
      * 应用端编码
@@ -85,7 +85,7 @@ public final class WarRecordRankRequest {
         private String orgId;
         private String tenantOrgId;
         private List<String> sportDateList;
-        private long rankNumber;
+        private Long rankNumber;
         private String appCode;
 
         public Builder sportSceneCodes(List<String> sportSceneCodes) {
@@ -123,7 +123,7 @@ public final class WarRecordRankRequest {
             return this;
         }
 
-        public Builder rankNumber(long rankNumber) {
+        public Builder rankNumber(Long rankNumber) {
             this.rankNumber = rankNumber;
             return this;
         }

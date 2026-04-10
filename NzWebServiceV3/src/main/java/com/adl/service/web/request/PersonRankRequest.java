@@ -26,7 +26,7 @@ public final class PersonRankRequest {
      * 1-今日 2-本周 3-本月 4-本季度 5-本年度
      */
     @SerializedName("timeType")
-    private int timeType;
+    private Integer timeType;
 
     /**
      * 班级标识码
@@ -86,7 +86,7 @@ public final class PersonRankRequest {
         private String accountId;
         private String sportSkuId;
         private String sportSkuSubType;
-        private int timeType;
+        private Integer timeType;
         private String classId;
         private String gradeId;
         private String orgId;
@@ -151,7 +151,7 @@ public final class PersonRankRequest {
         return sportSkuSubType;
     }
 
-    public int getTimeType() {
+    public Integer getTimeType() {
         return timeType;
     }
 

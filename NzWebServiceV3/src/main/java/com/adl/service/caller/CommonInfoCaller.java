@@ -2,7 +2,6 @@ package com.adl.service.caller;
 
 import com.adl.service.callback.RequestCallback;
 import com.adl.service.exception.NzBaseException;
-import com.adl.service.web.request.AccountInfoRequest;
 import com.adl.service.web.request.AddBatchPageRequest;
 import com.adl.service.web.request.CitizenPageRequest;
 import com.adl.service.web.request.ClassInfoRequest;
@@ -66,10 +65,6 @@ public interface CommonInfoCaller {
     long getCitizenPageAsync(RequestScope scope, CitizenPageRequest request, RequestCallback<CitizenPageData> callback);
 
     CitizenPageData getCitizenPageSync(CitizenPageRequest request) throws NzBaseException;
-
-    long getAccountInfoAsync(RequestScope scope, AccountInfoRequest request, RequestCallback<AccountInfoData> callback);
-
-    AccountInfoData getAccountInfoSync(AccountInfoRequest request) throws NzBaseException;
 
     long getDictsAsync(RequestScope scope, DictsRequest request, RequestCallback<List<DictsData>> callback);
 

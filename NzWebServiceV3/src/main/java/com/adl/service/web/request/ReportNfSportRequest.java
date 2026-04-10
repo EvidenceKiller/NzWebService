@@ -22,7 +22,7 @@ public final class ReportNfSportRequest {
      * 学年标识码
      */
     @SerializedName("academicYearCode")
-    private int academicYearCode;
+    private Integer academicYearCode;
 
     /**
      * 用户标识码
@@ -40,19 +40,19 @@ public final class ReportNfSportRequest {
      * 运动完美个数
      */
     @SerializedName("perfectCount")
-    private int perfectCount;
+    private Integer perfectCount;
 
     /**
      * 运动优秀个数
      */
     @SerializedName("bravoCount")
-    private int bravoCount;
+    private Integer bravoCount;
 
     /**
      * 运动良好个数
      */
     @SerializedName("goodeviceount")
-    private int goodeviceount;
+    private Integer goodeviceount;
 
     /**
      * 扩展JSON
@@ -94,7 +94,7 @@ public final class ReportNfSportRequest {
      * 记录有效标识位
      */
     @SerializedName("invalidFlag")
-    private int invalidFlag;
+    private Integer invalidFlag;
 
     /**
      * 多人运动Id
@@ -106,13 +106,13 @@ public final class ReportNfSportRequest {
      * 多人运动排名
      */
     @SerializedName("multiPersonRank")
-    private int multiPersonRank;
+    private Integer multiPersonRank;
 
     /**
      * 多人运动机位排序
      */
     @SerializedName("multiPersonIndex")
-    private int multiPersonIndex;
+    private Integer multiPersonIndex;
 
     /**
      * 原始运动结果
@@ -148,7 +148,7 @@ public final class ReportNfSportRequest {
      * 运动统计字段 例：跳绳类为个数 阳光跑为mm
      */
     @SerializedName("sportCount")
-    private long sportCount;
+    private Long sportCount;
 
     /**
      * 运动开始时间，时间戳不能为空
@@ -190,7 +190,7 @@ public final class ReportNfSportRequest {
      * 运动得分
      */
     @SerializedName("sportScore")
-    private double sportScore;
+    private Double sportScore;
 
     /**
      * 运动sku编码
@@ -208,19 +208,19 @@ public final class ReportNfSportRequest {
      * 运动时长
      */
     @SerializedName("sportTime")
-    private long sportTime;
+    private Long sportTime;
 
     /**
      * 运动单位编码
      */
     @SerializedName("sportUnitCode")
-    private int sportUnitCode;
+    private Integer sportUnitCode;
 
     /**
      * 是否违规不能为空 1:违规
      */
     @SerializedName("sportViolationStatus")
-    private int sportViolationStatus;
+    private Integer sportViolationStatus;
 
     private ReportNfSportRequest(Builder builder) {
         this.id = builder.id;
@@ -261,7 +261,7 @@ public final class ReportNfSportRequest {
         this.sportViolationStatus = builder.sportViolationStatus;
     }
 
-    public static Builder builder(String accountId, String appCode, int invalidFlag, long sportCount, String sportStartTime, String sportEndTime, String sportResult, String sportSceneCode, String sportSkuId, String sportSkuSubType, long sportTime) {
+    public static Builder builder(String accountId, String appCode, Integer invalidFlag, Long sportCount, String sportStartTime, String sportEndTime, String sportResult, String sportSceneCode, String sportSkuId, String sportSkuSubType, Long sportTime) {
         return new Builder(accountId, appCode, invalidFlag, sportCount, sportStartTime, sportEndTime, sportResult, sportSceneCode, sportSkuId, sportSkuSubType, sportTime);
     }
 
@@ -269,40 +269,40 @@ public final class ReportNfSportRequest {
     public static class Builder {
         private String id;
         private String recordId;
-        private int academicYearCode;
+        private Integer academicYearCode;
         private String accountId;
         private String appCode;
-        private int perfectCount;
-        private int bravoCount;
-        private int goodeviceount;
+        private Integer perfectCount;
+        private Integer bravoCount;
+        private Integer goodeviceount;
         private String extraJson;
         private BaseCompetitionAthletics competitionAthletics;
         private List<BaseSportIndicator> sportIndicators;
         private BaseSportMeet sportMeet;
         private BaseSportPlan sportPlan;
         private BaseTrainPlan trainPlan;
-        private int invalidFlag;
+        private Integer invalidFlag;
         private String multiPersonId;
-        private int multiPersonRank;
-        private int multiPersonIndex;
+        private Integer multiPersonRank;
+        private Integer multiPersonIndex;
         private String originalSportResult;
         private String placeId;
         private String placeName;
         private String semesterId;
         private String sourceType;
-        private long sportCount;
+        private Long sportCount;
         private String sportStartTime;
         private String sportEndTime;
         private List<BaseSportImage> sportImages;
         private List<BaseSportVideo> sportVideos;
         private String sportResult;
         private String sportSceneCode;
-        private double sportScore;
+        private Double sportScore;
         private String sportSkuId;
         private String sportSkuSubType;
-        private long sportTime;
-        private int sportUnitCode;
-        private int sportViolationStatus;
+        private Long sportTime;
+        private Integer sportUnitCode;
+        private Integer sportViolationStatus;
 
         Builder(String accountId, String appCode, int invalidFlag, long sportCount, String sportStartTime, String sportEndTime, String sportResult, String sportSceneCode, String sportSkuId, String sportSkuSubType, long sportTime) {
             this.accountId = accountId;
@@ -328,22 +328,22 @@ public final class ReportNfSportRequest {
             return this;
         }
 
-        public Builder academicYearCode(int academicYearCode) {
+        public Builder academicYearCode(Integer academicYearCode) {
             this.academicYearCode = academicYearCode;
             return this;
         }
 
-        public Builder perfectCount(int perfectCount) {
+        public Builder perfectCount(Integer perfectCount) {
             this.perfectCount = perfectCount;
             return this;
         }
 
-        public Builder bravoCount(int bravoCount) {
+        public Builder bravoCount(Integer bravoCount) {
             this.bravoCount = bravoCount;
             return this;
         }
 
-        public Builder goodeviceount(int goodeviceount) {
+        public Builder goodeviceount(Integer goodeviceount) {
             this.goodeviceount = goodeviceount;
             return this;
         }
@@ -383,12 +383,12 @@ public final class ReportNfSportRequest {
             return this;
         }
 
-        public Builder multiPersonRank(int multiPersonRank) {
+        public Builder multiPersonRank(Integer multiPersonRank) {
             this.multiPersonRank = multiPersonRank;
             return this;
         }
 
-        public Builder multiPersonIndex(int multiPersonIndex) {
+        public Builder multiPersonIndex(Integer multiPersonIndex) {
             this.multiPersonIndex = multiPersonIndex;
             return this;
         }
@@ -428,17 +428,17 @@ public final class ReportNfSportRequest {
             return this;
         }
 
-        public Builder sportScore(double sportScore) {
+        public Builder sportScore(Double sportScore) {
             this.sportScore = sportScore;
             return this;
         }
 
-        public Builder sportUnitCode(int sportUnitCode) {
+        public Builder sportUnitCode(Integer sportUnitCode) {
             this.sportUnitCode = sportUnitCode;
             return this;
         }
 
-        public Builder sportViolationStatus(int sportViolationStatus) {
+        public Builder sportViolationStatus(Integer sportViolationStatus) {
             this.sportViolationStatus = sportViolationStatus;
             return this;
         }
@@ -456,7 +456,7 @@ public final class ReportNfSportRequest {
         return recordId;
     }
 
-    public int getAcademicYearCode() {
+    public Integer getAcademicYearCode() {
         return academicYearCode;
     }
 
@@ -468,15 +468,15 @@ public final class ReportNfSportRequest {
         return appCode;
     }
 
-    public int getPerfectCount() {
+    public Integer getPerfectCount() {
         return perfectCount;
     }
 
-    public int getBravoCount() {
+    public Integer getBravoCount() {
         return bravoCount;
     }
 
-    public int getGoodeviceount() {
+    public Integer getGoodeviceount() {
         return goodeviceount;
     }
 
@@ -504,7 +504,7 @@ public final class ReportNfSportRequest {
         return trainPlan;
     }
 
-    public int getInvalidFlag() {
+    public Integer getInvalidFlag() {
         return invalidFlag;
     }
 
@@ -512,11 +512,11 @@ public final class ReportNfSportRequest {
         return multiPersonId;
     }
 
-    public int getMultiPersonRank() {
+    public Integer getMultiPersonRank() {
         return multiPersonRank;
     }
 
-    public int getMultiPersonIndex() {
+    public Integer getMultiPersonIndex() {
         return multiPersonIndex;
     }
 
@@ -540,7 +540,7 @@ public final class ReportNfSportRequest {
         return sourceType;
     }
 
-    public long getSportCount() {
+    public Long getSportCount() {
         return sportCount;
     }
 
@@ -568,7 +568,7 @@ public final class ReportNfSportRequest {
         return sportSceneCode;
     }
 
-    public double getSportScore() {
+    public Double getSportScore() {
         return sportScore;
     }
 
@@ -580,15 +580,15 @@ public final class ReportNfSportRequest {
         return sportSkuSubType;
     }
 
-    public long getSportTime() {
+    public Long getSportTime() {
         return sportTime;
     }
 
-    public int getSportUnitCode() {
+    public Integer getSportUnitCode() {
         return sportUnitCode;
     }
 
-    public int getSportViolationStatus() {
+    public Integer getSportViolationStatus() {
         return sportViolationStatus;
     }
 }

@@ -28,7 +28,7 @@ public final class SportMeetPageRequest extends BasePageRequest {
      * 状态
      */
     @SerializedName("state")
-    private int state;
+    private Integer state;
 
     /**
      * 关键字
@@ -46,7 +46,7 @@ public final class SportMeetPageRequest extends BasePageRequest {
      * 是否显示分组
      */
     @SerializedName("showGroup")
-    private boolean showGroup;
+    private Boolean showGroup;
 
     /**
      * 检查时间
@@ -58,13 +58,13 @@ public final class SportMeetPageRequest extends BasePageRequest {
      * 排序字段 0 创建时间降序 1比赛时间降序
      */
     @SerializedName("orderByField")
-    private int orderByField;
+    private Integer orderByField;
 
     /**
      * 最后更新时间
      */
     @SerializedName("lastUpdateTime")
-    private long lastUpdateTime;
+    private Long lastUpdateTime;
 
     private SportMeetPageRequest(Builder builder) {
         super(builder);
@@ -92,13 +92,13 @@ public final class SportMeetPageRequest extends BasePageRequest {
         private String appCode;
         private List<String> classIds;
         private String orgId;
-        private int state;
+        private Integer state;
         private String keyword;
         private String id;
-        private boolean showGroup;
+        private Boolean showGroup;
         private String checkTime;
-        private int orderByField;
-        private long lastUpdateTime;
+        private Integer orderByField;
+        private Long lastUpdateTime;
 
         public Builder appCode(String appCode) {
             this.appCode = appCode;
@@ -115,7 +115,7 @@ public final class SportMeetPageRequest extends BasePageRequest {
             return this;
         }
 
-        public Builder state(int state) {
+        public Builder state(Integer state) {
             this.state = state;
             return this;
         }
@@ -130,7 +130,7 @@ public final class SportMeetPageRequest extends BasePageRequest {
             return this;
         }
 
-        public Builder showGroup(boolean showGroup) {
+        public Builder showGroup(Boolean showGroup) {
             this.showGroup = showGroup;
             return this;
         }
@@ -140,12 +140,12 @@ public final class SportMeetPageRequest extends BasePageRequest {
             return this;
         }
 
-        public Builder orderByField(int orderByField) {
+        public Builder orderByField(Integer orderByField) {
             this.orderByField = orderByField;
             return this;
         }
 
-        public Builder lastUpdateTime(long lastUpdateTime) {
+        public Builder lastUpdateTime(Long lastUpdateTime) {
             this.lastUpdateTime = lastUpdateTime;
             return this;
         }
@@ -167,7 +167,7 @@ public final class SportMeetPageRequest extends BasePageRequest {
         return orgId;
     }
 
-    public int getState() {
+    public Integer getState() {
         return state;
     }
 
@@ -179,7 +179,7 @@ public final class SportMeetPageRequest extends BasePageRequest {
         return id;
     }
 
-    public boolean getShowGroup() {
+    public Boolean getShowGroup() {
         return showGroup;
     }
 
@@ -187,11 +187,11 @@ public final class SportMeetPageRequest extends BasePageRequest {
         return checkTime;
     }
 
-    public int getOrderByField() {
+    public Integer getOrderByField() {
         return orderByField;
     }
 
-    public long getLastUpdateTime() {
+    public Long getLastUpdateTime() {
         return lastUpdateTime;
     }
 }

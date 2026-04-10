@@ -48,7 +48,7 @@ public final class RxCallbackScheduler {
                             if (callback == null) {
                                 return;
                             }
-                            if (response != null && response.isSucceed()) {
+                            if (response != null && response.getSucceed().booleanValue()) {
                                 callback.onSuccess(response.getData());
                             } else if (response != null) {
                                 callback.onFail(response.getCode(), response.getMsg());
@@ -87,7 +87,7 @@ public final class RxCallbackScheduler {
                                 } else {
                                     if (data instanceof BaseResponse) {
                                         BaseResponse<?> response = (BaseResponse<?>) data;
-                                        if (!response.isSucceed()) {
+                                        if (!response.getSucceed().booleanValue()) {
                                             callback.onFail(response.getCode(), response.getMsg());
                                             return;
                                         }
@@ -125,7 +125,7 @@ public final class RxCallbackScheduler {
         if (response == null) {
             throw new NzEmptyResponseException("Response is null");
         }
-        if (response.getCode() != 200 || !response.isSucceed()) {
+        if (response.getCode() != 200 || !response.getSucceed().booleanValue()) {
             throw new NzNetworkException(response.getCode(), response.getMsg());
         }
         T data = response.getData();

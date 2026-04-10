@@ -8,19 +8,19 @@ import java.util.Map;
 public final class SunshineRunningGetClassroomCompetitionRecordListRequest {
 
     @SerializedName("noPaging")
-    private boolean noPaging;
+    private Boolean noPaging;
 
     @SerializedName("pageSize")
-    private long pageSize;
+    private Long pageSize;
 
     @SerializedName("current")
-    private long current;
+    private Long current;
 
     @SerializedName("detail")
-    private boolean detail;
+    private Boolean detail;
 
     @SerializedName("enableSort")
-    private boolean enableSort;
+    private Boolean enableSort;
 
     @SerializedName("sorts")
     private List<Map<String, Object>> sorts;
@@ -51,7 +51,7 @@ public final class SunshineRunningGetClassroomCompetitionRecordListRequest {
 
     /** 组别 */
     @SerializedName("multiPersonIndex")
-    private int multiPersonIndex;
+    private Integer multiPersonIndex;
 
     /** 开始日期 */
     @SerializedName("startDate")
@@ -101,11 +101,11 @@ public final class SunshineRunningGetClassroomCompetitionRecordListRequest {
 
 
     public static class Builder {
-        private boolean noPaging;
-        private long pageSize;
-        private long current;
-        private boolean detail;
-        private boolean enableSort;
+        private Boolean noPaging;
+        private Long pageSize;
+        private Long current;
+        private Boolean detail;
+        private Boolean enableSort;
         private List<Map<String, Object>> sorts;
         private String sortsStr;
         private List<String> ignoreColumns;
@@ -114,29 +114,29 @@ public final class SunshineRunningGetClassroomCompetitionRecordListRequest {
         private String orgId;
         private String gradeId;
         private String classId;
-        private int multiPersonIndex;
+        private Integer multiPersonIndex;
         private String startDate;
         private String endDate;
         private String sportSkuId;
         private String appCode;
         private String keyword;
-        public Builder noPaging(boolean noPaging) {
+        public Builder noPaging(Boolean noPaging) {
             this.noPaging = noPaging;
             return this;
         }
-        public Builder pageSize(long pageSize) {
+        public Builder pageSize(Long pageSize) {
             this.pageSize = pageSize;
             return this;
         }
-        public Builder current(long current) {
+        public Builder current(Long current) {
             this.current = current;
             return this;
         }
-        public Builder detail(boolean detail) {
+        public Builder detail(Boolean detail) {
             this.detail = detail;
             return this;
         }
-        public Builder enableSort(boolean enableSort) {
+        public Builder enableSort(Boolean enableSort) {
             this.enableSort = enableSort;
             return this;
         }
@@ -172,7 +172,7 @@ public final class SunshineRunningGetClassroomCompetitionRecordListRequest {
             this.classId = classId;
             return this;
         }
-        public Builder multiPersonIndex(int multiPersonIndex) {
+        public Builder multiPersonIndex(Integer multiPersonIndex) {
             this.multiPersonIndex = multiPersonIndex;
             return this;
         }
@@ -200,11 +200,11 @@ public final class SunshineRunningGetClassroomCompetitionRecordListRequest {
         public SunshineRunningGetClassroomCompetitionRecordListRequest build() { return new SunshineRunningGetClassroomCompetitionRecordListRequest(this); }
     }
 
-    public boolean getNoPaging() { return noPaging; }
-    public long getPageSize() { return pageSize; }
-    public long getCurrent() { return current; }
-    public boolean getDetail() { return detail; }
-    public boolean getEnableSort() { return enableSort; }
+    public Boolean getNoPaging() { return noPaging; }
+    public Long getPageSize() { return pageSize; }
+    public Long getCurrent() { return current; }
+    public Boolean getDetail() { return detail; }
+    public Boolean getEnableSort() { return enableSort; }
     public List<Map<String, Object>> getSorts() { return sorts; }
     public String getSortsStr() { return sortsStr; }
     public List<String> getIgnoreColumns() { return ignoreColumns; }
@@ -213,7 +213,7 @@ public final class SunshineRunningGetClassroomCompetitionRecordListRequest {
     public String getOrgId() { return orgId; }
     public String getGradeId() { return gradeId; }
     public String getClassId() { return classId; }
-    public int getMultiPersonIndex() { return multiPersonIndex; }
+    public Integer getMultiPersonIndex() { return multiPersonIndex; }
     public String getStartDate() { return startDate; }
     public String getEndDate() { return endDate; }
     public String getSportSkuId() { return sportSkuId; }

@@ -11,7 +11,7 @@ public final class ResTypeListRequest {
     private String wikiId;
 
     @SerializedName("resType")
-    private int resType;
+    private Integer resType;
 
     private ResTypeListRequest(Builder builder) {
         this.id = builder.id;
@@ -27,7 +27,7 @@ public final class ResTypeListRequest {
     public static class Builder {
         private String id;
         private String wikiId;
-        private int resType;
+        private Integer resType;
 
         public Builder id(String id) {
             this.id = id;
@@ -39,7 +39,7 @@ public final class ResTypeListRequest {
             return this;
         }
 
-        public Builder resType(int resType) {
+        public Builder resType(Integer resType) {
             this.resType = resType;
             return this;
         }
@@ -57,7 +57,7 @@ public final class ResTypeListRequest {
         return wikiId;
     }
 
-    public int getResType() {
+    public Integer getResType() {
         return resType;
     }
 }

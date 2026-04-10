@@ -32,7 +32,7 @@ public final class CompetitionRankRequest {
      * 排名的数量
      */
     @SerializedName("rankNumber")
-    private long rankNumber;
+    private Long rankNumber;
 
     /**
      * 账号id
@@ -58,7 +58,7 @@ public final class CompetitionRankRequest {
         private String rankType;
         private String rankId;
         private String sportSkuId;
-        private long rankNumber;
+        private Long rankNumber;
         private String accountId;
 
         public Builder competitionId(String competitionId) {
@@ -81,7 +81,7 @@ public final class CompetitionRankRequest {
             return this;
         }
 
-        public Builder rankNumber(long rankNumber) {
+        public Builder rankNumber(Long rankNumber) {
             this.rankNumber = rankNumber;
             return this;
         }
@@ -112,7 +112,7 @@ public final class CompetitionRankRequest {
         return sportSkuId;
     }
 
-    public long getRankNumber() {
+    public Long getRankNumber() {
         return rankNumber;
     }
 

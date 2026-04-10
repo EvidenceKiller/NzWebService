@@ -22,7 +22,7 @@ public final class DetailListRequest {
 
     /** 次数 */
     @SerializedName("times")
-    private int times;
+    private Integer times;
 
     private DetailListRequest(Builder builder) {
         this.classId = builder.classId;
@@ -42,7 +42,7 @@ public final class DetailListRequest {
         private String sportSkuId;
         private String sportItemCode;
         private String date;
-        private int times;
+        private Integer times;
         public Builder classId(String classId) {
             this.classId = classId;
             return this;
@@ -59,7 +59,7 @@ public final class DetailListRequest {
             this.date = date;
             return this;
         }
-        public Builder times(int times) {
+        public Builder times(Integer times) {
             this.times = times;
             return this;
         }
@@ -71,5 +71,5 @@ public final class DetailListRequest {
     public String getSportSkuId() { return sportSkuId; }
     public String getSportItemCode() { return sportItemCode; }
     public String getDate() { return date; }
-    public int getTimes() { return times; }
+    public Integer getTimes() { return times; }
 }

@@ -20,7 +20,7 @@ public final class SportSkuPageRequest extends BasePageRequest {
 
     /** 模板标识 */
     @SerializedName("templateFlag")
-    private int templateFlag;
+    private Integer templateFlag;
 
     /** ID列表 */
     @SerializedName("ids")
@@ -40,11 +40,11 @@ public final class SportSkuPageRequest extends BasePageRequest {
 
     /** 删除标志 */
     @SerializedName("delFlag")
-    private boolean delFlag;
+    private Boolean delFlag;
 
     /** 启用状态 */
     @SerializedName("enabled")
-    private boolean enabled;
+    private Boolean enabled;
 
     private SportSkuPageRequest(Builder builder) {
         super(builder);
@@ -72,13 +72,13 @@ public final class SportSkuPageRequest extends BasePageRequest {
         private String sportNature;
         private String sportType;
         private String keyword;
-        private int templateFlag;
+        private Integer templateFlag;
         private List<String> ids;
         private List<String> appCodes;
         private String appCode;
         private String sceneId;
-        private boolean delFlag;
-        private boolean enabled;
+        private Boolean delFlag;
+        private Boolean enabled;
         public Builder sportNature(String sportNature) {
             this.sportNature = sportNature;
             return this;
@@ -91,7 +91,7 @@ public final class SportSkuPageRequest extends BasePageRequest {
             this.keyword = keyword;
             return this;
         }
-        public Builder templateFlag(int templateFlag) {
+        public Builder templateFlag(Integer templateFlag) {
             this.templateFlag = templateFlag;
             return this;
         }
@@ -111,11 +111,11 @@ public final class SportSkuPageRequest extends BasePageRequest {
             this.sceneId = sceneId;
             return this;
         }
-        public Builder delFlag(boolean delFlag) {
+        public Builder delFlag(Boolean delFlag) {
             this.delFlag = delFlag;
             return this;
         }
-        public Builder enabled(boolean enabled) {
+        public Builder enabled(Boolean enabled) {
             this.enabled = enabled;
             return this;
         }
@@ -125,11 +125,11 @@ public final class SportSkuPageRequest extends BasePageRequest {
     public String getSportNature() { return sportNature; }
     public String getSportType() { return sportType; }
     public String getKeyword() { return keyword; }
-    public int getTemplateFlag() { return templateFlag; }
+    public Integer getTemplateFlag() { return templateFlag; }
     public List<String> getIds() { return ids; }
     public List<String> getAppCodes() { return appCodes; }
     public String getAppCode() { return appCode; }
     public String getSceneId() { return sceneId; }
-    public boolean getDelFlag() { return delFlag; }
-    public boolean getEnabled() { return enabled; }
+    public Boolean getDelFlag() { return delFlag; }
+    public Boolean getEnabled() { return enabled; }
 }

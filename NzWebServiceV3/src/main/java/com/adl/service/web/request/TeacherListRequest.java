@@ -14,7 +14,7 @@ public final class TeacherListRequest extends BasePageRequest {
      * 账户类型
      */
     @SerializedName("accountType")
-    private int accountType;
+    private Integer accountType;
 
     /**
      * 最后更新时间
@@ -38,10 +38,10 @@ public final class TeacherListRequest extends BasePageRequest {
      * 1 百度 2 商汤
      */
     @SerializedName("faceType")
-    private int faceType;
+    private Integer faceType;
 
     @SerializedName("delFlag")
-    private boolean delFlag;
+    private Boolean delFlag;
 
     private TeacherListRequest(Builder builder) {
         super(builder);
@@ -66,19 +66,19 @@ public final class TeacherListRequest extends BasePageRequest {
         }
 
         private String orgId;
-        private int accountType;
+        private Integer accountType;
         private String lastUpdateTime;
         private String acayearSem;
         private String acayearSemCode;
-        private int faceType;
-        private boolean delFlag;
+        private Integer faceType;
+        private Boolean delFlag;
 
         public Builder orgId(String orgId) {
             this.orgId = orgId;
             return this;
         }
 
-        public Builder accountType(int accountType) {
+        public Builder accountType(Integer accountType) {
             this.accountType = accountType;
             return this;
         }
@@ -98,12 +98,12 @@ public final class TeacherListRequest extends BasePageRequest {
             return this;
         }
 
-        public Builder faceType(int faceType) {
+        public Builder faceType(Integer faceType) {
             this.faceType = faceType;
             return this;
         }
 
-        public Builder delFlag(boolean delFlag) {
+        public Builder delFlag(Boolean delFlag) {
             this.delFlag = delFlag;
             return this;
         }
@@ -117,7 +117,7 @@ public final class TeacherListRequest extends BasePageRequest {
         return orgId;
     }
 
-    public int getAccountType() {
+    public Integer getAccountType() {
         return accountType;
     }
 
@@ -133,11 +133,11 @@ public final class TeacherListRequest extends BasePageRequest {
         return acayearSemCode;
     }
 
-    public int getFaceType() {
+    public Integer getFaceType() {
         return faceType;
     }
 
-    public boolean getDelFlag() {
+    public Boolean getDelFlag() {
         return delFlag;
     }
 }

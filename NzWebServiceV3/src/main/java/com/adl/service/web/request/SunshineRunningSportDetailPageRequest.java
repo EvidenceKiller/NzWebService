@@ -29,16 +29,7 @@ public final class SunshineRunningSportDetailPageRequest extends BasePageRequest
     private String date;
 
     private SunshineRunningSportDetailPageRequest(Builder b) {
-        this.noPaging = b.noPaging;
-        this.pageSize = b.pageSize;
-        this.current = b.current;
-        this.detail = b.detail;
-        this.enableSort = b.enableSort;
-        this.sorts = b.sorts;
-        this.sortsStr = b.sortsStr;
-        this.ignoreColumns = b.ignoreColumns;
-        this.containColumns = b.containColumns;
-        this.moduleStr = b.moduleStr;
+        super(b);
         this.semesterId = b.semesterId;
         this.orgId = b.orgId;
         this.date = b.date;

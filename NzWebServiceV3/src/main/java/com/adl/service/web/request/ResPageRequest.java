@@ -12,11 +12,11 @@ public final class ResPageRequest extends BasePageRequest {
 
     /** 启停用 参考枚举 adl_tis_enabled */
     @SerializedName("enabled")
-    private boolean enabled;
+    private Boolean enabled;
 
     /** 资源类型 参考枚举 adl_tis_res_type */
     @SerializedName("type")
-    private int type;
+    private Integer type;
 
     /** 开始日期 */
     @SerializedName("startTime")
@@ -36,7 +36,7 @@ public final class ResPageRequest extends BasePageRequest {
 
     /** 资源类型 1-备课助手 2-校本资源 */
     @SerializedName("resType")
-    private int resType;
+    private Integer resType;
 
     /** 应用端代码 */
     @SerializedName("appCode")
@@ -74,24 +74,24 @@ public final class ResPageRequest extends BasePageRequest {
             return this;
         }
         private String id;
-        private boolean enabled;
-        private int type;
+        private Boolean enabled;
+        private Integer type;
         private String startTime;
         private String endTime;
         private String title;
         private String createNum;
-        private int resType;
+        private Integer resType;
         private String appCode;
         private String resTypeId;
         private List<String> ids;
         Builder(String id) {
             this.id = id;
         }
-        public Builder enabled(boolean enabled) {
+        public Builder enabled(Boolean enabled) {
             this.enabled = enabled;
             return this;
         }
-        public Builder type(int type) {
+        public Builder type(Integer type) {
             this.type = type;
             return this;
         }
@@ -111,7 +111,7 @@ public final class ResPageRequest extends BasePageRequest {
             this.createNum = createNum;
             return this;
         }
-        public Builder resType(int resType) {
+        public Builder resType(Integer resType) {
             this.resType = resType;
             return this;
         }
@@ -131,13 +131,13 @@ public final class ResPageRequest extends BasePageRequest {
         public ResPageRequest build() { return new ResPageRequest(this); }
     }
     public String getId() { return id; }
-    public boolean getEnabled() { return enabled; }
-    public int getType() { return type; }
+    public Boolean getEnabled() { return enabled; }
+    public Integer getType() { return type; }
     public String getStartTime() { return startTime; }
     public String getEndTime() { return endTime; }
     public String getTitle() { return title; }
     public String getCreateNum() { return createNum; }
-    public int getResType() { return resType; }
+    public Integer getResType() { return resType; }
     public String getAppCode() { return appCode; }
     public String getResTypeId() { return resTypeId; }
     public List<String> getIds() { return ids; }

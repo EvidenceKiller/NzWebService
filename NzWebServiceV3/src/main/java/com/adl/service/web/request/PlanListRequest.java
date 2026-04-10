@@ -32,7 +32,7 @@ public final class PlanListRequest extends BasePageRequest {
      * 是否显示统计
      */
     @SerializedName("showStatistic")
-    private boolean showStatistic;
+    private Boolean showStatistic;
 
     /**
      * 计划ID
@@ -65,7 +65,7 @@ public final class PlanListRequest extends BasePageRequest {
         private String standardType;
         private String acayearCode;
         private String status;
-        private boolean showStatistic;
+        private Boolean showStatistic;
         private String planId;
 
         public Builder orgId(String orgId) {
@@ -88,7 +88,7 @@ public final class PlanListRequest extends BasePageRequest {
             return this;
         }
 
-        public Builder showStatistic(boolean showStatistic) {
+        public Builder showStatistic(Boolean showStatistic) {
             this.showStatistic = showStatistic;
             return this;
         }
@@ -119,7 +119,7 @@ public final class PlanListRequest extends BasePageRequest {
         return status;
     }
 
-    public boolean getShowStatistic() {
+    public Boolean getShowStatistic() {
         return showStatistic;
     }
 

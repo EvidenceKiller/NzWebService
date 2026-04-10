@@ -14,13 +14,13 @@ public final class MorePeopleVictoryRankRequest {
      * 上榜的最大排名
      */
     @SerializedName("maxRank")
-    private int maxRank;
+    private Integer maxRank;
 
     /**
      * 前N名
      */
     @SerializedName("top")
-    private int top;
+    private Integer top;
 
     private MorePeopleVictoryRankRequest(Builder builder) {
         this.skuId = builder.skuId;
@@ -35,19 +35,19 @@ public final class MorePeopleVictoryRankRequest {
 
     public static class Builder {
         private String skuId;
-        private int maxRank;
-        private int top;
+        private Integer maxRank;
+        private Integer top;
 
         Builder(String skuId) {
             this.skuId = skuId;
         }
 
-        public Builder maxRank(int maxRank) {
+        public Builder maxRank(Integer maxRank) {
             this.maxRank = maxRank;
             return this;
         }
 
-        public Builder top(int top) {
+        public Builder top(Integer top) {
             this.top = top;
             return this;
         }
@@ -61,11 +61,11 @@ public final class MorePeopleVictoryRankRequest {
         return skuId;
     }
 
-    public int getMaxRank() {
+    public Integer getMaxRank() {
         return maxRank;
     }
 
-    public int getTop() {
+    public Integer getTop() {
         return top;
     }
 }

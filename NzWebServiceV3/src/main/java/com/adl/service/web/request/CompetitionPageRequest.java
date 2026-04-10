@@ -6,7 +6,7 @@ public final class CompetitionPageRequest extends BasePageRequest {
 
     /** 赛事类型 */
     @SerializedName("onlineType")
-    private int onlineType;
+    private Integer onlineType;
 
     /** 机构ID */
     @SerializedName("orgId")
@@ -14,7 +14,7 @@ public final class CompetitionPageRequest extends BasePageRequest {
 
     /** 赛事级别 */
     @SerializedName("competitionLevel")
-    private int competitionLevel;
+    private Integer competitionLevel;
 
     /** 应用编码 */
     @SerializedName("appCode")
@@ -30,7 +30,7 @@ public final class CompetitionPageRequest extends BasePageRequest {
 
     /** 赛事状态 1未开始 2进行中 3已结束 */
     @SerializedName("competitionEnabled")
-    private int competitionEnabled;
+    private Integer competitionEnabled;
 
     /** 名称/发布人模糊搜索 */
     @SerializedName("keyword")
@@ -42,11 +42,11 @@ public final class CompetitionPageRequest extends BasePageRequest {
 
     /** 机构类型 */
     @SerializedName("orgType")
-    private int orgType;
+    private Integer orgType;
 
     /** 终端标识 */
     @SerializedName("terminalFlag")
-    private boolean terminalFlag;
+    private Boolean terminalFlag;
 
     /** 账户ID */
     @SerializedName("accountId")
@@ -54,7 +54,7 @@ public final class CompetitionPageRequest extends BasePageRequest {
 
     /** 排序字段 0 createTime , 1 startTime */
     @SerializedName("sortField")
-    private int sortField;
+    private Integer sortField;
 
     private CompetitionPageRequest(Builder builder) {
         super(builder);
@@ -82,20 +82,20 @@ public final class CompetitionPageRequest extends BasePageRequest {
         protected Builder self() {
             return this;
         }
-        private int onlineType;
+        private Integer onlineType;
         private String orgId;
-        private int competitionLevel;
+        private Integer competitionLevel;
         private String appCode;
         private String startTime;
         private String endTime;
-        private int competitionEnabled;
+        private Integer competitionEnabled;
         private String keyword;
         private String acayearSemCode;
-        private int orgType;
-        private boolean terminalFlag;
+        private Integer orgType;
+        private Boolean terminalFlag;
         private String accountId;
-        private int sortField;
-        public Builder onlineType(int onlineType) {
+        private Integer sortField;
+        public Builder onlineType(Integer onlineType) {
             this.onlineType = onlineType;
             return this;
         }
@@ -103,7 +103,7 @@ public final class CompetitionPageRequest extends BasePageRequest {
             this.orgId = orgId;
             return this;
         }
-        public Builder competitionLevel(int competitionLevel) {
+        public Builder competitionLevel(Integer competitionLevel) {
             this.competitionLevel = competitionLevel;
             return this;
         }
@@ -119,7 +119,7 @@ public final class CompetitionPageRequest extends BasePageRequest {
             this.endTime = endTime;
             return this;
         }
-        public Builder competitionEnabled(int competitionEnabled) {
+        public Builder competitionEnabled(Integer competitionEnabled) {
             this.competitionEnabled = competitionEnabled;
             return this;
         }
@@ -131,11 +131,11 @@ public final class CompetitionPageRequest extends BasePageRequest {
             this.acayearSemCode = acayearSemCode;
             return this;
         }
-        public Builder orgType(int orgType) {
+        public Builder orgType(Integer orgType) {
             this.orgType = orgType;
             return this;
         }
-        public Builder terminalFlag(boolean terminalFlag) {
+        public Builder terminalFlag(Boolean terminalFlag) {
             this.terminalFlag = terminalFlag;
             return this;
         }
@@ -143,24 +143,24 @@ public final class CompetitionPageRequest extends BasePageRequest {
             this.accountId = accountId;
             return this;
         }
-        public Builder sortField(int sortField) {
+        public Builder sortField(Integer sortField) {
             this.sortField = sortField;
             return this;
         }
 
         public CompetitionPageRequest build() { return new CompetitionPageRequest(this); }
     }
-    public int getOnlineType() { return onlineType; }
+    public Integer getOnlineType() { return onlineType; }
     public String getOrgId() { return orgId; }
-    public int getCompetitionLevel() { return competitionLevel; }
+    public Integer getCompetitionLevel() { return competitionLevel; }
     public String getAppCode() { return appCode; }
     public String getStartTime() { return startTime; }
     public String getEndTime() { return endTime; }
-    public int getCompetitionEnabled() { return competitionEnabled; }
+    public Integer getCompetitionEnabled() { return competitionEnabled; }
     public String getKeyword() { return keyword; }
     public String getAcayearSemCode() { return acayearSemCode; }
-    public int getOrgType() { return orgType; }
-    public boolean getTerminalFlag() { return terminalFlag; }
+    public Integer getOrgType() { return orgType; }
+    public Boolean getTerminalFlag() { return terminalFlag; }
     public String getAccountId() { return accountId; }
-    public int getSortField() { return sortField; }
+    public Integer getSortField() { return sortField; }
 }

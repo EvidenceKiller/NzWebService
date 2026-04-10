@@ -14,5 +14,5 @@ public final class BaseGroupRule {
      * 分组规则
      */
     @SerializedName("empty")
-    private boolean empty;
+    private Boolean empty;
 }

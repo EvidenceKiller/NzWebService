@@ -20,7 +20,7 @@ public final class SportPhysicalTrainingRankRequest {
 
     /** 排行数 */
     @SerializedName("rankNumber")
-    private long rankNumber;
+    private Long rankNumber;
 
     /** 应用端 */
     @SerializedName("appCode")
@@ -43,7 +43,7 @@ public final class SportPhysicalTrainingRankRequest {
         private List<String> sportSceneCodes;
         private String sportSkuId;
         private String dayType;
-        private long rankNumber;
+        private Long rankNumber;
         private String appCode;
         Builder(List<String> sportSceneCodes, String sportSkuId, String dayType, String appCode) {
             this.sportSceneCodes = sportSceneCodes;
@@ -51,7 +51,7 @@ public final class SportPhysicalTrainingRankRequest {
             this.dayType = dayType;
             this.appCode = appCode;
         }
-        public Builder rankNumber(long rankNumber) {
+        public Builder rankNumber(Long rankNumber) {
             this.rankNumber = rankNumber;
             return this;
         }
@@ -62,6 +62,6 @@ public final class SportPhysicalTrainingRankRequest {
     public List<String> getSportSceneCodes() { return sportSceneCodes; }
     public String getSportSkuId() { return sportSkuId; }
     public String getDayType() { return dayType; }
-    public long getRankNumber() { return rankNumber; }
+    public Long getRankNumber() { return rankNumber; }
     public String getAppCode() { return appCode; }
 }

@@ -26,15 +26,6 @@ public final class StudentPageData {
     @SerializedName("current")
     private Long current;
 
-    @SerializedName("optimizeJoinOfCountSql")
-    private Boolean optimizeJoinOfCountSql;
-
-    @SerializedName("maxLimit")
-    private Long maxLimit;
-
-    @SerializedName("countId")
-    private String countId;
-
     @SerializedName("pages")
     private Long pages;
 }

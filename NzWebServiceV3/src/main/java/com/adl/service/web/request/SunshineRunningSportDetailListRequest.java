@@ -8,19 +8,19 @@ import java.util.Map;
 public final class SunshineRunningSportDetailListRequest {
 
     @SerializedName("noPaging")
-    private boolean noPaging;
+    private Boolean noPaging;
 
     @SerializedName("pageSize")
-    private long pageSize;
+    private Long pageSize;
 
     @SerializedName("current")
-    private long current;
+    private Long current;
 
     @SerializedName("detail")
-    private boolean detail;
+    private Boolean detail;
 
     @SerializedName("enableSort")
-    private boolean enableSort;
+    private Boolean enableSort;
 
     @SerializedName("sorts")
     private List<Map<String, Object>> sorts;
@@ -71,11 +71,11 @@ public final class SunshineRunningSportDetailListRequest {
 
 
     public static class Builder {
-        private boolean noPaging;
-        private long pageSize;
-        private long current;
-        private boolean detail;
-        private boolean enableSort;
+        private Boolean noPaging;
+        private Long pageSize;
+        private Long current;
+        private Boolean detail;
+        private Boolean enableSort;
         private List<Map<String, Object>> sorts;
         private String sortsStr;
         private List<String> ignoreColumns;
@@ -84,23 +84,23 @@ public final class SunshineRunningSportDetailListRequest {
         private String semesterId;
         private String orgId;
         private String date;
-        public Builder noPaging(boolean noPaging) {
+        public Builder noPaging(Boolean noPaging) {
             this.noPaging = noPaging;
             return this;
         }
-        public Builder pageSize(long pageSize) {
+        public Builder pageSize(Long pageSize) {
             this.pageSize = pageSize;
             return this;
         }
-        public Builder current(long current) {
+        public Builder current(Long current) {
             this.current = current;
             return this;
         }
-        public Builder detail(boolean detail) {
+        public Builder detail(Boolean detail) {
             this.detail = detail;
             return this;
         }
-        public Builder enableSort(boolean enableSort) {
+        public Builder enableSort(Boolean enableSort) {
             this.enableSort = enableSort;
             return this;
         }
@@ -140,11 +140,11 @@ public final class SunshineRunningSportDetailListRequest {
         public SunshineRunningSportDetailListRequest build() { return new SunshineRunningSportDetailListRequest(this); }
     }
 
-    public boolean getNoPaging() { return noPaging; }
-    public long getPageSize() { return pageSize; }
-    public long getCurrent() { return current; }
-    public boolean getDetail() { return detail; }
-    public boolean getEnableSort() { return enableSort; }
+    public Boolean getNoPaging() { return noPaging; }
+    public Long getPageSize() { return pageSize; }
+    public Long getCurrent() { return current; }
+    public Boolean getDetail() { return detail; }
+    public Boolean getEnableSort() { return enableSort; }
     public List<Map<String, Object>> getSorts() { return sorts; }
     public String getSortsStr() { return sortsStr; }
     public List<String> getIgnoreColumns() { return ignoreColumns; }

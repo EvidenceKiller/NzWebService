@@ -8,7 +8,7 @@ public final class SceneListRequest {
     private String appCode;
 
     @SerializedName("enabled")
-    private boolean enabled;
+    private Boolean enabled;
 
     @SerializedName("sceneType")
     private String sceneType;
@@ -26,7 +26,7 @@ public final class SceneListRequest {
 
     public static class Builder {
         private String appCode;
-        private boolean enabled;
+        private Boolean enabled;
         private String sceneType;
 
         public Builder appCode(String appCode) {
@@ -34,7 +34,7 @@ public final class SceneListRequest {
             return this;
         }
 
-        public Builder enabled(boolean enabled) {
+        public Builder enabled(Boolean enabled) {
             this.enabled = enabled;
             return this;
         }
@@ -53,7 +53,7 @@ public final class SceneListRequest {
         return appCode;
     }
 
-    public boolean getEnabled() {
+    public Boolean getEnabled() {
         return enabled;
     }
 
