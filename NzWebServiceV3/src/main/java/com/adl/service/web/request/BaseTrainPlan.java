@@ -2,6 +2,13 @@ package com.adl.service.web.request;
 
 import com.google.gson.annotations.SerializedName;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
+
+@Data
+@NoArgsConstructor
+@Accessors(chain = true)
 public final class BaseTrainPlan {
     /**
      * 特训计划id
@@ -26,5 +33,4 @@ public final class BaseTrainPlan {
      */
     @SerializedName("trainPlanSportName")
     private String trainPlanSportName;
-
 }

@@ -1,7 +1,6 @@
 package com.adl.service.web.response;
 
 import com.adl.service.internal.StrictJsonDeserializer;
-import com.adl.service.web.request.BaseLoginAccount;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 
@@ -76,13 +75,13 @@ public final class LoginInfoData {
      * 用户性别 1 男， 2 女
      */
     @SerializedName("userSex")
-    private int userSex;
+    private Integer userSex;
 
     /**
      * 用戶证件类型
      */
     @SerializedName("certType")
-    private int certType;
+    private Integer certType;
 
     /**
      * 用户证件号
@@ -124,11 +123,11 @@ public final class LoginInfoData {
     private String lang;
 
     @SerializedName("inner")
-    private boolean inner;
+    private Boolean inner;
 
     /**
      * 账号信息列表
      */
     @SerializedName("accounts")
-    private List<BaseLoginAccount> accounts;
+    private List<LoginInfoAccountData> accounts;
 }

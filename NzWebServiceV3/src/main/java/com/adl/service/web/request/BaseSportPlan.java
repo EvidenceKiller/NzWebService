@@ -2,6 +2,13 @@ package com.adl.service.web.request;
 
 import com.google.gson.annotations.SerializedName;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
+
+@Data
+@NoArgsConstructor
+@Accessors(chain = true)
 public final class BaseSportPlan {
     /**
      * 组织测试计划ID
@@ -92,64 +99,4 @@ public final class BaseSportPlan {
      */
     @SerializedName("ptTestType")
     private Integer ptTestType;
-
-    public String getPtPlanId() {
-        return ptPlanId;
-    }
-
-    public String getPtStandardId() {
-        return ptStandardId;
-    }
-
-    public String getPtStandardType() {
-        return ptStandardType;
-    }
-
-    public Integer getPtBatch() {
-        return ptBatch;
-    }
-
-    public String getPtSportStandardScore() {
-        return ptSportStandardScore;
-    }
-
-    public String getPtSportStandardLevel() {
-        return ptSportStandardLevel;
-    }
-
-    public String getPtSportScore() {
-        return ptSportScore;
-    }
-
-    public String getPtSportStandardAddScore() {
-        return ptSportStandardAddScore;
-    }
-
-    public Integer getSportViolationStatus() {
-        return sportViolationStatus;
-    }
-
-    public Integer getSportViolationNumber() {
-        return sportViolationNumber;
-    }
-
-    public String getPtExtrasResult() {
-        return ptExtrasResult;
-    }
-
-    public String getPtExtrasResultMod() {
-        return ptExtrasResultMod;
-    }
-
-    public String getPtExtrasScore() {
-        return ptExtrasScore;
-    }
-
-    public String getPtExtrasScoreMod() {
-        return ptExtrasScoreMod;
-    }
-
-    public Integer getPtTestType() {
-        return ptTestType;
-    }
 }

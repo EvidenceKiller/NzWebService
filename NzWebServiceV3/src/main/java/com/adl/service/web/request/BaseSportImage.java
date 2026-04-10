@@ -2,6 +2,13 @@ package com.adl.service.web.request;
 
 import com.google.gson.annotations.SerializedName;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
+
+@Data
+@NoArgsConstructor
+@Accessors(chain = true)
 public final class BaseSportImage {
     /**
      * 图片说明
@@ -20,16 +27,4 @@ public final class BaseSportImage {
      */
     @SerializedName("groupIndex")
     private String groupIndex;
-
-    public String getImageDesc() {
-        return imageDesc;
-    }
-
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public String getGroupIndex() {
-        return groupIndex;
-    }
 }

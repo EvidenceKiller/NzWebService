@@ -2,6 +2,13 @@ package com.adl.service.web.request;
 
 import com.google.gson.annotations.SerializedName;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
+
+@Data
+@NoArgsConstructor
+@Accessors(chain = true)
 public final class BaseCompetitionAthletics {
     /**
      * 赛事id
@@ -38,28 +45,4 @@ public final class BaseCompetitionAthletics {
      */
     @SerializedName("competitionTaskStatus")
     private Boolean competitionTaskStatus;
-
-    public String getCompetitionId() {
-        return competitionId;
-    }
-
-    public String getCompetitionName() {
-        return competitionName;
-    }
-
-    public String getCompetitionAthSportId() {
-        return competitionAthSportId;
-    }
-
-    public String getCompetitionAthSportName() {
-        return competitionAthSportName;
-    }
-
-    public Boolean getCompetitionCheckStatus() {
-        return competitionCheckStatus;
-    }
-
-    public Boolean getCompetitionTaskStatus() {
-        return competitionTaskStatus;
-    }
 }

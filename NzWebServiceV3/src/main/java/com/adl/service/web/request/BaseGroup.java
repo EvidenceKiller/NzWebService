@@ -4,6 +4,13 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
+
+@Data
+@NoArgsConstructor
+@Accessors(chain = true)
 public final class BaseGroup {
 
     /**
@@ -35,24 +42,4 @@ public final class BaseGroup {
      */
     @SerializedName("groupAccountInfos")
     private List<Object> groupAccountInfos;
-
-    public String getGroupId() {
-        return groupId;
-    }
-
-    public String getGroupClassId() {
-        return groupClassId;
-    }
-
-    public String getGroupName() {
-        return groupName;
-    }
-
-    public String getGroupNumber() {
-        return groupNumber;
-    }
-
-    public List<Object> getGroupAccountInfos() {
-        return groupAccountInfos;
-    }
 }

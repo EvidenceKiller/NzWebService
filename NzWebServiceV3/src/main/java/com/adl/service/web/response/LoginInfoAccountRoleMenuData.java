@@ -1,5 +1,7 @@
-package com.adl.service.web.request;
+package com.adl.service.web.response;
 
+import com.adl.service.internal.StrictJsonDeserializer;
+import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 
 import lombok.Getter;
@@ -7,7 +9,8 @@ import lombok.ToString;
 
 @Getter
 @ToString
-public final class BaseLoginAccountRoleMenu {
+@JsonAdapter(StrictJsonDeserializer.class)
+public final class LoginInfoAccountRoleMenuData {
     /**
      * 菜单id
      */
@@ -54,11 +57,11 @@ public final class BaseLoginAccountRoleMenu {
      * 是否是跳转菜单
      */
     @SerializedName("redirectFlag")
-    private int redirectFlag;
+    private Integer redirectFlag;
 
     /**
      * 菜单排序标识符
      */
     @SerializedName("sortNum")
-    private int sortNum;
+    private Integer sortNum;
 }

@@ -1,5 +1,7 @@
-package com.adl.service.web.request;
+package com.adl.service.web.response;
 
+import com.adl.service.internal.StrictJsonDeserializer;
+import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
@@ -12,7 +14,8 @@ import lombok.ToString;
  */
 @Getter
 @ToString
-public final class BaseLoginAccount {
+@JsonAdapter(StrictJsonDeserializer.class)
+public final class LoginInfoAccountData {
     /**
      * 租户id
      */
@@ -119,13 +122,13 @@ public final class BaseLoginAccount {
      * 角色集
      */
     @SerializedName("roles")
-    private List<BaseLoginAccountRole> roles;
+    private List<LoginInfoAccountRoleData> roles;
 
     /**
      * 年级 label: 名称 value: id
      */
     @SerializedName("grade")
-    private BaseLoginAccountGrade grade;
+    private LoginInfoAccountGradeData grade;
 
     /**
      * 部门集合 label: 名称 value: id extra:类型

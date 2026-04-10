@@ -184,7 +184,7 @@ public final class ReportStudentCompetitionRequest {
      * 运动指标
      */
     @SerializedName("reqDataSportIndicators")
-    private List<BaseSportIndicatorReqData> reqDataSportIndicators;
+    private List<BaseSportIndicatorReq> reqDataSportIndicators;
 
     private ReportStudentCompetitionRequest(Builder builder) {
         this.accountId = builder.accountId;
@@ -254,7 +254,7 @@ public final class ReportStudentCompetitionRequest {
         private String placeName;
         private String reportCode;
         private BaseCompetitionAthletics competitionAthletics;
-        private List<BaseSportIndicatorReqData> reqDataSportIndicators;
+        private List<BaseSportIndicatorReq> reqDataSportIndicators;
 
         Builder(String accountId, String appCode, int invalidFlag, long sportCount, String sportStartTime, String sportEndTime, String sportResult, String sportSceneCode, String sportSkuId, String sportSkuSubType, long sportTime) {
             this.accountId = accountId;
@@ -360,7 +360,7 @@ public final class ReportStudentCompetitionRequest {
             return this;
         }
 
-        public Builder reqDataSportIndicators(List<BaseSportIndicatorReqData> reqDataSportIndicators) {
+        public Builder reqDataSportIndicators(List<BaseSportIndicatorReq> reqDataSportIndicators) {
             this.reqDataSportIndicators = reqDataSportIndicators;
             return this;
         }
@@ -486,7 +486,7 @@ public final class ReportStudentCompetitionRequest {
         return competitionAthletics;
     }
 
-    public List<BaseSportIndicatorReqData> getReqDataSportIndicators() {
+    public List<BaseSportIndicatorReq> getReqDataSportIndicators() {
         return reqDataSportIndicators;
     }
 }

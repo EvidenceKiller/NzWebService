@@ -2,6 +2,13 @@ package com.adl.service.web.request;
 
 import com.google.gson.annotations.SerializedName;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
+
+@Data
+@NoArgsConstructor
+@Accessors(chain = true)
 public final class BaseSportIndicator {
     /**
      * 运动指标编码，索引列
@@ -44,32 +51,4 @@ public final class BaseSportIndicator {
      */
     @SerializedName("indicatorsVideos")
     private String indicatorsVideos;
-
-    public String getIndicatorsCode() {
-        return indicatorsCode;
-    }
-
-    public String getIndicatorsName() {
-        return indicatorsName;
-    }
-
-    public String getIndicatorsRemark() {
-        return indicatorsRemark;
-    }
-
-    public String getIndicatorsUnit() {
-        return indicatorsUnit;
-    }
-
-    public String getIndicatorsValue() {
-        return indicatorsValue;
-    }
-
-    public String getIndicatorsImages() {
-        return indicatorsImages;
-    }
-
-    public String getIndicatorsVideos() {
-        return indicatorsVideos;
-    }
 }

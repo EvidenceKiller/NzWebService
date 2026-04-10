@@ -2,6 +2,13 @@ package com.adl.service.web.request;
 
 import com.google.gson.annotations.SerializedName;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
+
+@Data
+@NoArgsConstructor
+@Accessors(chain = true)
 public final class BaseSportMeet {
     /**
      * 运动会id
@@ -66,48 +73,4 @@ public final class BaseSportMeet {
      */
     @SerializedName("serialNumber")
     private String serialNumber;
-
-    public String getMeetId() {
-        return meetId;
-    }
-
-    public String getClassId() {
-        return classId;
-    }
-
-    public int getMeetGroupType() {
-        return meetGroupType;
-    }
-
-    public String getMeetNumberCode() {
-        return meetNumberCode;
-    }
-
-    public String getMeetRound() {
-        return meetRound;
-    }
-
-    public String getMeetRunwayCode() {
-        return meetRunwayCode;
-    }
-
-    public String getMeetTeamNo() {
-        return meetTeamNo;
-    }
-
-    public String getTeamUnitCode() {
-        return teamUnitCode;
-    }
-
-    public boolean isResultSyncFlag() {
-        return resultSyncFlag;
-    }
-
-    public String getMeetSportSkuId() {
-        return meetSportSkuId;
-    }
-
-    public String getSerialNumber() {
-        return serialNumber;
-    }
 }

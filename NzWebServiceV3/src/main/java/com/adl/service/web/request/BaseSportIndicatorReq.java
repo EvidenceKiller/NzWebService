@@ -4,7 +4,14 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public final class BaseSportIndicatorReqData {
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
+
+@Data
+@NoArgsConstructor
+@Accessors(chain = true)
+public final class BaseSportIndicatorReq {
     /**
      * 运动指标编码, 索引列
      */
@@ -46,33 +53,4 @@ public final class BaseSportIndicatorReqData {
      */
     @SerializedName("indicatorsVideos")
     private List<String> indicatorsVideos;
-
-    public List<String> getIndicatorsVideos() {
-        return indicatorsVideos;
-    }
-
-    public List<String> getIndicatorsImages() {
-        return indicatorsImages;
-    }
-
-    public String getIndicatorsValue() {
-        return indicatorsValue;
-    }
-
-    public String getIndicatorsUnit() {
-        return indicatorsUnit;
-    }
-
-    public String getIndicatorsRemark() {
-        return indicatorsRemark;
-    }
-
-    public String getIndicatorsName() {
-        return indicatorsName;
-    }
-
-    public String getIndicatorsCode() {
-        return indicatorsCode;
-    }
-
 }

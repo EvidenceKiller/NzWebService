@@ -2,6 +2,13 @@ package com.adl.service.web.request;
 
 import com.google.gson.annotations.SerializedName;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
+
+@Data
+@NoArgsConstructor
+@Accessors(chain = true)
 public final class BaseSportVideo {
     /**
      * 视频说明
@@ -20,16 +27,4 @@ public final class BaseSportVideo {
      */
     @SerializedName("videoCover")
     private String videoCover;
-
-    public String getVideoDesc() {
-        return videoDesc;
-    }
-
-    public String getVideoUrl() {
-        return videoUrl;
-    }
-
-    public String getVideoCover() {
-        return videoCover;
-    }
 }

@@ -1,5 +1,7 @@
-package com.adl.service.web.request;
+package com.adl.service.web.response;
 
+import com.adl.service.internal.StrictJsonDeserializer;
+import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
@@ -9,7 +11,8 @@ import lombok.ToString;
 
 @Getter
 @ToString
-public final class BaseLoginAccountRole {
+@JsonAdapter(StrictJsonDeserializer.class)
+public final class LoginInfoAccountRoleData {
     /**
      * 租户uid
      */
@@ -53,5 +56,5 @@ public final class BaseLoginAccountRole {
      * 菜单集
      */
     @SerializedName("menus")
-    private List<BaseLoginAccountRoleMenu> menus;
+    private List<LoginInfoAccountRoleMenuData> menus;
 }
