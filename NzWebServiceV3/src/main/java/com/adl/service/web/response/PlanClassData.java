@@ -1,8 +1,10 @@
 package com.adl.service.web.response;
 
 import com.google.gson.annotations.SerializedName;
+import lombok.Getter;
 import lombok.ToString;
 
+@Getter
 @ToString
 public final class PlanClassData {
 
@@ -53,17 +55,4 @@ public final class PlanClassData {
     /** 年级编号 */
     @SerializedName("gradeNum")
     private String gradeNum;
-
-    public String getClassId() { return classId; }
-    public String getGradeName() { return gradeName; }
-    public String getGradeId() { return gradeId; }
-    public String getClassName() { return className; }
-    public String getCollegeId() { return collegeId; }
-    public String getCollegeName() { return collegeName; }
-    public String getMajorId() { return majorId; }
-    public String getMajorName() { return majorName; }
-    public String getFacultyId() { return facultyId; }
-    public String getFacultyName() { return facultyName; }
-    public String getPeriodNum() { return periodNum; }
-    public String getGradeNum() { return gradeNum; }
 }

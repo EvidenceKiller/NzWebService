@@ -1,8 +1,10 @@
 package com.adl.service.web.response;
 
 import com.google.gson.annotations.SerializedName;
+import lombok.Getter;
 import lombok.ToString;
 
+@Getter
 @ToString
 public final class CompetitionMyRankData {
     /** 用户标识码 */
@@ -60,60 +62,4 @@ public final class CompetitionMyRankData {
     /** 运动单位代码 */
     @SerializedName("sportUnitCode")
     private String sportUnitCode;
-
-    public String getAccountId() {
-        return accountId;
-    }
-
-    public String getAccountName() {
-        return accountName;
-    }
-
-    public String getAccountAvatar() {
-        return accountAvatar;
-    }
-
-    public String getSex() {
-        return sex;
-    }
-
-    public int getScore() {
-        return score;
-    }
-
-    public String getSportResult() {
-        return sportResult;
-    }
-
-    public String getOrgName() {
-        return orgName;
-    }
-
-    public String getClassName() {
-        return className;
-    }
-
-    public int getRankNum() {
-        return rankNum;
-    }
-
-    public long getSportEndTime() {
-        return sportEndTime;
-    }
-
-    public double getSportScore() {
-        return sportScore;
-    }
-
-    public int getAccuracyType() {
-        return accuracyType;
-    }
-
-    public int getAccuracyMethod() {
-        return accuracyMethod;
-    }
-
-    public String getSportUnitCode() {
-        return sportUnitCode;
-    }
 }

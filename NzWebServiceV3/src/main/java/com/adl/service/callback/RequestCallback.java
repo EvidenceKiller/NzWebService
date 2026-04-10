@@ -29,5 +29,5 @@ public interface RequestCallback<T> {
      *
      * @param code 业务错误码
      */
-    void onFail(int code);
+    void onFail(int code, String msg);
 }

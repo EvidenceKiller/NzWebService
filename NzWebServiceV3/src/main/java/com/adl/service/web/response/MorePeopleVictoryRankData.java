@@ -1,8 +1,10 @@
 package com.adl.service.web.response;
 
 import com.google.gson.annotations.SerializedName;
+import lombok.Getter;
 import lombok.ToString;
 
+@Getter
 @ToString
 public final class MorePeopleVictoryRankData {
 
@@ -29,11 +31,4 @@ public final class MorePeopleVictoryRankData {
     /** 性别 */
     @SerializedName("sex")
     private int sex;
-
-    public String getAccountId() { return accountId; }
-    public String getAccountName() { return accountName; }
-    public String getFaceUrl() { return faceUrl; }
-    public int getVictoryNumber() { return victoryNumber; }
-    public double getVictoryRate() { return victoryRate; }
-    public int getSex() { return sex; }
 }

@@ -3,10 +3,11 @@ package com.adl.service.web.response;
 import com.adl.service.web.request.BaseGroup;
 import com.adl.service.web.request.BaseGroupRule;
 import com.google.gson.annotations.SerializedName;
+import lombok.Getter;
 import lombok.ToString;
-
 import java.util.List;
 
+@Getter
 @ToString
 public final class GroupData {
 
@@ -54,36 +55,4 @@ public final class GroupData {
      */
     @SerializedName("longModeType")
     private int longModeType;
-
-    public String getSceneCode() {
-        return sceneCode;
-    }
-
-    public String getPtPlanId() {
-        return ptPlanId;
-    }
-
-    public String getClassId() {
-        return classId;
-    }
-
-    public BaseGroupRule getGroupRule() {
-        return groupRule;
-    }
-
-    public boolean getEmpty() {
-        return empty;
-    }
-
-    public String getSportSkuId() {
-        return sportSkuId;
-    }
-
-    public List<BaseGroup> getGroups() {
-        return groups;
-    }
-
-    public int getLongModeType() {
-        return longModeType;
-    }
 }

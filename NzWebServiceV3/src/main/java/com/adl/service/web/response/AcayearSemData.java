@@ -1,8 +1,10 @@
 package com.adl.service.web.response;
 
 import com.google.gson.annotations.SerializedName;
+import lombok.Getter;
 import lombok.ToString;
 
+@Getter
 @ToString
 public final class AcayearSemData {
     /**
@@ -46,32 +48,4 @@ public final class AcayearSemData {
      */
     @SerializedName("startDate")
     private String startDate;
-
-    public String getAcayearCode() {
-        return acayearCode;
-    }
-
-    public String getAcayearSemCode() {
-        return acayearSemCode;
-    }
-
-    public String getAcayearSemName() {
-        return acayearSemName;
-    }
-
-    public String getEndDate() {
-        return endDate;
-    }
-
-    public int getIsLastAcayearSem() {
-        return isLastAcayearSem;
-    }
-
-    public int getIsNowAcayearSem() {
-        return isNowAcayearSem;
-    }
-
-    public String getStartDate() {
-        return startDate;
-    }
 }

@@ -1,8 +1,10 @@
 package com.adl.service.web.response;
 
 import com.google.gson.annotations.SerializedName;
+import lombok.Getter;
 import lombok.ToString;
 
+@Getter
 @ToString
 public final class UpgradePlanByDeviceData {
 
@@ -95,64 +97,4 @@ public final class UpgradePlanByDeviceData {
      */
     @SerializedName("upgradeVersion")
     private String upgradeVersion;
-
-    public String getAppCode() {
-        return appCode;
-    }
-
-    public String getCreateTime() {
-        return createTime;
-    }
-
-    public String getEndTime() {
-        return endTime;
-    }
-
-    public int getFileSize() {
-        return fileSize;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public String getPackageName() {
-        return packageName;
-    }
-
-    public String getPackagePath() {
-        return packagePath;
-    }
-
-    public String getPackageSign() {
-        return packageSign;
-    }
-
-    public String getPlanName() {
-        return planName;
-    }
-
-    public String getProductCode() {
-        return productCode;
-    }
-
-    public String getRemark() {
-        return remark;
-    }
-
-    public String getSsoDomain() {
-        return ssoDomain;
-    }
-
-    public String getStartTime() {
-        return startTime;
-    }
-
-    public int getUpgradeMethod() {
-        return upgradeMethod;
-    }
-
-    public String getUpgradeVersion() {
-        return upgradeVersion;
-    }
 }

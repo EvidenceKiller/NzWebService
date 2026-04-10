@@ -1,10 +1,11 @@
 package com.adl.service.web.response;
 
 import com.google.gson.annotations.SerializedName;
+import lombok.Getter;
 import lombok.ToString;
-
 import java.util.List;
 
+@Getter
 @ToString
 public final class AccountUserData {
     /**
@@ -114,76 +115,4 @@ public final class AccountUserData {
      */
     @SerializedName("updateTime")
     private String updateTime;
-
-    public String getFaceBase64() {
-        return faceBase64;
-    }
-
-    public List<Object> getUserFaces() {
-        return userFaces;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public String getTenantId() {
-        return tenantId;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public int getSex() {
-        return sex;
-    }
-
-    public String getNationCode() {
-        return nationCode;
-    }
-
-    public String getFaceImgUrl() {
-        return faceImgUrl;
-    }
-
-    public int getCertType() {
-        return certType;
-    }
-
-    public String getCertNum() {
-        return certNum;
-    }
-
-    public String getStudentCode() {
-        return studentCode;
-    }
-
-    public String getBirthday() {
-        return birthday;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public boolean isDelFlag() {
-        return delFlag;
-    }
-
-    public String getCreateTime() {
-        return createTime;
-    }
-
-    public String getUpdateTime() {
-        return updateTime;
-    }
 }

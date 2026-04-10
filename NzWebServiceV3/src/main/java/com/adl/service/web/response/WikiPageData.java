@@ -1,10 +1,11 @@
 package com.adl.service.web.response;
 
 import com.google.gson.annotations.SerializedName;
+import lombok.Getter;
 import lombok.ToString;
-
 import java.util.List;
 
+@Getter
 @ToString
 public final class WikiPageData {
 
@@ -40,48 +41,4 @@ public final class WikiPageData {
 
     @SerializedName("empty")
     private boolean empty;
-
-    public int getTotalPages() {
-        return totalPages;
-    }
-
-    public long getTotalElements() {
-        return totalElements;
-    }
-
-    public int getSize() {
-        return size;
-    }
-
-    public List<Object> getContent() {
-        return content;
-    }
-
-    public int getNumber() {
-        return number;
-    }
-
-    public Object getSort() {
-        return sort;
-    }
-
-    public boolean getFirst() {
-        return first;
-    }
-
-    public boolean getLast() {
-        return last;
-    }
-
-    public int getNumberOfElements() {
-        return numberOfElements;
-    }
-
-    public Object getPageable() {
-        return pageable;
-    }
-
-    public boolean getEmpty() {
-        return empty;
-    }
 }

@@ -1,10 +1,11 @@
 package com.adl.service.web.response;
 
 import com.google.gson.annotations.SerializedName;
+import lombok.Getter;
 import lombok.ToString;
-
 import java.util.List;
 
+@Getter
 @ToString
 public final class GradeChineseNameData {
 
@@ -88,60 +89,4 @@ public final class GradeChineseNameData {
      */
     @SerializedName("gradeStageChineseName")
     private String gradeStageChineseName;
-
-    public String getId() {
-        return id;
-    }
-
-    public int getEnterYear() {
-        return enterYear;
-    }
-
-    public int getGraduationYear() {
-        return graduationYear;
-    }
-
-    public String getGradeCode() {
-        return gradeCode;
-    }
-
-    public String getGradeName() {
-        return gradeName;
-    }
-
-    public String getDepartmentCodes() {
-        return departmentCodes;
-    }
-
-    public int getGraduationFlag() {
-        return graduationFlag;
-    }
-
-    public List<GradeClassData> getClassList() {
-        return classList;
-    }
-
-    public int getGradeNumByStage() {
-        return gradeNumByStage;
-    }
-
-    public int getGradeNum() {
-        return gradeNum;
-    }
-
-    public String getSecCode() {
-        return secCode;
-    }
-
-    public String getStageType() {
-        return stageType;
-    }
-
-    public String getGradeChineseName() {
-        return gradeChineseName;
-    }
-
-    public String getGradeStageChineseName() {
-        return gradeStageChineseName;
-    }
 }

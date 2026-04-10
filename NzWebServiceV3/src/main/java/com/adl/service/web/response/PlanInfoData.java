@@ -1,10 +1,11 @@
 package com.adl.service.web.response;
 
 import com.google.gson.annotations.SerializedName;
+import lombok.Getter;
 import lombok.ToString;
-
 import java.util.List;
 
+@Getter
 @ToString
 public final class PlanInfoData {
 
@@ -148,132 +149,4 @@ public final class PlanInfoData {
      */
     @SerializedName("reserveStatusMap")
     private Object reserveStatusMap;
-
-    public String getPlanId() {
-        return planId;
-    }
-
-    public String getPlanName() {
-        return planName;
-    }
-
-    public String getStandardType() {
-        return standardType;
-    }
-
-    public String getStartTime() {
-        return startTime;
-    }
-
-    public String getEndTime() {
-        return endTime;
-    }
-
-    public String getCreateTime() {
-        return createTime;
-    }
-
-    public String getStandardId() {
-        return standardId;
-    }
-
-    public String getOriginStandardId() {
-        return originStandardId;
-    }
-
-    public List<Object> getSportList() {
-        return sportList;
-    }
-
-    public List<Object> getClassIds() {
-        return classIds;
-    }
-
-    public List<Object> getClasses() {
-        return classes;
-    }
-
-    public Object getDayConfigsMap() {
-        return dayConfigsMap;
-    }
-
-    public Object getDateConfigsMap() {
-        return dateConfigsMap;
-    }
-
-    public String getClassAllFlag() {
-        return classAllFlag;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public String getTotalFullCredit() {
-        return totalFullCredit;
-    }
-
-    public String getFormula() {
-        return formula;
-    }
-
-    public double getPayPrice() {
-        return payPrice;
-    }
-
-    public boolean getDistributeFlag() {
-        return distributeFlag;
-    }
-
-    public boolean getClazzAllFlag() {
-        return clazzAllFlag;
-    }
-
-    public boolean getSignUpFlag() {
-        return signUpFlag;
-    }
-
-    public int getFullCreditType() {
-        return fullCreditType;
-    }
-
-    public int getRound() {
-        return round;
-    }
-
-    public int getDecimalPrecision() {
-        return decimalPrecision;
-    }
-
-    public int getPayType() {
-        return payType;
-    }
-
-    public int getSelfTest() {
-        return selfTest;
-    }
-
-    public String getOrgId() {
-        return orgId;
-    }
-
-    public boolean getDelFlag() {
-        return delFlag;
-    }
-
-    public boolean getReserveFlag() {
-        return reserveFlag;
-    }
-
-    public String getReserveStartTime() {
-        return reserveStartTime;
-    }
-
-    public String getReserveEndTime() {
-        return reserveEndTime;
-    }
-
-    public Object getReserveStatusMap() {
-        return reserveStatusMap;
-    }
 }

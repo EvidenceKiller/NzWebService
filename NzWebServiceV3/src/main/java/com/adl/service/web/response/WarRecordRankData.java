@@ -1,8 +1,10 @@
 package com.adl.service.web.response;
 
 import com.google.gson.annotations.SerializedName;
+import lombok.Getter;
 import lombok.ToString;
 
+@Getter
 @ToString
 public final class WarRecordRankData {
 
@@ -57,18 +59,4 @@ public final class WarRecordRankData {
     /** 败者时间 */
     @SerializedName("loserTime")
     private int loserTime;
-
-    public String getUid() { return uid; }
-    public String getWinnerUid() { return winnerUid; }
-    public String getWinnerName() { return winnerName; }
-    public String getWinnerHeadPath() { return winnerHeadPath; }
-    public int getWinnerAchievement() { return winnerAchievement; }
-    public int getWinnerCount() { return winnerCount; }
-    public int getWinnerTime() { return winnerTime; }
-    public String getLoserUid() { return loserUid; }
-    public String getLoserName() { return loserName; }
-    public String getLoserHeadPath() { return loserHeadPath; }
-    public int getLoserAchievement() { return loserAchievement; }
-    public int getLoserCount() { return loserCount; }
-    public int getLoserTime() { return loserTime; }
 }

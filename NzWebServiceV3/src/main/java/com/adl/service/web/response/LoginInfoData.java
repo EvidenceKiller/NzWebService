@@ -2,10 +2,13 @@ package com.adl.service.web.response;
 
 import com.adl.service.web.request.BaseLoginAccount;
 import com.google.gson.annotations.SerializedName;
+
+import lombok.Getter;
 import lombok.ToString;
 
 import java.util.List;
 
+@Getter
 @ToString
 public final class LoginInfoData {
 
@@ -125,92 +128,4 @@ public final class LoginInfoData {
      */
     @SerializedName("accounts")
     private List<BaseLoginAccount> accounts;
-
-    public String getDeviceId() {
-        return deviceId;
-    }
-
-    public List<String> getAppCodes() {
-        return appCodes;
-    }
-
-    public String getPlatform() {
-        return platform;
-    }
-
-    public String getOpenId() {
-        return openId;
-    }
-
-    public List<String> getTenantIds() {
-        return tenantIds;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public String getUserTel() {
-        return userTel;
-    }
-
-    public String getHeight() {
-        return height;
-    }
-
-    public String getWeight() {
-        return weight;
-    }
-
-    public String getUserEmail() {
-        return userEmail;
-    }
-
-    public int getUserSex() {
-        return userSex;
-    }
-
-    public int getCertType() {
-        return certType;
-    }
-
-    public String getCertNum() {
-        return certNum;
-    }
-
-    public String getFaceImgUrl() {
-        return faceImgUrl;
-    }
-
-    public String getNationCode() {
-        return nationCode;
-    }
-
-    public String getNationName() {
-        return nationName;
-    }
-
-    public String getBirthday() {
-        return birthday;
-    }
-
-    public String getStudentCode() {
-        return studentCode;
-    }
-
-    public String getLang() {
-        return lang;
-    }
-
-    public boolean getInner() {
-        return inner;
-    }
-
-    public List<BaseLoginAccount> getAccounts() {
-        return accounts;
-    }
 }

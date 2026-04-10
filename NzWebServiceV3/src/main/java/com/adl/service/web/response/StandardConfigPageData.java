@@ -1,10 +1,11 @@
 package com.adl.service.web.response;
 
 import com.google.gson.annotations.SerializedName;
+import lombok.Getter;
 import lombok.ToString;
-
 import java.util.List;
 
+@Getter
 @ToString
 public final class StandardConfigPageData {
 
@@ -55,36 +56,4 @@ public final class StandardConfigPageData {
      */
     @SerializedName("createTime")
     private String createTime;
-
-    public String getStandardId() {
-        return standardId;
-    }
-
-    public String getStandardName() {
-        return standardName;
-    }
-
-    public String getStandardType() {
-        return standardType;
-    }
-
-    public String getEnabled() {
-        return enabled;
-    }
-
-    public String getOrgAllFlag() {
-        return orgAllFlag;
-    }
-
-    public List<String> getSportSkuList() {
-        return sportSkuList;
-    }
-
-    public List<String> getAreaNames() {
-        return areaNames;
-    }
-
-    public String getCreateTime() {
-        return createTime;
-    }
 }

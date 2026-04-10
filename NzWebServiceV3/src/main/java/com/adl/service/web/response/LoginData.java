@@ -1,10 +1,11 @@
 package com.adl.service.web.response;
 
 import com.google.gson.annotations.SerializedName;
+import lombok.Getter;
 import lombok.ToString;
-
 import java.util.List;
 
+@Getter
 @ToString
 public final class LoginData {
 
@@ -28,24 +29,4 @@ public final class LoginData {
 
     @SerializedName("scope")
     private List<Object> scope;
-
-    public String getAccessToken() {
-        return accessToken;
-    }
-
-    public String getTokenType() {
-        return tokenType;
-    }
-
-    public Object getRefreshToken() {
-        return refreshToken;
-    }
-
-    public double getExpiresIn() {
-        return expiresIn;
-    }
-
-    public List<Object> getScope() {
-        return scope;
-    }
 }

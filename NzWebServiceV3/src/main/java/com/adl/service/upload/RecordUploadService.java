@@ -281,7 +281,7 @@ public class RecordUploadService extends BaseService {
                     sportRecord.setUploadDataStatus(IDefine.RecordUploadDataFail);
                     sportRecord.setUploadModifyStatus(IDefine.RecordUploadModifyNot);
                 }
-            } catch (NzUnknownException | NzEmptyDataException e) {
+            } catch (NzBaseException e) {
                 // TODO
             }
         } else if (uploadDataStatus == IDefine.RecordUploadDataDone) {
@@ -307,7 +307,7 @@ public class RecordUploadService extends BaseService {
                         sportRecord.setUploadDataStatus(IDefine.RecordUploadDataFail);
                         sportRecord.setUploadModifyStatus(IDefine.RecordUploadModifyNot);
                     }
-                } catch (NzUnknownException | NzEmptyDataException e) {
+                } catch (NzBaseException e) {
                     // TODO
                 }
             }
@@ -384,7 +384,7 @@ public class RecordUploadService extends BaseService {
                     teacherSport.setUploadDataStatus(IDefine.RecordUploadDataFail);
                     teacherSport.setUploadModifyStatus(IDefine.RecordUploadModifyNot);
                 }
-            } catch (NzUnknownException | NzEmptyDataException e) {
+            } catch (NzBaseException e) {
                 // TODO
             }
         } else if (uploadDataStatus == IDefine.RecordUploadDataDone) {
@@ -408,7 +408,7 @@ public class RecordUploadService extends BaseService {
                         teacherSport.setUploadDataStatus(IDefine.RecordUploadDataFail);
                         teacherSport.setUploadModifyStatus(IDefine.RecordUploadModifyNot);
                     }
-                } catch (NzUnknownException | NzEmptyDataException e) {
+                } catch (NzBaseException e) {
                     // TODO
                 }
             }
@@ -692,7 +692,7 @@ public class RecordUploadService extends BaseService {
     }
 
     //  上传记录
-    private boolean uploadRecord(SportRecordEntity sportRecord) {
+    private boolean uploadRecord(SportRecordEntity sportRecord) throws NzBaseException {
         /// 上传之前的数据处理
         //  游客
         if (IDefine.AccountTypeVisitor.equals(sportRecord.getAccountType())) {
@@ -706,7 +706,7 @@ public class RecordUploadService extends BaseService {
     }
 
     //  修改记录
-    private boolean updateRecord(SportRecordEntity sportRecord) {
+    private boolean updateRecord(SportRecordEntity sportRecord) throws NzBaseException {
         /// 上传之前的数据处理
         //  游客
         if (IDefine.AccountTypeVisitor.equals(sportRecord.getAccountType())) {

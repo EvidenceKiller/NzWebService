@@ -2,6 +2,11 @@ package com.adl.service.web.request;
 
 import com.google.gson.annotations.SerializedName;
 
+import lombok.Getter;
+import lombok.ToString;
+
+@Getter
+@ToString
 public final class BaseLoginAccountRoleMenu {
     /**
      * 菜单id
@@ -22,10 +27,10 @@ public final class BaseLoginAccountRoleMenu {
     private String menuPath;
 
     /**
-     * 菜单权限标识
+     * 父级菜单id
      */
-    @SerializedName("menuPermission")
-    private String menuPermission;
+    @SerializedName("pid")
+    private String pid;
 
     /**
      * 菜单类型 0：菜单 1：按钮
@@ -34,16 +39,10 @@ public final class BaseLoginAccountRoleMenu {
     private String menuType;
 
     /**
-     * 父级菜单id
+     * 菜单权限标识
      */
-    @SerializedName("pid")
-    private String pid;
-
-    /**
-     * 菜单排序标识符
-     */
-    @SerializedName("sortNum")
-    private int sortNum;
+    @SerializedName("menuPermission")
+    private String menuPermission;
 
     /**
      * 菜单使用平台
@@ -57,40 +56,9 @@ public final class BaseLoginAccountRoleMenu {
     @SerializedName("redirectFlag")
     private int redirectFlag;
 
-    public String getMenuId() {
-        return menuId;
-    }
-
-    public String getMenuName() {
-        return menuName;
-    }
-
-    public String getMenuPath() {
-        return menuPath;
-    }
-
-    public String getMenuPermission() {
-        return menuPermission;
-    }
-
-    public String getMenuType() {
-        return menuType;
-    }
-
-    public String getPid() {
-        return pid;
-    }
-
-    public int getSortNum() {
-        return sortNum;
-    }
-
-    public String getPlatform() {
-        return platform;
-    }
-
-    public int getRedirectFlag() {
-        return redirectFlag;
-    }
-
+    /**
+     * 菜单排序标识符
+     */
+    @SerializedName("sortNum")
+    private int sortNum;
 }

@@ -1,8 +1,8 @@
 package com.adl.service.web.response;
 
 import com.google.gson.annotations.SerializedName;
+import lombok.Getter;
 import lombok.ToString;
-
 import java.util.List;
 
 
@@ -12,6 +12,7 @@ import java.util.List;
  * Date : 2026/4/7
  * Describe : 定义接口响应数据结构
  */
+@Getter
 @ToString
 public final class SunshineRunningCompetitionRecordPageData {
     @SerializedName("records")
@@ -46,16 +47,4 @@ public final class SunshineRunningCompetitionRecordPageData {
 
     @SerializedName("pages")
     private long pages;
-
-    public List<Object> getRecords() { return records; }
-    public long getTotal() { return total; }
-    public long getSize() { return size; }
-    public long getCurrent() { return current; }
-    public List<Object> getOrders() { return orders; }
-    public Object getOptimizeCountSql() { return optimizeCountSql; }
-    public Object getSearchCount() { return searchCount; }
-    public boolean getOptimizeJoinOfCountSql() { return optimizeJoinOfCountSql; }
-    public long getMaxLimit() { return maxLimit; }
-    public String getCountId() { return countId; }
-    public long getPages() { return pages; }
 }

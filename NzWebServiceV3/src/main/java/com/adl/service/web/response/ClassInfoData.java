@@ -1,8 +1,10 @@
 package com.adl.service.web.response;
 
 import com.google.gson.annotations.SerializedName;
+import lombok.Getter;
 import lombok.ToString;
 
+@Getter
 @ToString
 public final class ClassInfoData {
 
@@ -95,64 +97,4 @@ public final class ClassInfoData {
      */
     @SerializedName("collegeName")
     private String collegeName;
-
-    public String getId() {
-        return id;
-    }
-
-    public int getClassNum() {
-        return classNum;
-    }
-
-    public String getClassName() {
-        return className;
-    }
-
-    public String getClassFullName() {
-        return classFullName;
-    }
-
-    public String getDepartmentCode() {
-        return departmentCode;
-    }
-
-    public int getStatus() {
-        return status;
-    }
-
-    public String getMajorId() {
-        return majorId;
-    }
-
-    public String getMajorCode() {
-        return majorCode;
-    }
-
-    public String getMajorName() {
-        return majorName;
-    }
-
-    public String getFacultyId() {
-        return facultyId;
-    }
-
-    public String getFacultyCode() {
-        return facultyCode;
-    }
-
-    public String getFacultyName() {
-        return facultyName;
-    }
-
-    public String getCollegeId() {
-        return collegeId;
-    }
-
-    public String getCollegeCode() {
-        return collegeCode;
-    }
-
-    public String getCollegeName() {
-        return collegeName;
-    }
 }

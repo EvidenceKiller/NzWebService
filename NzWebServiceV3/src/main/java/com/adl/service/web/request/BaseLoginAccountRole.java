@@ -4,12 +4,17 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
+import lombok.Getter;
+import lombok.ToString;
+
+@Getter
+@ToString
 public final class BaseLoginAccountRole {
     /**
-     *
+     * 租户uid
      */
-    @SerializedName("presentFlag")
-    private boolean presentFlag;
+    @SerializedName("tenantId")
+    private String tenantId;
 
     /**
      * 角色id
@@ -18,50 +23,35 @@ public final class BaseLoginAccountRole {
     private String roleId;
 
     /**
-     * 角色名
-     */
-    @SerializedName("roleName")
-    private String roleName;
-
-    /**
      * 角色类型
      */
     @SerializedName("roleType")
     private String roleType;
 
     /**
-     * 是否为系统预制角色: true: 是, false: 否
+     * 角色名
+     */
+    @SerializedName("roleName")
+    private String roleName;
+
+    /**
+     * 角色名
+     * 注意：注释可能不准确，根据字段名应为"是否是当前角色"等含义
+     */
+    @SerializedName("presentFlag")
+    private Boolean presentFlag;
+
+    /**
+     * 是否为系统预制角色
+     * true: 是
+     * false: 否
      */
     @SerializedName("systemFlag")
-    private boolean systemFlag;
+    private Boolean systemFlag;
 
     /**
      * 菜单集
      */
     @SerializedName("menus")
     private List<BaseLoginAccountRoleMenu> menus;
-
-    public boolean isPresentFlag() {
-        return presentFlag;
-    }
-
-    public String getRoleId() {
-        return roleId;
-    }
-
-    public String getRoleName() {
-        return roleName;
-    }
-
-    public String getRoleType() {
-        return roleType;
-    }
-
-    public boolean isSystemFlag() {
-        return systemFlag;
-    }
-
-    public List<BaseLoginAccountRoleMenu> getMenus() {
-        return menus;
-    }
 }

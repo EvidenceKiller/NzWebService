@@ -1,8 +1,10 @@
 package com.adl.service.web.response;
 
 import com.google.gson.annotations.SerializedName;
+import lombok.Getter;
 import lombok.ToString;
 
+@Getter
 @ToString
 public final class BestRankTopData {
 
@@ -77,52 +79,4 @@ public final class BestRankTopData {
      */
     @SerializedName("sportEndTime")
     private long sportEndTime;
-
-    public String getAccountId() {
-        return accountId;
-    }
-
-    public String getAccountName() {
-        return accountName;
-    }
-
-    public int getSex() {
-        return sex;
-    }
-
-    public String getStudentCode() {
-        return studentCode;
-    }
-
-    public String getGradeId() {
-        return gradeId;
-    }
-
-    public String getGradeName() {
-        return gradeName;
-    }
-
-    public String getClassId() {
-        return classId;
-    }
-
-    public String getClassName() {
-        return className;
-    }
-
-    public String getFaceImgUrl() {
-        return faceImgUrl;
-    }
-
-    public String getSportResult() {
-        return sportResult;
-    }
-
-    public String getOriginalSportResult() {
-        return originalSportResult;
-    }
-
-    public long getSportEndTime() {
-        return sportEndTime;
-    }
 }

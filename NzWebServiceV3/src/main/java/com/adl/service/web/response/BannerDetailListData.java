@@ -1,8 +1,10 @@
 package com.adl.service.web.response;
 
 import com.google.gson.annotations.SerializedName;
+import lombok.Getter;
 import lombok.ToString;
 
+@Getter
 @ToString
 public final class BannerDetailListData {
 
@@ -65,52 +67,4 @@ public final class BannerDetailListData {
 
     @SerializedName("currentFlag")
     private boolean currentFlag;
-
-    public String getId() {
-        return id;
-    }
-
-    public String getOrgId() {
-        return orgId;
-    }
-
-    public String getBannerId() {
-        return bannerId;
-    }
-
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public String getTargetId() {
-        return targetId;
-    }
-
-    public String getTargetType() {
-        return targetType;
-    }
-
-    public String getTargetIds() {
-        return targetIds;
-    }
-
-    public int getBannerSort() {
-        return bannerSort;
-    }
-
-    public String getCreateTime() {
-        return createTime;
-    }
-
-    public String getUpdateTime() {
-        return updateTime;
-    }
-
-    public boolean getBannerEnable() {
-        return bannerEnable;
-    }
-
-    public boolean getCurrentFlag() {
-        return currentFlag;
-    }
 }

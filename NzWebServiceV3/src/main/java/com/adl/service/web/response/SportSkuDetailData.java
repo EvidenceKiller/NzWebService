@@ -1,10 +1,11 @@
 package com.adl.service.web.response;
 
 import com.google.gson.annotations.SerializedName;
+import lombok.Getter;
 import lombok.ToString;
-
 import java.util.List;
 
+@Getter
 @ToString
 public final class SportSkuDetailData {
 
@@ -168,46 +169,4 @@ public final class SportSkuDetailData {
 
     @SerializedName("sceneSkuType")
     private String sceneSkuType;
-
-    public String getSportSkuId() { return sportSkuId; }
-    public String getSportNatureCodes() { return sportNatureCodes; }
-    public String getSportNatureNames() { return sportNatureNames; }
-    public String getSportTypeCode() { return sportTypeCode; }
-    public String getSportTypeName() { return sportTypeName; }
-    public String getSportItemCode() { return sportItemCode; }
-    public String getSportItemName() { return sportItemName; }
-    public String getSportSkuName() { return sportSkuName; }
-    public String getMeasureMode() { return measureMode; }
-    public String getMeasureUnitCode() { return measureUnitCode; }
-    public double getRangeEndValue() { return rangeEndValue; }
-    public double getRangeStartValue() { return rangeStartValue; }
-    public int getAccuracyType() { return accuracyType; }
-    public int getEndType() { return endType; }
-    public int getAccuracyMethod() { return accuracyMethod; }
-    public long getEndValue() { return endValue; }
-    public String getEndRemark() { return endRemark; }
-    public String getIconUrl() { return iconUrl; }
-    public String getCoverUrl() { return coverUrl; }
-    public String getActionVideoUrl() { return actionVideoUrl; }
-    public String getAudioUrl() { return audioUrl; }
-    public String getAudioName() { return audioName; }
-    public String getVideoUrl() { return videoUrl; }
-    public String getVideoCoverUrl() { return videoCoverUrl; }
-    public String getSportSkuDesc() { return sportSkuDesc; }
-    public String getTestTemplateUrl() { return testTemplateUrl; }
-    public String getTestTemplateName() { return testTemplateName; }
-    public String getQusTemplateUrl() { return qusTemplateUrl; }
-    public String getQusTemplateName() { return qusTemplateName; }
-    public String getTxVid() { return txVid; }
-    public String getRemark() { return remark; }
-    public boolean getEnabled() { return enabled; }
-    public boolean getDelFlag() { return delFlag; }
-    public int getSportPriority() { return sportPriority; }
-    public int getTestCount() { return testCount; }
-    public String getSceneSkuId() { return sceneSkuId; }
-    public String getSceneCode() { return sceneCode; }
-    public int getSceneSkuSort() { return sceneSkuSort; }
-    public List<String> getAppCodes() { return appCodes; }
-    public List<Integer> getQualities() { return qualities; }
-    public String getSceneSkuType() { return sceneSkuType; }
 }

@@ -35,7 +35,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.adl.ts.general.web.v3"
+        applicationId "com.adl.ts.general.web"
         minSdkVersion 26
         targetSdkVersion 29
         versionCode 4

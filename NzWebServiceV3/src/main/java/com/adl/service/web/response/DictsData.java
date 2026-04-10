@@ -1,10 +1,11 @@
 package com.adl.service.web.response;
 
 import com.google.gson.annotations.SerializedName;
+import lombok.Getter;
 import lombok.ToString;
-
 import java.util.List;
 
+@Getter
 @ToString
 public final class DictsData {
 
@@ -85,27 +86,4 @@ public final class DictsData {
     /** 字典数据类型 1-string 2-number 3-bool */
     @SerializedName("dataType")
     private int dataType;
-
-    public boolean getNoPaging() { return noPaging; }
-    public long getPageSize() { return pageSize; }
-    public long getCurrent() { return current; }
-    public boolean getDetail() { return detail; }
-    public boolean getEnableSort() { return enableSort; }
-    public List<Object> getSorts() { return sorts; }
-    public String getSortsStr() { return sortsStr; }
-    public List<Object> getIgnoreColumns() { return ignoreColumns; }
-    public List<Object> getContainColumns() { return containColumns; }
-    public String getModuleStr() { return moduleStr; }
-    public String getId() { return id; }
-    public String getDictCode() { return dictCode; }
-    public String getDictValue() { return dictValue; }
-    public String getDictLabel() { return dictLabel; }
-    public int getSortNum() { return sortNum; }
-    public String getDefaultFlag() { return defaultFlag; }
-    public String getExtData() { return extData; }
-    public String getRemark() { return remark; }
-    public String getLang() { return lang; }
-    public String getCreateTime() { return createTime; }
-    public String getUpdateTime() { return updateTime; }
-    public int getDataType() { return dataType; }
 }

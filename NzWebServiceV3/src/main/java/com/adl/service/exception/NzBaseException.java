@@ -3,7 +3,7 @@ package com.adl.service.exception;
 /**
  * SDK 异常基类（简单框架：用于统一分类网络/服务端/分页/未知错误）。
  */
-public abstract class NzBaseException extends RuntimeException {
+public abstract class NzBaseException extends Exception {
 
     private final String errorCode;
 

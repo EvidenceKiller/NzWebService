@@ -1,8 +1,10 @@
 package com.adl.service.web.response;
 
 import com.google.gson.annotations.SerializedName;
+import lombok.Getter;
 import lombok.ToString;
 
+@Getter
 @ToString
 public final class ExerciseSumTimeRankData {
 
@@ -65,20 +67,4 @@ public final class ExerciseSumTimeRankData {
     /** 霸榜项目数 */
     @SerializedName("count")
     private int count;
-
-    public String getAccountId() { return accountId; }
-    public String getAccountName() { return accountName; }
-    public String getUserAvatar() { return userAvatar; }
-    public String getSex() { return sex; }
-    public String getSportSkuName() { return sportSkuName; }
-    public String getSportSkuId() { return sportSkuId; }
-    public double getSportScore() { return sportScore; }
-    public String getSportResult() { return sportResult; }
-    public String getOriginalSportResult() { return originalSportResult; }
-    public int getSportTime() { return sportTime; }
-    public int getSportCount() { return sportCount; }
-    public String getSportDate() { return sportDate; }
-    public String getRecordId() { return recordId; }
-    public String getSportItemCode() { return sportItemCode; }
-    public int getCount() { return count; }
 }

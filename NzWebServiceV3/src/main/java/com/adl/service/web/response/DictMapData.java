@@ -1,8 +1,10 @@
 package com.adl.service.web.response;
 
 import com.google.gson.annotations.SerializedName;
+import lombok.Getter;
 import lombok.ToString;
 
+@Getter
 @ToString
 public final class DictMapData {
 
@@ -17,20 +19,4 @@ public final class DictMapData {
 
     @SerializedName("type")
     private String type;
-
-    public String getDict() {
-        return dict;
-    }
-
-    public String getRightKey() {
-        return rightKey;
-    }
-
-    public String getWrongKey() {
-        return wrongKey;
-    }
-
-    public String getType() {
-        return type;
-    }
 }

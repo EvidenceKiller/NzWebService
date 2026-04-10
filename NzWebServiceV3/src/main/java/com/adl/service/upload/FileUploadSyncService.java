@@ -50,7 +50,7 @@ public class FileUploadSyncService extends BaseService {
         return _instance;
     }
 
-    public String syncUploadFile(File file, String remoteFileName) {
+    public String syncUploadFile(File file, String remoteFileName) throws NzBaseException {
         ConfigService configService = getConfigService();
         if (configService == null || TextUtils.isEmpty(configService.getQiNiuHost())) {
             throw new NzUnknownException("上传配置错误");

@@ -1,10 +1,11 @@
 package com.adl.service.web.response;
 
 import com.google.gson.annotations.SerializedName;
+import lombok.Getter;
 import lombok.ToString;
-
 import java.util.List;
 
+@Getter
 @ToString
 public final class GroupTeamData {
 
@@ -55,17 +56,4 @@ public final class GroupTeamData {
     /** 人员详情 */
     @SerializedName("details")
     private List<Object> details;
-
-    public String getTeamUnitCode() { return teamUnitCode; }
-    public String getTeamUnitName() { return teamUnitName; }
-    public String getSportSkuName() { return sportSkuName; }
-    public String getSportSkuId() { return sportSkuId; }
-    public String getMeetSportSkuId() { return meetSportSkuId; }
-    public int getTeamNum() { return teamNum; }
-    public int getNumber() { return number; }
-    public int getCompetitionStatus() { return competitionStatus; }
-    public int getCompetitionType() { return competitionType; }
-    public int getCompetitionRound() { return competitionRound; }
-    public int getDisabled() { return disabled; }
-    public List<Object> getDetails() { return details; }
 }

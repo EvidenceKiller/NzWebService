@@ -1,8 +1,10 @@
 package com.adl.service.web.response;
 
 import com.google.gson.annotations.SerializedName;
+import lombok.Getter;
 import lombok.ToString;
 
+@Getter
 @ToString
 public final class TrainPlanOneDayProjectData {
 
@@ -65,44 +67,4 @@ public final class TrainPlanOneDayProjectData {
      */
     @SerializedName("trainPlanSportId")
     private String trainPlanSportId;
-
-    public String getTrainPlanId() {
-        return trainPlanId;
-    }
-
-    public int getSort() {
-        return sort;
-    }
-
-    public int getSportCount() {
-        return sportCount;
-    }
-
-    public String getSportModel() {
-        return sportModel;
-    }
-
-    public int getSportTime() {
-        return sportTime;
-    }
-
-    public String getSportResult() {
-        return sportResult;
-    }
-
-    public boolean getCheckStatus() {
-        return checkStatus;
-    }
-
-    public String getSportSkuId() {
-        return sportSkuId;
-    }
-
-    public String getSportSkuName() {
-        return sportSkuName;
-    }
-
-    public String getTrainPlanSportId() {
-        return trainPlanSportId;
-    }
 }

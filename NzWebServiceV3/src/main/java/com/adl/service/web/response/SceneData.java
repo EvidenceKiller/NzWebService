@@ -1,8 +1,10 @@
 package com.adl.service.web.response;
 
 import com.google.gson.annotations.SerializedName;
+import lombok.Getter;
 import lombok.ToString;
 
+@Getter
 @ToString
 public final class SceneData {
 
@@ -44,32 +46,4 @@ public final class SceneData {
 
     @SerializedName("enabled")
     private boolean enabled;
-
-    public String getId() {
-        return id;
-    }
-
-    public String getSceneCode() {
-        return sceneCode;
-    }
-
-    public String getSceneName() {
-        return sceneName;
-    }
-
-    public String getAppCodes() {
-        return appCodes;
-    }
-
-    public long getSceneSort() {
-        return sceneSort;
-    }
-
-    public String getSceneType() {
-        return sceneType;
-    }
-
-    public boolean getEnabled() {
-        return enabled;
-    }
 }

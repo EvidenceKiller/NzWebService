@@ -1,10 +1,11 @@
 package com.adl.service.web.response;
 
 import com.google.gson.annotations.SerializedName;
+import lombok.Getter;
 import lombok.ToString;
-
 import java.util.List;
 
+@Getter
 @ToString
 public final class DetailListData {
 
@@ -86,25 +87,4 @@ public final class DetailListData {
     /** 竖向报告URL */
     @SerializedName("reportVerticalUrl")
     private String reportVerticalUrl;
-
-    public String getAccountId() { return accountId; }
-    public String getAccountName() { return accountName; }
-    public String getFaceImgUrl() { return faceImgUrl; }
-    public double getSportScore() { return sportScore; }
-    public String getSportResult() { return sportResult; }
-    public String getOriginalSportResult() { return originalSportResult; }
-    public String getLastSportResult() { return lastSportResult; }
-    public String getLastOriginalSportResult() { return lastOriginalSportResult; }
-    public String getRecordId() { return recordId; }
-    public int getCourseTimes() { return courseTimes; }
-    public String getSportUnitCode() { return sportUnitCode; }
-    public long getSportTime() { return sportTime; }
-    public long getSportStartTime() { return sportStartTime; }
-    public long getSportEndTime() { return sportEndTime; }
-    public long getSportTestTime() { return sportTestTime; }
-    public int getSex() { return sex; }
-    public String getSportVideoUrls() { return sportVideoUrls; }
-    public List<Object> getList() { return list; }
-    public String getReportCrosswiseUrl() { return reportCrosswiseUrl; }
-    public String getReportVerticalUrl() { return reportVerticalUrl; }
 }

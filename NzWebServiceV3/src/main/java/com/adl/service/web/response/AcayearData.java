@@ -1,10 +1,11 @@
 package com.adl.service.web.response;
 
 import com.google.gson.annotations.SerializedName;
+import lombok.Getter;
 import lombok.ToString;
-
 import java.util.List;
 
+@Getter
 @ToString
 public final class AcayearData {
 
@@ -25,16 +26,4 @@ public final class AcayearData {
      */
     @SerializedName("isNowAcayear")
     private int isNowAcayear;
-
-    public String getYear() {
-        return year;
-    }
-
-    public List<AcayearSemData> getAcayearSemList() {
-        return acayearSemList;
-    }
-
-    public int getIsNowAcayear() {
-        return isNowAcayear;
-    }
 }

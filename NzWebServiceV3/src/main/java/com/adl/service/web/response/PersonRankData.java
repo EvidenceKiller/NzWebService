@@ -1,8 +1,10 @@
 package com.adl.service.web.response;
 
 import com.google.gson.annotations.SerializedName;
+import lombok.Getter;
 import lombok.ToString;
 
+@Getter
 @ToString
 public final class PersonRankData {
 
@@ -23,16 +25,4 @@ public final class PersonRankData {
      */
     @SerializedName("originalSportResult")
     private String originalSportResult;
-
-    public long getRankNum() {
-        return rankNum;
-    }
-
-    public String getSportResult() {
-        return sportResult;
-    }
-
-    public String getOriginalSportResult() {
-        return originalSportResult;
-    }
 }

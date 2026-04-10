@@ -25,7 +25,7 @@ public final class BaseResponsePersistence {
             Single<BaseResponse<T>> network,
             Function<T, Completable> persistIfSuccess) {
         return network.flatMap(response -> {
-            if (!response.isSuccess() || response.getData() == null) {
+            if (!response.isSucceed() || response.getData() == null) {
                 return Single.just(response);
             }
             T data = response.getData();

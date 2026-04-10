@@ -1,8 +1,10 @@
 package com.adl.service.web.response;
 
 import com.google.gson.annotations.SerializedName;
+import lombok.Getter;
 import lombok.ToString;
 
+@Getter
 @ToString
 public final class ResTypeData {
 
@@ -47,32 +49,4 @@ public final class ResTypeData {
      */
     @SerializedName("updateTime")
     private String updateTime;
-
-    public String getId() {
-        return id;
-    }
-
-    public String getTypeName() {
-        return typeName;
-    }
-
-    public int getSort() {
-        return sort;
-    }
-
-    public String getOrgId() {
-        return orgId;
-    }
-
-    public int getResType() {
-        return resType;
-    }
-
-    public String getCreateTime() {
-        return createTime;
-    }
-
-    public String getUpdateTime() {
-        return updateTime;
-    }
 }

@@ -1,10 +1,11 @@
 package com.adl.service.web.response;
 
 import com.google.gson.annotations.SerializedName;
+import lombok.Getter;
 import lombok.ToString;
-
 import java.util.List;
 
+@Getter
 @ToString
 public final class DeviceFocusData {
 
@@ -46,15 +47,4 @@ public final class DeviceFocusData {
     /** 设备ids */
     @SerializedName("deviceIds")
     private List<Object> deviceIds;
-
-    public String getId() { return id; }
-    public String getDeviceId() { return deviceId; }
-    public String getAppCode() { return appCode; }
-    public String getSceneCode() { return sceneCode; }
-    public String getBusiId() { return busiId; }
-    public String getBusiName() { return busiName; }
-    public int getTimeType() { return timeType; }
-    public String getStartTime() { return startTime; }
-    public String getEndTime() { return endTime; }
-    public List<Object> getDeviceIds() { return deviceIds; }
 }

@@ -1,10 +1,11 @@
 package com.adl.service.web.response;
 
 import com.google.gson.annotations.SerializedName;
+import lombok.Getter;
 import lombok.ToString;
-
 import java.util.List;
 
+@Getter
 @ToString
 public final class MorePeopleRecordRankData {
 
@@ -19,12 +20,4 @@ public final class MorePeopleRecordRankData {
      */
     @SerializedName("morePeopleRecordRank")
     private List<Object> morePeopleRecordRank;
-
-    public String getUid() {
-        return uid;
-    }
-
-    public List<Object> getMorePeopleRecordRank() {
-        return morePeopleRecordRank;
-    }
 }

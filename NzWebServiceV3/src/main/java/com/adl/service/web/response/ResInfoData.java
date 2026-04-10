@@ -1,10 +1,11 @@
 package com.adl.service.web.response;
 
 import com.google.gson.annotations.SerializedName;
+import lombok.Getter;
 import lombok.ToString;
-
 import java.util.List;
 
+@Getter
 @ToString
 public final class ResInfoData {
 
@@ -97,30 +98,4 @@ public final class ResInfoData {
     /** 资源类型列表 */
     @SerializedName("resTypes")
     private List<Object> resTypes;
-
-    public boolean getNoPaging() { return noPaging; }
-    public long getPageSize() { return pageSize; }
-    public long getCurrent() { return current; }
-    public boolean getDetail() { return detail; }
-    public boolean getEnableSort() { return enableSort; }
-    public List<Object> getSorts() { return sorts; }
-    public String getSortsStr() { return sortsStr; }
-    public List<Object> getIgnoreColumns() { return ignoreColumns; }
-    public List<Object> getContainColumns() { return containColumns; }
-    public String getModuleStr() { return moduleStr; }
-    public String getId() { return id; }
-    public String getOrgId() { return orgId; }
-    public String getName() { return name; }
-    public String getTitle() { return title; }
-    public String getCover() { return cover; }
-    public boolean getEnabled() { return enabled; }
-    public int getSortNum() { return sortNum; }
-    public String getContent() { return content; }
-    public String getRemark() { return remark; }
-    public int getType() { return type; }
-    public int getResType() { return resType; }
-    public String getCreateNum() { return createNum; }
-    public String getCreateTime() { return createTime; }
-    public String getUpdateTime() { return updateTime; }
-    public List<Object> getResTypes() { return resTypes; }
 }

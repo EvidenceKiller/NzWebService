@@ -4,16 +4,26 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
+import lombok.Getter;
+import lombok.ToString;
+
 /**
  * 账户信息（与接口文档字段对应）。
  */
+@Getter
+@ToString
 public final class BaseLoginAccount {
+    /**
+     * 租户id
+     */
+    @SerializedName("tenantOrgId")
+    private String tenantOrgId;
 
     /**
-     * 头像
+     * 租户代码
      */
-    @SerializedName("accountAvatar")
-    private String accountAvatar;
+    @SerializedName("tenantOrgCode")
+    private String tenantOrgCode;
 
     /**
      * 用户id
@@ -22,40 +32,16 @@ public final class BaseLoginAccount {
     private String accountId;
 
     /**
-     * 登录账号名
+     * 机构id
      */
-    @SerializedName("accountName")
-    private String accountName;
-
-    /**
-     * 用户登录账号
-     */
-    @SerializedName("accountNum")
-    private String accountNum;
-
-    /**
-     * 账号手机号
-     */
-    @SerializedName("accountPhoneNum")
-    private String accountPhoneNum;
-
-    /**
-     * 当前用户是否激活 true: 是 false: 不是
-     */
-    @SerializedName("enabled")
-    private boolean enabled;
+    @SerializedName("orgId")
+    private String orgId;
 
     /**
      * 机构编码
      */
     @SerializedName("orgCode")
     private String orgCode;
-
-    /**
-     * 机构id
-     */
-    @SerializedName("orgId")
-    private String orgId;
 
     /**
      * 机构名称
@@ -70,16 +56,64 @@ public final class BaseLoginAccount {
     private String orgType;
 
     /**
-     * 是否当前登录用户 true: 是 false: 不是
-     */
-    @SerializedName("presentFlag")
-    private boolean presentFlag;
-
-    /**
      * 当前执行身份
      */
     @SerializedName("roleType")
-    private int roleType;
+    private Integer roleType;
+
+    /**
+     * 用户登录账号
+     */
+    @SerializedName("accountNum")
+    private String accountNum;
+
+    /**
+     * 登录账号名
+     */
+    @SerializedName("accountName")
+    private String accountName;
+
+    /**
+     * 账号手机号
+     */
+    @SerializedName("accountPhoneNum")
+    private String accountPhoneNum;
+
+    /**
+     * 头像
+     */
+    @SerializedName("accountAvatar")
+    private String accountAvatar;
+
+    /**
+     * 工号
+     */
+    @SerializedName("jobNum")
+    private String jobNum;
+
+    /**
+     * 卡号
+     */
+    @SerializedName("cardNum")
+    private String cardNum;
+
+    /**
+     * 入学年
+     */
+    @SerializedName("enterYear")
+    private String enterYear;
+
+    /**
+     * 是否当前登录用户 true: 是 false: 不是
+     */
+    @SerializedName("presentFlag")
+    private Boolean presentFlag;
+
+    /**
+     * 当前用户是否激活 true: 是 false: 不是
+     */
+    @SerializedName("enabled")
+    private Boolean enabled;
 
     /**
      * 角色集
@@ -87,55 +121,27 @@ public final class BaseLoginAccount {
     @SerializedName("roles")
     private List<BaseLoginAccountRole> roles;
 
-    public String getAccountAvatar() {
-        return accountAvatar;
-    }
+    /**
+     * 年级 label: 名称 value: id
+     */
+    @SerializedName("grade")
+    private BaseLoginAccountGrade grade;
 
-    public String getAccountId() {
-        return accountId;
-    }
+    /**
+     * 部门集合 label: 名称 value: id extra:类型
+     */
+    @SerializedName("departments")
+    private List<String> departments;
 
-    public String getAccountName() {
-        return accountName;
-    }
+    /**
+     * 小孩名称 label: 名称 value: id extra:子女信息
+     */
+    @SerializedName("children")
+    private List<String> children;
 
-    public String getAccountNum() {
-        return accountNum;
-    }
-
-    public String getAccountPhoneNum() {
-        return accountPhoneNum;
-    }
-
-    public boolean isEnabled() {
-        return enabled;
-    }
-
-    public String getOrgCode() {
-        return orgCode;
-    }
-
-    public String getOrgId() {
-        return orgId;
-    }
-
-    public String getOrgName() {
-        return orgName;
-    }
-
-    public String getOrgType() {
-        return orgType;
-    }
-
-    public boolean isPresentFlag() {
-        return presentFlag;
-    }
-
-    public int getRoleType() {
-        return roleType;
-    }
-
-    public List<BaseLoginAccountRole> getRoles() {
-        return roles;
-    }
+    /**
+     * 班级集合 label: 名称 value: id
+     */
+    @SerializedName("classes")
+    private List<String> classes;
 }

@@ -1,8 +1,10 @@
 package com.adl.service.web.response;
 
 import com.google.gson.annotations.SerializedName;
+import lombok.Getter;
 import lombok.ToString;
 
+@Getter
 @ToString
 public final class GroupTeamDetailData {
 
@@ -113,76 +115,4 @@ public final class GroupTeamDetailData {
      */
     @SerializedName("recordId")
     private String recordId;
-
-    public String getTeamUnitCode() {
-        return teamUnitCode;
-    }
-
-    public String getTeamUnitName() {
-        return teamUnitName;
-    }
-
-    public int getGroupNo() {
-        return groupNo;
-    }
-
-    public int getIdentifyType() {
-        return identifyType;
-    }
-
-    public String getRunwayCode() {
-        return runwayCode;
-    }
-
-    public String getNumberCode() {
-        return numberCode;
-    }
-
-    public String getSerialCode() {
-        return serialCode;
-    }
-
-    public String getSportAccountNum() {
-        return sportAccountNum;
-    }
-
-    public String getAccountAvatar() {
-        return accountAvatar;
-    }
-
-    public String getAccountName() {
-        return accountName;
-    }
-
-    public String getAccountId() {
-        return accountId;
-    }
-
-    public String getClassId() {
-        return classId;
-    }
-
-    public String getClassName() {
-        return className;
-    }
-
-    public int getSex() {
-        return sex;
-    }
-
-    public int getStudentNum() {
-        return studentNum;
-    }
-
-    public String getSportResult() {
-        return sportResult;
-    }
-
-    public String getSportResultConverted() {
-        return sportResultConverted;
-    }
-
-    public String getRecordId() {
-        return recordId;
-    }
 }

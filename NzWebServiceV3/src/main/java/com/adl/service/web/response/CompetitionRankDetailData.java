@@ -1,10 +1,11 @@
 package com.adl.service.web.response;
 
 import com.google.gson.annotations.SerializedName;
+import lombok.Getter;
 import lombok.ToString;
-
 import java.util.List;
 
+@Getter
 @ToString
 public final class CompetitionRankDetailData {
 
@@ -70,26 +71,4 @@ public final class CompetitionRankDetailData {
 
     @SerializedName("editFlag")
     private boolean editFlag;
-
-    public String getId() { return id; }
-    public String getOnlineTitle() { return onlineTitle; }
-    public String getOnlineSubtitle() { return onlineSubtitle; }
-    public String getOnlineCover() { return onlineCover; }
-    public String getCoverCustom() { return coverCustom; }
-    public int getOnlineType() { return onlineType; }
-    public int getOrgLevel() { return orgLevel; }
-    public String getOrgLevelName() { return orgLevelName; }
-    public String getStartTime() { return startTime; }
-    public String getEndTime() { return endTime; }
-    public List<Object> getAppCodes() { return appCodes; }
-    public List<Object> getCompetitionRange() { return competitionRange; }
-    public List<Object> getOrgNames() { return orgNames; }
-    public int getRankRule() { return rankRule; }
-    public List<Object> getCompetitionItem() { return competitionItem; }
-    public String getRemark() { return remark; }
-    public boolean getJoinFlag() { return joinFlag; }
-    public int getOrgType() { return orgType; }
-    public int getCompetitionEnabled() { return competitionEnabled; }
-    public String getOrgId() { return orgId; }
-    public boolean getEditFlag() { return editFlag; }
 }

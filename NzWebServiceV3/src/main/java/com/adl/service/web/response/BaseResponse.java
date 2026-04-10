@@ -1,5 +1,6 @@
 package com.adl.service.web.response;
 
+import lombok.Getter;
 import lombok.ToString;
 
 /**
@@ -15,6 +16,7 @@ import lombok.ToString;
  *
  * @param <T> 业务数据类型
  */
+@Getter
 @ToString
 public final class BaseResponse<T> {
 
@@ -29,15 +31,4 @@ public final class BaseResponse<T> {
 
     /** 业务数据 */
     private T data;
-
-    // ---- Getter ----
-    public int getCode()       { return code; }
-    public String getMsg() { return msg; }
-    public T getData()         { return data; }
-    public boolean isSuccess() { return succeed; }
-
-    @Override
-    public String toString() {
-        return "BaseResponse{code=" + code + ", message='" + msg + "', succeed=" + succeed + ", data=" + data + "}";
-    }
 }

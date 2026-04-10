@@ -1,8 +1,10 @@
 package com.adl.service.web.response;
 
 import com.google.gson.annotations.SerializedName;
+import lombok.Getter;
 import lombok.ToString;
 
+@Getter
 @ToString
 public final class OverviewData {
 
@@ -29,20 +31,4 @@ public final class OverviewData {
      */
     @SerializedName("todaySportTime")
     private long todaySportTime;
-
-    public long getTotalSportAccountNum() {
-        return totalSportAccountNum;
-    }
-
-    public long getTodaySportAccountNum() {
-        return todaySportAccountNum;
-    }
-
-    public long getTotalSportTime() {
-        return totalSportTime;
-    }
-
-    public long getTodaySportTime() {
-        return todaySportTime;
-    }
 }

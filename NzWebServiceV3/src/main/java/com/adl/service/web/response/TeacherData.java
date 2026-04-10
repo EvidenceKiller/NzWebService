@@ -1,8 +1,10 @@
 package com.adl.service.web.response;
 
 import com.google.gson.annotations.SerializedName;
+import lombok.Getter;
 import lombok.ToString;
 
+@Getter
 @ToString
 public final class TeacherData {
 
@@ -56,72 +58,4 @@ public final class TeacherData {
 
     @SerializedName("delFlag")
     private boolean delFlag;
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public String getAccountId() {
-        return accountId;
-    }
-
-    public String getAccountName() {
-        return accountName;
-    }
-
-    public String getAccountNum() {
-        return accountNum;
-    }
-
-    public String getAccountPhoneNum() {
-        return accountPhoneNum;
-    }
-
-    public int getUserSex() {
-        return userSex;
-    }
-
-    public String getJobNum() {
-        return jobNum;
-    }
-
-    public String getAccountAvatar() {
-        return accountAvatar;
-    }
-
-    public String getAccountNamePinYin() {
-        return accountNamePinYin;
-    }
-
-    public String getAccountNameFirstLetterPinYin() {
-        return accountNameFirstLetterPinYin;
-    }
-
-    public String getUserFaceImgUrl() {
-        return userFaceImgUrl;
-    }
-
-    public String getThumbnailUserFaceImgUrl() {
-        return thumbnailUserFaceImgUrl;
-    }
-
-    public String getCreateTime() {
-        return createTime;
-    }
-
-    public String getUpdateTime() {
-        return updateTime;
-    }
-
-    public boolean getAvatarFlag() {
-        return avatarFlag;
-    }
-
-    public boolean getRecordFlag() {
-        return recordFlag;
-    }
-
-    public boolean getDelFlag() {
-        return delFlag;
-    }
 }

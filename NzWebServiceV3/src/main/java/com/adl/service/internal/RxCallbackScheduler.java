@@ -2,7 +2,9 @@ package com.adl.service.internal;
 
 
 import com.adl.service.callback.RequestCallback;
+import com.adl.service.exception.NzBaseException;
 import com.adl.service.exception.NzEmptyDataException;
+import com.adl.service.exception.NzEmptyResponseException;
 import com.adl.service.exception.NzExceptionMapper;
 import com.adl.service.exception.NzNetworkException;
 import com.adl.service.exception.NzUnknownException;
@@ -46,12 +48,12 @@ public final class RxCallbackScheduler {
                             if (callback == null) {
                                 return;
                             }
-                            if (response != null && response.isSuccess()) {
+                            if (response != null && response.isSucceed()) {
                                 callback.onSuccess(response.getData());
                             } else if (response != null) {
-                                callback.onFail(response.getCode());
+                                callback.onFail(response.getCode(), response.getMsg());
                             } else {
-                                callback.onError("Empty response");
+                                callback.onError("Response is null");
                             }
                         },
                         error -> {
@@ -77,17 +79,22 @@ public final class RxCallbackScheduler {
                 .subscribeOn(Schedulers.io())           // 在 IO 线程执行网络请求
                 .observeOn(AndroidSchedulers.mainThread()) // 在主线程回调
                 .subscribe(
-                        response -> {
+                        data -> {
                             if (callback != null) {
                                 // 统一约定：如果响应是 BaseResponse 且业务失败，则走 onFail。
-                                if (response instanceof BaseResponse) {
-                                    BaseResponse<?> base = (BaseResponse<?>) response;
-                                    if (!base.isSuccess()) {
-                                        callback.onFail(base.getCode());
-                                        return;
+                                if (data == null) {
+                                    callback.onError("Response data is null");
+                                } else {
+                                    if (data instanceof BaseResponse) {
+                                        BaseResponse<?> response = (BaseResponse<?>) data;
+                                        if (!response.isSucceed()) {
+                                            callback.onFail(response.getCode(), response.getMsg());
+                                            return;
+                                        }
                                     }
+                                    callback.onSuccess(data);
                                 }
-                                callback.onSuccess(response);
+
                             }
                         },
                         error -> {
@@ -103,7 +110,7 @@ public final class RxCallbackScheduler {
      * 阻塞获取 Single，校验响应成功且 data 非空后返回 data；否则抛出 {@link NzNetworkException} 或 {@link NzUnknownException}；
      * 其它异常经 {@link NzExceptionMapper} 映射。
      */
-    public static <T> T blockingGetData(Single<BaseResponse<T>> single) {
+    public static <T> T blockingGetData(Single<BaseResponse<T>> single) throws NzBaseException {
         try {
             return requireSuccessData(single.blockingGet());
         } catch (Throwable t) {
@@ -114,16 +121,16 @@ public final class RxCallbackScheduler {
     /**
      * 对已有 {@link BaseResponse} 做成功与 data 校验，成功则返回 data。
      */
-    public static <T> T requireSuccessData(BaseResponse<T> response) {
+    public static <T> T requireSuccessData(BaseResponse<T> response) throws NzBaseException {
         if (response == null) {
-            throw new NzUnknownException("empty response");
+            throw new NzEmptyResponseException("Response is null");
         }
-        if (!response.isSuccess()) {
+        if (response.getCode() != 200 || !response.isSucceed()) {
             throw new NzNetworkException(response.getCode(), response.getMsg());
         }
         T data = response.getData();
         if (data == null) {
-            throw new NzEmptyDataException("empty data");
+            throw new NzEmptyDataException("Response data is null");
         }
         return data;
     }

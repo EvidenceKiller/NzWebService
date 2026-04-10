@@ -1,10 +1,11 @@
 package com.adl.service.web.response;
 
 import com.google.gson.annotations.SerializedName;
+import lombok.Getter;
 import lombok.ToString;
-
 import java.util.List;
 
+@Getter
 @ToString
 public final class WikiDetailData {
 
@@ -51,16 +52,4 @@ public final class WikiDetailData {
     /** 百科视频列表 */
     @SerializedName("wikiVideo")
     private List<Object> wikiVideo;
-
-    public String getWikiId() { return wikiId; }
-    public String getWikiCover() { return wikiCover; }
-    public String getWikiName() { return wikiName; }
-    public String getWikiType() { return wikiType; }
-    public String getWikiContext() { return wikiContext; }
-    public boolean getEnabled() { return enabled; }
-    public String getWikiSort() { return wikiSort; }
-    public List<Object> getWikiTypeIds() { return wikiTypeIds; }
-    public List<Object> getAppCodes() { return appCodes; }
-    public String getCreateTime() { return createTime; }
-    public List<Object> getWikiVideo() { return wikiVideo; }
 }

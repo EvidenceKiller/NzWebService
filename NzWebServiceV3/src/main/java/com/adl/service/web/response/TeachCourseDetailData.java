@@ -1,10 +1,11 @@
 package com.adl.service.web.response;
 
 import com.google.gson.annotations.SerializedName;
+import lombok.Getter;
 import lombok.ToString;
-
 import java.util.List;
 
+@Getter
 @ToString
 public final class TeachCourseDetailData {
     /**
@@ -120,80 +121,4 @@ public final class TeachCourseDetailData {
      */
     @SerializedName("reportVerticalUrl")
     private String reportVerticalUrl;
-
-    public String getAccountId() {
-        return accountId;
-    }
-
-    public String getAccountName() {
-        return accountName;
-    }
-
-    public String getFaceImgUrl() {
-        return faceImgUrl;
-    }
-
-    public Double getSportScore() {
-        return sportScore;
-    }
-
-    public String getSportResult() {
-        return sportResult;
-    }
-
-    public String getOriginalSportResult() {
-        return originalSportResult;
-    }
-
-    public String getLastSportResult() {
-        return lastSportResult;
-    }
-
-    public String getLastOriginalSportResult() {
-        return lastOriginalSportResult;
-    }
-
-    public String getRecordId() {
-        return recordId;
-    }
-
-    public Integer getCourseTimes() {
-        return courseTimes;
-    }
-
-    public String getSportUnitCode() {
-        return sportUnitCode;
-    }
-
-    public Long getSportTime() {
-        return sportTime;
-    }
-
-    public Long getSportStartTime() {
-        return sportStartTime;
-    }
-
-    public Long getSportEndTime() {
-        return sportEndTime;
-    }
-
-    public Long getSportTestTime() {
-        return sportTestTime;
-    }
-
-    public Integer getSex() {
-        return sex;
-    }
-
-    public List<String> getSportVideoUrls() {
-        return sportVideoUrls;
-    }
-
-    public String getReportCrosswiseUrl() {
-        return reportCrosswiseUrl;
-    }
-
-    public String getReportVerticalUrl() {
-        return reportVerticalUrl;
-    }
 }
