@@ -23,7 +23,7 @@ import com.adl.service.common.NzConfig;
 import com.adl.service.common.NzConfigBusiness;
 import com.adl.service.common.NzConfigNode;
 import com.adl.service.db.CitizenDao;
-import com.adl.service.db.DaoManager;
+import com.adl.service.db.DaoManagerProxy;
 import com.adl.service.db.DictDao;
 import com.adl.service.db.FileDownDao;
 import com.adl.service.db.FileUploadDao;
@@ -40,7 +40,6 @@ import com.adl.service.db.StandardConfigDao;
 import com.adl.service.db.StudentDao;
 import com.adl.service.db.TeacherDao;
 import com.adl.service.db.TeacherSportDao;
-import com.adl.service.db.migration.Migration_17_to_18;
 import com.adl.service.internal.RetrofitManager;
 import com.adl.service.internal.RxCallbackScheduler;
 import com.adl.service.internal.SubscriptionManager;
@@ -55,7 +54,6 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.util.concurrent.Callable;
 
-import androidx.room.Room;
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.disposables.Disposable;
 
@@ -67,13 +65,10 @@ import io.reactivex.rxjava3.disposables.Disposable;
  */
 public final class AdlService {
 
-    private final static String DB_NAME = "_local_service_1";
-    private final static int DB_VERSION = 4;
-
     /** 懒加载、双重检查锁定的单例 */
     private static volatile AdlService _instance;
     private ConfigService mConfig;
-    private DaoManager mDaoManager;
+    private DaoManagerProxy mDaoManagerProxy;
     private Context mContext;
     private String orgId;
     private NzConfig mNzConfig;
@@ -91,36 +86,7 @@ public final class AdlService {
         // preferences 存储
         InnerPreferences pf = InnerPreferences.instance();
         pf.init(context);
-        int version = pf.readInt("_db_version");
-
-        // 数据库文件, 清空数据库文件
-        if (DB_VERSION > version) {
-            File[] dataList = context.getDataDir().listFiles();
-            if (dataList != null) {
-                for (File dataFile : dataList) {
-                    // 数据存储路径
-                    if (!"databases".equals(dataFile.getName()))
-                        continue;
-
-                    File[] dbFileList = dataFile.listFiles();
-                    if (dbFileList == null) continue;
-
-                    for (File dbFile : dbFileList) {
-                        if (dbFile.getName().startsWith("_local_service")) {
-                            dbFile.delete();
-                        }
-                    }
-                }
-            }
-        }
-
-        // 数据库
-        mDaoManager = Room.databaseBuilder(context, DaoManager.class, DB_NAME)
-                .allowMainThreadQueries()
-                .fallbackToDestructiveMigration()
-                .addMigrations(new Migration_17_to_18())
-                .build();
-        pf.putInt("_db_version", DB_VERSION);
+        mDaoManagerProxy = DaoManagerProxy.create(context);
     }
 
     public static AdlService create(Context context) {
@@ -140,6 +106,11 @@ public final class AdlService {
 
     public Context getContext() {
         return mContext;
+    }
+
+    /** 数据库访问代理 **/
+    public DaoManagerProxy getDaoManagerProxy() {
+        return mDaoManagerProxy;
     }
 
     public AdlService setDebug(boolean debug) {
@@ -231,89 +202,6 @@ public final class AdlService {
 
     public String getDeviceToken() {
         return InnerPreferences.instance().readString(IDefine.SpToken);
-    }
-
-    // 学生Dao
-    public StudentDao getStudentDao() {
-        return mDaoManager.getStudentDao();
-    }
-
-    public CitizenDao getCitizenDao() {
-        return mDaoManager.getCitizenDao();
-    }
-
-    // 老师Dao
-    public TeacherDao getTeacherDao() {
-        return mDaoManager.getTeacherDao();
-    }
-
-    // 文件下载
-    public FileDownDao getFileDownDao() {
-        return mDaoManager.getFileDownDao();
-    }
-
-    // 文件上传
-    public FileUploadDao getFileUploadDao() {
-        return mDaoManager.getFileUploadDao();
-    }
-
-    // 计划Dao
-    public PlanDao getPlanDao() {
-        return mDaoManager.getPlanDao();
-    }
-
-    // 计划学生Dao
-    public PlanStudentDao getPlanStudentDao() {
-        return mDaoManager.getPlanStudentDao();
-    }
-
-    // 标准配置Dao
-    public StandardConfigDao getStandardConfigDao() {
-        return mDaoManager.getStandardConfigDao();
-    }
-
-    // 运动Dao
-    public SceneSportDao getSceneSportDao() {
-        return mDaoManager.getSceneSportDao();
-    }
-
-    // 运动本地记录Dao
-    public RecordLocalDao getRecordLocalDao() {
-        return mDaoManager.getRecordLocalDao();
-    }
-
-    // 运动上传记录Dao
-    public RecordUploadDao getRecordUploadDao() {
-        return mDaoManager.getRecordUploadDao();
-    }
-
-    // 字典Dao
-    public DictDao getDictDao() {
-        return mDaoManager.getDictDao();
-    }
-
-    // 运动会Dao
-    public MeetDao getMeetDao() {
-        return mDaoManager.getMeetDao();
-    }
-
-    // 运动会分组Dao
-    public MeetGroupTeamDao getMeetGroupTeamDao() {
-        return mDaoManager.getMeetGroupTeamDao();
-    }
-
-    // 运动会分组人员Dao
-    public MeetGroupDetailsDao getMeetGroupDetailsDao() {
-        return mDaoManager.getMeetGroupDetailsDao();
-    }
-
-    public TeacherSportDao getTeacherSportDao() {
-        return mDaoManager.getTeacherSportDao();
-    }
-
-    // 场景Dao
-    public SceneDao getSceneDao() {
-        return mDaoManager.getSceneDao();
     }
 
     public CommonInfoCaller getCommonInfoCaller() {
