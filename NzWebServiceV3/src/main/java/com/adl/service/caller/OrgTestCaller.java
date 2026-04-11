@@ -2,19 +2,19 @@ package com.adl.service.caller;
 
 import com.adl.service.callback.RequestCallback;
 import com.adl.service.exception.NzBaseException;
-import com.adl.service.web.request.OrganizeTestCheckStudentRequest;
+import com.adl.service.web.request.CheckStudentInPlanRequest;
 import com.adl.service.web.request.PlanClassListRequest;
 import com.adl.service.web.request.PlanListRequest;
 import com.adl.service.web.request.PlanStudentPageRequest;
 import com.adl.service.web.request.RecordDetailPageRequest;
 import com.adl.service.web.request.RequestScope;
 import com.adl.service.web.request.StandardConfigPageRequest;
-import com.adl.service.web.response.OrganizeTestCheckStudentData;
+import com.adl.service.web.response.BasePageData;
 import com.adl.service.web.response.PlanClassData;
 import com.adl.service.web.response.PlanInfoData;
-import com.adl.service.web.response.PlanPageData;
-import com.adl.service.web.response.PlanStudentPageData;
-import com.adl.service.web.response.RecordDetailPageData;
+import com.adl.service.web.response.PlanData;
+import com.adl.service.web.response.PlanStudentData;
+import com.adl.service.web.response.RecordDetailData;
 import com.adl.service.web.response.StandardConfigPageData;
 
 import java.util.List;
@@ -28,17 +28,17 @@ public interface OrgTestCaller {
 
     List<StandardConfigPageData> getStandardConfigPageSync(StandardConfigPageRequest request) throws NzBaseException;
 
-    long getRecordDetailPageAsync(RequestScope scope, RecordDetailPageRequest request, RequestCallback<RecordDetailPageData> callback);
+    long getRecordDetailPageAsync(RequestScope scope, RecordDetailPageRequest request, RequestCallback<BasePageData<RecordDetailData>> callback);
 
-    RecordDetailPageData getRecordDetailPageSync(RecordDetailPageRequest request) throws NzBaseException;
+    BasePageData<RecordDetailData> getRecordDetailPageSync(RecordDetailPageRequest request) throws NzBaseException;
 
-    long getPlanStudentPageAsync(RequestScope scope, PlanStudentPageRequest request, RequestCallback<PlanStudentPageData> callback);
+    long getPlanStudentPageAsync(RequestScope scope, PlanStudentPageRequest request, RequestCallback<BasePageData<PlanStudentData>> callback);
 
-    PlanStudentPageData getPlanStudentPageSync(PlanStudentPageRequest request) throws NzBaseException;
+    BasePageData<PlanStudentData> getPlanStudentPageSync(PlanStudentPageRequest request) throws NzBaseException;
 
-    long getPlanPageAsync(RequestScope scope, PlanListRequest request, RequestCallback<PlanPageData> callback);
+    long getPlanPageAsync(RequestScope scope, PlanListRequest request, RequestCallback<BasePageData<PlanData>> callback);
 
-    PlanPageData getPlanPageSync(PlanListRequest request) throws NzBaseException;
+    BasePageData<PlanData> getPlanPageSync(PlanListRequest request) throws NzBaseException;
 
     long getPlanInfoAsync(RequestScope scope, RequestCallback<PlanInfoData> callback);
 
@@ -48,8 +48,8 @@ public interface OrgTestCaller {
 
     List<PlanClassData> getPlanClassListSync(PlanClassListRequest request) throws NzBaseException;
 
-    long getCheckStudentAsync(RequestScope scope, OrganizeTestCheckStudentRequest request, RequestCallback<OrganizeTestCheckStudentData> callback);
+    long checkStudentInPlanAsync(RequestScope scope, CheckStudentInPlanRequest request, RequestCallback<Boolean> callback);
 
-    OrganizeTestCheckStudentData getCheckStudentSync(OrganizeTestCheckStudentRequest request) throws NzBaseException;
+    Boolean checkStudentInPlanSync(CheckStudentInPlanRequest request) throws NzBaseException;
 
 }

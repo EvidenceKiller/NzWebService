@@ -12,7 +12,7 @@ import com.adl.service.web.request.RequestScope;
 import com.adl.service.web.request.StudentPageRequest;
 import com.adl.service.web.request.TeacherListRequest;
 import com.adl.service.web.response.AcayearData;
-import com.adl.service.web.response.AccountInfoData;
+import com.adl.service.web.response.BasePageData;
 import com.adl.service.web.response.CitizenPageData;
 import com.adl.service.web.response.ClassInfoData;
 import com.adl.service.web.response.ClassListData;
@@ -20,7 +20,7 @@ import com.adl.service.web.response.DictsData;
 import com.adl.service.web.response.GradeChineseNameData;
 import com.adl.service.web.response.GradeTreeData;
 import com.adl.service.web.response.LoginInfoData;
-import com.adl.service.web.response.StudentPageData;
+import com.adl.service.web.response.StudentData;
 import com.adl.service.web.response.TeacherData;
 
 import java.util.List;
@@ -58,9 +58,9 @@ public interface CommonInfoCaller {
 
     List<TeacherData> getTeacherListSync(TeacherListRequest request) throws NzBaseException;
 
-    long getStudentPageAsync(RequestScope scope, StudentPageRequest request, RequestCallback<StudentPageData> callback);
+    long getStudentPageAsync(RequestScope scope, StudentPageRequest request, RequestCallback<BasePageData<StudentData>> callback);
 
-    StudentPageData getStudentPageSync(StudentPageRequest request) throws NzBaseException;
+    BasePageData<StudentData> getStudentPageSync(StudentPageRequest request) throws NzBaseException;
 
     long getCitizenPageAsync(RequestScope scope, CitizenPageRequest request, RequestCallback<CitizenPageData> callback);
 

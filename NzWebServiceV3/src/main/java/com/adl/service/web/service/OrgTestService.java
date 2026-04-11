@@ -1,18 +1,18 @@
 package com.adl.service.web.service;
 
-import com.adl.service.web.request.OrganizeTestCheckStudentRequest;
+import com.adl.service.web.request.CheckStudentInPlanRequest;
 import com.adl.service.web.request.PlanClassListRequest;
 import com.adl.service.web.request.PlanListRequest;
 import com.adl.service.web.request.PlanStudentPageRequest;
 import com.adl.service.web.request.RecordDetailPageRequest;
 import com.adl.service.web.request.StandardConfigPageRequest;
+import com.adl.service.web.response.BasePageData;
 import com.adl.service.web.response.BaseResponse;
-import com.adl.service.web.response.OrganizeTestCheckStudentData;
 import com.adl.service.web.response.PlanClassData;
 import com.adl.service.web.response.PlanInfoData;
-import com.adl.service.web.response.PlanPageData;
-import com.adl.service.web.response.PlanStudentPageData;
-import com.adl.service.web.response.RecordDetailPageData;
+import com.adl.service.web.response.PlanData;
+import com.adl.service.web.response.PlanStudentData;
+import com.adl.service.web.response.RecordDetailData;
 import com.adl.service.web.response.StandardConfigPageData;
 
 import java.util.List;
@@ -35,19 +35,19 @@ public interface OrgTestService {
      * 获取组织测试记录详情
      */
     @POST("tis/device/pte/organizeTest/getRecordDetail")
-    Single<BaseResponse<RecordDetailPageData>> getRecordDetailPage(@Body RecordDetailPageRequest request);
+    Single<BaseResponse<BasePageData<RecordDetailData>>> getRecordDetailPage(@Body RecordDetailPageRequest request);
 
     /**
      * 获取计划下学生
      */
     @POST("tis/device/pte/organizeTest/getPlanStudents")
-    Single<BaseResponse<PlanStudentPageData>> getPlanStudentPage(@Body PlanStudentPageRequest request);
+    Single<BaseResponse<BasePageData<PlanStudentData>>> getPlanStudentPage(@Body PlanStudentPageRequest request);
 
     /**
      * 获取计划列表
      */
     @POST("tis/device/pte/organizeTest/getPlanList")
-    Single<BaseResponse<PlanPageData>> getPlanPage(@Body PlanListRequest request);
+    Single<BaseResponse<BasePageData<PlanData>>> getPlanPage(@Body PlanListRequest request);
 
     /**
      * 获取组织测试计划详情
@@ -65,5 +65,5 @@ public interface OrgTestService {
      * 查询学生是否在计划下
      */
     @POST("tis/device/pte/organizeTest/checkStudent")
-    Single<BaseResponse<OrganizeTestCheckStudentData>> getCheckStudent(@Body OrganizeTestCheckStudentRequest request);
+    Single<BaseResponse<Boolean>> checkStudentInPlan(@Body CheckStudentInPlanRequest request);
 }

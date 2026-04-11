@@ -8,9 +8,11 @@ import com.adl.service.web.request.ReportStudentMeetRequest;
 import com.adl.service.web.request.ReportStudentPlanRequest;
 import com.adl.service.web.request.ReportStudentSportRequest;
 import com.adl.service.web.request.ReportTeacherSportRequest;
+import com.adl.service.web.response.AccountRecordData;
 import com.adl.service.web.response.AccountRecordPageData;
+import com.adl.service.web.response.BasePageData;
 import com.adl.service.web.response.BaseResponse;
-import com.adl.service.web.response.OrgRecordPageData;
+import com.adl.service.web.response.OrgRecordData;
 
 import io.reactivex.rxjava3.core.Single;
 import retrofit2.http.Body;
@@ -43,12 +45,6 @@ public interface SportInfoService {
      */
     @POST("tis/device/sport/result/reportStudentSport")
     Single<BaseResponse<Boolean>> reportStudentSport(@Body ReportStudentSportRequest request);
-
-    /**
-     * 上传学生运动会成绩
-     */
-    @POST("tis/device/sport/result/uploadStudentMeet")
-    Single<BaseResponse<Boolean>> uploadStudentMeet(@Body ReportStudentMeetRequest request);
 
     /**
      * 上报学生组织测试成绩
@@ -84,11 +80,11 @@ public interface SportInfoService {
      * 获取机构/年级运动记录分页
      */
     @POST("tis/device/sport/result/getOrgRecordPage")
-    Single<BaseResponse<OrgRecordPageData>> getOrgRecordPage(@Body OrgRecordPageRequest request);
+    Single<BaseResponse<BasePageData<OrgRecordData>>> getOrgRecordPage(@Body OrgRecordPageRequest request);
 
     /**
      * 获取班级/个人运动记录分页
      */
     @POST("tis/device/sport/result/getAccountRecordPage")
-    Single<BaseResponse<AccountRecordPageData>> getAccountRecordPage(@Body AccountRecordPageRequest request);
+    Single<BaseResponse<BasePageData<AccountRecordData>>> getAccountRecordPage(@Body AccountRecordPageRequest request);
 }

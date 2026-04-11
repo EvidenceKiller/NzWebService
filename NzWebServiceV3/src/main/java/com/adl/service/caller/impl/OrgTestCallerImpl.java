@@ -6,19 +6,19 @@ import com.adl.service.caller.OrgTestCaller;
 import com.adl.service.exception.NzBaseException;
 import com.adl.service.internal.RxCallbackScheduler;
 import com.adl.service.internal.SubscriptionManager;
-import com.adl.service.web.request.OrganizeTestCheckStudentRequest;
+import com.adl.service.web.request.CheckStudentInPlanRequest;
 import com.adl.service.web.request.PlanClassListRequest;
 import com.adl.service.web.request.PlanListRequest;
 import com.adl.service.web.request.PlanStudentPageRequest;
 import com.adl.service.web.request.RecordDetailPageRequest;
 import com.adl.service.web.request.RequestScope;
 import com.adl.service.web.request.StandardConfigPageRequest;
-import com.adl.service.web.response.OrganizeTestCheckStudentData;
+import com.adl.service.web.response.BasePageData;
 import com.adl.service.web.response.PlanClassData;
 import com.adl.service.web.response.PlanInfoData;
-import com.adl.service.web.response.PlanPageData;
-import com.adl.service.web.response.PlanStudentPageData;
-import com.adl.service.web.response.RecordDetailPageData;
+import com.adl.service.web.response.PlanData;
+import com.adl.service.web.response.PlanStudentData;
+import com.adl.service.web.response.RecordDetailData;
 import com.adl.service.web.response.StandardConfigPageData;
 import com.adl.service.web.service.OrgTestService;
 
@@ -51,7 +51,7 @@ public final class OrgTestCallerImpl implements OrgTestCaller {
     }
 
     @Override
-    public long getRecordDetailPageAsync(RequestScope scope, RecordDetailPageRequest request, RequestCallback<RecordDetailPageData> callback) {
+    public long getRecordDetailPageAsync(RequestScope scope, RecordDetailPageRequest request, RequestCallback<BasePageData<RecordDetailData>> callback) {
         CallerScopeUtils.requireScope(scope);
         Disposable disposable = RxCallbackScheduler.scheduleBaseResponse(orgTestService.getRecordDetailPage(request), callback);
         SubscriptionManager.getInstance().add(scope.owner(), disposable);
@@ -59,12 +59,12 @@ public final class OrgTestCallerImpl implements OrgTestCaller {
     }
 
     @Override
-    public RecordDetailPageData getRecordDetailPageSync(RecordDetailPageRequest request) throws NzBaseException {
+    public BasePageData<RecordDetailData> getRecordDetailPageSync(RecordDetailPageRequest request) throws NzBaseException {
         return RxCallbackScheduler.blockingGetData(orgTestService.getRecordDetailPage(request));
     }
 
     @Override
-    public long getPlanStudentPageAsync(RequestScope scope, PlanStudentPageRequest request, RequestCallback<PlanStudentPageData> callback) {
+    public long getPlanStudentPageAsync(RequestScope scope, PlanStudentPageRequest request, RequestCallback<BasePageData<PlanStudentData>> callback) {
         CallerScopeUtils.requireScope(scope);
         Disposable disposable = RxCallbackScheduler.scheduleBaseResponse(orgTestService.getPlanStudentPage(request), callback);
         SubscriptionManager.getInstance().add(scope.owner(), disposable);
@@ -72,12 +72,12 @@ public final class OrgTestCallerImpl implements OrgTestCaller {
     }
 
     @Override
-    public PlanStudentPageData getPlanStudentPageSync(PlanStudentPageRequest request) throws NzBaseException {
+    public BasePageData<PlanStudentData> getPlanStudentPageSync(PlanStudentPageRequest request) throws NzBaseException {
         return RxCallbackScheduler.blockingGetData(orgTestService.getPlanStudentPage(request));
     }
 
     @Override
-    public long getPlanPageAsync(RequestScope scope, PlanListRequest request, RequestCallback<PlanPageData> callback) {
+    public long getPlanPageAsync(RequestScope scope, PlanListRequest request, RequestCallback<BasePageData<PlanData>> callback) {
         CallerScopeUtils.requireScope(scope);
         Disposable disposable = RxCallbackScheduler.scheduleBaseResponse(orgTestService.getPlanPage(request), callback);
         SubscriptionManager.getInstance().add(scope.owner(), disposable);
@@ -85,7 +85,7 @@ public final class OrgTestCallerImpl implements OrgTestCaller {
     }
 
     @Override
-    public PlanPageData getPlanPageSync(PlanListRequest request) throws NzBaseException {
+    public BasePageData<PlanData> getPlanPageSync(PlanListRequest request) throws NzBaseException {
         return RxCallbackScheduler.blockingGetData(orgTestService.getPlanPage(request));
     }
 
@@ -116,15 +116,15 @@ public final class OrgTestCallerImpl implements OrgTestCaller {
     }
 
     @Override
-    public long getCheckStudentAsync(RequestScope scope, OrganizeTestCheckStudentRequest request, RequestCallback<OrganizeTestCheckStudentData> callback) {
+    public long checkStudentInPlanAsync(RequestScope scope, CheckStudentInPlanRequest request, RequestCallback<Boolean> callback) {
         CallerScopeUtils.requireScope(scope);
-        Disposable disposable = RxCallbackScheduler.scheduleBaseResponse(orgTestService.getCheckStudent(request), callback);
+        Disposable disposable = RxCallbackScheduler.scheduleBaseResponse(orgTestService.checkStudentInPlan(request), callback);
         SubscriptionManager.getInstance().add(scope.owner(), disposable);
         return disposable.hashCode();
     }
 
     @Override
-    public OrganizeTestCheckStudentData getCheckStudentSync(OrganizeTestCheckStudentRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGetData(orgTestService.getCheckStudent(request));
+    public Boolean checkStudentInPlanSync(CheckStudentInPlanRequest request) throws NzBaseException {
+        return RxCallbackScheduler.blockingGetData(orgTestService.checkStudentInPlan(request));
     }
 }

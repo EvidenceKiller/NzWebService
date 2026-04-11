@@ -2,7 +2,7 @@ package com.adl.service.web.request;
 
 import com.google.gson.annotations.SerializedName;
 
-public final class OrganizeTestCheckStudentRequest {
+public final class CheckStudentInPlanRequest {
 
     /** 计划 id */
     @SerializedName("planId")
@@ -12,7 +12,7 @@ public final class OrganizeTestCheckStudentRequest {
     @SerializedName("accountId")
     private String accountId;
 
-    private OrganizeTestCheckStudentRequest(Builder builder) {
+    private CheckStudentInPlanRequest(Builder builder) {
         this.planId = builder.planId;
         this.accountId = builder.accountId;
     }
@@ -33,7 +33,7 @@ public final class OrganizeTestCheckStudentRequest {
             return this;
         }
 
-        public OrganizeTestCheckStudentRequest build() { return new OrganizeTestCheckStudentRequest(this); }
+        public CheckStudentInPlanRequest build() { return new CheckStudentInPlanRequest(this); }
     }
 
     public String getPlanId() { return planId; }

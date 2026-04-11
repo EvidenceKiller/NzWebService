@@ -11,8 +11,10 @@ import com.adl.service.web.request.ReportStudentPlanRequest;
 import com.adl.service.web.request.ReportStudentSportRequest;
 import com.adl.service.web.request.ReportTeacherSportRequest;
 import com.adl.service.web.request.RequestScope;
+import com.adl.service.web.response.AccountRecordData;
 import com.adl.service.web.response.AccountRecordPageData;
-import com.adl.service.web.response.OrgRecordPageData;
+import com.adl.service.web.response.BasePageData;
+import com.adl.service.web.response.OrgRecordData;
 
 /**
  * SportInfoCaller。
@@ -35,10 +37,6 @@ public interface SportInfoCaller {
 
     Boolean reportStudentSportSync(ReportStudentSportRequest request) throws NzBaseException;
 
-    long uploadStudentMeetAsync(RequestScope scope, ReportStudentMeetRequest request, RequestCallback<Boolean> callback);
-
-    Boolean uploadStudentMeetSync(ReportStudentMeetRequest request) throws NzBaseException;
-
     long reportStudentPlanAsync(RequestScope scope, ReportStudentPlanRequest request, RequestCallback<Boolean> callback);
 
     Boolean reportStudentPlanSync(ReportStudentPlanRequest request) throws NzBaseException;
@@ -59,12 +57,11 @@ public interface SportInfoCaller {
 
     Boolean reportNfSportSync(ReportNfSportRequest request) throws NzBaseException;
 
-    long getOrgRecordPageAsync(RequestScope scope, OrgRecordPageRequest request, RequestCallback<OrgRecordPageData> callback);
+    long getOrgRecordPageAsync(RequestScope scope, OrgRecordPageRequest request, RequestCallback<BasePageData<OrgRecordData>> callback);
 
-    OrgRecordPageData getOrgRecordPageSync(OrgRecordPageRequest request) throws NzBaseException;
+    BasePageData<OrgRecordData> getOrgRecordPageSync(OrgRecordPageRequest request) throws NzBaseException;
 
-    long getAccountRecordPageAsync(RequestScope scope, AccountRecordPageRequest request, RequestCallback<AccountRecordPageData> callback);
+    long getAccountRecordPageAsync(RequestScope scope, AccountRecordPageRequest request, RequestCallback<BasePageData<AccountRecordData>> callback);
 
-    AccountRecordPageData getAccountRecordPageSync(AccountRecordPageRequest request) throws NzBaseException;
-
+    BasePageData<AccountRecordData> getAccountRecordPageSync(AccountRecordPageRequest request) throws NzBaseException;
 }

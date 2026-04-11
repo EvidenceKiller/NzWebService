@@ -48,7 +48,7 @@ public final class StandardConfigPageData {
      * 项目列表
      */
     @SerializedName("sportSkuList")
-    private List<String> sportSkuList;
+    private List<SportSkuData> sportSkuList;
 
     /**
      * 区域名称列表

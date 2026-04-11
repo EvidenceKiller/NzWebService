@@ -12,10 +12,10 @@ import lombok.ToString;
 @Getter
 @ToString
 @JsonAdapter(StrictJsonDeserializer.class)
-public final class PlanStudentPageData {
+public final class BasePageData<T> {
 
     @SerializedName("records")
-    private List<Object> records;
+    private List<T> records;
 
     @SerializedName("total")
     private Long total;
@@ -25,24 +25,6 @@ public final class PlanStudentPageData {
 
     @SerializedName("current")
     private Long current;
-
-    @SerializedName("orders")
-    private List<Object> orders;
-
-    @SerializedName("optimizeCountSql")
-    private Object optimizeCountSql;
-
-    @SerializedName("searchCount")
-    private Object searchCount;
-
-    @SerializedName("optimizeJoinOfCountSql")
-    private Boolean optimizeJoinOfCountSql;
-
-    @SerializedName("maxLimit")
-    private Long maxLimit;
-
-    @SerializedName("countId")
-    private String countId;
 
     @SerializedName("pages")
     private Long pages;
