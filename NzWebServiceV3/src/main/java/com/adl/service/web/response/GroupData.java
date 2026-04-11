@@ -40,9 +40,6 @@ public final class GroupData {
     @SerializedName("groupRule")
     private BaseGroupRule groupRule;
 
-    @SerializedName("empty")
-    private Boolean empty;
-
     /**
      * 运动 Id
      */

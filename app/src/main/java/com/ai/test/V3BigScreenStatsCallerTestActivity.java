@@ -51,6 +51,7 @@ public class V3BigScreenStatsCallerTestActivity extends AppCompatActivity {
 
         resultView = findViewById(R.id.tv_result);
         gridLayout = findViewById(R.id.gl_test);
+        findViewById(R.id.btn_back).setOnClickListener(v -> finish());
 
         createButton("getWarRecordRankAsync").setOnClickListener(v -> getWarRecordRankAsync());
         createButton("getWarRecordRankSync").setOnClickListener(v -> getWarRecordRankSync());

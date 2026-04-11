@@ -84,5 +84,5 @@ public final class GroupTeamData {
      * 人员详情
      */
     @SerializedName("details")
-    private List<Object> details;
+    private List<GroupTeamPersonDetailData> details;
 }

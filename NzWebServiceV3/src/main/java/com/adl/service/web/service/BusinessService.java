@@ -13,17 +13,17 @@ import com.adl.service.web.request.SaveGroupRequest;
 import com.adl.service.web.request.SportMeetPageRequest;
 import com.adl.service.web.request.TrainPlanInfoPageRequest;
 import com.adl.service.web.request.TrainPlanOneDayProjectListRequest;
+import com.adl.service.web.response.BasePageData;
 import com.adl.service.web.response.BaseResponse;
-import com.adl.service.web.response.CompetitionPageData;
+import com.adl.service.web.response.CompetitionData;
 import com.adl.service.web.response.CompetitionRankDetailData;
 import com.adl.service.web.response.GroupData;
 import com.adl.service.web.response.GroupTeamData;
 import com.adl.service.web.response.GroupTeamDetailData;
-import com.adl.service.web.response.ResInfoData;
-import com.adl.service.web.response.ResPageData;
+import com.adl.service.web.response.ResData;
 import com.adl.service.web.response.ResTypeData;
-import com.adl.service.web.response.SportMeetPageData;
-import com.adl.service.web.response.TrainPlanInfoPageData;
+import com.adl.service.web.response.SportMeetData;
+import com.adl.service.web.response.TrainPlanInfoData;
 import com.adl.service.web.response.TrainPlanOneDayProjectData;
 
 import java.util.List;
@@ -58,7 +58,7 @@ public interface BusinessService {
      * 训练计划列表
      */
     @POST("tis/device/busi/train/plan/getTrainPlanInfoList")
-    Single<BaseResponse<TrainPlanInfoPageData>> getTrainPlanInfoPage(@Body TrainPlanInfoPageRequest request);
+    Single<BaseResponse<BasePageData<TrainPlanInfoData>>> getTrainPlanInfoPage(@Body TrainPlanInfoPageRequest request);
 
     /**
      * 参与竞技排名赛事
@@ -76,13 +76,13 @@ public interface BusinessService {
      * 赛事列表
      */
     @POST("tis/device/busi/org/competition/online/getCompetitionList")
-    Single<BaseResponse<CompetitionPageData>> getCompetitionPage(@Body CompetitionPageRequest request);
+    Single<BaseResponse<BasePageData<CompetitionData>>> getCompetitionPage(@Body CompetitionPageRequest request);
 
     /**
      * 获取运动会列表
      */
     @POST("tis/device/busi/org/meet/getSportMeetList")
-    Single<BaseResponse<SportMeetPageData>> getSportMeetPage(@Body SportMeetPageRequest request);
+    Single<BaseResponse<BasePageData<SportMeetData>>> getSportMeetPage(@Body SportMeetPageRequest request);
 
     /**
      * 拉取编排数据
@@ -106,12 +106,12 @@ public interface BusinessService {
      * 获取资源列表
      */
     @POST("tis/device/org/res/getResList")
-    Single<BaseResponse<ResPageData>> getResPage(@Body ResPageRequest request);
+    Single<BaseResponse<BasePageData<ResData>>> getResPage(@Body ResPageRequest request);
 
     /**
      * 获取资源详情
      */
     @POST("tis/device/org/res/getResInfo")
-    Single<BaseResponse<ResInfoData>> getResInfo(@Body ResInfoRequest request);
+    Single<BaseResponse<ResData>> getResInfo(@Body ResInfoRequest request);
 
 }

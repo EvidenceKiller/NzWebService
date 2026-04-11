@@ -16,16 +16,16 @@ import com.adl.service.web.request.SaveGroupRequest;
 import com.adl.service.web.request.SportMeetPageRequest;
 import com.adl.service.web.request.TrainPlanInfoPageRequest;
 import com.adl.service.web.request.TrainPlanOneDayProjectListRequest;
-import com.adl.service.web.response.CompetitionPageData;
+import com.adl.service.web.response.BasePageData;
+import com.adl.service.web.response.CompetitionData;
 import com.adl.service.web.response.CompetitionRankDetailData;
 import com.adl.service.web.response.GroupData;
 import com.adl.service.web.response.GroupTeamData;
 import com.adl.service.web.response.GroupTeamDetailData;
-import com.adl.service.web.response.ResInfoData;
-import com.adl.service.web.response.ResPageData;
+import com.adl.service.web.response.ResData;
 import com.adl.service.web.response.ResTypeData;
-import com.adl.service.web.response.SportMeetPageData;
-import com.adl.service.web.response.TrainPlanInfoPageData;
+import com.adl.service.web.response.SportMeetData;
+import com.adl.service.web.response.TrainPlanInfoData;
 import com.adl.service.web.response.TrainPlanOneDayProjectData;
 
 import java.util.List;
@@ -47,9 +47,9 @@ public interface BusinessCaller {
 
     List<TrainPlanOneDayProjectData> getTrainPlanOneDayProjectListSync(TrainPlanOneDayProjectListRequest request) throws NzBaseException;
 
-    long getTrainPlanInfoPageAsync(RequestScope scope, TrainPlanInfoPageRequest request, RequestCallback<TrainPlanInfoPageData> callback);
+    long getTrainPlanInfoPageAsync(RequestScope scope, TrainPlanInfoPageRequest request, RequestCallback<BasePageData<TrainPlanInfoData>> callback);
 
-    TrainPlanInfoPageData getTrainPlanInfoPageSync(TrainPlanInfoPageRequest request) throws NzBaseException;
+    BasePageData<TrainPlanInfoData> getTrainPlanInfoPageSync(TrainPlanInfoPageRequest request) throws NzBaseException;
 
     long joinCompetitionRankAsync(RequestScope scope, JoinCompetitionRankRequest request, RequestCallback<Boolean> callback);
 
@@ -59,13 +59,13 @@ public interface BusinessCaller {
 
     CompetitionRankDetailData getCompetitionRankDetailSync(CompetitionRankDetailRequest request) throws NzBaseException;
 
-    long getCompetitionPageAsync(RequestScope scope, CompetitionPageRequest request, RequestCallback<CompetitionPageData> callback);
+    long getCompetitionPageAsync(RequestScope scope, CompetitionPageRequest request, RequestCallback<BasePageData<CompetitionData>> callback);
 
-    CompetitionPageData getCompetitionPageSync(CompetitionPageRequest request) throws NzBaseException;
+    BasePageData<CompetitionData> getCompetitionPageSync(CompetitionPageRequest request) throws NzBaseException;
 
-    long getSportMeetPageAsync(RequestScope scope, SportMeetPageRequest request, RequestCallback<SportMeetPageData> callback);
+    long getSportMeetPageAsync(RequestScope scope, SportMeetPageRequest request, RequestCallback<BasePageData<SportMeetData>> callback);
 
-    SportMeetPageData getSportMeetPageSync(SportMeetPageRequest request) throws NzBaseException;
+    BasePageData<SportMeetData> getSportMeetPageSync(SportMeetPageRequest request) throws NzBaseException;
 
     long downloadGroupTeamPageAsync(RequestScope scope, DownloadGroupTeamPageRequest request, RequestCallback<List<GroupTeamData>> callback);
 
@@ -79,12 +79,12 @@ public interface BusinessCaller {
 
     List<ResTypeData> getResTypeListSync(ResTypeListRequest request) throws NzBaseException;
 
-    long getResPageAsync(RequestScope scope, ResPageRequest request, RequestCallback<ResPageData> callback);
+    long getResPageAsync(RequestScope scope, ResPageRequest request, RequestCallback<BasePageData<ResData>> callback);
 
-    ResPageData getResPageSync(ResPageRequest request) throws NzBaseException;
+    BasePageData<ResData> getResPageSync(ResPageRequest request) throws NzBaseException;
 
-    long getResInfoAsync(RequestScope scope, ResInfoRequest request, RequestCallback<ResInfoData> callback);
+    long getResInfoAsync(RequestScope scope, ResInfoRequest request, RequestCallback<ResData> callback);
 
-    ResInfoData getResInfoSync(ResInfoRequest request) throws NzBaseException;
+    ResData getResInfoSync(ResInfoRequest request) throws NzBaseException;
 
 }

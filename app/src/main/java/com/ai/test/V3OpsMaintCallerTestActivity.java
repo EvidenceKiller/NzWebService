@@ -37,6 +37,7 @@ public class V3OpsMaintCallerTestActivity extends AppCompatActivity {
 
         resultView = findViewById(R.id.tv_result);
         gridLayout = findViewById(R.id.gl_test);
+        findViewById(R.id.btn_back).setOnClickListener(v -> finish());
 
         createButton("uploadDeviceInfoAsync").setOnClickListener(v -> uploadDeviceInfoAsync());
         createButton("uploadDeviceInfoSync").setOnClickListener(v -> uploadDeviceInfoSync());

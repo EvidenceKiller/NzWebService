@@ -41,5 +41,5 @@ public final class BaseGroup {
      * 分组账户信息列表
      */
     @SerializedName("groupAccountInfos")
-    private List<Object> groupAccountInfos;
+    private List<BaseGroupAccountInfo> groupAccountInfos;
 }
