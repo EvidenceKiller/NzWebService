@@ -57,7 +57,7 @@ public class V3OpsMaintCallerTestActivity extends AppCompatActivity {
     }
 
     private UploadDeviceInfoRequest buildUploadDeviceInfoRequest() {
-        return UploadDeviceInfoRequest.builder("")
+        return UploadDeviceInfoRequest.builder("123456789")
                 .build();
     }
 
@@ -67,7 +67,7 @@ public class V3OpsMaintCallerTestActivity extends AppCompatActivity {
     }
 
     private UpgradePlanByDeviceWithOutLoginRequest buildUpgradePlanByDeviceWithOutLoginRequest() {
-        return UpgradePlanByDeviceWithOutLoginRequest.builder("").build();
+        return UpgradePlanByDeviceWithOutLoginRequest.builder("123456789").build();
     }
 
     private SoftwareReportRequest buildSoftwareReportRequest() {
@@ -76,11 +76,14 @@ public class V3OpsMaintCallerTestActivity extends AppCompatActivity {
     }
 
     private DeviceQrcodeRequest buildDeviceQrcodeRequest() {
-        return DeviceQrcodeRequest.builder("").build();
+        return DeviceQrcodeRequest.builder("101101").build();
     }
 
     private LogAddBatchRequest buildLogAddBatchRequest() {
         return LogAddBatchRequest.builder()
+                .appCode("101101")
+                .content("test context")
+                .productCode("789456132")
                 .build();
     }
 
