@@ -12,12 +12,28 @@ import com.adl.service.web.response.LoginData;
  */
 public interface LoginAuthCaller {
 
+    /**
+     * 设备登录
+     * <p>异步调用。</p>
+     */
     long loginAsync(RequestScope scope, LoginRequest request, RequestCallback<LoginData> callback);
 
+    /**
+     * 设备登录
+     * <p>同步调用。</p>
+     */
     LoginData loginSync(LoginRequest request) throws NzBaseException;
 
+    /**
+     * 退出登录
+     * <p>异步调用。</p>
+     */
     long logoutAsync(RequestScope scope, LogoutRequest request, RequestCallback<String> callback);
 
+    /**
+     * 退出登录
+     * <p>同步调用。</p>
+     */
     String logoutSync(LogoutRequest request) throws NzBaseException;
 
 }
