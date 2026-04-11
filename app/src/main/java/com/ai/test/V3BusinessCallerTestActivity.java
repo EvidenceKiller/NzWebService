@@ -87,154 +87,66 @@ public class V3BusinessCallerTestActivity extends AppCompatActivity {
 
     private SaveGroupRequest buildSaveGroupRequest() {
         return SaveGroupRequest.builder("", Collections.emptyList())
-                .ptPlanId("")
-                .classId("")
-                .groupRule(null)
-                .sportSkuId("")
-                .longModeType(0)
                 .build();
     }
 
     private GetGroupRequest buildGetGroupRequest() {
         return GetGroupRequest.builder()
-                .sceneCode("")
-                .ptPlanId("")
-                .classId("")
-                .groupId("")
-                .groupClassId("")
-                .groupNumber("")
-                .sportSkuId("")
-                .longModeType(0)
                 .build();
     }
 
     private TrainPlanOneDayProjectListRequest buildTrainPlanOneDayProjectListRequest() {
         return TrainPlanOneDayProjectListRequest.builder("", "")
-                .trainPlanTime("")
                 .build();
     }
 
     private TrainPlanInfoPageRequest buildTrainPlanInfoPageRequest() {
         return TrainPlanInfoPageRequest.builder()
-                .keyword("")
-                .orgId("")
-                .uid("")
-                .timeStatus("")
-                .gradeUid("")
-                .classUid("")
-                .trainPlanTime("")
-                .sportTime("")
-                .trainPlanStartTime("")
-                .trainPlanEndTime("")
-                .sportStarTime("")
-                .sportEndTime("")
-                .acayearSemCode("")
-                .accountId("")
-                .trainPlanIds(null)
                 .build();
     }
 
     private JoinCompetitionRankRequest buildJoinCompetitionRankRequest() {
         return JoinCompetitionRankRequest.builder()
-                .id("")
-                .accountId("")
-                .classId("")
                 .build();
     }
 
     private CompetitionRankDetailRequest buildCompetitionRankDetailRequest() {
         return CompetitionRankDetailRequest.builder()
-                .id("")
-                .accountId("")
-                .classId("")
                 .build();
     }
 
     private CompetitionPageRequest buildCompetitionPageRequest() {
         return CompetitionPageRequest.builder()
-                .onlineType(0)
-                .orgId("")
-                .competitionLevel(0)
-                .appCode("")
-                .startTime("")
-                .endTime("")
-                .competitionEnabled(0)
-                .keyword("")
-                .acayearSemCode("")
-                .orgType(0)
-                .terminalFlag(false)
-                .accountId("")
-                .sortField(0)
                 .build();
     }
 
     private SportMeetPageRequest buildSportMeetPageRequest() {
         return SportMeetPageRequest.builder()
-                .appCode("")
-                .classIds(null)
-                .orgId("")
-                .state(0)
-                .keyword("")
-                .id("")
-                .showGroup(false)
-                .checkTime("")
-                .orderByField(0)
-                .lastUpdateTime(0L)
                 .build();
     }
 
     private DownloadGroupTeamPageRequest buildDownloadGroupTeamPageRequest() {
         return DownloadGroupTeamPageRequest.builder()
-                .meetId("")
-                .meetSportSkuId("")
-                .competitionRound(0)
-                .checkTime("")
-                .showDetail(false)
-                .competitionType(0)
-                .deviceFlag(false)
-                .result(false)
                 .build();
     }
 
     private DownloadGroupTeamDetailPageRequest buildDownloadGroupTeamDetailPageRequest() {
         return DownloadGroupTeamDetailPageRequest.builder()
-                .meetId("")
-                .meetSportSkuId("")
-                .competitionType(0)
-                .competitionRound(0)
-                .checkTime("")
-                .teamUnitCode("")
                 .build();
     }
 
     private ResTypeListRequest buildResTypeListRequest() {
         return ResTypeListRequest.builder()
-                .id("")
-                .wikiId("")
-                .resType(0)
                 .build();
     }
 
     private ResPageRequest buildResPageRequest() {
         return ResPageRequest.builder("")
-                .enabled(false)
-                .type(0)
-                .startTime("")
-                .endTime("")
-                .title("")
-                .createNum("")
-                .resType(0)
-                .appCode("")
-                .resTypeId("")
-                .ids(null)
                 .build();
     }
 
     private ResInfoRequest buildResInfoRequest() {
         return ResInfoRequest.builder()
-                .id("")
-                .wikiId("")
-                .resType(0)
                 .build();
     }
 

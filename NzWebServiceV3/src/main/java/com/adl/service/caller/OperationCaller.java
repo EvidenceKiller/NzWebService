@@ -13,14 +13,16 @@ import com.adl.service.web.request.UploadDeviceNameRequest;
 import com.adl.service.web.request.WikiDetailRequest;
 import com.adl.service.web.request.WikiPageRequest;
 import com.adl.service.web.request.WikiTypePageRequest;
-import com.adl.service.web.response.BannerDetailListData;
+import com.adl.service.web.response.BannerDetailData;
+import com.adl.service.web.response.BasePageData;
 import com.adl.service.web.response.DeviceFocusData;
 import com.adl.service.web.response.DictMapData;
 import com.adl.service.web.response.SceneData;
 import com.adl.service.web.response.SportSkuDetailData;
-import com.adl.service.web.response.SportSkuPageData;
+import com.adl.service.web.response.SportSkuData;
+import com.adl.service.web.response.WikiData;
 import com.adl.service.web.response.WikiDetailData;
-import com.adl.service.web.response.WikiPageData;
+import com.adl.service.web.response.WikiTypeData;
 
 import java.util.List;
 
@@ -29,13 +31,13 @@ import java.util.List;
  */
 public interface OperationCaller {
 
-    long getDetailListAsync(RequestScope scope, BannerDetailListRequest request, RequestCallback<List<BannerDetailListData>> callback);
+    long getBannerDetailListAsync(RequestScope scope, BannerDetailListRequest request, RequestCallback<List<BannerDetailData>> callback);
 
-    List<BannerDetailListData> getDetailListSync(BannerDetailListRequest request) throws NzBaseException;
+    List<BannerDetailData> getBannerDetailListSync(BannerDetailListRequest request) throws NzBaseException;
 
-    long getSportSkuPageAsync(RequestScope scope, SportSkuPageRequest request, RequestCallback<SportSkuPageData> callback);
+    long getSportSkuPageAsync(RequestScope scope, SportSkuPageRequest request, RequestCallback<BasePageData<SportSkuData>> callback);
 
-    SportSkuPageData getSportSkuPageSync(SportSkuPageRequest request) throws NzBaseException;
+    BasePageData<SportSkuData> getSportSkuPageSync(SportSkuPageRequest request) throws NzBaseException;
 
     long getSportSkuDetailAsync(RequestScope scope, SportSkuDetailRequest request, RequestCallback<SportSkuDetailData> callback);
 
@@ -49,13 +51,13 @@ public interface OperationCaller {
 
     List<SceneData> getSceneListSync(SceneListRequest request) throws NzBaseException;
 
-    long getWikiTypePageAsync(RequestScope scope, WikiTypePageRequest request, RequestCallback<WikiPageData> callback);
+    long getWikiTypePageAsync(RequestScope scope, WikiTypePageRequest request, RequestCallback<BasePageData<WikiTypeData>> callback);
 
-    WikiPageData getWikiTypePageSync(WikiTypePageRequest request) throws NzBaseException;
+    BasePageData<WikiTypeData> getWikiTypePageSync(WikiTypePageRequest request) throws NzBaseException;
 
-    long getWikiPageAsync(RequestScope scope, WikiPageRequest request, RequestCallback<WikiPageData> callback);
+    long getWikiPageAsync(RequestScope scope, WikiPageRequest request, RequestCallback<BasePageData<WikiData>> callback);
 
-    WikiPageData getWikiPageSync(WikiPageRequest request) throws NzBaseException;
+    BasePageData<WikiData> getWikiPageSync(WikiPageRequest request) throws NzBaseException;
 
     long getWikiDetailAsync(RequestScope scope, WikiDetailRequest request, RequestCallback<WikiDetailData> callback);
 

@@ -81,107 +81,46 @@ public class V3BigScreenStatsCallerTestActivity extends AppCompatActivity {
 
     private WarRecordRankRequest buildWarRecordRankRequest() {
         return WarRecordRankRequest.builder()
-                .sportSceneCodes(null)
-                .sportSceneType("")
-                .sportSkuId("")
-                .dayType("")
-                .orgId("")
-                .tenantOrgId("")
-                .sportDateList(null)
-                .rankNumber(0L)
-                .appCode("")
                 .build();
     }
 
     private PersonRankRequest buildPersonRankRequest() {
         return PersonRankRequest.builder("", "")
-                .sportSkuSubType("")
-                .classId("")
-                .gradeId("")
-                .orgId("")
-                .collegeId("")
-                .facultyId("")
-                .majorId("")
                 .build();
     }
 
     private MorePeopleVictoryRankRequest buildMorePeopleVictoryRankRequest() {
         return MorePeopleVictoryRankRequest.builder("")
-                .maxRank(0)
-                .top(0)
                 .build();
     }
 
     private MorePeopleRecordRankRequest buildMorePeopleRecordRankRequest() {
         return MorePeopleRecordRankRequest.builder()
-                .sportSkuId("")
-                .orgId("")
-                .rankNumber(0L)
                 .build();
     }
 
     private OverviewRequest buildOverviewRequest() {
         return OverviewRequest.builder()
-                .timeType(0)
-                .classId("")
-                .gradeId("")
-                .collegeId("")
-                .facultyId("")
-                .majorId("")
                 .build();
     }
 
     private CompetitionRankRequest buildCompetitionRankRequest() {
         return CompetitionRankRequest.builder()
-                .competitionId("")
-                .rankType("")
-                .rankId("")
-                .sportSkuId("")
-                .rankNumber(0L)
-                .accountId("")
                 .build();
     }
 
     private SumScoreRankRequest buildSumScoreRankRequest() {
         return SumScoreRankRequest.builder("", 0)
-                .sportSkuSubType("")
-                .classId("")
-                .gradeId("")
-                .orgId("")
-                .collegeId("")
-                .facultyId("")
-                .majorId("")
-                .topLimit(0)
                 .build();
     }
 
     private SportRankRequest buildSportRankRequest() {
         return SportRankRequest.builder()
-                .sportSceneCodes(null)
-                .sportSceneType("")
-                .sportSkuId("")
-                .dayType("")
-                .orgId("")
-                .tenantOrgId("")
-                .sportDateList(null)
-                .rankNumber(0L)
-                .appCode("")
                 .build();
     }
 
     private BestRankTopRequest buildBestRankTopRequest() {
         return BestRankTopRequest.builder("", 0)
-                .appCode("")
-                .classId("")
-                .gradeId("")
-                .orgId("")
-                .collegeId("")
-                .facultyId("")
-                .majorId("")
-                .sex(0)
-                .top(0)
-                .sportSceneCode("")
-                .sportSceneType("")
                 .build();
     }
 

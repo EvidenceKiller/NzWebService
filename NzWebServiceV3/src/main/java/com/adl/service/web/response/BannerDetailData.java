@@ -10,7 +10,7 @@ import lombok.ToString;
 @Getter
 @ToString
 @JsonAdapter(StrictJsonDeserializer.class)
-public final class BannerDetailListData {
+public final class BannerDetailData {
 
     /**
      * 主键id

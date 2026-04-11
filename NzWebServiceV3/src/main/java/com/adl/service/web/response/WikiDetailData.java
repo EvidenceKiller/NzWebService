@@ -60,13 +60,13 @@ public final class WikiDetailData {
      * 分类id
      */
     @SerializedName("wikiTypeIds")
-    private List<Object> wikiTypeIds;
+    private List<String> wikiTypeIds;
 
     /**
      * 应用编码集合
      */
     @SerializedName("appCodes")
-    private List<Object> appCodes;
+    private List<String> appCodes;
 
     /**
      * 创建时间
@@ -78,5 +78,5 @@ public final class WikiDetailData {
      * 百科视频列表
      */
     @SerializedName("wikiVideo")
-    private List<Object> wikiVideo;
+    private List<WikiVideolData> wikiVideo;
 }

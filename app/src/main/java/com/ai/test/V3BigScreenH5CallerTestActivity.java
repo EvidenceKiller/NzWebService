@@ -57,19 +57,11 @@ public class V3BigScreenH5CallerTestActivity extends AppCompatActivity {
 
     private TeachCourseRequest buildTeachCourseRequest() {
         return TeachCourseRequest.builder()
-                .classId("")
-                .sportSkuId("")
-                .sportItemCode("")
-                .date("")
-                .times(0)
                 .build();
     }
 
     private TeachCourseDataDatesRequest buildTeachCourseDataDatesRequest() {
         return TeachCourseDataDatesRequest.builder()
-                .sceneCodes(null)
-                .skuIds(null)
-                .classId("")
                 .build();
     }
 
@@ -79,43 +71,11 @@ public class V3BigScreenH5CallerTestActivity extends AppCompatActivity {
 
     private SunshineRunningSportDetailPageRequest buildSunshineRunningSportDetailPageRequest() {
         return SunshineRunningSportDetailPageRequest.builder()
-                .semesterId("")
-                .orgId("")
-                .date("")
-                .noPaging(false)
-                .pageSize(0L)
-                .current(0L)
-                .detail(false)
-                .enableSort(false)
-                .sorts(null)
-                .sortsStr("")
-                .ignoreColumns(null)
-                .containColumns(null)
-                .moduleStr("")
                 .build();
     }
 
     private SunshineRunningCompetitionRecordPageRequest buildSunshineRunningCompetitionRecordPageRequest() {
         return SunshineRunningCompetitionRecordPageRequest.builder()
-                .orgId("")
-                .gradeId("")
-                .classId("")
-                .multiPersonIndex(0)
-                .startDate("")
-                .endDate("")
-                .sportSkuId("")
-                .appCode("")
-                .keyword("")
-                .noPaging(false)
-                .pageSize(0L)
-                .current(0L)
-                .detail(false)
-                .enableSort(false)
-                .sorts(null)
-                .sortsStr("")
-                .ignoreColumns(null)
-                .containColumns(null)
-                .moduleStr("")
                 .build();
     }
 

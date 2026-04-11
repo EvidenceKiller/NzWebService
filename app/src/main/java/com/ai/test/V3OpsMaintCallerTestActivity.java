@@ -56,17 +56,11 @@ public class V3OpsMaintCallerTestActivity extends AppCompatActivity {
 
     private UploadDeviceInfoRequest buildUploadDeviceInfoRequest() {
         return UploadDeviceInfoRequest.builder("")
-                .deviceName("")
-                .macAddress("")
                 .build();
     }
 
     private UploadUpgradeLogRequest buildUploadUpgradeLogRequest() {
         return UploadUpgradeLogRequest.builder()
-                .deviceId("")
-                .planId("")
-                .reason("")
-                .upgradeFlag("")
                 .build();
     }
 
@@ -76,12 +70,6 @@ public class V3OpsMaintCallerTestActivity extends AppCompatActivity {
 
     private SoftwareReportRequest buildSoftwareReportRequest() {
         return SoftwareReportRequest.builder()
-                .productCode("")
-                .appCode("")
-                .softwareVersion("")
-                .packageName("")
-                .deviceNickname("")
-                .remark("")
                 .build();
     }
 
@@ -91,12 +79,6 @@ public class V3OpsMaintCallerTestActivity extends AppCompatActivity {
 
     private LogAddBatchRequest buildLogAddBatchRequest() {
         return LogAddBatchRequest.builder()
-                .appCode("")
-                .content("")
-                .expireTime("")
-                .level("")
-                .productCode("")
-                .tags(null)
                 .build();
     }
 
