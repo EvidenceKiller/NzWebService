@@ -8,8 +8,9 @@ import com.adl.service.web.request.SunshineRunningSportDetailPageRequest;
 import com.adl.service.web.request.TeachCourseButtonClickCountRequest;
 import com.adl.service.web.request.TeachCourseDataDatesRequest;
 import com.adl.service.web.request.TeachCourseRequest;
-import com.adl.service.web.response.SunshineRunningCompetitionRecordPageData;
-import com.adl.service.web.response.SunshineRunningSportDetailPageData;
+import com.adl.service.web.response.BasePageData;
+import com.adl.service.web.response.ClassroomCompetitionRecordData;
+import com.adl.service.web.response.SunshineRunningSportDetailData;
 import com.adl.service.web.response.TeachCourseDetailData;
 
 import java.util.List;
@@ -19,9 +20,9 @@ import java.util.List;
  */
 public interface BigScreenH5Caller {
 
-    long getTeachCourseDetailListAsync(RequestScope scope, TeachCourseRequest request, RequestCallback<TeachCourseDetailData> callback);
+    long getTeachCourseDetailListAsync(RequestScope scope, TeachCourseRequest request, RequestCallback<List<TeachCourseDetailData>> callback);
 
-    TeachCourseDetailData getTeachCourseDetailListSync(TeachCourseRequest request) throws NzBaseException;
+    List<TeachCourseDetailData> getTeachCourseDetailListSync(TeachCourseRequest request) throws NzBaseException;
 
     long getTeachCourseDataDatesAsync(RequestScope scope, TeachCourseDataDatesRequest request, RequestCallback<List<String>> callback);
 
@@ -35,12 +36,12 @@ public interface BigScreenH5Caller {
 
     Boolean getTeachCourseButtonClickCountSync(TeachCourseButtonClickCountRequest request) throws NzBaseException;
 
-    long getSunshineRunningSportDetailPageAsync(RequestScope scope, SunshineRunningSportDetailPageRequest request, RequestCallback<SunshineRunningSportDetailPageData> callback);
+    long getSunshineRunningSportDetailPageAsync(RequestScope scope, SunshineRunningSportDetailPageRequest request, RequestCallback<BasePageData<SunshineRunningSportDetailData>> callback);
 
-    SunshineRunningSportDetailPageData getSunshineRunningSportDetailPageSync(SunshineRunningSportDetailPageRequest request) throws NzBaseException;
+    BasePageData<SunshineRunningSportDetailData> getSunshineRunningSportDetailPageSync(SunshineRunningSportDetailPageRequest request) throws NzBaseException;
 
-    long getSunshineRunningCompetitionRecordPageAsync(RequestScope scope, SunshineRunningCompetitionRecordPageRequest request, RequestCallback<SunshineRunningCompetitionRecordPageData> callback);
+    long getSunshineRunningCompetitionRecordPageAsync(RequestScope scope, SunshineRunningCompetitionRecordPageRequest request, RequestCallback<BasePageData<ClassroomCompetitionRecordData>> callback);
 
-    SunshineRunningCompetitionRecordPageData getSunshineRunningCompetitionRecordPageSync(SunshineRunningCompetitionRecordPageRequest request) throws NzBaseException;
+    BasePageData<ClassroomCompetitionRecordData> getSunshineRunningCompetitionRecordPageSync(SunshineRunningCompetitionRecordPageRequest request) throws NzBaseException;
 
 }

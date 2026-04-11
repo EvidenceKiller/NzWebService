@@ -5,9 +5,10 @@ import com.adl.service.web.request.SunshineRunningSportDetailPageRequest;
 import com.adl.service.web.request.TeachCourseButtonClickCountRequest;
 import com.adl.service.web.request.TeachCourseDataDatesRequest;
 import com.adl.service.web.request.TeachCourseRequest;
+import com.adl.service.web.response.BasePageData;
 import com.adl.service.web.response.BaseResponse;
-import com.adl.service.web.response.SunshineRunningCompetitionRecordPageData;
-import com.adl.service.web.response.SunshineRunningSportDetailPageData;
+import com.adl.service.web.response.ClassroomCompetitionRecordData;
+import com.adl.service.web.response.SunshineRunningSportDetailData;
 import com.adl.service.web.response.TeachCourseDetailData;
 
 import java.util.List;
@@ -24,7 +25,7 @@ public interface BigScreenH5Service {
      * 分组教学列表
      */
     @POST("tis/device/h5/org/teach/course/detail/list")
-    Single<BaseResponse<TeachCourseDetailData>> getTeachCourseDetailList(@Body TeachCourseRequest request);
+    Single<BaseResponse<List<TeachCourseDetailData>>> getTeachCourseDetailList(@Body TeachCourseRequest request);
 
     /**
      * 有数据的日期列表
@@ -48,11 +49,11 @@ public interface BigScreenH5Service {
      * 历史记录
      */
     @POST("tis/device/h5/org/sunshineRunning/sportDetailList")
-    Single<BaseResponse<SunshineRunningSportDetailPageData>> getSunshineRunningSportDetailPage(@Body SunshineRunningSportDetailPageRequest request);
+    Single<BaseResponse<BasePageData<SunshineRunningSportDetailData>>> getSunshineRunningSportDetailPage(@Body SunshineRunningSportDetailPageRequest request);
 
     /**
      * 历史记录
      */
     @POST("tis/device/h5/org/sunshineRunning/getClassroomCompetitionRecordList")
-    Single<BaseResponse<SunshineRunningCompetitionRecordPageData>> getSunshineRunningCompetitionRecordPage(@Body SunshineRunningCompetitionRecordPageRequest request);
+    Single<BaseResponse<BasePageData<ClassroomCompetitionRecordData>>> getSunshineRunningCompetitionRecordPage(@Body SunshineRunningCompetitionRecordPageRequest request);
 }

@@ -116,6 +116,12 @@ public final class TeachCourseDetailData {
     private List<String> sportVideoUrls;
 
     /**
+     * 运动指标集合
+     */
+    @SerializedName("list")
+    private List<SportIndicatorsData> list;
+
+    /**
      * 横向报告URL
      */
     @SerializedName("reportCrosswiseUrl")
