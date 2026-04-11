@@ -18,12 +18,10 @@ import com.adl.service.web.request.SumScoreRankRequest;
 import com.adl.service.web.request.WarRecordRankRequest;
 import com.adl.service.web.response.BestRankTopData;
 import com.adl.service.web.response.CompetitionRankData;
-import com.adl.service.web.response.ExerciseSumTimeRankData;
 import com.adl.service.web.response.MorePeopleRecordRankData;
 import com.adl.service.web.response.MorePeopleVictoryRankData;
 import com.adl.service.web.response.OverviewData;
 import com.adl.service.web.response.PersonRankData;
-import com.adl.service.web.response.PhysicalTrainingRankData;
 import com.adl.service.web.response.SportRankKingData;
 import com.adl.service.web.response.SportSkuRankData;
 import com.adl.service.web.response.SumScoreRankData;
@@ -163,7 +161,7 @@ public final class BigScreenStatsCallerImpl implements BigScreenStatsCaller {
     }
 
     @Override
-    public long getPhysicalTrainingRankAsync(RequestScope scope, SportRankRequest request, RequestCallback<List<PhysicalTrainingRankData>> callback) {
+    public long getPhysicalTrainingRankAsync(RequestScope scope, SportRankRequest request, RequestCallback<List<SportRankKingData>> callback) {
         CallerScopeUtils.requireScope(scope);
         Disposable disposable = RxCallbackScheduler.scheduleBaseResponse(bigScreenStatsService.getPhysicalTrainingRank(request), callback);
         SubscriptionManager.getInstance().add(scope.owner(), disposable);
@@ -171,12 +169,12 @@ public final class BigScreenStatsCallerImpl implements BigScreenStatsCaller {
     }
 
     @Override
-    public List<PhysicalTrainingRankData> getPhysicalTrainingRankSync(SportRankRequest request) throws NzBaseException {
+    public List<SportRankKingData> getPhysicalTrainingRankSync(SportRankRequest request) throws NzBaseException {
         return RxCallbackScheduler.blockingGetData(bigScreenStatsService.getPhysicalTrainingRank(request));
     }
 
     @Override
-    public long getExerciseSumTimeRankAsync(RequestScope scope, SportRankRequest request, RequestCallback<List<ExerciseSumTimeRankData>> callback) {
+    public long getExerciseSumTimeRankAsync(RequestScope scope, SportRankRequest request, RequestCallback<List<SportRankKingData>> callback) {
         CallerScopeUtils.requireScope(scope);
         Disposable disposable = RxCallbackScheduler.scheduleBaseResponse(bigScreenStatsService.getExerciseSumTimeRank(request), callback);
         SubscriptionManager.getInstance().add(scope.owner(), disposable);
@@ -184,7 +182,7 @@ public final class BigScreenStatsCallerImpl implements BigScreenStatsCaller {
     }
 
     @Override
-    public List<ExerciseSumTimeRankData> getExerciseSumTimeRankSync(SportRankRequest request) throws NzBaseException {
+    public List<SportRankKingData> getExerciseSumTimeRankSync(SportRankRequest request) throws NzBaseException {
         return RxCallbackScheduler.blockingGetData(bigScreenStatsService.getExerciseSumTimeRank(request));
     }
 

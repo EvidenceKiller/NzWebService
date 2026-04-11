@@ -51,6 +51,7 @@ public class V3OperationCallerTestActivity extends AppCompatActivity {
         resultView = findViewById(R.id.tv_result);
         gridLayout = findViewById(R.id.gl_test);
         findViewById(R.id.btn_back).setOnClickListener(v -> finish());
+        findViewById(R.id.btn_clear).setOnClickListener(v -> resultView.setText(""));
 
         createButton("getDetailListAsync").setOnClickListener(v -> getBannerDetailListAsync());
         createButton("getDetailListSync").setOnClickListener(v -> getBannerDetailListSync());

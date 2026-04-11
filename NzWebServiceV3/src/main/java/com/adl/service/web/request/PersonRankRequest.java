@@ -104,6 +104,11 @@ public final class PersonRankRequest {
             return this;
         }
 
+        public Builder timeType(Integer timeType) {
+            this.timeType = timeType;
+            return this;
+        }
+
         public Builder classId(String classId) {
             this.classId = classId;
             return this;

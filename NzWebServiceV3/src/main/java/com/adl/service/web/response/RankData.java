@@ -10,7 +10,7 @@ import lombok.ToString;
 @Getter
 @ToString
 @JsonAdapter(StrictJsonDeserializer.class)
-public final class CompetitionMyRankData {
+public final class RankData {
     /**
      * 用户标识码
      */

@@ -18,11 +18,11 @@ public final class CompetitionRankData {
      * 我的排名
      */
     @SerializedName("myRank")
-    private CompetitionMyRankData myRank;
+    private RankData myRank;
 
     /**
      * 排行榜列表
      */
     @SerializedName("rankList")
-    private List<Object> rankList;
+    private List<RankData> rankList;
 }

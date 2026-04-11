@@ -14,12 +14,10 @@ import com.adl.service.web.request.SumScoreRankRequest;
 import com.adl.service.web.request.WarRecordRankRequest;
 import com.adl.service.web.response.BestRankTopData;
 import com.adl.service.web.response.CompetitionRankData;
-import com.adl.service.web.response.ExerciseSumTimeRankData;
 import com.adl.service.web.response.MorePeopleRecordRankData;
 import com.adl.service.web.response.MorePeopleVictoryRankData;
 import com.adl.service.web.response.OverviewData;
 import com.adl.service.web.response.PersonRankData;
-import com.adl.service.web.response.PhysicalTrainingRankData;
 import com.adl.service.web.response.SportRankKingData;
 import com.adl.service.web.response.SportSkuRankData;
 import com.adl.service.web.response.SumScoreRankData;
@@ -68,13 +66,13 @@ public interface BigScreenStatsCaller {
 
     List<SportRankKingData> getSportRankKingSync(SportRankRequest request) throws NzBaseException;
 
-    long getPhysicalTrainingRankAsync(RequestScope scope, SportRankRequest request, RequestCallback<List<PhysicalTrainingRankData>> callback);
+    long getPhysicalTrainingRankAsync(RequestScope scope, SportRankRequest request, RequestCallback<List<SportRankKingData>> callback);
 
-    List<PhysicalTrainingRankData> getPhysicalTrainingRankSync(SportRankRequest request) throws NzBaseException;
+    List<SportRankKingData> getPhysicalTrainingRankSync(SportRankRequest request) throws NzBaseException;
 
-    long getExerciseSumTimeRankAsync(RequestScope scope, SportRankRequest request, RequestCallback<List<ExerciseSumTimeRankData>> callback);
+    long getExerciseSumTimeRankAsync(RequestScope scope, SportRankRequest request, RequestCallback<List<SportRankKingData>> callback);
 
-    List<ExerciseSumTimeRankData> getExerciseSumTimeRankSync(SportRankRequest request) throws NzBaseException;
+    List<SportRankKingData> getExerciseSumTimeRankSync(SportRankRequest request) throws NzBaseException;
 
     long getBestRankTopAsync(RequestScope scope, BestRankTopRequest request, RequestCallback<List<BestRankTopData>> callback);
 

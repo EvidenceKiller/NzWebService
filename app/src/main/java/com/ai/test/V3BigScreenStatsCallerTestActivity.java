@@ -21,18 +21,17 @@ import com.adl.service.web.request.SumScoreRankRequest;
 import com.adl.service.web.request.WarRecordRankRequest;
 import com.adl.service.web.response.BestRankTopData;
 import com.adl.service.web.response.CompetitionRankData;
-import com.adl.service.web.response.ExerciseSumTimeRankData;
 import com.adl.service.web.response.MorePeopleRecordRankData;
 import com.adl.service.web.response.MorePeopleVictoryRankData;
 import com.adl.service.web.response.OverviewData;
 import com.adl.service.web.response.PersonRankData;
-import com.adl.service.web.response.PhysicalTrainingRankData;
 import com.adl.service.web.response.SportRankKingData;
 import com.adl.service.web.response.SportSkuRankData;
 import com.adl.service.web.response.SumScoreRankData;
 import com.adl.service.web.response.WarRecordRankData;
 import com.adl.ts.general.R;
 
+import java.util.Collections;
 import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -52,6 +51,7 @@ public class V3BigScreenStatsCallerTestActivity extends AppCompatActivity {
         resultView = findViewById(R.id.tv_result);
         gridLayout = findViewById(R.id.gl_test);
         findViewById(R.id.btn_back).setOnClickListener(v -> finish());
+        findViewById(R.id.btn_clear).setOnClickListener(v -> resultView.setText(""));
 
         createButton("getWarRecordRankAsync").setOnClickListener(v -> getWarRecordRankAsync());
         createButton("getWarRecordRankSync").setOnClickListener(v -> getWarRecordRankSync());
@@ -86,17 +86,23 @@ public class V3BigScreenStatsCallerTestActivity extends AppCompatActivity {
     }
 
     private PersonRankRequest buildPersonRankRequest() {
-        return PersonRankRequest.builder("", "")
+        return PersonRankRequest.builder("123456789", "0001010001")
+                .timeType(1)
                 .build();
     }
 
     private MorePeopleVictoryRankRequest buildMorePeopleVictoryRankRequest() {
-        return MorePeopleVictoryRankRequest.builder("")
+        return MorePeopleVictoryRankRequest.builder("0001010001")
+                .maxRank(100)
+                .top(10)
                 .build();
     }
 
     private MorePeopleRecordRankRequest buildMorePeopleRecordRankRequest() {
         return MorePeopleRecordRankRequest.builder()
+                .sportSkuId("0001010001")
+                .orgId("1858352135200641024")
+                .rankNumber(100L)
                 .build();
     }
 
@@ -107,21 +113,25 @@ public class V3BigScreenStatsCallerTestActivity extends AppCompatActivity {
 
     private CompetitionRankRequest buildCompetitionRankRequest() {
         return CompetitionRankRequest.builder()
+                .competitionId("123456789")
+                .rankType("1")
+                .sportSkuId("0001010001")
                 .build();
     }
 
     private SumScoreRankRequest buildSumScoreRankRequest() {
-        return SumScoreRankRequest.builder("", 0)
+        return SumScoreRankRequest.builder("0001010001", 5)
                 .build();
     }
 
     private SportRankRequest buildSportRankRequest() {
         return SportRankRequest.builder()
+                .sportSceneCodes(Collections.singletonList("1001"))
                 .build();
     }
 
     private BestRankTopRequest buildBestRankTopRequest() {
-        return BestRankTopRequest.builder("", 0)
+        return BestRankTopRequest.builder("0001010001", 5)
                 .build();
     }
 
@@ -598,9 +608,9 @@ public class V3BigScreenStatsCallerTestActivity extends AppCompatActivity {
 
     private void getPhysicalTrainingRankAsync() {
         SportRankRequest request = buildSportRankRequest();
-        AdlService.getService().getBigScreenStatsCaller().getPhysicalTrainingRankAsync(RequestScope.of(this), request, new RequestCallback<List<PhysicalTrainingRankData>>() {
+        AdlService.getService().getBigScreenStatsCaller().getPhysicalTrainingRankAsync(RequestScope.of(this), request, new RequestCallback<List<SportRankKingData>>() {
             @Override
-            public void onSuccess(List<PhysicalTrainingRankData> data) {
+            public void onSuccess(List<SportRankKingData> data) {
                 if (data != null) {
                     Log.d(TAG, "BigScreenStatsCallerTestActivity::getPhysicalTrainingRankAsync::onSuccess : data size : " + data.size());
                     Log.d(TAG, "BigScreenStatsCallerTestActivity::getPhysicalTrainingRankAsync::onSuccess : data : " + data);
@@ -625,9 +635,9 @@ public class V3BigScreenStatsCallerTestActivity extends AppCompatActivity {
     private void getPhysicalTrainingRankSync() {
         AdlService.getService().executeSyncOnIo(RequestScope.of(this),
                 () -> AdlService.getService().getBigScreenStatsCaller().getPhysicalTrainingRankSync(buildSportRankRequest()),
-                new RequestCallback<List<PhysicalTrainingRankData>>() {
+                new RequestCallback<List<SportRankKingData>>() {
                     @Override
-                    public void onSuccess(List<PhysicalTrainingRankData> data) {
+                    public void onSuccess(List<SportRankKingData> data) {
                         if (data != null) {
                             Log.d(TAG, "BigScreenStatsCallerTestActivity::getPhysicalTrainingRankSync::onSuccess : data size : " + data.size());
                             Log.d(TAG, "BigScreenStatsCallerTestActivity::getPhysicalTrainingRankSync::onSuccess : data : " + data);
@@ -651,9 +661,9 @@ public class V3BigScreenStatsCallerTestActivity extends AppCompatActivity {
 
     private void getExerciseSumTimeRankAsync() {
         SportRankRequest request = buildSportRankRequest();
-        AdlService.getService().getBigScreenStatsCaller().getExerciseSumTimeRankAsync(RequestScope.of(this), request, new RequestCallback<List<ExerciseSumTimeRankData>>() {
+        AdlService.getService().getBigScreenStatsCaller().getExerciseSumTimeRankAsync(RequestScope.of(this), request, new RequestCallback<List<SportRankKingData>>() {
             @Override
-            public void onSuccess(List<ExerciseSumTimeRankData> data) {
+            public void onSuccess(List<SportRankKingData> data) {
                 if (data != null) {
                     Log.d(TAG, "BigScreenStatsCallerTestActivity::getExerciseSumTimeRankAsync::onSuccess : data size : " + data.size());
                     Log.d(TAG, "BigScreenStatsCallerTestActivity::getExerciseSumTimeRankAsync::onSuccess : data : " + data);
@@ -678,9 +688,9 @@ public class V3BigScreenStatsCallerTestActivity extends AppCompatActivity {
     private void getExerciseSumTimeRankSync() {
         AdlService.getService().executeSyncOnIo(RequestScope.of(this),
                 () -> AdlService.getService().getBigScreenStatsCaller().getExerciseSumTimeRankSync(buildSportRankRequest()),
-                new RequestCallback<List<ExerciseSumTimeRankData>>() {
+                new RequestCallback<List<SportRankKingData>>() {
                     @Override
-                    public void onSuccess(List<ExerciseSumTimeRankData> data) {
+                    public void onSuccess(List<SportRankKingData> data) {
                         if (data != null) {
                             Log.d(TAG, "BigScreenStatsCallerTestActivity::getExerciseSumTimeRankSync::onSuccess : data size : " + data.size());
                             Log.d(TAG, "BigScreenStatsCallerTestActivity::getExerciseSumTimeRankSync::onSuccess : data : " + data);

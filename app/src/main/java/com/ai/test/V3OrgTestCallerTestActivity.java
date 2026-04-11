@@ -44,6 +44,7 @@ public class V3OrgTestCallerTestActivity extends AppCompatActivity {
         resultView = findViewById(R.id.tv_result);
         gridLayout = findViewById(R.id.gl_test);
         findViewById(R.id.btn_back).setOnClickListener(v -> finish());
+        findViewById(R.id.btn_clear).setOnClickListener(v -> resultView.setText(""));
 
         createButton("getStandardConfigPageAsync").setOnClickListener(v -> getStandardConfigPageAsync());
         createButton("getStandardConfigPageSync").setOnClickListener(v -> getStandardConfigPageSync());

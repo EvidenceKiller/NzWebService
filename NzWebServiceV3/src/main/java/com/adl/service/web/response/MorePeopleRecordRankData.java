@@ -13,7 +13,6 @@ import lombok.ToString;
 @ToString
 @JsonAdapter(StrictJsonDeserializer.class)
 public final class MorePeopleRecordRankData {
-
     /**
      * 用户ID
      */
@@ -24,5 +23,5 @@ public final class MorePeopleRecordRankData {
      * 多人对战最新战况
      */
     @SerializedName("morePeopleRecordRank")
-    private List<Object> morePeopleRecordRank;
+    private List<MorePeopleRecordRankInfoData> morePeopleRecordRank;
 }

@@ -12,12 +12,10 @@ import com.adl.service.web.request.WarRecordRankRequest;
 import com.adl.service.web.response.BaseResponse;
 import com.adl.service.web.response.BestRankTopData;
 import com.adl.service.web.response.CompetitionRankData;
-import com.adl.service.web.response.ExerciseSumTimeRankData;
 import com.adl.service.web.response.MorePeopleRecordRankData;
 import com.adl.service.web.response.MorePeopleVictoryRankData;
 import com.adl.service.web.response.OverviewData;
 import com.adl.service.web.response.PersonRankData;
-import com.adl.service.web.response.PhysicalTrainingRankData;
 import com.adl.service.web.response.SportRankKingData;
 import com.adl.service.web.response.SportSkuRankData;
 import com.adl.service.web.response.SumScoreRankData;
@@ -91,13 +89,13 @@ public interface BigScreenStatsService {
      * 锻炼排行榜、历史最佳
      */
     @POST("tis/device/statistics/exercise/sport/physicalTrainingRank")
-    Single<BaseResponse<List<PhysicalTrainingRankData>>> getPhysicalTrainingRank(@Body SportRankRequest request);
+    Single<BaseResponse<List<SportRankKingData>>> getPhysicalTrainingRank(@Body SportRankRequest request);
 
     /**
      * 锻炼之星
      */
     @POST("tis/device/statistics/exercise/sport/exerciseSumTimeRank")
-    Single<BaseResponse<List<ExerciseSumTimeRankData>>> getExerciseSumTimeRank(@Body SportRankRequest request);
+    Single<BaseResponse<List<SportRankKingData>>> getExerciseSumTimeRank(@Body SportRankRequest request);
 
     /**
      * 最佳榜单

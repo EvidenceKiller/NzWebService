@@ -17,21 +17,21 @@ public final class LoginData {
     /**
      * token
      */
-    @SerializedName("accessToken")
+    @SerializedName("access_token")
     private String accessToken;
 
     /**
      * token类型
      */
-    @SerializedName("tokenType")
-    private String tokenType;
+    @SerializedName("token_type")
+    private Integer tokenType;
 
-    @SerializedName("refreshToken")
+    @SerializedName("refresh_token")
     private String refreshToken;
 
-    @SerializedName("expiresIn")
+    @SerializedName("expires_in")
     private Double expiresIn;
 
     @SerializedName("scope")
-    private List<Object> scope;
+    private String scope;
 }
