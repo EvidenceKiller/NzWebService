@@ -19,6 +19,7 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
+import io.reactivex.rxjava3.core.Completable;
 
 /**
  * ProjectName: AiPowerAuth
@@ -40,7 +41,7 @@ public interface StudentDao {
             "_account_name_pinyin,_account_name_first_letter_pinyin,local_avatar_path";
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertAll(List<StudentEntity> list);
+    Completable insertAll(List<StudentEntity> list);
 
     @Query("select count (*) from _student_entity")
     int countSize();

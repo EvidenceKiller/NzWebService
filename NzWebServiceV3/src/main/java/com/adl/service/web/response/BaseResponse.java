@@ -1,8 +1,5 @@
 package com.adl.service.web.response;
 
-import com.adl.service.internal.StrictJsonDeserializer;
-import com.google.gson.annotations.JsonAdapter;
-
 import lombok.Getter;
 import lombok.ToString;
 

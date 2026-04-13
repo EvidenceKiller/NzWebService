@@ -4,7 +4,7 @@ import com.adl.service.callback.RequestCallback;
 import com.adl.service.exception.NzBaseException;
 import com.adl.service.web.request.CheckStudentInPlanRequest;
 import com.adl.service.web.request.PlanClassListRequest;
-import com.adl.service.web.request.PlanListRequest;
+import com.adl.service.web.request.PlanPageRequest;
 import com.adl.service.web.request.PlanStudentPageRequest;
 import com.adl.service.web.request.RecordDetailPageRequest;
 import com.adl.service.web.request.RequestScope;
@@ -64,13 +64,35 @@ public interface OrgTestCaller {
      * 获取计划列表
      * <p>异步调用。</p>
      */
-    long getPlanPageAsync(RequestScope scope, PlanListRequest request, RequestCallback<BasePageData<PlanData>> callback);
+    long getPlanPageAsync(RequestScope scope, PlanPageRequest request, RequestCallback<BasePageData<PlanData>> callback);
 
     /**
      * 获取计划列表
      * <p>同步调用。</p>
      */
-    BasePageData<PlanData> getPlanPageSync(PlanListRequest request) throws NzBaseException;
+    BasePageData<PlanData> getPlanPageSync(PlanPageRequest request) throws NzBaseException;
+
+    /**
+     * 获取所有的分页计划列表
+     * <p>异步调用。</p>
+     *
+     * @param scope
+     * @param request
+     * @param callback
+     * @return
+     * @throws NzBaseException
+     */
+    long getAllPlanPagesAsync(RequestScope scope, PlanPageRequest request, RequestCallback<List<PlanData>> callback) throws NzBaseException;
+
+    /**
+     * 获取所有的分页计划列表
+     * <p>同步调用。</p>
+     *
+     * @param request
+     * @return
+     * @throws NzBaseException
+     */
+    List<PlanData> getAllPlanPagesSync(PlanPageRequest request) throws NzBaseException;
 
     /**
      * 获取组织测试计划详情

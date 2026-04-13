@@ -4,6 +4,7 @@ import com.adl.service.internal.StrictJsonDeserializer;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.List;
 
 import lombok.Getter;
@@ -12,7 +13,7 @@ import lombok.ToString;
 @Getter
 @ToString
 @JsonAdapter(StrictJsonDeserializer.class)
-public final class SportProjectData {
+public final class SportProjectData implements Serializable {
     /**
      * 精度
      * 参考字典编码:adl_tis_physical_test_plan_decimal_precision

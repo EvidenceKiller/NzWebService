@@ -2,7 +2,7 @@ package com.adl.service.web.request;
 
 import com.google.gson.annotations.SerializedName;
 
-public final class PlanListRequest extends BasePageRequest {
+public final class PlanPageRequest extends BasePageRequest {
 
     /**
      * 机构ID
@@ -40,7 +40,7 @@ public final class PlanListRequest extends BasePageRequest {
     @SerializedName("planId")
     private String planId;
 
-    private PlanListRequest(Builder builder) {
+    private PlanPageRequest(Builder builder) {
         super(builder);
         this.orgId = builder.orgId;
         this.standardType = builder.standardType;
@@ -98,8 +98,8 @@ public final class PlanListRequest extends BasePageRequest {
             return this;
         }
 
-        public PlanListRequest build() {
-            return new PlanListRequest(this);
+        public PlanPageRequest build() {
+            return new PlanPageRequest(this);
         }
     }
 

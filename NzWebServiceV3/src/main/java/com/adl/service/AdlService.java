@@ -22,24 +22,7 @@ import com.adl.service.common.InnerPreferences;
 import com.adl.service.common.NzConfig;
 import com.adl.service.common.NzConfigBusiness;
 import com.adl.service.common.NzConfigNode;
-import com.adl.service.db.CitizenDao;
 import com.adl.service.db.DaoManagerProxy;
-import com.adl.service.db.DictDao;
-import com.adl.service.db.FileDownDao;
-import com.adl.service.db.FileUploadDao;
-import com.adl.service.db.MeetDao;
-import com.adl.service.db.MeetGroupDetailsDao;
-import com.adl.service.db.MeetGroupTeamDao;
-import com.adl.service.db.PlanDao;
-import com.adl.service.db.PlanStudentDao;
-import com.adl.service.db.RecordLocalDao;
-import com.adl.service.db.RecordUploadDao;
-import com.adl.service.db.SceneDao;
-import com.adl.service.db.SceneSportDao;
-import com.adl.service.db.StandardConfigDao;
-import com.adl.service.db.StudentDao;
-import com.adl.service.db.TeacherDao;
-import com.adl.service.db.TeacherSportDao;
 import com.adl.service.internal.RetrofitManager;
 import com.adl.service.internal.RxCallbackScheduler;
 import com.adl.service.internal.SubscriptionManager;
@@ -68,7 +51,6 @@ public final class AdlService {
     /** 懒加载、双重检查锁定的单例 */
     private static volatile AdlService _instance;
     private ConfigService mConfig;
-    private DaoManagerProxy mDaoManagerProxy;
     private Context mContext;
     private String orgId;
     private NzConfig mNzConfig;
@@ -86,7 +68,7 @@ public final class AdlService {
         // preferences 存储
         InnerPreferences pf = InnerPreferences.instance();
         pf.init(context);
-        mDaoManagerProxy = DaoManagerProxy.create(context);
+        DaoManagerProxy.init(context);
     }
 
     public static AdlService create(Context context) {
@@ -108,10 +90,6 @@ public final class AdlService {
         return mContext;
     }
 
-    /** 数据库访问代理 **/
-    public DaoManagerProxy getDaoManagerProxy() {
-        return mDaoManagerProxy;
-    }
 
     public AdlService setDebug(boolean debug) {
         mConfig.setDebug(debug);

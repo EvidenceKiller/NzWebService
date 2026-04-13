@@ -3,20 +3,25 @@ package com.adl.service.caller.impl;
 import com.adl.service.AdlService;
 import com.adl.service.callback.RequestCallback;
 import com.adl.service.caller.OrgTestCaller;
+import com.adl.service.db.DaoManagerProxy;
 import com.adl.service.exception.NzBaseException;
+import com.adl.service.exception.NzCommonException;
 import com.adl.service.internal.RxCallbackScheduler;
 import com.adl.service.internal.SubscriptionManager;
+import com.adl.service.persistence.BasePagePersistence;
+import com.adl.service.persistence.PlanPersistenceHelper;
 import com.adl.service.web.request.CheckStudentInPlanRequest;
 import com.adl.service.web.request.PlanClassListRequest;
-import com.adl.service.web.request.PlanListRequest;
+import com.adl.service.web.request.PlanPageRequest;
 import com.adl.service.web.request.PlanStudentPageRequest;
 import com.adl.service.web.request.RecordDetailPageRequest;
 import com.adl.service.web.request.RequestScope;
 import com.adl.service.web.request.StandardConfigPageRequest;
 import com.adl.service.web.response.BasePageData;
+import com.adl.service.web.response.BaseResponse;
 import com.adl.service.web.response.PlanClassData;
-import com.adl.service.web.response.PlanInfoData;
 import com.adl.service.web.response.PlanData;
+import com.adl.service.web.response.PlanInfoData;
 import com.adl.service.web.response.PlanStudentData;
 import com.adl.service.web.response.RecordDetailData;
 import com.adl.service.web.response.StandardConfigPageData;
@@ -24,7 +29,10 @@ import com.adl.service.web.service.OrgTestService;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.functions.Function;
 
 /**
  * OrgTestCaller 实现（SDK 内部使用，通过 {@link AdlService} 暴露）。
@@ -77,16 +85,42 @@ public final class OrgTestCallerImpl implements OrgTestCaller {
     }
 
     @Override
-    public long getPlanPageAsync(RequestScope scope, PlanListRequest request, RequestCallback<BasePageData<PlanData>> callback) {
+    public long getPlanPageAsync(RequestScope scope, PlanPageRequest request, RequestCallback<BasePageData<PlanData>> callback) {
         CallerScopeUtils.requireScope(scope);
-        Disposable disposable = RxCallbackScheduler.scheduleBaseResponse(orgTestService.getPlanPage(request), callback);
+        Disposable disposable = RxCallbackScheduler.scheduleBaseResponse(BasePagePersistence.persistAfterFetch(
+                orgTestService.getPlanPage(request),
+                records -> DaoManagerProxy.getInstance().getPlanDao().insertPlanList(records)), callback);
         SubscriptionManager.getInstance().add(scope.owner(), disposable);
         return disposable.hashCode();
     }
 
     @Override
-    public BasePageData<PlanData> getPlanPageSync(PlanListRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGetData(orgTestService.getPlanPage(request));
+    public BasePageData<PlanData> getPlanPageSync(PlanPageRequest request) throws NzBaseException {
+        return RxCallbackScheduler.blockingGetData(BasePagePersistence.persistAfterFetch(
+                orgTestService.getPlanPage(request),
+                records -> DaoManagerProxy.getInstance().getPlanDao().insertPlanList(records)));
+    }
+
+    public long getAllPlanPagesAsync(RequestScope scope, PlanPageRequest request, RequestCallback<List<PlanData>> callback) throws NzBaseException {
+        if (request.getCurrent() != 1) {
+            throw new NzCommonException("get all pages async must set current is 1!");
+        }
+        CallerScopeUtils.requireScope(scope);
+        Disposable disposable = RxCallbackScheduler.schedule(BasePagePersistence.persistAllPagesAsSingle(
+                PlanPersistenceHelper.createPlanPageRequester(request, (req) -> orgTestService.getPlanPage(req)),
+                PlanPersistenceHelper.createPlanPagePersister()), callback);
+        SubscriptionManager.getInstance().add(scope.owner(), disposable);
+        return disposable.hashCode();
+    }
+
+    @Override
+    public List<PlanData> getAllPlanPagesSync(PlanPageRequest request) throws NzBaseException {
+        if (request.getCurrent() != 1) {
+            throw new NzCommonException("get all pages sync must set current is 1!");
+        }
+        return RxCallbackScheduler.blockingGet(BasePagePersistence.persistAllPagesAsSingle(
+                PlanPersistenceHelper.createPlanPageRequester(request, (req) -> orgTestService.getPlanPage(req)),
+                PlanPersistenceHelper.createPlanPagePersister()));
     }
 
     @Override

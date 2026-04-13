@@ -2,7 +2,7 @@ package com.adl.service.web.service;
 
 import com.adl.service.web.request.CheckStudentInPlanRequest;
 import com.adl.service.web.request.PlanClassListRequest;
-import com.adl.service.web.request.PlanListRequest;
+import com.adl.service.web.request.PlanPageRequest;
 import com.adl.service.web.request.PlanStudentPageRequest;
 import com.adl.service.web.request.RecordDetailPageRequest;
 import com.adl.service.web.request.StandardConfigPageRequest;
@@ -47,7 +47,7 @@ public interface OrgTestService {
      * 获取计划列表
      */
     @POST("tis/device/pte/organizeTest/getPlanList")
-    Single<BaseResponse<BasePageData<PlanData>>> getPlanPage(@Body PlanListRequest request);
+    Single<BaseResponse<BasePageData<PlanData>>> getPlanPage(@Body PlanPageRequest request);
 
     /**
      * 获取组织测试计划详情

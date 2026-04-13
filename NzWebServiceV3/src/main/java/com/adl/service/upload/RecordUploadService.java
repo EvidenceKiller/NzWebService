@@ -11,6 +11,7 @@ import com.adl.service.common.CommonUtil;
 import com.adl.service.common.IDefine;
 import com.adl.service.common.InnerUtil;
 import com.adl.service.common.OssType;
+import com.adl.service.db.DaoManagerProxy;
 import com.adl.service.db.FileUploadDao;
 import com.adl.service.db.RecordLocalDao;
 import com.adl.service.db.RecordUploadDao;
@@ -111,10 +112,10 @@ public class RecordUploadService extends BaseService {
         uploadManager = new UploadManager(config);
 
         // dao
-        recordLocalDao = AdlService.getService().getRecordLocalDao();
-        recordUploadDao = AdlService.getService().getRecordUploadDao();
-        fileUploadDao = AdlService.getService().getFileUploadDao();
-        teacherSportDao = AdlService.getService().getTeacherSportDao();
+        recordLocalDao = DaoManagerProxy.getInstance().getRecordLocalDao();
+        recordUploadDao = DaoManagerProxy.getInstance().getRecordUploadDao();
+        fileUploadDao = DaoManagerProxy.getInstance().getFileUploadDao();
+        teacherSportDao = DaoManagerProxy.getInstance().getTeacherSportDao();
 
         statusLD = new MutableLiveData<>();
     }

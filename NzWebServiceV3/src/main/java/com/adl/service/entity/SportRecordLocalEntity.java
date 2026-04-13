@@ -13,6 +13,7 @@ import com.adl.service.db.converter.RecordCompetitionConverter;
 import com.adl.service.db.converter.RecordMeetingConverter;
 import com.adl.service.db.converter.RecordPlanConverter;
 import com.adl.service.db.converter.SportTrainPlanConverter;
+import com.adl.service.web.response.PlanData;
 
 import java.io.Serializable;
 
@@ -695,11 +696,11 @@ public class SportRecordLocalEntity extends SportRecordEntity implements Seriali
     }
 
     //  设置组织测试信息[确保记录已经设置了 是否违规、运动违规次数]
-    public void setPlanInfo(SportPlanEntity plan, int ptTestType, String batch) {
+    public void setPlanInfo(PlanData plan, int ptTestType, String batch) {
         setPlanInfo(plan, ptTestType, batch, getSportViolationStatus(), getSportViolationNumber());
     }
 
-    public void setPlanInfo(SportPlanEntity plan, int ptTestType, String batch, int sportViolationStatus, String sportViolationNumber) {
+    public void setPlanInfo(PlanData plan, int ptTestType, String batch, int sportViolationStatus, String sportViolationNumber) {
         RecordPlan recordPlan = new RecordPlan();
         recordPlan.setPtPlanId(plan.getPlanId());
         recordPlan.setPtBatch(batch);
