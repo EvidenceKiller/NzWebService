@@ -4,7 +4,6 @@ import com.adl.service.web.request.CheckStudentInPlanRequest;
 import com.adl.service.web.request.PlanClassListRequest;
 import com.adl.service.web.request.PlanPageRequest;
 import com.adl.service.web.request.PlanStudentPageRequest;
-import com.adl.service.web.request.RecordDetailPageRequest;
 import com.adl.service.web.request.StandardConfigPageRequest;
 import com.adl.service.web.response.BasePageData;
 import com.adl.service.web.response.BaseResponse;
@@ -12,7 +11,6 @@ import com.adl.service.web.response.PlanClassData;
 import com.adl.service.web.response.PlanInfoData;
 import com.adl.service.web.response.PlanData;
 import com.adl.service.web.response.PlanStudentData;
-import com.adl.service.web.response.RecordDetailData;
 import com.adl.service.web.response.StandardConfigPageData;
 
 import java.util.List;
@@ -30,12 +28,6 @@ public interface OrgTestService {
      */
     @POST("tis/device/pte/organizeTest/getStandardConfig")
     Single<BaseResponse<List<StandardConfigPageData>>> getStandardConfigPage(@Body StandardConfigPageRequest request);
-
-    /**
-     * 获取组织测试记录详情
-     */
-    @POST("tis/device/pte/organizeTest/getRecordDetail")
-    Single<BaseResponse<BasePageData<RecordDetailData>>> getRecordDetailPage(@Body RecordDetailPageRequest request);
 
     /**
      * 获取计划下学生

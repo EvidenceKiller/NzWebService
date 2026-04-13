@@ -89,9 +89,6 @@ public class V3CommonInfoCallerTestActivity extends AppCompatActivity {
 
         createButton("deviceActiveAsync").setOnClickListener(v -> deviceActiveAsync());
         createButton("deviceActiveSync").setOnClickListener(v -> deviceActiveSync());
-
-        createButton("addBatchPageAsync").setOnClickListener(v -> addBatchPageAsync());
-        createButton("addBatchPageSync").setOnClickListener(v -> addBatchPageSync());
     }
 
     private void getGradeTreeAsync() {
@@ -716,56 +713,6 @@ public class V3CommonInfoCallerTestActivity extends AppCompatActivity {
             @Override
             public void onError(String error) {
                 Log.d(TAG, "CommonInfoCallerTestActivity::deviceActiveSync::onError : error : " + error);
-                resultView.setText(error);
-            }
-        });
-    }
-
-    private void addBatchPageAsync() {
-        AddBatchPageRequest request = AddBatchPageRequest.builder()
-                .build();
-        AdlService.getService().getCommonInfoCaller().addBatchPageAsync(RequestScope.of(this), request, new RequestCallback<Object>() {
-            @Override
-            public void onSuccess(Object data) {
-                Log.d(TAG, "CommonInfoCallerTestActivity::addBatchPageAsync::onSuccess : data : " + data);
-                resultView.setText(String.valueOf(data));
-            }
-
-            @Override
-            public void onFail(int code, String msg) {
-                Log.d(TAG, "CommonInfoCallerTestActivity::addBatchPageAsync::onFail : code : " + code + ", msg : " + msg);
-                resultView.setText(msg);
-            }
-
-            @Override
-            public void onError(String error) {
-                Log.d(TAG, "CommonInfoCallerTestActivity::addBatchPageAsync::onError : error : " + error);
-                resultView.setText(error);
-            }
-        });
-    }
-
-    private void addBatchPageSync() {
-        AdlService.getService().executeSyncOnIo(RequestScope.of(this), () -> {
-            AddBatchPageRequest request = AddBatchPageRequest.builder()
-                    .build();
-            return AdlService.getService().getCommonInfoCaller().addBatchPageSync(request);
-        }, new RequestCallback<Object>() {
-            @Override
-            public void onSuccess(Object data) {
-                Log.d(TAG, "CommonInfoCallerTestActivity::addBatchPageSync::onSuccess : data : " + data);
-                resultView.setText(String.valueOf(data));
-            }
-
-            @Override
-            public void onFail(int code, String msg) {
-                Log.d(TAG, "CommonInfoCallerTestActivity::addBatchPageSync::onFail : code : " + code + ", msg : " + msg);
-                resultView.setText(msg);
-            }
-
-            @Override
-            public void onError(String error) {
-                Log.d(TAG, "CommonInfoCallerTestActivity::addBatchPageSync::onError : error : " + error);
                 resultView.setText(error);
             }
         });

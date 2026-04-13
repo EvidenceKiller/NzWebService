@@ -14,7 +14,6 @@ import com.adl.service.web.request.CheckStudentInPlanRequest;
 import com.adl.service.web.request.PlanClassListRequest;
 import com.adl.service.web.request.PlanPageRequest;
 import com.adl.service.web.request.PlanStudentPageRequest;
-import com.adl.service.web.request.RecordDetailPageRequest;
 import com.adl.service.web.request.RequestScope;
 import com.adl.service.web.request.StandardConfigPageRequest;
 import com.adl.service.web.response.BasePageData;
@@ -22,7 +21,6 @@ import com.adl.service.web.response.PlanClassData;
 import com.adl.service.web.response.PlanInfoData;
 import com.adl.service.web.response.PlanData;
 import com.adl.service.web.response.PlanStudentData;
-import com.adl.service.web.response.RecordDetailData;
 import com.adl.service.web.response.StandardConfigPageData;
 import com.adl.ts.general.R;
 
@@ -49,8 +47,6 @@ public class V3OrgTestCallerTestActivity extends AppCompatActivity {
 
         createButton("getStandardConfigPageAsync").setOnClickListener(v -> getStandardConfigPageAsync());
         createButton("getStandardConfigPageSync").setOnClickListener(v -> getStandardConfigPageSync());
-        createButton("getRecordDetailPageAsync").setOnClickListener(v -> getRecordDetailPageAsync());
-        createButton("getRecordDetailPageSync").setOnClickListener(v -> getRecordDetailPageSync());
         createButton("getPlanStudentPageAsync").setOnClickListener(v -> getPlanStudentPageAsync());
         createButton("getPlanStudentPageSync").setOnClickListener(v -> getPlanStudentPageSync());
         createButton("getPlanPageAsync").setOnClickListener(v -> getPlanPageAsync());
@@ -68,11 +64,6 @@ public class V3OrgTestCallerTestActivity extends AppCompatActivity {
 
     private StandardConfigPageRequest buildStandardConfigPageRequest() {
         return StandardConfigPageRequest.builder("")
-                .build();
-    }
-
-    private RecordDetailPageRequest buildRecordDetailPageRequest() {
-        return RecordDetailPageRequest.builder()
                 .build();
     }
 
@@ -150,62 +141,6 @@ public class V3OrgTestCallerTestActivity extends AppCompatActivity {
             @Override
             public void onError(String error) {
                 Log.d(TAG, "OrgTestCallerTestActivity::getStandardConfigPageSync::onError : error : " + error);
-                resultView.setText(error);
-            }
-        });
-    }
-
-    private void getRecordDetailPageAsync() {
-        RecordDetailPageRequest request = buildRecordDetailPageRequest();
-        AdlService.getService().getOrgTestCaller().getRecordDetailPageAsync(RequestScope.of(this), request, new RequestCallback<BasePageData<RecordDetailData>>() {
-            @Override
-            public void onSuccess(BasePageData<RecordDetailData> data) {
-                if (data != null) {
-                    Log.d(TAG, "OrgTestCallerTestActivity::getRecordDetailPageAsync::onSuccess : data : " + data);
-                    resultView.setText(data.toString());
-                } else {
-                    Log.d(TAG, "OrgTestCallerTestActivity::getRecordDetailPageAsync::onSuccess : data is null");
-                }
-            }
-
-            @Override
-            public void onFail(int code, String msg) {
-                Log.d(TAG, "OrgTestCallerTestActivity::getRecordDetailPageAsync::onFail : code : " + code + ", msg : " + msg);
-                resultView.setText(msg);
-            }
-
-            @Override
-            public void onError(String error) {
-                Log.d(TAG, "OrgTestCallerTestActivity::getRecordDetailPageAsync::onError : error : " + error);
-                resultView.setText(error);
-            }
-        });
-    }
-
-    private void getRecordDetailPageSync() {
-        AdlService.getService().executeSyncOnIo(RequestScope.of(this), () -> {
-            RecordDetailPageRequest request = buildRecordDetailPageRequest();
-            return AdlService.getService().getOrgTestCaller().getRecordDetailPageSync(request);
-        }, new RequestCallback<BasePageData<RecordDetailData>>() {
-            @Override
-            public void onSuccess(BasePageData<RecordDetailData> data) {
-                if (data != null) {
-                    Log.d(TAG, "OrgTestCallerTestActivity::getRecordDetailPageSync::onSuccess : data : " + data);
-                    resultView.setText(data.toString());
-                } else {
-                    Log.d(TAG, "OrgTestCallerTestActivity::getRecordDetailPageSync::onSuccess : data is null");
-                }
-            }
-
-            @Override
-            public void onFail(int code, String msg) {
-                Log.d(TAG, "OrgTestCallerTestActivity::getRecordDetailPageSync::onFail : code : " + code + ", msg : " + msg);
-                resultView.setText(msg);
-            }
-
-            @Override
-            public void onError(String error) {
-                Log.d(TAG, "OrgTestCallerTestActivity::getRecordDetailPageSync::onError : error : " + error);
                 resultView.setText(error);
             }
         });

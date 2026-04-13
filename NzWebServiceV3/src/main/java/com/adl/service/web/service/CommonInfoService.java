@@ -96,10 +96,4 @@ public interface CommonInfoService {
      */
     @POST("tis/device/base/sys/device/active")
     Single<BaseResponse<Boolean>> deviceActive(@Body DeviceActiveRequest request);
-
-    /**
-     * 添加通用日志
-     */
-    @POST("tis/device/base/sys/addBatch")
-    Single<BaseResponse<Object>> addBatchPage(@Body AddBatchPageRequest request);
 }

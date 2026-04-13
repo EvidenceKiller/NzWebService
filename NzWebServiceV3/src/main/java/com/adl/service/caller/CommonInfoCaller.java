@@ -161,17 +161,4 @@ public interface CommonInfoCaller {
      * <p>同步调用。</p>
      */
     Boolean deviceActiveSync(DeviceActiveRequest request) throws NzBaseException;
-
-    /**
-     * 添加通用日志
-     * <p>异步调用。</p>
-     */
-    long addBatchPageAsync(RequestScope scope, AddBatchPageRequest request, RequestCallback<Object> callback);
-
-    /**
-     * 添加通用日志
-     * <p>同步调用。</p>
-     */
-    Object addBatchPageSync(AddBatchPageRequest request) throws NzBaseException;
-
 }

@@ -2,14 +2,12 @@ package com.adl.service.web.service;
 
 import com.adl.service.web.request.AccountRecordPageRequest;
 import com.adl.service.web.request.OrgRecordPageRequest;
-import com.adl.service.web.request.ReportNfSportRequest;
 import com.adl.service.web.request.ReportStudentCompetitionRequest;
 import com.adl.service.web.request.ReportStudentMeetRequest;
 import com.adl.service.web.request.ReportStudentPlanRequest;
 import com.adl.service.web.request.ReportStudentSportRequest;
 import com.adl.service.web.request.ReportTeacherSportRequest;
 import com.adl.service.web.response.AccountRecordData;
-import com.adl.service.web.response.AccountRecordPageData;
 import com.adl.service.web.response.BasePageData;
 import com.adl.service.web.response.BaseResponse;
 import com.adl.service.web.response.OrgRecordData;
@@ -69,12 +67,6 @@ public interface SportInfoService {
      */
     @POST("tis/device/sport/result/reportStudentAllSport")
     Single<BaseResponse<Boolean>> reportStudentAllSport(@Body ReportStudentSportRequest request);
-
-    /**
-     * 上报市民通运动成绩
-     */
-    @POST("tis/device/sport/result/reportNfSport")
-    Single<BaseResponse<Boolean>> reportNfSport(@Body ReportNfSportRequest request);
 
     /**
      * 获取机构/年级运动记录分页

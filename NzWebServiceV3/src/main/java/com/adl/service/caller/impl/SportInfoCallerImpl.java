@@ -8,7 +8,6 @@ import com.adl.service.internal.RxCallbackScheduler;
 import com.adl.service.internal.SubscriptionManager;
 import com.adl.service.web.request.AccountRecordPageRequest;
 import com.adl.service.web.request.OrgRecordPageRequest;
-import com.adl.service.web.request.ReportNfSportRequest;
 import com.adl.service.web.request.ReportStudentCompetitionRequest;
 import com.adl.service.web.request.ReportStudentMeetRequest;
 import com.adl.service.web.request.ReportStudentPlanRequest;
@@ -16,7 +15,6 @@ import com.adl.service.web.request.ReportStudentSportRequest;
 import com.adl.service.web.request.ReportTeacherSportRequest;
 import com.adl.service.web.request.RequestScope;
 import com.adl.service.web.response.AccountRecordData;
-import com.adl.service.web.response.AccountRecordPageData;
 import com.adl.service.web.response.BasePageData;
 import com.adl.service.web.response.OrgRecordData;
 import com.adl.service.web.service.SportInfoService;
@@ -136,19 +134,6 @@ public final class SportInfoCallerImpl implements SportInfoCaller {
     @Override
     public Boolean reportStudentAllSportSync(ReportStudentSportRequest request) throws NzBaseException {
         return RxCallbackScheduler.blockingGetData(sportInfoService.reportStudentAllSport(request));
-    }
-
-    @Override
-    public long reportNfSportAsync(RequestScope scope, ReportNfSportRequest request, RequestCallback<Boolean> callback) {
-        CallerScopeUtils.requireScope(scope);
-        Disposable disposable = RxCallbackScheduler.scheduleBaseResponse(sportInfoService.reportNfSport(request), callback);
-        SubscriptionManager.getInstance().add(scope.owner(), disposable);
-        return disposable.hashCode();
-    }
-
-    @Override
-    public Boolean reportNfSportSync(ReportNfSportRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGetData(sportInfoService.reportNfSport(request));
     }
 
     @Override

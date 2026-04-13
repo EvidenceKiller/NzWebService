@@ -14,25 +14,19 @@ import com.adl.service.web.request.CheckStudentInPlanRequest;
 import com.adl.service.web.request.PlanClassListRequest;
 import com.adl.service.web.request.PlanPageRequest;
 import com.adl.service.web.request.PlanStudentPageRequest;
-import com.adl.service.web.request.RecordDetailPageRequest;
 import com.adl.service.web.request.RequestScope;
 import com.adl.service.web.request.StandardConfigPageRequest;
 import com.adl.service.web.response.BasePageData;
-import com.adl.service.web.response.BaseResponse;
 import com.adl.service.web.response.PlanClassData;
 import com.adl.service.web.response.PlanData;
 import com.adl.service.web.response.PlanInfoData;
 import com.adl.service.web.response.PlanStudentData;
-import com.adl.service.web.response.RecordDetailData;
 import com.adl.service.web.response.StandardConfigPageData;
 import com.adl.service.web.service.OrgTestService;
 
 import java.util.List;
 
-import io.reactivex.rxjava3.core.Completable;
-import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.disposables.Disposable;
-import io.reactivex.rxjava3.functions.Function;
 
 /**
  * OrgTestCaller 实现（SDK 内部使用，通过 {@link AdlService} 暴露）。
@@ -56,19 +50,6 @@ public final class OrgTestCallerImpl implements OrgTestCaller {
     @Override
     public List<StandardConfigPageData> getStandardConfigPageSync(StandardConfigPageRequest request) throws NzBaseException {
         return RxCallbackScheduler.blockingGetData(orgTestService.getStandardConfigPage(request));
-    }
-
-    @Override
-    public long getRecordDetailPageAsync(RequestScope scope, RecordDetailPageRequest request, RequestCallback<BasePageData<RecordDetailData>> callback) {
-        CallerScopeUtils.requireScope(scope);
-        Disposable disposable = RxCallbackScheduler.scheduleBaseResponse(orgTestService.getRecordDetailPage(request), callback);
-        SubscriptionManager.getInstance().add(scope.owner(), disposable);
-        return disposable.hashCode();
-    }
-
-    @Override
-    public BasePageData<RecordDetailData> getRecordDetailPageSync(RecordDetailPageRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGetData(orgTestService.getRecordDetailPage(request));
     }
 
     @Override

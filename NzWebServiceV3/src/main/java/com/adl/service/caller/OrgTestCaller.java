@@ -6,7 +6,6 @@ import com.adl.service.web.request.CheckStudentInPlanRequest;
 import com.adl.service.web.request.PlanClassListRequest;
 import com.adl.service.web.request.PlanPageRequest;
 import com.adl.service.web.request.PlanStudentPageRequest;
-import com.adl.service.web.request.RecordDetailPageRequest;
 import com.adl.service.web.request.RequestScope;
 import com.adl.service.web.request.StandardConfigPageRequest;
 import com.adl.service.web.response.BasePageData;
@@ -14,7 +13,6 @@ import com.adl.service.web.response.PlanClassData;
 import com.adl.service.web.response.PlanInfoData;
 import com.adl.service.web.response.PlanData;
 import com.adl.service.web.response.PlanStudentData;
-import com.adl.service.web.response.RecordDetailData;
 import com.adl.service.web.response.StandardConfigPageData;
 
 import java.util.List;
@@ -35,18 +33,6 @@ public interface OrgTestCaller {
      * <p>同步调用。</p>
      */
     List<StandardConfigPageData> getStandardConfigPageSync(StandardConfigPageRequest request) throws NzBaseException;
-
-    /**
-     * 获取组织测试记录详情
-     * <p>异步调用。</p>
-     */
-    long getRecordDetailPageAsync(RequestScope scope, RecordDetailPageRequest request, RequestCallback<BasePageData<RecordDetailData>> callback);
-
-    /**
-     * 获取组织测试记录详情
-     * <p>同步调用。</p>
-     */
-    BasePageData<RecordDetailData> getRecordDetailPageSync(RecordDetailPageRequest request) throws NzBaseException;
 
     /**
      * 获取计划下学生

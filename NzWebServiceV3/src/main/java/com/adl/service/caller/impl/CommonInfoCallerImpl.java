@@ -185,17 +185,4 @@ public final class CommonInfoCallerImpl implements CommonInfoCaller {
     public Boolean deviceActiveSync(DeviceActiveRequest request) throws NzBaseException {
         return RxCallbackScheduler.blockingGetData(commonInfoService.deviceActive(request));
     }
-
-    @Override
-    public long addBatchPageAsync(RequestScope scope, AddBatchPageRequest request, RequestCallback<Object> callback) {
-        CallerScopeUtils.requireScope(scope);
-        Disposable disposable = RxCallbackScheduler.scheduleBaseResponse(commonInfoService.addBatchPage(request), callback);
-        SubscriptionManager.getInstance().add(scope.owner(), disposable);
-        return disposable.hashCode();
-    }
-
-    @Override
-    public Object addBatchPageSync(AddBatchPageRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGetData(commonInfoService.addBatchPage(request));
-    }
 }
