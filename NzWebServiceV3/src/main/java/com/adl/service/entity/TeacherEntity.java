@@ -5,9 +5,6 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
-import com.adl.service.db.converter.ListClassInfoConverter;
-import com.adl.service.db.converter.ListFaceDataConverter;
-
 import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;

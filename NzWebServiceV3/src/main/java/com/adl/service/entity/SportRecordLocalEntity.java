@@ -5,14 +5,7 @@ import androidx.room.Entity;
 import androidx.room.TypeConverters;
 
 import com.adl.service.common.IDefine;
-import com.adl.service.common.InnerUtil;
-import com.adl.service.db.converter.ListSportImageConverter;
-import com.adl.service.db.converter.ListSportIndicatorsConverter;
-import com.adl.service.db.converter.ListSportVideoConverter;
-import com.adl.service.db.converter.RecordCompetitionConverter;
-import com.adl.service.db.converter.RecordMeetingConverter;
-import com.adl.service.db.converter.RecordPlanConverter;
-import com.adl.service.db.converter.SportTrainPlanConverter;
+import com.adl.service.utils.InnerUtil;
 import com.adl.service.web.response.PlanData;
 
 import java.io.Serializable;

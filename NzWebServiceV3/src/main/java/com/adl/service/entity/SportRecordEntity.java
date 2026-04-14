@@ -6,14 +6,6 @@ import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
-import com.adl.service.db.converter.ListSportImageConverter;
-import com.adl.service.db.converter.ListSportIndicatorsConverter;
-import com.adl.service.db.converter.ListSportVideoConverter;
-import com.adl.service.db.converter.RecordCompetitionConverter;
-import com.adl.service.db.converter.RecordMeetingConverter;
-import com.adl.service.db.converter.RecordPlanConverter;
-import com.adl.service.db.converter.SportTrainPlanConverter;
-
 import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;

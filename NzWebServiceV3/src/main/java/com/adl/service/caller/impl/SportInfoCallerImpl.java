@@ -34,7 +34,7 @@ public final class SportInfoCallerImpl implements SportInfoCaller {
 
     @Override
     public long updateStudentSportAsync(RequestScope scope, ReportStudentSportRequest request, RequestCallback<Boolean> callback) {
-        CallerScopeUtils.requireScope(scope);
+        CallerUtil.assertScope(scope);
         Disposable disposable = RxCallbackScheduler.scheduleBaseResponse(sportInfoService.updateStudentSport(request), callback);
         SubscriptionManager.getInstance().add(scope.owner(), disposable);
         return disposable.hashCode();
@@ -47,7 +47,7 @@ public final class SportInfoCallerImpl implements SportInfoCaller {
 
     @Override
     public long reportTeacherSportAsync(RequestScope scope, ReportTeacherSportRequest request, RequestCallback<Boolean> callback) {
-        CallerScopeUtils.requireScope(scope);
+        CallerUtil.assertScope(scope);
         Disposable disposable = RxCallbackScheduler.scheduleBaseResponse(sportInfoService.reportTeacherSport(request), callback);
         SubscriptionManager.getInstance().add(scope.owner(), disposable);
         return disposable.hashCode();
@@ -60,7 +60,7 @@ public final class SportInfoCallerImpl implements SportInfoCaller {
 
     @Override
     public long reportStudentTrainAsync(RequestScope scope, ReportStudentSportRequest request, RequestCallback<Boolean> callback) {
-        CallerScopeUtils.requireScope(scope);
+        CallerUtil.assertScope(scope);
         Disposable disposable = RxCallbackScheduler.scheduleBaseResponse(sportInfoService.reportStudentTrain(request), callback);
         SubscriptionManager.getInstance().add(scope.owner(), disposable);
         return disposable.hashCode();
@@ -73,7 +73,7 @@ public final class SportInfoCallerImpl implements SportInfoCaller {
 
     @Override
     public long reportStudentSportAsync(RequestScope scope, ReportStudentSportRequest request, RequestCallback<Boolean> callback) {
-        CallerScopeUtils.requireScope(scope);
+        CallerUtil.assertScope(scope);
         Disposable disposable = RxCallbackScheduler.scheduleBaseResponse(sportInfoService.reportStudentSport(request), callback);
         SubscriptionManager.getInstance().add(scope.owner(), disposable);
         return disposable.hashCode();
@@ -86,7 +86,7 @@ public final class SportInfoCallerImpl implements SportInfoCaller {
 
     @Override
     public long reportStudentPlanAsync(RequestScope scope, ReportStudentPlanRequest request, RequestCallback<Boolean> callback) {
-        CallerScopeUtils.requireScope(scope);
+        CallerUtil.assertScope(scope);
         Disposable disposable = RxCallbackScheduler.scheduleBaseResponse(sportInfoService.reportStudentPlan(request), callback);
         SubscriptionManager.getInstance().add(scope.owner(), disposable);
         return disposable.hashCode();
@@ -99,7 +99,7 @@ public final class SportInfoCallerImpl implements SportInfoCaller {
 
     @Override
     public long reportStudentMeetAsync(RequestScope scope, ReportStudentMeetRequest request, RequestCallback<Boolean> callback) {
-        CallerScopeUtils.requireScope(scope);
+        CallerUtil.assertScope(scope);
         Disposable disposable = RxCallbackScheduler.scheduleBaseResponse(sportInfoService.reportStudentMeet(request), callback);
         SubscriptionManager.getInstance().add(scope.owner(), disposable);
         return disposable.hashCode();
@@ -112,7 +112,7 @@ public final class SportInfoCallerImpl implements SportInfoCaller {
 
     @Override
     public long reportStudentCompetitionAsync(RequestScope scope, ReportStudentCompetitionRequest request, RequestCallback<Boolean> callback) {
-        CallerScopeUtils.requireScope(scope);
+        CallerUtil.assertScope(scope);
         Disposable disposable = RxCallbackScheduler.scheduleBaseResponse(sportInfoService.reportStudentCompetition(request), callback);
         SubscriptionManager.getInstance().add(scope.owner(), disposable);
         return disposable.hashCode();
@@ -125,7 +125,7 @@ public final class SportInfoCallerImpl implements SportInfoCaller {
 
     @Override
     public long reportStudentAllSportAsync(RequestScope scope, ReportStudentSportRequest request, RequestCallback<Boolean> callback) {
-        CallerScopeUtils.requireScope(scope);
+        CallerUtil.assertScope(scope);
         Disposable disposable = RxCallbackScheduler.scheduleBaseResponse(sportInfoService.reportStudentAllSport(request), callback);
         SubscriptionManager.getInstance().add(scope.owner(), disposable);
         return disposable.hashCode();
@@ -138,7 +138,7 @@ public final class SportInfoCallerImpl implements SportInfoCaller {
 
     @Override
     public long getOrgRecordPageAsync(RequestScope scope, OrgRecordPageRequest request, RequestCallback<BasePageData<OrgRecordData>> callback) {
-        CallerScopeUtils.requireScope(scope);
+        CallerUtil.assertScope(scope);
         Disposable disposable = RxCallbackScheduler.scheduleBaseResponse(sportInfoService.getOrgRecordPage(request), callback);
         SubscriptionManager.getInstance().add(scope.owner(), disposable);
         return disposable.hashCode();
@@ -151,7 +151,7 @@ public final class SportInfoCallerImpl implements SportInfoCaller {
 
     @Override
     public long getAccountRecordPageAsync(RequestScope scope, AccountRecordPageRequest request, RequestCallback<BasePageData<AccountRecordData>> callback) {
-        CallerScopeUtils.requireScope(scope);
+        CallerUtil.assertScope(scope);
         Disposable disposable = RxCallbackScheduler.scheduleBaseResponse(sportInfoService.getAccountRecordPage(request), callback);
         SubscriptionManager.getInstance().add(scope.owner(), disposable);
         return disposable.hashCode();

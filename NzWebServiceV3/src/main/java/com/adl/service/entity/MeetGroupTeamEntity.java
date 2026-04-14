@@ -5,8 +5,6 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
-import com.adl.service.db.converter.ListSportMeetingDetailConverter;
-
 import java.io.Serializable;
 import java.util.List;
 

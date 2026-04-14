@@ -35,7 +35,7 @@ public final class BigScreenH5CallerImpl implements BigScreenH5Caller {
 
     @Override
     public long getTeachCourseDetailListAsync(RequestScope scope, TeachCourseRequest request, RequestCallback<List<TeachCourseDetailData>> callback) {
-        CallerScopeUtils.requireScope(scope);
+        CallerUtil.assertScope(scope);
         Disposable disposable = RxCallbackScheduler.scheduleBaseResponse(bigScreenH5Service.getTeachCourseDetailList(request), callback);
         SubscriptionManager.getInstance().add(scope.owner(), disposable);
         return disposable.hashCode();
@@ -48,7 +48,7 @@ public final class BigScreenH5CallerImpl implements BigScreenH5Caller {
 
     @Override
     public long getTeachCourseDataDatesAsync(RequestScope scope, TeachCourseDataDatesRequest request, RequestCallback<List<String>> callback) {
-        CallerScopeUtils.requireScope(scope);
+        CallerUtil.assertScope(scope);
         Disposable disposable = RxCallbackScheduler.scheduleBaseResponse(bigScreenH5Service.getTeachCourseDataDates(request), callback);
         SubscriptionManager.getInstance().add(scope.owner(), disposable);
         return disposable.hashCode();
@@ -61,7 +61,7 @@ public final class BigScreenH5CallerImpl implements BigScreenH5Caller {
 
     @Override
     public long getTeachCourseTimesAsync(RequestScope scope, TeachCourseRequest request, RequestCallback<Integer> callback) {
-        CallerScopeUtils.requireScope(scope);
+        CallerUtil.assertScope(scope);
         Disposable disposable = RxCallbackScheduler.scheduleBaseResponse(bigScreenH5Service.getTeachCourseTimes(request), callback);
         SubscriptionManager.getInstance().add(scope.owner(), disposable);
         return disposable.hashCode();
@@ -74,7 +74,7 @@ public final class BigScreenH5CallerImpl implements BigScreenH5Caller {
 
     @Override
     public long getTeachCourseButtonClickableAsync(RequestScope scope, TeachCourseButtonClickCountRequest request, RequestCallback<Boolean> callback) {
-        CallerScopeUtils.requireScope(scope);
+        CallerUtil.assertScope(scope);
         Disposable disposable = RxCallbackScheduler.scheduleBaseResponse(bigScreenH5Service.getTeachCourseButtonClickable(request), callback);
         SubscriptionManager.getInstance().add(scope.owner(), disposable);
         return disposable.hashCode();
@@ -87,7 +87,7 @@ public final class BigScreenH5CallerImpl implements BigScreenH5Caller {
 
     @Override
     public long getSunshineRunningSportDetailPageAsync(RequestScope scope, SunshineRunningSportDetailPageRequest request, RequestCallback<BasePageData<SunshineRunningSportDetailData>> callback) {
-        CallerScopeUtils.requireScope(scope);
+        CallerUtil.assertScope(scope);
         Disposable disposable = RxCallbackScheduler.scheduleBaseResponse(bigScreenH5Service.getSunshineRunningSportDetailPage(request), callback);
         SubscriptionManager.getInstance().add(scope.owner(), disposable);
         return disposable.hashCode();
@@ -100,7 +100,7 @@ public final class BigScreenH5CallerImpl implements BigScreenH5Caller {
 
     @Override
     public long getSunshineRunningCompetitionRecordPageAsync(RequestScope scope, SunshineRunningCompetitionRecordPageRequest request, RequestCallback<BasePageData<ClassroomCompetitionRecordData>> callback) {
-        CallerScopeUtils.requireScope(scope);
+        CallerUtil.assertScope(scope);
         Disposable disposable = RxCallbackScheduler.scheduleBaseResponse(bigScreenH5Service.getSunshineRunningCompetitionRecordPage(request), callback);
         SubscriptionManager.getInstance().add(scope.owner(), disposable);
         return disposable.hashCode();

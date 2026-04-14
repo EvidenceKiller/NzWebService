@@ -6,13 +6,9 @@ import androidx.room.Index;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
-import com.adl.service.db.converter.ListFaceDataConverter;
-import com.adl.service.web.response.StudentData;
-
 import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 /**

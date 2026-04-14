@@ -120,13 +120,25 @@ public interface BusinessCaller {
     BasePageData<CompetitionData> getCompetitionPageSync(CompetitionPageRequest request) throws NzBaseException;
 
     /**
-     * 获取运动会列表
+     * 清空运动会数据
+     * <p>同步调用。</p>
+     */
+    void clearSportMeetDataSync();
+
+    /**
+     * 获取所有运动会列表
+     * <p>同步调用。</p>
+     */
+    List<SportMeetData> getSportMeetPagesAllSync(SportMeetPageRequest request) throws NzBaseException;
+
+    /**
+     * 分页获取运动会列表
      * <p>异步调用。</p>
      */
     long getSportMeetPageAsync(RequestScope scope, SportMeetPageRequest request, RequestCallback<BasePageData<SportMeetData>> callback);
 
     /**
-     * 获取运动会列表
+     * 分页获取运动会列表
      * <p>同步调用。</p>
      */
     BasePageData<SportMeetData> getSportMeetPageSync(SportMeetPageRequest request) throws NzBaseException;

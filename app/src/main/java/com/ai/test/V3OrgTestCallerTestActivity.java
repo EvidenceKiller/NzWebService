@@ -267,7 +267,7 @@ public class V3OrgTestCallerTestActivity extends AppCompatActivity {
     private void getAllPlanPagesAsync() {
         PlanPageRequest request = buildPlanListRequest();
         try {
-            AdlService.getService().getOrgTestCaller().getAllPlanPagesAsync(RequestScope.of(this), request, new RequestCallback<List<PlanData>>() {
+            AdlService.getService().getOrgTestCaller().getPlanPagesAllAsync(RequestScope.of(this), request, new RequestCallback<List<PlanData>>() {
                 @Override
                 public void onSuccess(List<PlanData> data) {
                     if (data != null) {
@@ -298,7 +298,7 @@ public class V3OrgTestCallerTestActivity extends AppCompatActivity {
     private void getAllPlanPagesSync() {
         AdlService.getService().executeSyncOnIo(RequestScope.of(this), () -> {
             PlanPageRequest request = buildPlanListRequest();
-            return AdlService.getService().getOrgTestCaller().getAllPlanPagesSync(request);
+            return AdlService.getService().getOrgTestCaller().getPlanPagesAllSync(request);
         }, new RequestCallback<List<PlanData>>() {
             @Override
             public void onSuccess(List<PlanData> data) {

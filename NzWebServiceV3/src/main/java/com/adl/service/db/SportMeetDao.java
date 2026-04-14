@@ -1,6 +1,6 @@
 package com.adl.service.db;
 
-import com.adl.service.entity.SportMeetingEntity;
+import com.adl.service.db.entity.SportMeetEntity;
 
 import java.util.List;
 
@@ -16,37 +16,40 @@ import androidx.room.Query;
  * Describe   : 类描述
  */
 @Dao
-public interface MeetDao {
+public interface SportMeetDao {
 
     @Query("select * from _sport_meet where _app_code = :appCode")
-    List<SportMeetingEntity> getAll(String appCode);
+    List<SportMeetEntity> getAll(String appCode);
 
     @Query("select * from _sport_meet where _app_code = :appCode limit :noOfRows,:rowNum")
-    List<SportMeetingEntity> getAllByPage(String appCode,int noOfRows, int rowNum);
+    List<SportMeetEntity> getAllByPage(String appCode,int noOfRows, int rowNum);
 
     @Query("select * from _sport_meet where _app_code = :appCode and _start_time > strftime('%s', 'now')*1000")
-    List<SportMeetingEntity> queryMeetStatusNew(String appCode);
+    List<SportMeetEntity> queryMeetStatusNew(String appCode);
 
     @Query("select * from _sport_meet where _app_code = :appCode and _start_time > strftime('%s', 'now')*1000 limit :noOfRows,:rowNum")
-    List<SportMeetingEntity> queryMeetStatusNewByPage(String appCode,int noOfRows, int rowNum);
+    List<SportMeetEntity> queryMeetStatusNewByPage(String appCode,int noOfRows, int rowNum);
 
     @Query("select * from _sport_meet where _app_code = :appCode and (strftime('%s','now')*1000 between _start_time and _end_time)")
-    List<SportMeetingEntity> queryMeetStatusDoing(String appCode);
+    List<SportMeetEntity> queryMeetStatusDoing(String appCode);
 
     @Query("select * from _sport_meet where _app_code = :appCode and (strftime('%s','now')*1000 between _start_time and _end_time) limit :noOfRows,:rowNum")
-    List<SportMeetingEntity> queryMeetStatusDoingByPage(String appCode,int noOfRows, int rowNum);
+    List<SportMeetEntity> queryMeetStatusDoingByPage(String appCode,int noOfRows, int rowNum);
 
     @Query("select * from _sport_meet where _app_code = :appCode and _end_time < strftime('%s','now')*1000")
-    List<SportMeetingEntity> queryMeetStatusDone(String appCode);
+    List<SportMeetEntity> queryMeetStatusDone(String appCode);
 
     @Query("select * from _sport_meet where _app_code = :appCode and _end_time < strftime('%s','now')*1000 limit :noOfRows,:rowNum")
-    List<SportMeetingEntity> queryMeetStatusDoneByPage(String appCode,int noOfRows, int rowNum);
+    List<SportMeetEntity> queryMeetStatusDoneByPage(String appCode,int noOfRows, int rowNum);
 
     @Query("select * from _sport_meet where _app_code = :appCode and _id = :id limit 1")
-    SportMeetingEntity queryMeetById(String appCode,String id);
+    SportMeetEntity queryMeetById(String appCode,String id);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertAll(List<SportMeetingEntity> list);
+    void insertAll(List<SportMeetEntity> list);
+
+    @Query("delete from _sport_meet where _app_code = :appCode")
+    void clearByAppCode(String appCode);
 
     @Query("delete from _sport_meet")
     void clearAll();

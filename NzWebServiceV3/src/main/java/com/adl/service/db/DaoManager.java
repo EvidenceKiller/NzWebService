@@ -1,8 +1,7 @@
 package com.adl.service.db;
 
 
-import com.adl.service.common.IDefine;
-import com.adl.service.common.InnerPreferences;
+import com.adl.service.db.converter.ListStringConverter;
 import com.adl.service.entity.CitizenEntity;
 import com.adl.service.entity.DictEntity;
 import com.adl.service.entity.FileDownInfoEntity;
@@ -20,18 +19,11 @@ import com.adl.service.entity.StandardConfigEntity;
 import com.adl.service.entity.StudentEntity;
 import com.adl.service.entity.TeacherEntity;
 import com.adl.service.entity.TeacherSportLocalEntity;
-import com.adl.service.db.converter.ListStringConverter;
 import com.adl.service.web.response.PlanData;
 
-import androidx.annotation.NonNull;
-import androidx.room.AutoMigration;
 import androidx.room.Database;
-import androidx.room.DeleteTable;
-import androidx.room.RenameColumn;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
-import androidx.room.migration.AutoMigrationSpec;
-import androidx.sqlite.db.SupportSQLiteDatabase;
 
 /**
  * ProjectName: AiPowerAuth
@@ -80,11 +72,11 @@ public abstract class DaoManager extends RoomDatabase {
 
     public abstract DictDao getDictDao();
 
-    public abstract MeetDao getMeetDao();
+    public abstract SportMeetDao getSportMeetDao();
 
-    public abstract MeetGroupTeamDao getMeetGroupTeamDao();
+    public abstract SportMeetGroupTeamDao getSportMeetGroupTeamDao();
 
-    public abstract MeetGroupDetailsDao getMeetGroupDetailsDao();
+    public abstract SportMeetGroupDetailDao getSportMeetGroupDetailDao();
 
     public abstract TeacherSportDao getTeacherSportDao();
 }

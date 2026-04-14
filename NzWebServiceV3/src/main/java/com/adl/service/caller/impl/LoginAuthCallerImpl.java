@@ -27,7 +27,7 @@ public final class LoginAuthCallerImpl implements LoginAuthCaller {
 
     @Override
     public long loginAsync(RequestScope scope, LoginRequest request, RequestCallback<LoginData> callback) {
-        CallerScopeUtils.requireScope(scope);
+        CallerUtil.assertScope(scope);
         Disposable disposable = RxCallbackScheduler.scheduleBaseResponse(loginAuthService.login(request), callback);
         SubscriptionManager.getInstance().add(scope.owner(), disposable);
         return disposable.hashCode();
@@ -40,7 +40,7 @@ public final class LoginAuthCallerImpl implements LoginAuthCaller {
 
     @Override
     public long logoutAsync(RequestScope scope, LogoutRequest request, RequestCallback<String> callback) {
-        CallerScopeUtils.requireScope(scope);
+        CallerUtil.assertScope(scope);
         Disposable disposable = RxCallbackScheduler.scheduleBaseResponse(loginAuthService.logout(request), callback);
         SubscriptionManager.getInstance().add(scope.owner(), disposable);
         return disposable.hashCode();

@@ -44,7 +44,7 @@ public final class CommonInfoCallerImpl implements CommonInfoCaller {
 
     @Override
     public long getGradeTreeAsync(RequestScope scope, RequestCallback<List<GradeTreeData>> callback) {
-        CallerScopeUtils.requireScope(scope);
+        CallerUtil.assertScope(scope);
         Disposable disposable = RxCallbackScheduler.scheduleBaseResponse(commonInfoService.getGradeTree(), callback);
         SubscriptionManager.getInstance().add(scope.owner(), disposable);
         return disposable.hashCode();
@@ -57,7 +57,7 @@ public final class CommonInfoCallerImpl implements CommonInfoCaller {
 
     @Override
     public long getGradeChineseNameListAsync(RequestScope scope, RequestCallback<List<GradeChineseNameData>> callback) {
-        CallerScopeUtils.requireScope(scope);
+        CallerUtil.assertScope(scope);
         Disposable disposable = RxCallbackScheduler.scheduleBaseResponse(commonInfoService.getGradeChineseNameList(), callback);
         SubscriptionManager.getInstance().add(scope.owner(), disposable);
         return disposable.hashCode();
@@ -70,7 +70,7 @@ public final class CommonInfoCallerImpl implements CommonInfoCaller {
 
     @Override
     public long getClassListAsync(RequestScope scope, ClassListRequest request, RequestCallback<List<ClassData>> callback) {
-        CallerScopeUtils.requireScope(scope);
+        CallerUtil.assertScope(scope);
         Disposable disposable = RxCallbackScheduler.scheduleBaseResponse(commonInfoService.getClassList(request), callback);
         SubscriptionManager.getInstance().add(scope.owner(), disposable);
         return disposable.hashCode();
@@ -83,7 +83,7 @@ public final class CommonInfoCallerImpl implements CommonInfoCaller {
 
     @Override
     public long getClassInfoAsync(RequestScope scope, ClassInfoRequest request, RequestCallback<ClassInfoData> callback) {
-        CallerScopeUtils.requireScope(scope);
+        CallerUtil.assertScope(scope);
         Disposable disposable = RxCallbackScheduler.scheduleBaseResponse(commonInfoService.getClassInfo(request), callback);
         SubscriptionManager.getInstance().add(scope.owner(), disposable);
         return disposable.hashCode();
@@ -96,7 +96,7 @@ public final class CommonInfoCallerImpl implements CommonInfoCaller {
 
     @Override
     public long getLoginInfoAsync(RequestScope scope, RequestCallback<LoginInfoData> callback) {
-        CallerScopeUtils.requireScope(scope);
+        CallerUtil.assertScope(scope);
         Disposable disposable = RxCallbackScheduler.scheduleBaseResponse(commonInfoService.getLoginInfo(), callback);
         SubscriptionManager.getInstance().add(scope.owner(), disposable);
         return disposable.hashCode();
@@ -109,7 +109,7 @@ public final class CommonInfoCallerImpl implements CommonInfoCaller {
 
     @Override
     public long getAcayearListAsync(RequestScope scope, RequestCallback<List<AcayearData>> callback) {
-        CallerScopeUtils.requireScope(scope);
+        CallerUtil.assertScope(scope);
         Disposable disposable = RxCallbackScheduler.scheduleBaseResponse(commonInfoService.getAcayearList(), callback);
         SubscriptionManager.getInstance().add(scope.owner(), disposable);
         return disposable.hashCode();
@@ -122,7 +122,7 @@ public final class CommonInfoCallerImpl implements CommonInfoCaller {
 
     @Override
     public long getTeacherListAsync(RequestScope scope, TeacherListRequest request, RequestCallback<List<TeacherData>> callback) {
-        CallerScopeUtils.requireScope(scope);
+        CallerUtil.assertScope(scope);
         Disposable disposable = RxCallbackScheduler.scheduleBaseResponse(commonInfoService.getTeacherList(request), callback);
         SubscriptionManager.getInstance().add(scope.owner(), disposable);
         return disposable.hashCode();
@@ -135,7 +135,7 @@ public final class CommonInfoCallerImpl implements CommonInfoCaller {
 
     @Override
     public long getStudentPageAsync(RequestScope scope, StudentPageRequest request, RequestCallback<BasePageData<StudentData>> callback) {
-        CallerScopeUtils.requireScope(scope);
+        CallerUtil.assertScope(scope);
         Disposable disposable = RxCallbackScheduler.scheduleBaseResponse(commonInfoService.getStudentPage(request), callback);
         SubscriptionManager.getInstance().add(scope.owner(), disposable);
         return disposable.hashCode();
@@ -148,7 +148,7 @@ public final class CommonInfoCallerImpl implements CommonInfoCaller {
 
     @Override
     public long getCitizenPageAsync(RequestScope scope, CitizenPageRequest request, RequestCallback<CitizenPageData> callback) {
-        CallerScopeUtils.requireScope(scope);
+        CallerUtil.assertScope(scope);
         Disposable disposable = RxCallbackScheduler.scheduleBaseResponse(commonInfoService.getCitizenPage(request), callback);
         SubscriptionManager.getInstance().add(scope.owner(), disposable);
         return disposable.hashCode();
@@ -161,7 +161,7 @@ public final class CommonInfoCallerImpl implements CommonInfoCaller {
 
     @Override
     public long getDictsAsync(RequestScope scope, DictsRequest request, RequestCallback<List<DictsData>> callback) {
-        CallerScopeUtils.requireScope(scope);
+        CallerUtil.assertScope(scope);
         Disposable disposable = RxCallbackScheduler.scheduleBaseResponse(commonInfoService.getDicts(request), callback);
         SubscriptionManager.getInstance().add(scope.owner(), disposable);
         return disposable.hashCode();
@@ -174,7 +174,7 @@ public final class CommonInfoCallerImpl implements CommonInfoCaller {
 
     @Override
     public long deviceActiveAsync(RequestScope scope, DeviceActiveRequest request, RequestCallback<Boolean> callback) {
-        CallerScopeUtils.requireScope(scope);
+        CallerUtil.assertScope(scope);
         Disposable disposable = RxCallbackScheduler.scheduleBaseResponse(commonInfoService.deviceActive(request), callback);
         SubscriptionManager.getInstance().add(scope.owner(), disposable);
         return disposable.hashCode();

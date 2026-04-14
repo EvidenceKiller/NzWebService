@@ -23,6 +23,10 @@ import java.util.List;
  */
 public interface OrgTestCaller {
 
+    long getStandardConfigPagesAllAsync(RequestScope scope, StandardConfigPageRequest request, RequestCallback<List<StandardConfigPageData>> callback) throws NzBaseException;
+
+    List<StandardConfigPageData> getStandardConfigPagesAllSync(StandardConfigPageRequest request) throws NzBaseException;
+
     /**
      * 获取标准列表
      * <p>异步调用。</p>
@@ -34,6 +38,10 @@ public interface OrgTestCaller {
      * <p>同步调用。</p>
      */
     List<StandardConfigPageData> getStandardConfigPageSync(StandardConfigPageRequest request) throws NzBaseException;
+
+    void clearPlanStudentDataSync();
+
+    List<PlanStudentData> getPlanStudentPagesAllSync(PlanStudentPageRequest request) throws NzBaseException;
 
     /**
      * 获取计划下学生
@@ -48,6 +56,28 @@ public interface OrgTestCaller {
     BasePageData<PlanStudentData> getPlanStudentPageSync(PlanStudentPageRequest request) throws NzBaseException;
 
     /**
+     * 获取所有的分页计划列表
+     * <p>异步调用。</p>
+     *
+     * @param scope
+     * @param request
+     * @param callback
+     * @return
+     * @throws NzBaseException
+     */
+    long getPlanPagesAllAsync(RequestScope scope, PlanPageRequest request, RequestCallback<List<PlanData>> callback) throws NzBaseException;
+
+    /**
+     * 获取所有的分页计划列表
+     * <p>同步调用。</p>
+     *
+     * @param request
+     * @return
+     * @throws NzBaseException
+     */
+    List<PlanData> getPlanPagesAllSync(PlanPageRequest request) throws NzBaseException;
+
+    /**
      * 获取计划列表
      * <p>异步调用。</p>
      */
@@ -58,28 +88,6 @@ public interface OrgTestCaller {
      * <p>同步调用。</p>
      */
     BasePageData<PlanData> getPlanPageSync(PlanPageRequest request) throws NzBaseException;
-
-    /**
-     * 获取所有的分页计划列表
-     * <p>异步调用。</p>
-     *
-     * @param scope
-     * @param request
-     * @param callback
-     * @return
-     * @throws NzBaseException
-     */
-    long getAllPlanPagesAsync(RequestScope scope, PlanPageRequest request, RequestCallback<List<PlanData>> callback) throws NzBaseException;
-
-    /**
-     * 获取所有的分页计划列表
-     * <p>同步调用。</p>
-     *
-     * @param request
-     * @return
-     * @throws NzBaseException
-     */
-    List<PlanData> getAllPlanPagesSync(PlanPageRequest request) throws NzBaseException;
 
     /**
      * 获取组织测试计划详情

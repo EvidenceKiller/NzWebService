@@ -1,6 +1,7 @@
 package com.adl.service.db;
 
-import com.adl.service.entity.StandardConfigEntity;
+
+import com.adl.service.db.entity.StandardConfigEntity;
 
 import java.util.List;
 

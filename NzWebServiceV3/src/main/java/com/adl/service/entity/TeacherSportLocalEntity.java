@@ -5,7 +5,7 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
-import com.adl.service.common.InnerUtil;
+import com.adl.service.utils.InnerUtil;
 
 import org.jetbrains.annotations.NotNull;
 

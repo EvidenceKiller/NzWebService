@@ -2,6 +2,7 @@ package com.adl.service.persistence;
 
 import android.util.Log;
 
+import com.adl.service.exception.NzNetworkException;
 import com.adl.service.web.response.BaseResponse;
 
 import io.reactivex.rxjava3.core.Completable;
@@ -20,19 +21,19 @@ public final class BasePersistence {
     }
 
     /**
-     * @param network          网络请求 Single
-     * @param persistIfSuccess 仅当 {@code response.isSuccess() && response.getData()!=null} 时调用，对 {@code data} 执行插入；无需写入时返回 {@link Completable#complete()}
+     * @param requestCallable          网络请求 Single
+     * @param persistFunc 仅当 {@code response.isSuccess() && response.getData()!=null} 时调用，对 {@code data} 执行插入；无需写入时返回 {@link Completable#complete()}
      */
     public static <T> Single<BaseResponse<T>> persistAfterFetch(
-            Single<BaseResponse<T>> network,
-            Function<T, Completable> persistIfSuccess) {
+            Single<BaseResponse<T>> requestCallable,
+            Function<T, Completable> persistFunc) {
         Log.i("ZXN_TEST", "BasePersistence : persistAfterFetch");
-        return network.flatMap(response -> {
+        return requestCallable.flatMap(response -> {
             if (!response.getSucceed() || response.getData() == null) {
-                return Single.just(response);
+                return Single.error(new NzNetworkException(response.getCode(), response.getMsg()));
             }
             T data = response.getData();
-            return persistIfSuccess.apply(data).andThen(Single.just(response));
+            return persistFunc.apply(data).andThen(Single.just(response));
         });
     }
 }

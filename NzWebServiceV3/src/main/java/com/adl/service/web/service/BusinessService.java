@@ -1,5 +1,9 @@
 package com.adl.service.web.service;
 
+import com.adl.service.exception.NzBaseException;
+import com.adl.service.exception.NzCommonException;
+import com.adl.service.internal.RetrofitClient;
+import com.adl.service.utils.InnerUtil;
 import com.adl.service.web.request.CompetitionPageRequest;
 import com.adl.service.web.request.CompetitionRankDetailRequest;
 import com.adl.service.web.request.DownloadGroupTeamDetailPageRequest;
@@ -25,10 +29,15 @@ import com.adl.service.web.response.ResTypeData;
 import com.adl.service.web.response.SportMeetData;
 import com.adl.service.web.response.TrainPlanInfoData;
 import com.adl.service.web.response.TrainPlanOneDayProjectData;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 
+import java.io.IOException;
 import java.util.List;
 
 import io.reactivex.rxjava3.core.Single;
+import okhttp3.Request;
+import okhttp3.Response;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
 
@@ -114,4 +123,22 @@ public interface BusinessService {
     @POST("tis/device/org/res/getResInfo")
     Single<BaseResponse<ResData>> getResInfo(@Body ResInfoRequest request);
 
+    /**
+     * 获取服务端时间
+     */
+    default long getServerTime() throws NzBaseException {
+        try {
+            Request request = new Request.Builder().url(InnerUtil.getIpHost() + "/time").build();
+            Response response = RetrofitClient.getInstance("", false).getOkHttpClient().newCall(request).execute();
+            if (response.isSuccessful() && response.body() != null) {
+                JSONObject jo = JSON.parseObject(response.body().string());
+                // 服务器返回时间为秒
+                return (long) (jo.getDoubleValue("timestamp") * 1000L);
+            } else {
+                throw new NzCommonException("Get Server time meet some error : " + response.message());
+            }
+        } catch (IOException e) {
+            throw new NzCommonException("Get Server time meet some error", e);
+        }
+    }
 }

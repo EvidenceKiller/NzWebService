@@ -3,7 +3,6 @@ package com.adl.service.db;
 import android.content.Context;
 
 import com.adl.service.common.InnerPreferences;
-import com.adl.service.db.migration.Migration_17_to_18;
 
 import java.io.File;
 
@@ -84,8 +83,6 @@ public final class DaoManagerProxy {
 
             DaoManager dm = Room.databaseBuilder(context, DaoManager.class, DB_NAME)
                     .allowMainThreadQueries()
-                    .fallbackToDestructiveMigration()
-                    .addMigrations(new Migration_17_to_18())
                     .build();
             pf.putInt("_db_version", DB_VERSION);
             return dm;
@@ -140,16 +137,16 @@ public final class DaoManagerProxy {
         return mDaoManager.getDictDao();
     }
 
-    public MeetDao getMeetDao() {
-        return mDaoManager.getMeetDao();
+    public SportMeetDao getSportMeetDao() {
+        return mDaoManager.getSportMeetDao();
     }
 
-    public MeetGroupTeamDao getMeetGroupTeamDao() {
-        return mDaoManager.getMeetGroupTeamDao();
+    public SportMeetGroupTeamDao getSportMeetGroupTeamDao() {
+        return mDaoManager.getSportMeetGroupTeamDao();
     }
 
-    public MeetGroupDetailsDao getMeetGroupDetailsDao() {
-        return mDaoManager.getMeetGroupDetailsDao();
+    public SportMeetGroupDetailDao getSportMeetGroupDetailsDao() {
+        return mDaoManager.getSportMeetGroupDetailDao();
     }
 
     public TeacherSportDao getTeacherSportDao() {

@@ -1,4 +1,4 @@
-package com.adl.service.web.response.converter;
+package com.adl.service.db.converter;
 
 import com.adl.service.web.response.SportProjectData;
 import com.google.gson.Gson;

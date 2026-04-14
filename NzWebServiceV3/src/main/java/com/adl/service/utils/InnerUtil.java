@@ -1,5 +1,6 @@
-package com.adl.service.common;
+package com.adl.service.utils;
 
+import com.adl.service.AdlService;
 import com.adl.service.entity.PageInfo;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -13,6 +14,8 @@ import java.security.MessageDigest;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * ProjectName: AiPowerAuth
@@ -22,19 +25,30 @@ import java.util.Locale;
  */
 public class InnerUtil {
 
-    static SimpleDateFormat DFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
-    static SimpleDateFormat YMDFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+    private static final Pattern URL_PATTERN = Pattern.compile("https?://(?:www\\.)?(?:(?:[\\w-]+\\.)+[\\w-]+|\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3})(:\\d+)?");
+    private static final String SERVICE_HOST = "https://www.nezhasport.com";
+
+    private static SimpleDateFormat YMD_HMS_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+    private static SimpleDateFormat YMD_FORMAT = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+
+    public static String getIpHost() {
+        Matcher matcher = URL_PATTERN.matcher(AdlService.getService().getHost());
+        if (matcher.find()) {
+            return matcher.group(0);
+        }
+        return SERVICE_HOST;
+    }
 
     public static String formatByTimeCode(long time) {
-        return DFormat.format(new Date(time));
+        return YMD_HMS_FORMAT.format(new Date(time));
     }
 
     public static String formatNow() {
-        return DFormat.format(new Date());
+        return YMD_HMS_FORMAT.format(new Date());
     }
 
     public static String formatYMDNow() {
-        return YMDFormat.format(new Date());
+        return YMD_FORMAT.format(new Date());
     }
 
     public static String md5(String text) {

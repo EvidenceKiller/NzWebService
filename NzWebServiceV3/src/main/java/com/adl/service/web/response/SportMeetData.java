@@ -1,11 +1,15 @@
 package com.adl.service.web.response;
 
+import com.adl.service.common.CommonUtil;
 import com.adl.service.internal.StrictJsonDeserializer;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.ToString;
 
@@ -209,5 +213,17 @@ public final class SportMeetData {
      * 分组团队
      */
     @SerializedName("groupTeams")
-    private Object groupTeams;
+    private List<SportMeetGroupTeamData> groupTeams;
+
+    public List<SportMeetSkuData> fliterSkuList(Predicate<SportMeetSkuData> predicate) {
+        if (CommonUtil.isNotEmptyList(skuList)) {
+            List<SportMeetSkuData> filterList = skuList.stream()
+                    .filter(predicate)
+                    .collect(Collectors.toList());
+            skuList = filterList;
+            return filterList;
+        } else {
+            return null;
+        }
+    }
 }

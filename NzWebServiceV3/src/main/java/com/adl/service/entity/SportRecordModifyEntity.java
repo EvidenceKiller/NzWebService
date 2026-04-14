@@ -2,7 +2,7 @@ package com.adl.service.entity;
 
 import androidx.room.ColumnInfo;
 
-import com.adl.service.common.InnerUtil;
+import com.adl.service.utils.InnerUtil;
 
 /**
  * ProjectName: AiPowerAuth

@@ -1,6 +1,6 @@
 package com.adl.service.db;
 
-import com.adl.service.entity.MeetGroupDetailsEntity;
+import com.adl.service.db.entity.SportMeetGroupDetailEntity;
 
 import java.util.List;
 
@@ -16,13 +16,13 @@ import androidx.room.Query;
  * Describe   : 类描述
  */
 @Dao
-public interface MeetGroupDetailsDao {
+public interface SportMeetGroupDetailDao {
 
     @Query("select * from _meet_group_detail where _app_code = :appCode")
-    List<MeetGroupDetailsEntity> getAll(String appCode);
+    List<SportMeetGroupDetailEntity> getAll(String appCode);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertAll(List<MeetGroupDetailsEntity> list);
+    void insertAll(List<SportMeetGroupDetailEntity> list);
 
     @Query("select * from _meet_group_detail where " +
             "_app_code = :appCode and " +
@@ -31,7 +31,7 @@ public interface MeetGroupDetailsDao {
             "_competition_round = :competitionRound and " +
             "_team_unit_code = :teamUnitCode"
     )
-    List<MeetGroupDetailsEntity> queryMeetDetailsByTeamCode(
+    List<SportMeetGroupDetailEntity> queryMeetDetailsByTeamCode(
             String appCode,
             String meetId,
             String meetSportSkuId,
@@ -46,13 +46,16 @@ public interface MeetGroupDetailsDao {
             "_competition_round = :competitionRound and " +
             "_team_unit_code = :teamUnitCode and " +
             "_group_no = :groupNo")
-    List<MeetGroupDetailsEntity> queryMeetDetailsByGroupNo(
+    List<SportMeetGroupDetailEntity> queryMeetDetailsByGroupNo(
             String appCode,
             String meetId,
             String meetSportSkuId,
             int competitionRound,
             String teamUnitCode,
             int groupNo);
+
+    @Query("delete from _meet_group_detail where _app_code = :appCode")
+    void clearByAppCode(String appCode);
 
     @Query("delete from _meet_group_detail")
     void clearAll();
