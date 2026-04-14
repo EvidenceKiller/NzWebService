@@ -35,8 +35,8 @@ public final class SunshineRunningSportDetailPageRequest extends BasePageRequest
         this.date = b.date;
     }
 
-    public static Builder builder() {
-        return new Builder();
+    public static Builder builder(String date) {
+        return new Builder(date);
     }
 
     public static class Builder extends BasePageRequest.Builder<Builder> {
@@ -48,6 +48,10 @@ public final class SunshineRunningSportDetailPageRequest extends BasePageRequest
         private String orgId;
         private String date;
 
+        public Builder(String date) {
+            this.date = date;
+        }
+
         public Builder semesterId(String v) {
             this.semesterId = v;
             return this;
@@ -55,11 +59,6 @@ public final class SunshineRunningSportDetailPageRequest extends BasePageRequest
 
         public Builder orgId(String v) {
             this.orgId = v;
-            return this;
-        }
-
-        public Builder date(String v) {
-            this.date = v;
             return this;
         }
 

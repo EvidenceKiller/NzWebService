@@ -15,8 +15,6 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 import lombok.Data;
-import lombok.Getter;
-import lombok.ToString;
 
 @Data
 @JsonAdapter(StrictJsonDeserializer.class)

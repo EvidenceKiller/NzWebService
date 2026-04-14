@@ -19,8 +19,8 @@ public final class BannerDetailListRequest {
         this.resType = builder.resType;
     }
 
-    public static Builder builder() {
-        return new Builder();
+    public static Builder builder(String id) {
+        return new Builder(id);
     }
 
 
@@ -29,9 +29,8 @@ public final class BannerDetailListRequest {
         private String wikiId;
         private Integer resType;
 
-        public Builder id(String id) {
+        Builder(String id) {
             this.id = id;
-            return this;
         }
 
         public Builder wikiId(String wikiId) {

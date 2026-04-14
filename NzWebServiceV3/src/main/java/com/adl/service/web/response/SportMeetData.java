@@ -170,16 +170,16 @@ public final class SportMeetData {
     private Integer applyState;
 
     /**
-     * 班级
-     */
-    @SerializedName("classes")
-    private Object classes;
-
-    /**
      * 班级ID列表
      */
     @SerializedName("classIds")
-    private Object classIds;
+    private List<String> classIds;
+
+    /**
+     * 班级
+     */
+    @SerializedName("classes")
+    private List<ClassSimpleData> classes;
 
     /**
      * 机构名称

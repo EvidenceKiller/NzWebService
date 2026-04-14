@@ -6,7 +6,6 @@ import com.adl.service.caller.CommonInfoCaller;
 import com.adl.service.exception.NzBaseException;
 import com.adl.service.internal.RxCallbackScheduler;
 import com.adl.service.internal.SubscriptionManager;
-import com.adl.service.web.request.AddBatchPageRequest;
 import com.adl.service.web.request.CitizenPageRequest;
 import com.adl.service.web.request.ClassInfoRequest;
 import com.adl.service.web.request.ClassListRequest;
@@ -19,7 +18,7 @@ import com.adl.service.web.response.AcayearData;
 import com.adl.service.web.response.BasePageData;
 import com.adl.service.web.response.CitizenPageData;
 import com.adl.service.web.response.ClassInfoData;
-import com.adl.service.web.response.ClassListData;
+import com.adl.service.web.response.ClassData;
 import com.adl.service.web.response.DictsData;
 import com.adl.service.web.response.GradeChineseNameData;
 import com.adl.service.web.response.GradeTreeData;
@@ -70,7 +69,7 @@ public final class CommonInfoCallerImpl implements CommonInfoCaller {
     }
 
     @Override
-    public long getClassListAsync(RequestScope scope, ClassListRequest request, RequestCallback<List<ClassListData>> callback) {
+    public long getClassListAsync(RequestScope scope, ClassListRequest request, RequestCallback<List<ClassData>> callback) {
         CallerScopeUtils.requireScope(scope);
         Disposable disposable = RxCallbackScheduler.scheduleBaseResponse(commonInfoService.getClassList(request), callback);
         SubscriptionManager.getInstance().add(scope.owner(), disposable);
@@ -78,7 +77,7 @@ public final class CommonInfoCallerImpl implements CommonInfoCaller {
     }
 
     @Override
-    public List<ClassListData> getClassListSync(ClassListRequest request) throws NzBaseException {
+    public List<ClassData> getClassListSync(ClassListRequest request) throws NzBaseException {
         return RxCallbackScheduler.blockingGetData(commonInfoService.getClassList(request));
     }
 

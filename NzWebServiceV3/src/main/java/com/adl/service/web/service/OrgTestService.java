@@ -2,6 +2,7 @@ package com.adl.service.web.service;
 
 import com.adl.service.web.request.CheckStudentInPlanRequest;
 import com.adl.service.web.request.PlanClassListRequest;
+import com.adl.service.web.request.PlanInfoRequest;
 import com.adl.service.web.request.PlanPageRequest;
 import com.adl.service.web.request.PlanStudentPageRequest;
 import com.adl.service.web.request.StandardConfigPageRequest;
@@ -45,7 +46,7 @@ public interface OrgTestService {
      * 获取组织测试计划详情
      */
     @POST("tis/device/pte/organizeTest/getPlanInfo")
-    Single<BaseResponse<PlanInfoData>> getPlanInfo();
+    Single<BaseResponse<PlanInfoData>> getPlanInfo(@Body PlanInfoRequest request);
 
     /**
      * 获取计划班级列表

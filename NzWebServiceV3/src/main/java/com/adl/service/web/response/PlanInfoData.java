@@ -5,6 +5,7 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
+import java.util.Map;
 
 import lombok.Getter;
 import lombok.ToString;
@@ -39,19 +40,19 @@ public final class PlanInfoData {
     private String originStandardId;
 
     @SerializedName("sportList")
-    private List<Object> sportList;
+    private List<SportProjectData> sportList;
 
     @SerializedName("classIds")
-    private List<Object> classIds;
+    private List<String> classIds;
 
     @SerializedName("classes")
-    private List<Object> classes;
+    private List<ClassSimpleData> classes;
 
     @SerializedName("dayConfigsMap")
-    private Object dayConfigsMap;
+    private Map<String, List<DateConfigData>> dayConfigsMap;
 
     @SerializedName("dateConfigsMap")
-    private Object dateConfigsMap;
+    private Map<String, List<DateConfigData>> dateConfigsMap;
 
     @SerializedName("classAllFlag")
     private String classAllFlag;
@@ -153,5 +154,5 @@ public final class PlanInfoData {
      * 两种模式的预约状态
      */
     @SerializedName("reserveStatusMap")
-    private Object reserveStatusMap;
+    private Map<String, List<DateConfigData>> reserveStatusMap;
 }

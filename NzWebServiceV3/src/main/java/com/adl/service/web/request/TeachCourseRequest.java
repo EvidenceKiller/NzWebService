@@ -41,8 +41,8 @@ public final class TeachCourseRequest {
         this.times = builder.times;
     }
 
-    public static Builder builder() {
-        return new Builder();
+    public static Builder builder(String classId, String date) {
+        return new Builder(classId, date);
     }
 
     public static class Builder {
@@ -52,9 +52,9 @@ public final class TeachCourseRequest {
         private String date;
         private Integer times;
 
-        public Builder classId(String classId) {
+        Builder(String classId, String date) {
             this.classId = classId;
-            return this;
+            this.date = date;
         }
 
         public Builder sportSkuId(String sportSkuId) {
@@ -64,11 +64,6 @@ public final class TeachCourseRequest {
 
         public Builder sportItemCode(String sportItemCode) {
             this.sportItemCode = sportItemCode;
-            return this;
-        }
-
-        public Builder date(String date) {
-            this.date = date;
             return this;
         }
 

@@ -30,7 +30,6 @@ public class V3InterfaceTestActivity extends BaseActivity {
         findViewById(R.id.btn_6).setOnClickListener(v -> startActivity(new Intent(this, V3LoginAuthCallerTestActivity.class)));
         findViewById(R.id.btn_7).setOnClickListener(v -> startActivity(new Intent(this, V3BigScreenStatsCallerTestActivity.class)));
         findViewById(R.id.btn_8).setOnClickListener(v -> startActivity(new Intent(this, V3BigScreenH5CallerTestActivity.class)));
-        findViewById(R.id.btn_9).setOnClickListener(v -> startActivity(new Intent(this, V3OpsMaintCallerTestActivity.class)));
 
     }
 

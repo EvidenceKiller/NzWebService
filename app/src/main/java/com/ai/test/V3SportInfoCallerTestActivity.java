@@ -64,23 +64,38 @@ public class V3SportInfoCallerTestActivity extends AppCompatActivity {
     }
 
     private ReportStudentSportRequest buildReportStudentSportRequest() {
-        return ReportStudentSportRequest.builder("1965665142485622785", "101101", 0, 10L, "123456789", "234567890", "Succeed", "0401010001", "0401010001", "temp", 100000L).build();
+        return ReportStudentSportRequest.builder(
+                "1965665142485622785", "101101", 0, 10L, "1776082153044", "1776082213054",
+                "50", "1001", "4301010001", "temp", 60000L)
+                .build();
     }
 
     private ReportTeacherSportRequest buildReportTeacherSportRequest() {
-        return ReportTeacherSportRequest.builder("1965665142485622785", "101101", "", 0, 10L, "123456789", "234567890", "Succeed", "0401010001", "0401010001", "temp", 100000L).build();
+        return ReportTeacherSportRequest.builder(
+                "1965665142485622785", "101101", "test1111", 0, 10L, "1776082153044", "1776082213054",
+                "50", "1001", "4301010001", "temp", 60000L)
+                .build();
     }
 
     private ReportStudentMeetRequest buildReportStudentMeetRequest() {
-        return ReportStudentMeetRequest.builder("1965665142485622785", "101101", 0, 10L, "123456789", "234567890", "Succeed", "0401010001", "0401010001", "temp", 100000L).build();
+        return ReportStudentMeetRequest.builder(
+                "1965665142485622785", "101101", 0, 10L, "1776082153044", "1776082213054",
+                "50", "1001", "4301010001", "temp", 60000L)
+                .build();
     }
 
     private ReportStudentPlanRequest buildReportStudentPlanRequest() {
-        return ReportStudentPlanRequest.builder("1965665142485622785", "101101", 0, 10L, "123456789", "234567890", "Succeed", "0401010001", "0401010001", "temp", 100000L).build();
+        return ReportStudentPlanRequest.builder(
+                "1965665142485622785", "101101", 0, 10L, "1776082153044", "1776082213054",
+                "50", "1001", "4301010001", "temp", 60000L)
+                .build();
     }
 
     private ReportStudentCompetitionRequest buildReportStudentCompetitionRequest() {
-        return ReportStudentCompetitionRequest.builder("1965665142485622785", "101101", 0, 10L, "123456789", "234567890", "Succeed", "0401010001", "0401010001", "temp", 100000L).build();
+        return ReportStudentCompetitionRequest.builder(
+                "1965665142485622785", "101101", 0, 10L, "1776082153044", "1776082213054",
+                "50", "1001", "4301010001", "temp", 60000L)
+                .build();
     }
 
     private AccountRecordPageRequest buildAccountRecordPageRequest() {

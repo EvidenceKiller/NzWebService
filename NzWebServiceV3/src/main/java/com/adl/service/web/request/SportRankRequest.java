@@ -54,8 +54,8 @@ public final class SportRankRequest {
         this.appCode = builder.appCode;
     }
 
-    public static Builder builder() {
-        return new Builder();
+    public static Builder builder(String appCode, String sportSceneType) {
+        return new Builder(appCode, sportSceneType);
     }
 
 
@@ -70,13 +70,13 @@ public final class SportRankRequest {
         private Long rankNumber;
         private String appCode;
 
-        public Builder sportSceneCodes(List<String> sportSceneCodes) {
-            this.sportSceneCodes = sportSceneCodes;
-            return this;
+        Builder(String appCode, String sportSceneType) {
+            this.appCode = appCode;
+            this.sportSceneType = sportSceneType;
         }
 
-        public Builder sportSceneType(String sportSceneType) {
-            this.sportSceneType = sportSceneType;
+        public Builder sportSceneCodes(List<String> sportSceneCodes) {
+            this.sportSceneCodes = sportSceneCodes;
             return this;
         }
 
@@ -107,11 +107,6 @@ public final class SportRankRequest {
 
         public Builder rankNumber(Long rankNumber) {
             this.rankNumber = rankNumber;
-            return this;
-        }
-
-        public Builder appCode(String appCode) {
-            this.appCode = appCode;
             return this;
         }
 

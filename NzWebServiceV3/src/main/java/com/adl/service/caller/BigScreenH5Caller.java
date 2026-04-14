@@ -60,13 +60,13 @@ public interface BigScreenH5Caller {
      * 教学按钮点击计数
      * <p>异步调用。</p>
      */
-    long getTeachCourseButtonClickCountAsync(RequestScope scope, TeachCourseButtonClickCountRequest request, RequestCallback<Boolean> callback);
+    long getTeachCourseButtonClickableAsync(RequestScope scope, TeachCourseButtonClickCountRequest request, RequestCallback<Boolean> callback);
 
     /**
      * 教学按钮点击计数
      * <p>同步调用。</p>
      */
-    Boolean getTeachCourseButtonClickCountSync(TeachCourseButtonClickCountRequest request) throws NzBaseException;
+    Boolean getTeachCourseButtonClickableSync(TeachCourseButtonClickCountRequest request) throws NzBaseException;
 
     /**
      * 历史记录

@@ -6,7 +6,6 @@ import com.adl.service.caller.BusinessCaller;
 import com.adl.service.caller.CommonInfoCaller;
 import com.adl.service.caller.LoginAuthCaller;
 import com.adl.service.caller.OperationCaller;
-import com.adl.service.caller.OpsMaintCaller;
 import com.adl.service.caller.OrgTestCaller;
 import com.adl.service.caller.SportInfoCaller;
 import com.adl.service.caller.impl.BigScreenH5CallerImpl;
@@ -15,7 +14,6 @@ import com.adl.service.caller.impl.BusinessCallerImpl;
 import com.adl.service.caller.impl.CommonInfoCallerImpl;
 import com.adl.service.caller.impl.LoginAuthCallerImpl;
 import com.adl.service.caller.impl.OperationCallerImpl;
-import com.adl.service.caller.impl.OpsMaintCallerImpl;
 import com.adl.service.caller.impl.OrgTestCallerImpl;
 import com.adl.service.caller.impl.SportInfoCallerImpl;
 import com.adl.service.web.service.BigScreenH5Service;
@@ -24,7 +22,6 @@ import com.adl.service.web.service.BusinessService;
 import com.adl.service.web.service.CommonInfoService;
 import com.adl.service.web.service.LoginAuthService;
 import com.adl.service.web.service.OperationService;
-import com.adl.service.web.service.OpsMaintService;
 import com.adl.service.web.service.OrgTestService;
 import com.adl.service.web.service.SportInfoService;
 
@@ -46,7 +43,6 @@ public final class RetrofitManager {
     private LoginAuthCaller loginAuthCaller;
     private BigScreenStatsCaller bigScreenStatsCaller;
     private BigScreenH5Caller bigScreenH5Caller;
-    private OpsMaintCaller opsMaintCaller;
 
     private RetrofitManager() {
     }
@@ -71,7 +67,6 @@ public final class RetrofitManager {
                 || this.loginAuthCaller == null
                 || this.bigScreenStatsCaller == null
                 || this.bigScreenH5Caller == null
-                || this.opsMaintCaller == null
                 || !host.equals(this.host)
                 || debug != this.debug;
         if (!needRebuild) {
@@ -91,7 +86,6 @@ public final class RetrofitManager {
         LoginAuthService loginAuthService = retrofitClient.create(LoginAuthService.class);
         BigScreenStatsService bigScreenStatsService = retrofitClient.create(BigScreenStatsService.class);
         BigScreenH5Service bigScreenH5Service = retrofitClient.create(BigScreenH5Service.class);
-        OpsMaintService opsMaintService = retrofitClient.create(OpsMaintService.class);
 
         this.commonInfoCaller = new CommonInfoCallerImpl(commonInfoService);
         this.sportInfoCaller = new SportInfoCallerImpl(sportInfoService);
@@ -101,7 +95,6 @@ public final class RetrofitManager {
         this.loginAuthCaller = new LoginAuthCallerImpl(loginAuthService);
         this.bigScreenStatsCaller = new BigScreenStatsCallerImpl(bigScreenStatsService);
         this.bigScreenH5Caller = new BigScreenH5CallerImpl(bigScreenH5Service);
-        this.opsMaintCaller = new OpsMaintCallerImpl(opsMaintService);
     }
 
     public CommonInfoCaller getCommonInfoCaller() {
@@ -134,9 +127,5 @@ public final class RetrofitManager {
 
     public BigScreenH5Caller getBigScreenH5Caller() {
         return bigScreenH5Caller;
-    }
-
-    public OpsMaintCaller getOpsMaintCaller() {
-        return opsMaintCaller;
     }
 }

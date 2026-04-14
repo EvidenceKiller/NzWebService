@@ -28,8 +28,8 @@ public final class TrainPlanOneDayProjectListRequest {
         this.trainPlanTime = builder.trainPlanTime;
     }
 
-    public static Builder builder(String trainPlanId, String accountId) {
-        return new Builder(trainPlanId, accountId);
+    public static Builder builder(String accountId, String trainPlanId) {
+        return new Builder(accountId, trainPlanId);
     }
 
 
@@ -38,9 +38,9 @@ public final class TrainPlanOneDayProjectListRequest {
         private String accountId;
         private String trainPlanTime;
 
-        Builder(String trainPlanId, String accountId) {
-            this.trainPlanId = trainPlanId;
+        Builder(String accountId, String trainPlanId) {
             this.accountId = accountId;
+            this.trainPlanId = trainPlanId;
         }
 
         public Builder trainPlanTime(String trainPlanTime) {

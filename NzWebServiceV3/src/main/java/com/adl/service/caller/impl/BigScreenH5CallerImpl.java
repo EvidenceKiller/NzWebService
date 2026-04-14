@@ -73,16 +73,16 @@ public final class BigScreenH5CallerImpl implements BigScreenH5Caller {
     }
 
     @Override
-    public long getTeachCourseButtonClickCountAsync(RequestScope scope, TeachCourseButtonClickCountRequest request, RequestCallback<Boolean> callback) {
+    public long getTeachCourseButtonClickableAsync(RequestScope scope, TeachCourseButtonClickCountRequest request, RequestCallback<Boolean> callback) {
         CallerScopeUtils.requireScope(scope);
-        Disposable disposable = RxCallbackScheduler.scheduleBaseResponse(bigScreenH5Service.getTeachCourseButtonClickCount(request), callback);
+        Disposable disposable = RxCallbackScheduler.scheduleBaseResponse(bigScreenH5Service.getTeachCourseButtonClickable(request), callback);
         SubscriptionManager.getInstance().add(scope.owner(), disposable);
         return disposable.hashCode();
     }
 
     @Override
-    public Boolean getTeachCourseButtonClickCountSync(TeachCourseButtonClickCountRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGetData(bigScreenH5Service.getTeachCourseButtonClickCount(request));
+    public Boolean getTeachCourseButtonClickableSync(TeachCourseButtonClickCountRequest request) throws NzBaseException {
+        return RxCallbackScheduler.blockingGetData(bigScreenH5Service.getTeachCourseButtonClickable(request));
     }
 
     @Override

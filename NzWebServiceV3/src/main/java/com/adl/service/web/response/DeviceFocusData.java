@@ -69,5 +69,5 @@ public final class DeviceFocusData {
      * 设备ids
      */
     @SerializedName("deviceIds")
-    private List<Object> deviceIds;
+    private List<String> deviceIds;
 }

@@ -4,6 +4,7 @@ import com.adl.service.callback.RequestCallback;
 import com.adl.service.exception.NzBaseException;
 import com.adl.service.web.request.CheckStudentInPlanRequest;
 import com.adl.service.web.request.PlanClassListRequest;
+import com.adl.service.web.request.PlanInfoRequest;
 import com.adl.service.web.request.PlanPageRequest;
 import com.adl.service.web.request.PlanStudentPageRequest;
 import com.adl.service.web.request.RequestScope;
@@ -84,13 +85,13 @@ public interface OrgTestCaller {
      * 获取组织测试计划详情
      * <p>异步调用。</p>
      */
-    long getPlanInfoAsync(RequestScope scope, RequestCallback<PlanInfoData> callback);
+    long getPlanInfoAsync(RequestScope scope, PlanInfoRequest request, RequestCallback<PlanInfoData> callback);
 
     /**
      * 获取组织测试计划详情
      * <p>同步调用。</p>
      */
-    PlanInfoData getPlanInfoSync() throws NzBaseException;
+    PlanInfoData getPlanInfoSync(PlanInfoRequest request) throws NzBaseException;
 
     /**
      * 获取计划班级列表

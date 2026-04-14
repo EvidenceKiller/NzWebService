@@ -12,6 +12,7 @@ import com.adl.service.persistence.BasePagePersistence;
 import com.adl.service.persistence.PlanPersistenceHelper;
 import com.adl.service.web.request.CheckStudentInPlanRequest;
 import com.adl.service.web.request.PlanClassListRequest;
+import com.adl.service.web.request.PlanInfoRequest;
 import com.adl.service.web.request.PlanPageRequest;
 import com.adl.service.web.request.PlanStudentPageRequest;
 import com.adl.service.web.request.RequestScope;
@@ -105,16 +106,16 @@ public final class OrgTestCallerImpl implements OrgTestCaller {
     }
 
     @Override
-    public long getPlanInfoAsync(RequestScope scope, RequestCallback<PlanInfoData> callback) {
+    public long getPlanInfoAsync(RequestScope scope, PlanInfoRequest request, RequestCallback<PlanInfoData> callback) {
         CallerScopeUtils.requireScope(scope);
-        Disposable disposable = RxCallbackScheduler.scheduleBaseResponse(orgTestService.getPlanInfo(), callback);
+        Disposable disposable = RxCallbackScheduler.scheduleBaseResponse(orgTestService.getPlanInfo(request), callback);
         SubscriptionManager.getInstance().add(scope.owner(), disposable);
         return disposable.hashCode();
     }
 
     @Override
-    public PlanInfoData getPlanInfoSync() throws NzBaseException {
-        return RxCallbackScheduler.blockingGetData(orgTestService.getPlanInfo());
+    public PlanInfoData getPlanInfoSync(PlanInfoRequest request) throws NzBaseException {
+        return RxCallbackScheduler.blockingGetData(orgTestService.getPlanInfo(request));
     }
 
     @Override

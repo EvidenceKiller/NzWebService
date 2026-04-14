@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import com.adl.service.AdlService;
 import com.adl.service.callback.RequestCallback;
-import com.adl.service.web.request.AddBatchPageRequest;
 import com.adl.service.web.request.BaseDirection;
 import com.adl.service.web.request.BaseSort;
 import com.adl.service.web.request.CitizenPageRequest;
@@ -24,7 +23,7 @@ import com.adl.service.web.response.AcayearData;
 import com.adl.service.web.response.BasePageData;
 import com.adl.service.web.response.CitizenPageData;
 import com.adl.service.web.response.ClassInfoData;
-import com.adl.service.web.response.ClassListData;
+import com.adl.service.web.response.ClassData;
 import com.adl.service.web.response.DictsData;
 import com.adl.service.web.response.GradeChineseNameData;
 import com.adl.service.web.response.GradeTreeData;
@@ -205,9 +204,9 @@ public class V3CommonInfoCallerTestActivity extends AppCompatActivity {
 
     private void getClassListAsync() {
         ClassListRequest request = ClassListRequest.builder().build();
-        AdlService.getService().getCommonInfoCaller().getClassListAsync(RequestScope.of(this), request, new RequestCallback<List<ClassListData>>() {
+        AdlService.getService().getCommonInfoCaller().getClassListAsync(RequestScope.of(this), request, new RequestCallback<List<ClassData>>() {
             @Override
-            public void onSuccess(List<ClassListData> data) {
+            public void onSuccess(List<ClassData> data) {
                 if (data != null) {
                     Log.d(TAG, "CommonInfoCallerTestActivity::getClassListAsync::onSuccess : data size : " + data.size());
                     Log.d(TAG, "CommonInfoCallerTestActivity::getClassListAsync::onSuccess : data : " + data);
@@ -235,9 +234,9 @@ public class V3CommonInfoCallerTestActivity extends AppCompatActivity {
         AdlService.getService().executeSyncOnIo(RequestScope.of(this), () -> {
             ClassListRequest request = ClassListRequest.builder().build();
             return AdlService.getService().getCommonInfoCaller().getClassListSync(request);
-        }, new RequestCallback<List<ClassListData>>() {
+        }, new RequestCallback<List<ClassData>>() {
             @Override
-            public void onSuccess(List<ClassListData> data) {
+            public void onSuccess(List<ClassData> data) {
                 if (data != null) {
                     Log.d(TAG, "CommonInfoCallerTestActivity::getClassListSync::onSuccess : data size : " + data.size());
                     Log.d(TAG, "CommonInfoCallerTestActivity::getClassListSync::onSuccess : data : " + data);

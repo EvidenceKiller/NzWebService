@@ -101,7 +101,7 @@ public class V3BusinessCallerTestActivity extends AppCompatActivity {
     }
 
     private TrainPlanOneDayProjectListRequest buildTrainPlanOneDayProjectListRequest() {
-        return TrainPlanOneDayProjectListRequest.builder("", "")
+        return TrainPlanOneDayProjectListRequest.builder("1965665142485622785", "1965665142485622785")
                 .build();
     }
 
@@ -113,7 +113,7 @@ public class V3BusinessCallerTestActivity extends AppCompatActivity {
     private JoinCompetitionRankRequest buildJoinCompetitionRankRequest() {
         return JoinCompetitionRankRequest.builder()
                 .id("2041833871287713792")
-                .accountId("123456789")
+                .accountId("1965665142485622785")
                 .classId("123456789")
                 .build();
     }

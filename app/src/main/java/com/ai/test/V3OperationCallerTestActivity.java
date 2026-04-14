@@ -76,7 +76,7 @@ public class V3OperationCallerTestActivity extends AppCompatActivity {
     }
 
     private BannerDetailListRequest buildBannerDetailListRequest() {
-        return BannerDetailListRequest.builder()
+        return BannerDetailListRequest.builder("10110101")
                 .build();
     }
 

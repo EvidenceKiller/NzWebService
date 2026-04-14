@@ -43,7 +43,7 @@ public interface BigScreenH5Service {
      * 教学按钮点击计数
      */
     @POST("tis/device/h5/org/teach/course/click/teachButton")
-    Single<BaseResponse<Boolean>> getTeachCourseButtonClickCount(@Body TeachCourseButtonClickCountRequest request);
+    Single<BaseResponse<Boolean>> getTeachCourseButtonClickable(@Body TeachCourseButtonClickCountRequest request);
 
     /**
      * 历史记录

@@ -11,7 +11,6 @@ import com.adl.service.caller.BusinessCaller;
 import com.adl.service.caller.CommonInfoCaller;
 import com.adl.service.caller.LoginAuthCaller;
 import com.adl.service.caller.OperationCaller;
-import com.adl.service.caller.OpsMaintCaller;
 import com.adl.service.caller.OrgTestCaller;
 import com.adl.service.caller.SportInfoCaller;
 import com.adl.service.common.BaseService;
@@ -212,10 +211,6 @@ public final class AdlService {
 
     public BigScreenH5Caller getBigScreenH5Caller() {
         return RetrofitManager.getInstance().getBigScreenH5Caller();
-    }
-
-    public OpsMaintCaller getOpsMaintCaller() {
-        return RetrofitManager.getInstance().getOpsMaintCaller();
     }
 
     // ===================================================

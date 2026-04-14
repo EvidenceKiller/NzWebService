@@ -1,6 +1,5 @@
 package com.adl.service.web.service;
 
-import com.adl.service.web.request.AddBatchPageRequest;
 import com.adl.service.web.request.CitizenPageRequest;
 import com.adl.service.web.request.ClassInfoRequest;
 import com.adl.service.web.request.ClassListRequest;
@@ -13,7 +12,7 @@ import com.adl.service.web.response.BasePageData;
 import com.adl.service.web.response.BaseResponse;
 import com.adl.service.web.response.CitizenPageData;
 import com.adl.service.web.response.ClassInfoData;
-import com.adl.service.web.response.ClassListData;
+import com.adl.service.web.response.ClassData;
 import com.adl.service.web.response.DictsData;
 import com.adl.service.web.response.GradeChineseNameData;
 import com.adl.service.web.response.GradeTreeData;
@@ -47,7 +46,7 @@ public interface CommonInfoService {
      * 获取班级列表
      */
     @POST("tis/device/base/org/class/getClassList")
-    Single<BaseResponse<List<ClassListData>>> getClassList(@Body ClassListRequest request);
+    Single<BaseResponse<List<ClassData>>> getClassList(@Body ClassListRequest request);
 
     /**
      * 获取班级信息

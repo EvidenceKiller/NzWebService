@@ -2,7 +2,6 @@ package com.adl.service.caller;
 
 import com.adl.service.callback.RequestCallback;
 import com.adl.service.exception.NzBaseException;
-import com.adl.service.web.request.AddBatchPageRequest;
 import com.adl.service.web.request.CitizenPageRequest;
 import com.adl.service.web.request.ClassInfoRequest;
 import com.adl.service.web.request.ClassListRequest;
@@ -15,7 +14,7 @@ import com.adl.service.web.response.AcayearData;
 import com.adl.service.web.response.BasePageData;
 import com.adl.service.web.response.CitizenPageData;
 import com.adl.service.web.response.ClassInfoData;
-import com.adl.service.web.response.ClassListData;
+import com.adl.service.web.response.ClassData;
 import com.adl.service.web.response.DictsData;
 import com.adl.service.web.response.GradeChineseNameData;
 import com.adl.service.web.response.GradeTreeData;
@@ -58,13 +57,13 @@ public interface CommonInfoCaller {
      * 获取班级列表
      * <p>异步调用。</p>
      */
-    long getClassListAsync(RequestScope scope, ClassListRequest request, RequestCallback<List<ClassListData>> callback);
+    long getClassListAsync(RequestScope scope, ClassListRequest request, RequestCallback<List<ClassData>> callback);
 
     /**
      * 获取班级列表
      * <p>同步调用。</p>
      */
-    List<ClassListData> getClassListSync(ClassListRequest request) throws NzBaseException;
+    List<ClassData> getClassListSync(ClassListRequest request) throws NzBaseException;
 
     /**
      * 获取班级信息

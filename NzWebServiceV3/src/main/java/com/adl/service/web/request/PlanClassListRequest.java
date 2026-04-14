@@ -50,8 +50,8 @@ public final class PlanClassListRequest extends BasePageRequest {
         this.showStatistic = builder.showStatistic;
     }
 
-    public static Builder builder() {
-        return new Builder();
+    public static Builder builder(String planId) {
+        return new Builder(planId);
     }
 
 
@@ -68,9 +68,8 @@ public final class PlanClassListRequest extends BasePageRequest {
         private String status;
         private Boolean showStatistic;
 
-        public Builder planId(String planId) {
+        Builder(String planId) {
             this.planId = planId;
-            return this;
         }
 
         public Builder orgId(String orgId) {
