@@ -4,6 +4,7 @@ import com.adl.service.db.converter.ListSportMeetGroupTeamEntityConverter;
 import com.adl.service.db.converter.ListSportMeetSkuEntityConverter;
 import com.adl.service.web.response.ClassSimpleData;
 import com.adl.service.web.response.SportMeetData;
+import com.adl.service.web.response.SportMeetSimpleClassData;
 
 import java.io.Serializable;
 import java.util.List;
@@ -171,7 +172,7 @@ public final class SportMeetEntity implements Serializable {
      * 班级列表
      */
     @ColumnInfo(name = "_class_list")
-    private Object classList;
+    private List<SportMeetSimpleClassData> classList;
 
     /**
      * 状态

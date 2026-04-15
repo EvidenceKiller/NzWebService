@@ -2,23 +2,24 @@ package com.adl.service.persistence;
 
 import android.text.TextUtils;
 
-import com.adl.service.common.CommonUtil;
+import com.adl.service.common.FileDownManager;
 import com.adl.service.db.DaoManagerProxy;
 import com.adl.service.db.entity.DictEntity;
-import com.adl.service.db.entity.PlanEntity;
-import com.adl.service.db.entity.SportMeetEntity;
-import com.adl.service.db.entity.SportMeetGroupDetailEntity;
-import com.adl.service.db.entity.SportMeetGroupTeamEntity;
+import com.adl.service.db.entity.LoginInfoEntity;
+import com.adl.service.db.entity.StudentEntity;
+import com.adl.service.db.entity.TeacherEntity;
 import com.adl.service.exception.NzEmptyDataException;
-import com.adl.service.web.request.SportMeetPageRequest;
+import com.adl.service.web.request.StudentPageRequest;
+import com.adl.service.web.request.TeacherListRequest;
 import com.adl.service.web.response.BasePageData;
 import com.adl.service.web.response.BaseResponse;
 import com.adl.service.web.response.DictData;
-import com.adl.service.web.response.SportMeetData;
+import com.adl.service.web.response.LoginInfoData;
+import com.adl.service.web.response.StudentData;
+import com.adl.service.web.response.TeacherData;
 
-import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import io.reactivex.rxjava3.core.Completable;
@@ -51,6 +52,96 @@ public final class CommonInfoPersistenceHelper {
                     .collect(Collectors.toList());
             DaoManagerProxy.getInstance().getDictDao().insertAll(entityList);
             return Completable.complete();
+        };
+    }
+
+    public static Function<LoginInfoData, Completable> createLoginPersister() {
+        return (data) -> {
+            if (data == null) {
+                return Completable.error(new NzEmptyDataException("login info data is empty"));
+            }
+            DaoManagerProxy.getInstance().getLoginInfoDao().saveLoginInfoWithClear(LoginInfoEntity.convertToEntity(data));
+            return Completable.complete();
+        };
+    }
+
+    public static Function<Void, Completable> createStudentPagePreparer() {
+        return (v) -> {
+            DaoManagerProxy.getInstance().getStudentDao().clearAll();
+            return Completable.complete();
+        };
+    }
+
+    public static Function<Long, Single<BaseResponse<BasePageData<StudentData>>>> createStudentPageRequester(
+            StudentPageRequest request, Function<StudentPageRequest, Single<BaseResponse<BasePageData<StudentData>>>> function) {
+        return (page) -> {
+            StudentPageRequest pageReq = StudentPageRequest.builder()
+                    .current(page)
+                    .pageSize(request.getPageSize())
+                    .orgId(request.getOrgId())
+                    .accountType(request.getAccountType())
+                    .lastUpdateTime(request.getLastUpdateTime())
+                    .acayearSem(request.getAcayearSem())
+                    .acayearSemCode(request.getAcayearSemCode())
+                    .faceType(request.getFaceType())
+                    .delFlag(request.getDelFlag())
+                    .build();
+            return function.apply(pageReq);
+        };
+    }
+
+    public static Function<List<StudentData>, List<StudentData>> createStudentPagePersister() {
+        return (dataList) -> {
+            if (dataList == null || dataList.isEmpty()) {
+                return dataList;
+            }
+            Map<Boolean, List<StudentEntity>> partitioned = dataList.stream()
+                    .map(data -> StudentEntity.convertToEntity(data))
+                    .collect(Collectors.partitioningBy(data -> "0".equals(data.getDelFlag())));
+            DaoManagerProxy.getInstance().getStudentDao().insertAll(partitioned.get(true));
+            DaoManagerProxy.getInstance().getStudentDao().clear(partitioned.get(false));
+            FileDownManager.instance().clearByUrls(partitioned.get(false).stream().map(StudentEntity::getUserFaceImgUrl).collect(Collectors.toList()));
+            FileDownManager.instance().clearByUrls(partitioned.get(false).stream().map(StudentEntity::getThumbnailUserFaceImgUrl).collect(Collectors.toList()));
+            return dataList;
+        };
+    }
+
+    public static Function<Void, Completable> createTeacherListPreparer() {
+        return (v) -> {
+            DaoManagerProxy.getInstance().getTeacherDao().clearAll();
+            return Completable.complete();
+        };
+    }
+
+    public static Function<Long, Single<BaseResponse<List<TeacherData>>>> createTeacherListRequester(
+            TeacherListRequest request, Function<TeacherListRequest, Single<BaseResponse<List<TeacherData>>>> function) {
+        return (page) -> {
+            TeacherListRequest pageReq = TeacherListRequest.builder()
+                    .current(page)
+                    .pageSize(request.getPageSize())
+                    .orgId(request.getOrgId())
+                    .accountType(request.getAccountType())
+                    .lastUpdateTime(request.getLastUpdateTime())
+                    .acayearSem(request.getAcayearSem())
+                    .acayearSemCode(request.getAcayearSemCode())
+                    .faceType(request.getFaceType())
+                    .delFlag(request.getDelFlag())
+                    .build();
+            return function.apply(pageReq);
+        };
+    }
+
+    public static Function<List<TeacherData>, List<TeacherData>> createTeacherListPersister() {
+        return (dataList) -> {
+            if (dataList == null || dataList.isEmpty()) {
+                return dataList;
+            }
+            Map<Boolean, List<TeacherEntity>> partitioned = dataList.stream()
+                    .map(data -> TeacherEntity.convertToEntity(data))
+                    .collect(Collectors.partitioningBy(data -> !data.getDelFlag()));
+            DaoManagerProxy.getInstance().getTeacherDao().insertAll(partitioned.get(true));
+            DaoManagerProxy.getInstance().getTeacherDao().clear(partitioned.get(false));
+            return dataList;
         };
     }
 }

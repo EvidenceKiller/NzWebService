@@ -57,13 +57,13 @@ public final class DeviceFocusData {
      * 专注开始时间
      */
     @SerializedName("startTime")
-    private String startTime;
+    private Long startTime;
 
     /**
      * 专注结束时间
      */
     @SerializedName("endTime")
-    private String endTime;
+    private Long endTime;
 
     /**
      * 设备ids

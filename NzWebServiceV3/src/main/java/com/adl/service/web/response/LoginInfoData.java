@@ -6,128 +6,137 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
+import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-@Getter
-@ToString
+@Data
+@NoArgsConstructor
 @JsonAdapter(StrictJsonDeserializer.class)
 public final class LoginInfoData {
+    /**
+     * 上级机构ID
+     */
+    @SerializedName("pid")
+    private String pid;
 
     /**
-     * 设备标识码（设备侧相关用户登录必传字段）
+     * 一级机构名称
      */
-    @SerializedName("deviceId")
-    private String deviceId;
+    @SerializedName("orgName")
+    private String orgName;
 
     /**
-     * 应用端编码
+     * 机构代码
      */
-    @SerializedName("appCodes")
-    private List<String> appCodes;
+    @SerializedName("orgCode")
+    private String orgCode;
 
     /**
-     * 平台号（参考platformEnum）
+     * 机构类型
      */
-    @SerializedName("platform")
-    private String platform;
-
-    @SerializedName("openId")
-    private String openId;
+    @SerializedName("orgType")
+    private Integer orgType;
 
     /**
-     * 租户id集合
+     * 区域代码
      */
-    @SerializedName("tenantIds")
-    private List<String> tenantIds;
+    @SerializedName("areaCodes")
+    private String areaCodes;
 
     /**
-     * 用戶id
+     * 区域名称
      */
-    @SerializedName("userId")
-    private String userId;
+    @SerializedName("areaNames")
+    private String areaNames;
 
     /**
-     * 用户姓名
+     * 详细地址
      */
-    @SerializedName("userName")
-    private String userName;
+    @SerializedName("address")
+    private String address;
 
     /**
-     * 用户联系方式（包括手机号，座机号等）
+     * 管理员名称
      */
-    @SerializedName("userTel")
-    private String userTel;
-
-    @SerializedName("height")
-    private String height;
-
-    @SerializedName("weight")
-    private String weight;
+    @SerializedName("accountName")
+    private String accountName;
 
     /**
-     * 用户邮箱
+     * 管理员账号
      */
-    @SerializedName("userEmail")
-    private String userEmail;
+    @SerializedName("accountNum")
+    private String accountNum;
 
     /**
-     * 用户性别 1 男， 2 女
+     * 机构LOGO
      */
-    @SerializedName("userSex")
-    private Integer userSex;
+    @SerializedName("orglogo")
+    private String orglogo;
 
     /**
-     * 用戶证件类型
+     * 联系方式
      */
-    @SerializedName("certType")
-    private Integer certType;
+    @SerializedName("tel")
+    private String tel;
 
     /**
-     * 用户证件号
+     * 邮箱
      */
-    @SerializedName("certNum")
-    private String certNum;
+    @SerializedName("email")
+    private String email;
 
     /**
-     * 账户人脸头像
+     * 机构ID
      */
-    @SerializedName("faceImgUrl")
-    private String faceImgUrl;
+    @SerializedName("orgId")
+    private String orgId;
 
     /**
-     * 民族编码
+     * 学制代码
+     * 参考字典编码: adl_tis_academic_system_code
      */
-    @SerializedName("nationCode")
-    private String nationCode;
+    @SerializedName("eduCode")
+    private String eduCode;
 
     /**
-     * 民族名
+     * 管理员名称
      */
-    @SerializedName("nationName")
-    private String nationName;
+    @SerializedName("platformName")
+    private String platformName;
 
     /**
-     * 生日
+     * 经度
      */
-    @SerializedName("birthday")
-    private String birthday;
+    @SerializedName("longitude")
+    private String longitude;
 
     /**
-     * 学籍号
+     * 纬度
      */
-    @SerializedName("studentCode")
-    private String studentCode;
-
-    @SerializedName("lang")
-    private String lang;
-
-    @SerializedName("inner")
-    private Boolean inner;
+    @SerializedName("latitude")
+    private String latitude;
 
     /**
-     * 账号信息列表
+     * 机构设备通用管理密码
      */
-    @SerializedName("accounts")
-    private List<LoginInfoAccountData> accounts;
+    @SerializedName("deviceCommonPassword")
+    private String deviceCommonPassword;
+
+    /**
+     * 启用标识
+     * 参考字典编码: adl_tis_enabled
+     */
+    @SerializedName("enabled")
+    private Boolean enabled;
+
+    /**
+     * 机构资源文件上传总大小限制
+     */
+    @SerializedName("fileSizeLimit")
+    private Long fileSizeLimit;
+
+    @SerializedName("porgName")
+    private String porgName;
 }

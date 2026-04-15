@@ -1,14 +1,26 @@
 package com.adl.service.caller.impl;
 
+import android.text.TextUtils;
+
 import com.adl.service.AdlService;
 import com.adl.service.callback.RequestCallback;
 import com.adl.service.caller.CommonInfoCaller;
+import com.adl.service.common.FileDownManager;
+import com.adl.service.common.IDefine;
+import com.adl.service.common.InnerPreferences;
+import com.adl.service.db.DaoManagerProxy;
+import com.adl.service.db.StudentDao;
+import com.adl.service.db.entity.LoginInfoEntity;
+import com.adl.service.db.entity.StudentEntity;
+import com.adl.service.db.entity.TeacherEntity;
 import com.adl.service.exception.NzBaseException;
 import com.adl.service.internal.RxCallbackScheduler;
 import com.adl.service.internal.SubscriptionManager;
+import com.adl.service.log.NzLog;
+import com.adl.service.persistence.BasePagePersistence;
 import com.adl.service.persistence.BasePersistence;
 import com.adl.service.persistence.CommonInfoPersistenceHelper;
-import com.adl.service.web.request.CitizenPageRequest;
+import com.adl.service.utils.InnerUtil;
 import com.adl.service.web.request.ClassInfoRequest;
 import com.adl.service.web.request.ClassListRequest;
 import com.adl.service.web.request.DeviceActiveRequest;
@@ -18,7 +30,6 @@ import com.adl.service.web.request.StudentPageRequest;
 import com.adl.service.web.request.TeacherListRequest;
 import com.adl.service.web.response.AcayearData;
 import com.adl.service.web.response.BasePageData;
-import com.adl.service.web.response.CitizenPageData;
 import com.adl.service.web.response.ClassData;
 import com.adl.service.web.response.ClassInfoData;
 import com.adl.service.web.response.DictData;
@@ -30,6 +41,7 @@ import com.adl.service.web.response.TeacherData;
 import com.adl.service.web.service.CommonInfoService;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import io.reactivex.rxjava3.disposables.Disposable;
 
@@ -42,6 +54,150 @@ public final class CommonInfoCallerImpl implements CommonInfoCaller {
 
     public CommonInfoCallerImpl(CommonInfoService commonInfoService) {
         this.commonInfoService = commonInfoService;
+    }
+
+    @Override
+    public void reloadCommonInfoData(boolean forceUpdate, int faceType, long pageSize) throws NzBaseException {
+        InnerPreferences pf = InnerPreferences.instance();
+        AdlService adlService = AdlService.getService();
+
+        ////////////// 1.同步机构信息 ////////////
+        NzLog.i("同步机构信息");
+        //启动时，请求一次机构信息，如果机构变更，清除数据标识
+        LoginInfoData loginInfo = queryLoginInfoSync();
+        LoginInfoData newLoginInfo = getLoginInfoSync();
+        if (newLoginInfo != null && !TextUtils.isEmpty(newLoginInfo.getOrgId()) && !newLoginInfo.getOrgId().equals(loginInfo.getOrgId())) {
+            DaoManagerProxy.getInstance().getStudentDao().clearAll();
+            DaoManagerProxy.getInstance().getTeacherDao().clearAll();
+            FileDownManager.instance().clearAllFace();
+            pf.putLong(IDefine.LAST_STUDENT_UPDATE_TIME, IDefine.INVALID_TIME);
+            pf.putLong(IDefine.LAST_TEACHER_UPDATE_TIME, IDefine.INVALID_TIME);
+            pf.putLong(IDefine.LAST_CITIZEN_UPDATE_TIME, IDefine.INVALID_TIME);
+        }
+
+
+        ////////////// 2.同步学生基本信息 ////////////
+        long serverTime = System.currentTimeMillis();
+        try {
+            serverTime = InnerUtil.getServerTime();
+        } catch (NzBaseException e) {
+            NzLog.e("获取服务器时间失败", e.getMessage());
+        }
+        StudentDao stuDao = DaoManagerProxy.getInstance().getStudentDao();
+        int size = stuDao.countSize();
+        long lastTime = pf.readLong(IDefine.LAST_STUDENT_UPDATE_TIME);
+        NzLog.d("本机时间:size: " + size + ";forceUpdate:" + forceUpdate + ";serverTime:" + serverTime + ";lastTime:" + lastTime + ";UpdateIntervalTime:" + IDefine.UpdateIntervalTime);
+
+        // 是否强制更新数据
+        String recentUpdateTimeStr = stuDao.getLastStudentUpdateTime();
+        long recentUpdateTime = IDefine.INVALID_TIME;
+        try {
+            recentUpdateTime = Long.parseLong(recentUpdateTimeStr);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        NzLog.d("本机时间:recentUpdateTime: " + recentUpdateTime);
+
+        StudentPageRequest studentPageRequest = StudentPageRequest.builder()
+                .current(1L)
+                .pageSize(pageSize)
+                .faceType(faceType)
+                .lastUpdateTime(forceUpdate ? null : lastTime != IDefine.INVALID_TIME ? InnerUtil.formatByTimeCode(recentUpdateTime) : null)
+                .build();
+
+        getStudentPagesAllSync(studentPageRequest);
+        pf.putLong(IDefine.LAST_STUDENT_UPDATE_TIME, serverTime);
+
+        ////////////// 3.同步老师基本信息 ////////////
+        size = DaoManagerProxy.getInstance().getTeacherDao().countSize();
+        lastTime = pf.readLong(IDefine.LAST_TEACHER_UPDATE_TIME);
+
+        // 数据会空，或者时间间隔2分钟
+        if (size == 0 || forceUpdate || serverTime - lastTime > IDefine.UpdateIntervalTime) {
+            TeacherListRequest teacherListRequest = TeacherListRequest.builder()
+                    .current(1L)
+                    .pageSize(pageSize)
+                    .lastUpdateTime(forceUpdate ? null : InnerUtil.formatByTimeCode(lastTime))
+                    .build();
+            getTeacherListsAllSync(teacherListRequest);
+            pf.putLong(IDefine.LAST_TEACHER_UPDATE_TIME, serverTime);
+        }
+    }
+
+    @Override
+    public List<StudentData> queryAllStudentSync() {
+        return DaoManagerProxy.getInstance().getStudentDao().getAll().stream()
+                .map(data -> StudentEntity.convertToData(data))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<StudentData> queryAllStudentWithFaceDataSync() {
+        return DaoManagerProxy.getInstance().getStudentDao().queryStudentWithFaceData().stream()
+                .map(data -> StudentEntity.convertToData(data))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public int queryAllStudentCountSync() {
+        return DaoManagerProxy.getInstance().getStudentDao().countSize();
+    }
+
+    @Override
+    public StudentData queryStudentByAccountIdSync(String accountId) {
+        return StudentEntity.convertToData(DaoManagerProxy.getInstance().getStudentDao().queryStudentByAccountId(accountId));
+    }
+
+    @Override
+    public List<StudentData> queryStudentByAccountIdsSync(List<String> accountIds) {
+        return DaoManagerProxy.getInstance().getStudentDao().queryStudentByAccountIds(accountIds).stream()
+                .map(data -> StudentEntity.convertToData(data))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<StudentData> queryStudentByClassIdsSync(List<String> classIds) {
+        return DaoManagerProxy.getInstance().getStudentDao().queryStudentByClassIds(classIds).stream()
+                .map(data -> StudentEntity.convertToData(data))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<StudentData> queryStudentByCarNumSync(String cardNum) {
+        return DaoManagerProxy.getInstance().getStudentDao().queryStudentWithCardNum(cardNum).stream()
+                .map(data -> StudentEntity.convertToData(data))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<TeacherData> queryAllTeacherSync() {
+        return DaoManagerProxy.getInstance().getTeacherDao().getAll().stream()
+                .map(data -> TeacherEntity.convertToData(data))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<TeacherData> queryAllTeacherWithFaceDataSync() {
+        return DaoManagerProxy.getInstance().getTeacherDao().queryTeacherWithFaceData().stream()
+                .map(data -> TeacherEntity.convertToData(data))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public int queryAllTeacherCountSync(RequestCallback callback) {
+        return DaoManagerProxy.getInstance().getTeacherDao().countSize();
+    }
+
+    @Override
+    public TeacherData queryTeacherByAccountIdSync(String accountId) {
+        return TeacherEntity.convertToData(DaoManagerProxy.getInstance().getTeacherDao().queryTeacherByAccountId(accountId));
+    }
+
+    @Override
+    public List<TeacherData> queryTeacherByAccountIdsSync(List<String> accountIds) {
+        return DaoManagerProxy.getInstance().getTeacherDao().queryTeacherByAccountIds(accountIds).stream()
+                .map(data -> TeacherEntity.convertToData(data))
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -96,17 +252,25 @@ public final class CommonInfoCallerImpl implements CommonInfoCaller {
         return RxCallbackScheduler.blockingGetData(commonInfoService.getClassInfo(request));
     }
 
+    public LoginInfoData queryLoginInfoSync() {
+        return LoginInfoEntity.convertToData(DaoManagerProxy.getInstance().getLoginInfoDao().getLoginInfo());
+    }
+
     @Override
     public long getLoginInfoAsync(RequestScope scope, RequestCallback<LoginInfoData> callback) {
         CallerUtil.assertScope(scope);
-        Disposable disposable = RxCallbackScheduler.scheduleBaseResponse(commonInfoService.getLoginInfo(), callback);
+        Disposable disposable = RxCallbackScheduler.scheduleBaseResponse(BasePersistence.persistAfterFetch(
+                BasePersistence.createBaseRequester(null, (Void) -> commonInfoService.getLoginInfo()),
+                CommonInfoPersistenceHelper.createLoginPersister()), callback);
         SubscriptionManager.getInstance().add(scope.owner(), disposable);
         return disposable.hashCode();
     }
 
     @Override
     public LoginInfoData getLoginInfoSync() throws NzBaseException {
-        return RxCallbackScheduler.blockingGetData(commonInfoService.getLoginInfo());
+        return RxCallbackScheduler.blockingGetData(BasePersistence.persistAfterFetch(
+                BasePersistence.createBaseRequester(null, (Void) -> commonInfoService.getLoginInfo()),
+                CommonInfoPersistenceHelper.createLoginPersister()));
     }
 
     @Override
@@ -123,42 +287,78 @@ public final class CommonInfoCallerImpl implements CommonInfoCaller {
     }
 
     @Override
-    public long getTeacherListAsync(RequestScope scope, TeacherListRequest request, RequestCallback<List<TeacherData>> callback) {
+    public long getTeacherListsAllAsync(RequestScope scope, TeacherListRequest request, RequestCallback<List<TeacherData>> callback) {
+        CallerUtil.assertCurrent(request);
         CallerUtil.assertScope(scope);
-        Disposable disposable = RxCallbackScheduler.scheduleBaseResponse(commonInfoService.getTeacherList(request), callback);
+        Disposable disposable = RxCallbackScheduler.schedule(BasePagePersistence.persistAllListsAsSingle(
+                CommonInfoPersistenceHelper.createTeacherListPreparer(),
+                CommonInfoPersistenceHelper.createTeacherListRequester(request, req -> commonInfoService.getTeacherList(req)),
+                CommonInfoPersistenceHelper.createTeacherListPersister()), callback);
         SubscriptionManager.getInstance().add(scope.owner(), disposable);
         return disposable.hashCode();
     }
 
     @Override
+    public List<TeacherData> getTeacherListsAllSync(TeacherListRequest request) throws NzBaseException {
+        CallerUtil.assertCurrent(request);
+        return RxCallbackScheduler.blockingGet(BasePagePersistence.persistAllListsAsSingle(
+                CommonInfoPersistenceHelper.createTeacherListPreparer(),
+                CommonInfoPersistenceHelper.createTeacherListRequester(request, req -> commonInfoService.getTeacherList(req)),
+                CommonInfoPersistenceHelper.createTeacherListPersister()));
+    }
+
+    @Override
+    public long getTeacherListAsync(RequestScope scope, TeacherListRequest request, RequestCallback<List<TeacherData>> callback) {
+        CallerUtil.assertScope(scope);
+        Disposable disposable = RxCallbackScheduler.scheduleBaseResponse(BasePagePersistence.persistOneListAsSingle(
+                BasePersistence.createBaseRequester(null, (Void) -> commonInfoService.getTeacherList(request)),
+                CommonInfoPersistenceHelper.createTeacherListPersister()), callback);
+        return disposable.hashCode();
+    }
+
+    @Override
     public List<TeacherData> getTeacherListSync(TeacherListRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGetData(commonInfoService.getTeacherList(request));
+        return RxCallbackScheduler.blockingGetData(BasePagePersistence.persistOneListAsSingle(
+                BasePersistence.createBaseRequester(null, (Void) -> commonInfoService.getTeacherList(request)),
+                CommonInfoPersistenceHelper.createTeacherListPersister()));
+    }
+
+    @Override
+    public long getStudentPagesAllAsync(RequestScope scope, StudentPageRequest request, RequestCallback<List<StudentData>> callback) {
+        CallerUtil.assertCurrent(request);
+        CallerUtil.assertScope(scope);
+        Disposable disposable = RxCallbackScheduler.schedule(BasePagePersistence.persistAllPagesAsSingle(
+                CommonInfoPersistenceHelper.createStudentPagePreparer(),
+                CommonInfoPersistenceHelper.createStudentPageRequester(request, req -> commonInfoService.getStudentPage(req)),
+                CommonInfoPersistenceHelper.createStudentPagePersister()), callback);
+        SubscriptionManager.getInstance().add(scope.owner(), disposable);
+        return disposable.hashCode();
+    }
+
+    @Override
+    public List<StudentData> getStudentPagesAllSync(StudentPageRequest request) throws NzBaseException {
+        CallerUtil.assertCurrent(request);
+        return RxCallbackScheduler.blockingGet(BasePagePersistence.persistAllPagesAsSingle(
+                CommonInfoPersistenceHelper.createStudentPagePreparer(),
+                CommonInfoPersistenceHelper.createStudentPageRequester(request, req -> commonInfoService.getStudentPage(req)),
+                CommonInfoPersistenceHelper.createStudentPagePersister()));
     }
 
     @Override
     public long getStudentPageAsync(RequestScope scope, StudentPageRequest request, RequestCallback<BasePageData<StudentData>> callback) {
         CallerUtil.assertScope(scope);
-        Disposable disposable = RxCallbackScheduler.scheduleBaseResponse(commonInfoService.getStudentPage(request), callback);
+        Disposable disposable = RxCallbackScheduler.scheduleBaseResponse(BasePagePersistence.persistOnePageAsSingle(
+                BasePersistence.createBaseRequester(null, (Void) -> commonInfoService.getStudentPage(request)),
+                CommonInfoPersistenceHelper.createStudentPagePersister()), callback);
         SubscriptionManager.getInstance().add(scope.owner(), disposable);
         return disposable.hashCode();
     }
 
     @Override
     public BasePageData<StudentData> getStudentPageSync(StudentPageRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGetData(commonInfoService.getStudentPage(request));
-    }
-
-    @Override
-    public long getCitizenPageAsync(RequestScope scope, CitizenPageRequest request, RequestCallback<CitizenPageData> callback) {
-        CallerUtil.assertScope(scope);
-        Disposable disposable = RxCallbackScheduler.scheduleBaseResponse(commonInfoService.getCitizenPage(request), callback);
-        SubscriptionManager.getInstance().add(scope.owner(), disposable);
-        return disposable.hashCode();
-    }
-
-    @Override
-    public CitizenPageData getCitizenPageSync(CitizenPageRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGetData(commonInfoService.getCitizenPage(request));
+        return RxCallbackScheduler.blockingGetData(BasePagePersistence.persistOnePageAsSingle(
+                BasePersistence.createBaseRequester(null, (Void) -> commonInfoService.getStudentPage(request)),
+                CommonInfoPersistenceHelper.createStudentPagePersister()));
     }
 
     @Override

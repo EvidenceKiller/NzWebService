@@ -93,8 +93,8 @@ public final class DaoManagerProxy {
         return mDaoManager.getStudentDao();
     }
 
-    public CitizenDao getCitizenDao() {
-        return mDaoManager.getCitizenDao();
+    public CompetitionDao getCompetitionDao() {
+        return mDaoManager.getCompetitionDao();
     }
 
     public TeacherDao getTeacherDao() {
@@ -155,5 +155,9 @@ public final class DaoManagerProxy {
 
     public SceneDao getSceneDao() {
         return mDaoManager.getSceneDao();
+    }
+
+    public LoginInfoDao getLoginInfoDao() {
+        return mDaoManager.getLoginInfoDao();
     }
 }

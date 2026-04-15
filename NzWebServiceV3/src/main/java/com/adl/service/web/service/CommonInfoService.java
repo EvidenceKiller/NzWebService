@@ -1,6 +1,5 @@
 package com.adl.service.web.service;
 
-import com.adl.service.web.request.CitizenPageRequest;
 import com.adl.service.web.request.ClassInfoRequest;
 import com.adl.service.web.request.ClassListRequest;
 import com.adl.service.web.request.DeviceActiveRequest;
@@ -10,7 +9,6 @@ import com.adl.service.web.request.TeacherListRequest;
 import com.adl.service.web.response.AcayearData;
 import com.adl.service.web.response.BasePageData;
 import com.adl.service.web.response.BaseResponse;
-import com.adl.service.web.response.CitizenPageData;
 import com.adl.service.web.response.ClassInfoData;
 import com.adl.service.web.response.ClassData;
 import com.adl.service.web.response.DictData;
@@ -77,12 +75,6 @@ public interface CommonInfoService {
      */
     @POST("tis/device/base/account/getStudentList")
     Single<BaseResponse<BasePageData<StudentData>>> getStudentPage(@Body StudentPageRequest request);
-
-    /**
-     * 获取市民用户列表
-     */
-    @POST("tis/device/base/account/getCitizenList")
-    Single<BaseResponse<CitizenPageData>> getCitizenPage(@Body CitizenPageRequest request);
 
     /**
      * 获取系统字典

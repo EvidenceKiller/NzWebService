@@ -25,21 +25,20 @@ public final class BasePagePersistence {
     private BasePagePersistence() {
     }
 
-    public static <T> Single<BaseResponse<BasePageData<T>>> persistAfterFetch(
+    public static <T> Single<BaseResponse<BasePageData<T>>> persistOnePageAsSingle(
             Function<Void, Single<BaseResponse<BasePageData<T>>>> requestFunc,
             Function<List<T>, List<T>> persistFunc) {
-        Log.i("ZXN_TEST", "BasePagePersistence : persistAfterFetch");
-        return persistAfterFetch(BasePersistence.createBaseEmptyPreparer(), requestFunc, persistFunc);
+        return persistOnePageAsSingle(BasePersistence.createBaseEmptyPreparer(), requestFunc, persistFunc);
     }
 
     /**
      * 网络 {@link Single} 成功后，若业务成功且含列表数据则插入本地库，再向下游传递原响应。
      */
-    public static <T> Single<BaseResponse<BasePageData<T>>> persistAfterFetch(
+    public static <T> Single<BaseResponse<BasePageData<T>>> persistOnePageAsSingle(
             Function<Void, Completable> prepareFunc,
             Function<Void, Single<BaseResponse<BasePageData<T>>>> requestFunc,
             Function<List<T>, List<T>> persistFunc) {
-        Log.i("ZXN_TEST", "BasePagePersistence : persistAfterFetch");
+        Log.i("ZXN_TEST", "BasePagePersistence : persistOnePageAsSingle");
         return BasePersistence.persistAfterFetch(prepareFunc, requestFunc, data -> {
             if (data == null || data.getSize() == 0) {
                 return Completable.error(new NzEmptyDataException("request data is null before persist"));
@@ -51,10 +50,29 @@ public final class BasePagePersistence {
         });
     }
 
-    public static <T> Single<List<T>> persistAllPageListAsSingle(
+    public static <T> Single<BaseResponse<List<T>>> persistOneListAsSingle(
+            Function<Void, Single<BaseResponse<List<T>>>> requestFunc,
+            Function<List<T>, List<T>> persistFunc) {
+        return persistOneListAsSingle(BasePersistence.createBaseEmptyPreparer(), requestFunc, persistFunc);
+    }
+
+    public static <T> Single<BaseResponse<List<T>>> persistOneListAsSingle(
+            Function<Void, Completable> prepareFunc,
+            Function<Void, Single<BaseResponse<List<T>>>> requestFunc,
+            Function<List<T>, List<T>> persistFunc) {
+        Log.i("ZXN_TEST", "BasePagePersistence : persistOneListAsSingle");
+        return BasePersistence.persistAfterFetch(prepareFunc, requestFunc, data -> {
+            if (data == null || data.size() == 0) {
+                return Completable.error(new NzEmptyDataException("request data is null before persist"));
+            }
+            return Completable.fromAction(() -> persistFunc.apply(data));
+        });
+    }
+
+    public static <T> Single<List<T>> persistAllListsAsSingle(
             Function<Long, Single<BaseResponse<List<T>>>> pageRequestFunc,
             Function<List<T>, List<T>> persistFunc) {
-        return persistAllPageListAsSingle(BasePersistence.createBaseEmptyPreparer(), pageRequestFunc, persistFunc);
+        return persistAllListsAsSingle(BasePersistence.createBaseEmptyPreparer(), pageRequestFunc, persistFunc);
     }
 
     /**
@@ -68,11 +86,11 @@ public final class BasePagePersistence {
      * @param persistFunc     每页成功后的持久化逻辑
      * @return 包含所有分页记录的汇总 {@link List}
      */
-    public static <T> Single<List<T>> persistAllPageListAsSingle(
+    public static <T> Single<List<T>> persistAllListsAsSingle(
             Function<Void, Completable> prepareFunc,
             Function<Long, Single<BaseResponse<List<T>>>> pageRequestFunc,
             Function<List<T>, List<T>> persistFunc) {
-        Log.i("ZXN_TEST", "BasePagePersistence : persistAllPagesAsSingle");
+        Log.i("ZXN_TEST", "BasePagePersistence : persistAllListsAsSingle");
         return Completable.defer(() -> prepareFunc.apply(null))
                 .andThen(Observable.<Long, Long>generate(() -> 1L, (current, emitter) -> {
                             emitter.onNext(current);

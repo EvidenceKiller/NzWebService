@@ -159,7 +159,7 @@ public final class SportMeetData {
      * 班级列表
      */
     @SerializedName("classList")
-    private Object classList;
+    private List<SportMeetSimpleClassData> classList;
 
     /**
      * 状态
@@ -207,7 +207,7 @@ public final class SportMeetData {
      * 密码
      */
     @SerializedName("password")
-    private Object password;
+    private String password;
 
     /**
      * 分组团队

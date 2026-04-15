@@ -2,7 +2,6 @@ package com.adl.service.caller;
 
 import com.adl.service.callback.RequestCallback;
 import com.adl.service.exception.NzBaseException;
-import com.adl.service.web.request.CitizenPageRequest;
 import com.adl.service.web.request.ClassInfoRequest;
 import com.adl.service.web.request.ClassListRequest;
 import com.adl.service.web.request.DeviceActiveRequest;
@@ -12,7 +11,6 @@ import com.adl.service.web.request.StudentPageRequest;
 import com.adl.service.web.request.TeacherListRequest;
 import com.adl.service.web.response.AcayearData;
 import com.adl.service.web.response.BasePageData;
-import com.adl.service.web.response.CitizenPageData;
 import com.adl.service.web.response.ClassInfoData;
 import com.adl.service.web.response.ClassData;
 import com.adl.service.web.response.DictData;
@@ -28,6 +26,32 @@ import java.util.List;
  * CommonInfoCaller。
  */
 public interface CommonInfoCaller {
+
+    void reloadCommonInfoData(boolean forceUpdate, int faceType, long pageSize) throws NzBaseException;
+
+    List<StudentData> queryAllStudentSync();
+
+    List<StudentData> queryAllStudentWithFaceDataSync();
+
+    int queryAllStudentCountSync();
+
+    StudentData queryStudentByAccountIdSync(String accountId);
+
+    List<StudentData> queryStudentByAccountIdsSync(List<String> accountIds);
+
+    List<StudentData> queryStudentByClassIdsSync(List<String> classIds);
+
+    List<StudentData> queryStudentByCarNumSync(String cardNum);
+
+    List<TeacherData> queryAllTeacherSync();
+
+    List<TeacherData> queryAllTeacherWithFaceDataSync();
+
+    int queryAllTeacherCountSync(RequestCallback callback);
+
+    TeacherData queryTeacherByAccountIdSync(String accountId);
+
+    List<TeacherData> queryTeacherByAccountIdsSync(List<String> accountIds);
 
     /**
      * 获取机构年级树
@@ -101,6 +125,10 @@ public interface CommonInfoCaller {
      */
     List<AcayearData> getAcayearListSync() throws NzBaseException;
 
+    long getTeacherListsAllAsync(RequestScope scope, TeacherListRequest request, RequestCallback<List<TeacherData>> callback);
+
+    List<TeacherData> getTeacherListsAllSync(TeacherListRequest request) throws NzBaseException;
+
     /**
      * 获取教师用户列表（全量）
      * <p>异步调用。</p>
@@ -113,6 +141,10 @@ public interface CommonInfoCaller {
      */
     List<TeacherData> getTeacherListSync(TeacherListRequest request) throws NzBaseException;
 
+    long getStudentPagesAllAsync(RequestScope scope, StudentPageRequest request, RequestCallback<List<StudentData>> callback);
+
+    List<StudentData> getStudentPagesAllSync(StudentPageRequest request) throws NzBaseException;
+
     /**
      * 获取学生增量数据
      * <p>异步调用。</p>
@@ -124,18 +156,6 @@ public interface CommonInfoCaller {
      * <p>同步调用。</p>
      */
     BasePageData<StudentData> getStudentPageSync(StudentPageRequest request) throws NzBaseException;
-
-    /**
-     * 获取市民用户列表
-     * <p>异步调用。</p>
-     */
-    long getCitizenPageAsync(RequestScope scope, CitizenPageRequest request, RequestCallback<CitizenPageData> callback);
-
-    /**
-     * 获取市民用户列表
-     * <p>同步调用。</p>
-     */
-    CitizenPageData getCitizenPageSync(CitizenPageRequest request) throws NzBaseException;
 
     /**
      * 获取系统字典

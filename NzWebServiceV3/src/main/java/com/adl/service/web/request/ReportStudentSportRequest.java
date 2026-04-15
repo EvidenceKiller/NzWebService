@@ -205,8 +205,8 @@ public final class ReportStudentSportRequest extends BaseRequest {
         this.reportCode = builder.reportCode;
     }
 
-    public static Builder builder(String accountId, String appCode, Integer invalidFlag, Long sportCount, String sportStartTime, String sportEndTime, String sportResult, String sportSceneCode, String sportSkuId, String sportSkuSubType, Long sportTime) {
-        return new Builder(accountId, appCode, invalidFlag, sportCount, sportStartTime, sportEndTime, sportResult, sportSceneCode, sportSkuId, sportSkuSubType, sportTime);
+    public static Builder builder(String id, String accountId, String appCode, Integer invalidFlag, Long sportCount, String sportStartTime, String sportEndTime, String sportResult, String sportSceneCode, String sportSkuId, String sportSkuSubType, Long sportTime) {
+        return new Builder(id, accountId, appCode, invalidFlag, sportCount, sportStartTime, sportEndTime, sportResult, sportSceneCode, sportSkuId, sportSkuSubType, sportTime);
     }
 
 
@@ -240,7 +240,8 @@ public final class ReportStudentSportRequest extends BaseRequest {
         private String placeName;
         private String reportCode;
 
-        Builder(String accountId, String appCode, int invalidFlag, long sportCount, String sportStartTime, String sportEndTime, String sportResult, String sportSceneCode, String sportSkuId, String sportSkuSubType, long sportTime) {
+        Builder(String id, String accountId, String appCode, int invalidFlag, long sportCount, String sportStartTime, String sportEndTime, String sportResult, String sportSceneCode, String sportSkuId, String sportSkuSubType, long sportTime) {
+            this.id = id;
             this.accountId = accountId;
             this.appCode = appCode;
             this.invalidFlag = invalidFlag;
@@ -271,11 +272,6 @@ public final class ReportStudentSportRequest extends BaseRequest {
 
         public Builder extraJson(String extraJson) {
             this.extraJson = extraJson;
-            return this;
-        }
-
-        public Builder id(String id) {
-            this.id = id;
             return this;
         }
 

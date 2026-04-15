@@ -131,16 +131,40 @@ public final class BusinessCallerImpl implements BusinessCaller {
     }
 
     @Override
+    public long getCompetitionPagesAllAsync(RequestScope scope, CompetitionPageRequest request, RequestCallback<List<CompetitionData>> callback) {
+        CallerUtil.assertCurrent(request);
+        CallerUtil.assertScope(scope);
+        Disposable disposable = RxCallbackScheduler.schedule(BasePagePersistence.persistAllPagesAsSingle(
+                BusinessPersistenceHelper.createCompetitionPagePreparer(),
+                BusinessPersistenceHelper.createCompetitionPageRequester(request, req -> businessService.getCompetitionPage(req)),
+                BusinessPersistenceHelper.createCompetitionPagePersister()), callback);
+        SubscriptionManager.getInstance().add(scope.owner(), disposable);
+        return disposable.hashCode();
+    }
+
+    @Override
+    public List<CompetitionData> getCompetitionPagesAllSync(CompetitionPageRequest request) throws NzBaseException {
+        return RxCallbackScheduler.blockingGet(BasePagePersistence.persistAllPagesAsSingle(
+                BusinessPersistenceHelper.createCompetitionPagePreparer(),
+                BusinessPersistenceHelper.createCompetitionPageRequester(request, req -> businessService.getCompetitionPage(req)),
+                BusinessPersistenceHelper.createCompetitionPagePersister()));
+    }
+
+    @Override
     public long getCompetitionPageAsync(RequestScope scope, CompetitionPageRequest request, RequestCallback<BasePageData<CompetitionData>> callback) {
         CallerUtil.assertScope(scope);
-        Disposable disposable = RxCallbackScheduler.scheduleBaseResponse(businessService.getCompetitionPage(request), callback);
+        Disposable disposable = RxCallbackScheduler.scheduleBaseResponse(BasePagePersistence.persistOnePageAsSingle(
+                BasePersistence.createBaseRequester(request, req -> businessService.getCompetitionPage(req)),
+                BusinessPersistenceHelper.createCompetitionPagePersister()), callback);
         SubscriptionManager.getInstance().add(scope.owner(), disposable);
         return disposable.hashCode();
     }
 
     @Override
     public BasePageData<CompetitionData> getCompetitionPageSync(CompetitionPageRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGetData(businessService.getCompetitionPage(request));
+        return RxCallbackScheduler.blockingGetData(BasePagePersistence.persistOnePageAsSingle(
+                BasePersistence.createBaseRequester(request, req -> businessService.getCompetitionPage(req)),
+                BusinessPersistenceHelper.createCompetitionPagePersister()));
     }
 
     @Override
@@ -174,7 +198,7 @@ public final class BusinessCallerImpl implements BusinessCaller {
     @Override
     public long getSportMeetPageAsync(RequestScope scope, SportMeetPageRequest request, RequestCallback<BasePageData<SportMeetData>> callback) {
         CallerUtil.assertScope(scope);
-        Disposable disposable = RxCallbackScheduler.scheduleBaseResponse(BasePagePersistence.persistAfterFetch(
+        Disposable disposable = RxCallbackScheduler.scheduleBaseResponse(BasePagePersistence.persistOnePageAsSingle(
                 BasePersistence.createBaseRequester(request, req -> businessService.getSportMeetPage(request)),
                 BusinessPersistenceHelper.createSportMeetPagePersister(request.getAppCode())), callback);
         SubscriptionManager.getInstance().add(scope.owner(), disposable);
@@ -183,7 +207,7 @@ public final class BusinessCallerImpl implements BusinessCaller {
 
     @Override
     public BasePageData<SportMeetData> getSportMeetPageSync(SportMeetPageRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGetData(BasePagePersistence.persistAfterFetch(
+        return RxCallbackScheduler.blockingGetData(BasePagePersistence.persistOnePageAsSingle(
                 BasePersistence.createBaseRequester(request, req -> businessService.getSportMeetPage(request)),
                 BusinessPersistenceHelper.createSportMeetPagePersister(request.getAppCode())));
     }

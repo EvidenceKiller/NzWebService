@@ -1,7 +1,5 @@
 package com.adl.service.web.response;
 
-import com.adl.service.entity.SportImageEntity;
-import com.adl.service.entity.SportVideoEntity;
 import com.adl.service.internal.StrictJsonDeserializer;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;

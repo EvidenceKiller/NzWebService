@@ -1,4 +1,4 @@
-package com.adl.service.entity;
+package com.adl.service.db.entity;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;

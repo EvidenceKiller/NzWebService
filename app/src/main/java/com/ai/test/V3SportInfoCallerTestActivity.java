@@ -65,7 +65,7 @@ public class V3SportInfoCallerTestActivity extends AppCompatActivity {
 
     private ReportStudentSportRequest buildReportStudentSportRequest() {
         return ReportStudentSportRequest.builder(
-                "1965665142485622785", "101101", 0, 10L, "1776082153044", "1776082213054",
+                "9901060001", "1965665142485622785", "101101", 0, 10L, "1776082153044", "1776082213054",
                 "50", "1001", "4301010001", "temp", 60000L)
                 .build();
     }

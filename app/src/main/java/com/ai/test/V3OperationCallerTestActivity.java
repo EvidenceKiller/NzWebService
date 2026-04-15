@@ -63,12 +63,6 @@ public class V3OperationCallerTestActivity extends AppCompatActivity {
         createButton("getDictMapSync").setOnClickListener(v -> getDictMapSync());
         createButton("getSceneListAsync").setOnClickListener(v -> getSceneListAsync());
         createButton("getSceneListSync").setOnClickListener(v -> getSceneListSync());
-        createButton("getWikiTypePageAsync").setOnClickListener(v -> getWikiTypePageAsync());
-        createButton("getWikiTypePageSync").setOnClickListener(v -> getWikiTypePageSync());
-        createButton("getWikiPageAsync").setOnClickListener(v -> getWikiPageAsync());
-        createButton("getWikiPageSync").setOnClickListener(v -> getWikiPageSync());
-        createButton("getWikiDetailAsync").setOnClickListener(v -> getWikiDetailAsync());
-        createButton("getWikiDetailSync").setOnClickListener(v -> getWikiDetailSync());
         createButton("uploadDeviceNameAsync").setOnClickListener(v -> uploadDeviceNameAsync());
         createButton("uploadDeviceNameSync").setOnClickListener(v -> uploadDeviceNameSync());
         createButton("getDeviceFocusListAsync").setOnClickListener(v -> getDeviceFocusListAsync());
@@ -90,7 +84,7 @@ public class V3OperationCallerTestActivity extends AppCompatActivity {
     }
 
     private DictMapRequest buildDictMapRequest() {
-        return DictMapRequest.builder("0401010001").build();
+        return DictMapRequest.builder("9901060001").build();
     }
 
     private SceneListRequest buildSceneListRequest() {
@@ -403,174 +397,6 @@ public class V3OperationCallerTestActivity extends AppCompatActivity {
             @Override
             public void onError(String error) {
                 Log.d(TAG, "OperationCallerTestActivity::getSceneListSync::onError : error : " + error);
-                resultView.setText(error);
-            }
-        });
-    }
-
-    private void getWikiTypePageAsync() {
-        WikiTypePageRequest request = buildWikiTypePageRequest();
-        AdlService.getService().getOperationCaller().getWikiTypePageAsync(RequestScope.of(this), request, new RequestCallback<BasePageData<WikiTypeData>>() {
-            @Override
-            public void onSuccess(BasePageData<WikiTypeData> data) {
-                if (data != null) {
-                    Log.d(TAG, "OperationCallerTestActivity::getWikiTypePageAsync::onSuccess : data : " + data);
-                    resultView.setText(data.toString());
-                } else {
-                    Log.d(TAG, "OperationCallerTestActivity::getWikiTypePageAsync::onSuccess : data is null");
-                }
-            }
-
-            @Override
-            public void onFail(int code, String msg) {
-                Log.d(TAG, "OperationCallerTestActivity::getWikiTypePageAsync::onFail : code : " + code + ", msg : " + msg);
-                resultView.setText(msg);
-            }
-
-            @Override
-            public void onError(String error) {
-                Log.d(TAG, "OperationCallerTestActivity::getWikiTypePageAsync::onError : error : " + error);
-                resultView.setText(error);
-            }
-        });
-    }
-
-    private void getWikiTypePageSync() {
-        AdlService.getService().executeSyncOnIo(RequestScope.of(this), () -> {
-            WikiTypePageRequest request = buildWikiTypePageRequest();
-            return AdlService.getService().getOperationCaller().getWikiTypePageSync(request);
-        }, new RequestCallback<BasePageData<WikiTypeData>>() {
-            @Override
-            public void onSuccess(BasePageData<WikiTypeData> data) {
-                if (data != null) {
-                    Log.d(TAG, "OperationCallerTestActivity::getWikiTypePageSync::onSuccess : data : " + data);
-                    resultView.setText(data.toString());
-                } else {
-                    Log.d(TAG, "OperationCallerTestActivity::getWikiTypePageSync::onSuccess : data is null");
-                }
-            }
-
-            @Override
-            public void onFail(int code, String msg) {
-                Log.d(TAG, "OperationCallerTestActivity::getWikiTypePageSync::onFail : code : " + code + ", msg : " + msg);
-                resultView.setText(msg);
-            }
-
-            @Override
-            public void onError(String error) {
-                Log.d(TAG, "OperationCallerTestActivity::getWikiTypePageSync::onError : error : " + error);
-                resultView.setText(error);
-            }
-        });
-    }
-
-    private void getWikiPageAsync() {
-        WikiPageRequest request = buildWikiPageRequest();
-        AdlService.getService().getOperationCaller().getWikiPageAsync(RequestScope.of(this), request, new RequestCallback<BasePageData<WikiData>>() {
-            @Override
-            public void onSuccess(BasePageData<WikiData> data) {
-                if (data != null) {
-                    Log.d(TAG, "OperationCallerTestActivity::getWikiPageAsync::onSuccess : data : " + data);
-                    resultView.setText(data.toString());
-                } else {
-                    Log.d(TAG, "OperationCallerTestActivity::getWikiPageAsync::onSuccess : data is null");
-                }
-            }
-
-            @Override
-            public void onFail(int code, String msg) {
-                Log.d(TAG, "OperationCallerTestActivity::getWikiPageAsync::onFail : code : " + code + ", msg : " + msg);
-                resultView.setText(msg);
-            }
-
-            @Override
-            public void onError(String error) {
-                Log.d(TAG, "OperationCallerTestActivity::getWikiPageAsync::onError : error : " + error);
-                resultView.setText(error);
-            }
-        });
-    }
-
-    private void getWikiPageSync() {
-        AdlService.getService().executeSyncOnIo(RequestScope.of(this), () -> {
-            WikiPageRequest request = buildWikiPageRequest();
-            return AdlService.getService().getOperationCaller().getWikiPageSync(request);
-        }, new RequestCallback<BasePageData<WikiData>>() {
-            @Override
-            public void onSuccess(BasePageData<WikiData> data) {
-                if (data != null) {
-                    Log.d(TAG, "OperationCallerTestActivity::getWikiPageSync::onSuccess : data : " + data);
-                    resultView.setText(data.toString());
-                } else {
-                    Log.d(TAG, "OperationCallerTestActivity::getWikiPageSync::onSuccess : data is null");
-                }
-            }
-
-            @Override
-            public void onFail(int code, String msg) {
-                Log.d(TAG, "OperationCallerTestActivity::getWikiPageSync::onFail : code : " + code + ", msg : " + msg);
-                resultView.setText(msg);
-            }
-
-            @Override
-            public void onError(String error) {
-                Log.d(TAG, "OperationCallerTestActivity::getWikiPageSync::onError : error : " + error);
-                resultView.setText(error);
-            }
-        });
-    }
-
-    private void getWikiDetailAsync() {
-        WikiDetailRequest request = buildWikiDetailRequest();
-        AdlService.getService().getOperationCaller().getWikiDetailAsync(RequestScope.of(this), request, new RequestCallback<WikiDetailData>() {
-            @Override
-            public void onSuccess(WikiDetailData data) {
-                if (data != null) {
-                    Log.d(TAG, "OperationCallerTestActivity::getWikiDetailAsync::onSuccess : data : " + data);
-                    resultView.setText(data.toString());
-                } else {
-                    Log.d(TAG, "OperationCallerTestActivity::getWikiDetailAsync::onSuccess : data is null");
-                }
-            }
-
-            @Override
-            public void onFail(int code, String msg) {
-                Log.d(TAG, "OperationCallerTestActivity::getWikiDetailAsync::onFail : code : " + code + ", msg : " + msg);
-                resultView.setText(msg);
-            }
-
-            @Override
-            public void onError(String error) {
-                Log.d(TAG, "OperationCallerTestActivity::getWikiDetailAsync::onError : error : " + error);
-                resultView.setText(error);
-            }
-        });
-    }
-
-    private void getWikiDetailSync() {
-        AdlService.getService().executeSyncOnIo(RequestScope.of(this), () -> {
-            WikiDetailRequest request = buildWikiDetailRequest();
-            return AdlService.getService().getOperationCaller().getWikiDetailSync(request);
-        }, new RequestCallback<WikiDetailData>() {
-            @Override
-            public void onSuccess(WikiDetailData data) {
-                if (data != null) {
-                    Log.d(TAG, "OperationCallerTestActivity::getWikiDetailSync::onSuccess : data : " + data);
-                    resultView.setText(data.toString());
-                } else {
-                    Log.d(TAG, "OperationCallerTestActivity::getWikiDetailSync::onSuccess : data is null");
-                }
-            }
-
-            @Override
-            public void onFail(int code, String msg) {
-                Log.d(TAG, "OperationCallerTestActivity::getWikiDetailSync::onFail : code : " + code + ", msg : " + msg);
-                resultView.setText(msg);
-            }
-
-            @Override
-            public void onError(String error) {
-                Log.d(TAG, "OperationCallerTestActivity::getWikiDetailSync::onError : error : " + error);
                 resultView.setText(error);
             }
         });

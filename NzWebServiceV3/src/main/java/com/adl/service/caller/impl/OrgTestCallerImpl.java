@@ -120,7 +120,7 @@ public final class OrgTestCallerImpl implements OrgTestCaller {
     public long getStandardConfigPagesAllAsync(RequestScope scope, StandardConfigPageRequest request, RequestCallback<List<StandardConfigPageData>> callback) {
         CallerUtil.assertCurrent(request);
         CallerUtil.assertScope(scope);
-        Disposable disposable = RxCallbackScheduler.schedule(BasePagePersistence.persistAllPageListAsSingle(
+        Disposable disposable = RxCallbackScheduler.schedule(BasePagePersistence.persistAllListsAsSingle(
                 OrgTestPersistenceHelper.createStandardConfigPageRequester(request, req -> orgTestService.getStandardConfigPage(req)),
                 OrgTestPersistenceHelper.createStandardConfigPagePersister()), callback);
         SubscriptionManager.getInstance().add(scope.owner(), disposable);
@@ -130,7 +130,7 @@ public final class OrgTestCallerImpl implements OrgTestCaller {
     @Override
     public List<StandardConfigPageData> getStandardConfigPagesAllSync(StandardConfigPageRequest request) throws NzBaseException {
         CallerUtil.assertCurrent(request);
-        return RxCallbackScheduler.blockingGet(BasePagePersistence.persistAllPageListAsSingle(
+        return RxCallbackScheduler.blockingGet(BasePagePersistence.persistAllListsAsSingle(
                 OrgTestPersistenceHelper.createStandardConfigPageRequester(request, req -> orgTestService.getStandardConfigPage(req)),
                 OrgTestPersistenceHelper.createStandardConfigPagePersister()));
     }
@@ -214,7 +214,7 @@ public final class OrgTestCallerImpl implements OrgTestCaller {
     @Override
     public long getPlanPageAsync(RequestScope scope, PlanPageRequest request, RequestCallback<BasePageData<PlanData>> callback) {
         CallerUtil.assertScope(scope);
-        Disposable disposable = RxCallbackScheduler.scheduleBaseResponse(BasePagePersistence.persistAfterFetch(
+        Disposable disposable = RxCallbackScheduler.scheduleBaseResponse(BasePagePersistence.persistOnePageAsSingle(
                 BasePersistence.createBaseRequester(request, req -> orgTestService.getPlanPage(req)),
                 OrgTestPersistenceHelper.createPlanPagePersister()), callback);
         SubscriptionManager.getInstance().add(scope.owner(), disposable);
@@ -223,7 +223,7 @@ public final class OrgTestCallerImpl implements OrgTestCaller {
 
     @Override
     public BasePageData<PlanData> getPlanPageSync(PlanPageRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGetData(BasePagePersistence.persistAfterFetch(
+        return RxCallbackScheduler.blockingGetData(BasePagePersistence.persistOnePageAsSingle(
                 BasePersistence.createBaseRequester(request, req -> orgTestService.getPlanPage(req)),
                 OrgTestPersistenceHelper.createPlanPagePersister()));
     }

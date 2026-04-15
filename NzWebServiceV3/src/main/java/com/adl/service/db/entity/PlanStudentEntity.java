@@ -20,8 +20,7 @@ import lombok.ToString;
 
 @Data
 @NoArgsConstructor
-@Entity(tableName = "_plan_student"
-        , indices = {@Index(value = {"_plan_id"})})
+@Entity(tableName = "_plan_student", indices = {@Index(value = {"_plan_id"})})
 @TypeConverters(value = {ListPlanSportEntityConverter.class})
 public final class PlanStudentEntity implements Serializable {
 

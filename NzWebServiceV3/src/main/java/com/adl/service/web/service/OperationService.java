@@ -63,24 +63,6 @@ public interface OperationService {
     Single<BaseResponse<List<SceneData>>> getSceneList(@Body SceneListRequest request);
 
     /**
-     * 获取百科分类列表
-     */
-    @POST("tis/device/oper/wiki/type/getWikiTypeList")
-    Single<BaseResponse<BasePageData<WikiTypeData>>> getWikiTypePage(@Body WikiTypePageRequest request);
-
-    /**
-     * 获取百科列表
-     */
-    @POST("tis/device/oper/wiki/getWikiList")
-    Single<BaseResponse<BasePageData<WikiData>>> getWikiPage(@Body WikiPageRequest request);
-
-    /**
-     * 获取运动百科详情
-     */
-    @POST("tis/device/oper/wiki/getWikiDetail")
-    Single<BaseResponse<WikiDetailData>> getWikiDetail(@Body WikiDetailRequest request);
-
-    /**
      * 修改设备名称
      */
     @POST("tis/device/oper/device/upload/deviceName")

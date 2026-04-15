@@ -1,12 +1,12 @@
 package com.adl.service.db;
 
+import com.adl.service.db.entity.StudentEntity;
 import com.adl.service.entity.ClassQueryInfo;
 import com.adl.service.entity.CollegeQueryInfo;
 import com.adl.service.entity.FacultyQueryInfo;
 import com.adl.service.entity.GradeQueryInfo;
 import com.adl.service.entity.MajorQueryInfo;
 import com.adl.service.entity.StudentClassResult;
-import com.adl.service.entity.StudentEntity;
 import com.adl.service.entity.StudentGradeClassResult;
 
 import org.jetbrains.annotations.NotNull;
@@ -41,7 +41,7 @@ public interface StudentDao {
             "_account_name_pinyin,_account_name_first_letter_pinyin,local_avatar_path";
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    Completable insertAll(List<StudentEntity> list);
+    void insertAll(List<StudentEntity> list);
 
     @Query("select count (*) from _student_entity")
     int countSize();

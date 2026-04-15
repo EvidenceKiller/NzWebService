@@ -4,14 +4,19 @@ import android.text.TextUtils;
 
 import com.adl.service.common.CommonUtil;
 import com.adl.service.db.DaoManagerProxy;
+import com.adl.service.db.entity.CompetitionEntity;
 import com.adl.service.db.entity.SportMeetEntity;
 import com.adl.service.db.entity.SportMeetGroupDetailEntity;
 import com.adl.service.db.entity.SportMeetGroupTeamEntity;
+import com.adl.service.db.entity.SportSkuEntity;
+import com.adl.service.web.request.CompetitionPageRequest;
 import com.adl.service.web.request.SceneListRequest;
 import com.adl.service.web.request.SportMeetPageRequest;
 import com.adl.service.web.response.BasePageData;
 import com.adl.service.web.response.BaseResponse;
+import com.adl.service.web.response.CompetitionData;
 import com.adl.service.web.response.SportMeetData;
+import com.adl.service.web.response.SportSkuData;
 
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -128,6 +133,50 @@ public final class BusinessPersistenceHelper {
             }
 
             DaoManagerProxy.getInstance().getSportMeetDao().insertAll(persistList);
+            return dataList;
+        };
+    }
+
+    public static Function<Void, Completable> createCompetitionPagePreparer() {
+        return (v) -> {
+            DaoManagerProxy.getInstance().getCompetitionDao().clearAll();
+            return Completable.complete();
+        };
+    }
+
+    public static Function<Long, Single<BaseResponse<BasePageData<CompetitionData>>>> createCompetitionPageRequester(
+            CompetitionPageRequest request, Function<CompetitionPageRequest, Single<BaseResponse<BasePageData<CompetitionData>>>> function) {
+        return (page) -> {
+            CompetitionPageRequest pageReq = CompetitionPageRequest.builder()
+                    .current(page)
+                    .pageSize(request.getPageSize())
+                    .onlineType(request.getOnlineType())
+                    .orgId(request.getOrgId())
+                    .competitionLevel(request.getCompetitionLevel())
+                    .appCode(request.getAppCode())
+                    .startTime(request.getStartTime())
+                    .endTime(request.getEndTime())
+                    .competitionEnabled(request.getCompetitionEnabled())
+                    .keyword(request.getKeyword())
+                    .acayearSemCode(request.getAcayearSemCode())
+                    .orgType(request.getOrgType())
+                    .terminalFlag(request.getTerminalFlag())
+                    .accountId(request.getAccountId())
+                    .sortField(request.getSortField())
+                    .build();
+            return function.apply(pageReq);
+        };
+    }
+
+    public static Function<List<CompetitionData>, List<CompetitionData>> createCompetitionPagePersister() {
+        return (dataList) -> {
+            if (dataList == null || dataList.isEmpty()) {
+                return dataList;
+            }
+            List<CompetitionEntity> entityList = dataList.stream()
+                    .map(data -> CompetitionEntity.convertToEntity(data))
+                    .collect(Collectors.toList());
+            DaoManagerProxy.getInstance().getCompetitionDao().insertCompetitionList(entityList);
             return dataList;
         };
     }

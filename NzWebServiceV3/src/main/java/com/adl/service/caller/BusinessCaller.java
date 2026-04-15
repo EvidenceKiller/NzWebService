@@ -107,6 +107,10 @@ public interface BusinessCaller {
      */
     CompetitionRankDetailData getCompetitionRankDetailSync(CompetitionRankDetailRequest request) throws NzBaseException;
 
+    long getCompetitionPagesAllAsync(RequestScope scope, CompetitionPageRequest request, RequestCallback<List<CompetitionData>> callback);
+
+    List<CompetitionData> getCompetitionPagesAllSync(CompetitionPageRequest request) throws NzBaseException;
+
     /**
      * 赛事列表
      * <p>异步调用。</p>

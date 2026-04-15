@@ -20,19 +20,13 @@ import com.adl.service.web.request.SceneListRequest;
 import com.adl.service.web.request.SportSkuDetailRequest;
 import com.adl.service.web.request.SportSkuPageRequest;
 import com.adl.service.web.request.UploadDeviceNameRequest;
-import com.adl.service.web.request.WikiDetailRequest;
-import com.adl.service.web.request.WikiPageRequest;
-import com.adl.service.web.request.WikiTypePageRequest;
 import com.adl.service.web.response.BannerDetailData;
 import com.adl.service.web.response.BasePageData;
 import com.adl.service.web.response.DeviceFocusData;
 import com.adl.service.web.response.DictMapData;
 import com.adl.service.web.response.SceneData;
-import com.adl.service.web.response.SportSkuDetailData;
 import com.adl.service.web.response.SportSkuData;
-import com.adl.service.web.response.WikiData;
-import com.adl.service.web.response.WikiDetailData;
-import com.adl.service.web.response.WikiTypeData;
+import com.adl.service.web.response.SportSkuDetailData;
 import com.adl.service.web.service.OperationService;
 
 import java.util.List;
@@ -120,7 +114,7 @@ public final class OperationCallerImpl implements OperationCaller {
     @Override
     public long getSportSkuPageAsync(RequestScope scope, SportSkuPageRequest request, RequestCallback<BasePageData<SportSkuData>> callback) {
         CallerUtil.assertScope(scope);
-        Disposable disposable = RxCallbackScheduler.scheduleBaseResponse(BasePagePersistence.persistAfterFetch(
+        Disposable disposable = RxCallbackScheduler.scheduleBaseResponse(BasePagePersistence.persistOnePageAsSingle(
                 BasePersistence.createBaseRequester(request, req -> operationService.getSportSkuPage(req)),
                 OperationPersistenceHelper.createSportSkuPagePersister(request.getAppCode(), request.getSceneId())), callback);
         SubscriptionManager.getInstance().add(scope.owner(), disposable);
@@ -129,7 +123,7 @@ public final class OperationCallerImpl implements OperationCaller {
 
     @Override
     public BasePageData<SportSkuData> getSportSkuPageSync(SportSkuPageRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGetData(BasePagePersistence.persistAfterFetch(
+        return RxCallbackScheduler.blockingGetData(BasePagePersistence.persistOnePageAsSingle(
                 BasePersistence.createBaseRequester(request, req -> operationService.getSportSkuPage(req)),
                 OperationPersistenceHelper.createSportSkuPagePersister(request.getAppCode(), request.getSceneId())));
     }
@@ -177,45 +171,6 @@ public final class OperationCallerImpl implements OperationCaller {
                 OperationPersistenceHelper.createSceneListPreparer(request.getAppCode()),
                 BasePersistence.createBaseRequester(request, req -> operationService.getSceneList(req)),
                 OperationPersistenceHelper.createSceneListPersister(request.getAppCode())));
-    }
-
-    @Override
-    public long getWikiTypePageAsync(RequestScope scope, WikiTypePageRequest request, RequestCallback<BasePageData<WikiTypeData>> callback) {
-        CallerUtil.assertScope(scope);
-        Disposable disposable = RxCallbackScheduler.scheduleBaseResponse(operationService.getWikiTypePage(request), callback);
-        SubscriptionManager.getInstance().add(scope.owner(), disposable);
-        return disposable.hashCode();
-    }
-
-    @Override
-    public BasePageData<WikiTypeData> getWikiTypePageSync(WikiTypePageRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGetData(operationService.getWikiTypePage(request));
-    }
-
-    @Override
-    public long getWikiPageAsync(RequestScope scope, WikiPageRequest request, RequestCallback<BasePageData<WikiData>> callback) {
-        CallerUtil.assertScope(scope);
-        Disposable disposable = RxCallbackScheduler.scheduleBaseResponse(operationService.getWikiPage(request), callback);
-        SubscriptionManager.getInstance().add(scope.owner(), disposable);
-        return disposable.hashCode();
-    }
-
-    @Override
-    public BasePageData<WikiData> getWikiPageSync(WikiPageRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGetData(operationService.getWikiPage(request));
-    }
-
-    @Override
-    public long getWikiDetailAsync(RequestScope scope, WikiDetailRequest request, RequestCallback<WikiDetailData> callback) {
-        CallerUtil.assertScope(scope);
-        Disposable disposable = RxCallbackScheduler.scheduleBaseResponse(operationService.getWikiDetail(request), callback);
-        SubscriptionManager.getInstance().add(scope.owner(), disposable);
-        return disposable.hashCode();
-    }
-
-    @Override
-    public WikiDetailData getWikiDetailSync(WikiDetailRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGetData(operationService.getWikiDetail(request));
     }
 
     @Override

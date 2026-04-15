@@ -11,7 +11,6 @@ import com.adl.service.AdlService;
 import com.adl.service.callback.RequestCallback;
 import com.adl.service.web.request.BaseDirection;
 import com.adl.service.web.request.BaseSort;
-import com.adl.service.web.request.CitizenPageRequest;
 import com.adl.service.web.request.ClassInfoRequest;
 import com.adl.service.web.request.ClassListRequest;
 import com.adl.service.web.request.DeviceActiveRequest;
@@ -21,7 +20,6 @@ import com.adl.service.web.request.StudentPageRequest;
 import com.adl.service.web.request.TeacherListRequest;
 import com.adl.service.web.response.AcayearData;
 import com.adl.service.web.response.BasePageData;
-import com.adl.service.web.response.CitizenPageData;
 import com.adl.service.web.response.ClassInfoData;
 import com.adl.service.web.response.ClassData;
 import com.adl.service.web.response.DictData;
@@ -79,9 +77,6 @@ public class V3CommonInfoCallerTestActivity extends AppCompatActivity {
 
         createButton("getStudentPageAsync").setOnClickListener(v -> getStudentPageAsync());
         createButton("getStudentPageSync").setOnClickListener(v -> getStudentPageSync());
-
-        createButton("getCitizenPageAsync").setOnClickListener(v -> getCitizenPageAsync());
-        createButton("getCitizenPageSync").setOnClickListener(v -> getCitizenPageSync());
 
         createButton("getDictsAsync").setOnClickListener(v -> getDictsAsync());
         createButton("getDictsSync").setOnClickListener(v -> getDictsSync());
@@ -548,64 +543,6 @@ public class V3CommonInfoCallerTestActivity extends AppCompatActivity {
             @Override
             public void onError(String error) {
                 Log.d(TAG, "CommonInfoCallerTestActivity::getStudentPageSync::onError : error : " + error);
-                resultView.setText(error);
-            }
-        });
-    }
-
-    private void getCitizenPageAsync() {
-        CitizenPageRequest request = CitizenPageRequest.builder()
-                .build();
-        AdlService.getService().getCommonInfoCaller().getCitizenPageAsync(RequestScope.of(this), request, new RequestCallback<CitizenPageData>() {
-            @Override
-            public void onSuccess(CitizenPageData data) {
-                if (data != null) {
-                    Log.d(TAG, "CommonInfoCallerTestActivity::getCitizenPageAsync::onSuccess : data : " + data);
-                    resultView.setText(data.toString());
-                } else {
-                    Log.d(TAG, "CommonInfoCallerTestActivity::getCitizenPageAsync::onSuccess : data is null");
-                }
-            }
-
-            @Override
-            public void onFail(int code, String msg) {
-                Log.d(TAG, "CommonInfoCallerTestActivity::getCitizenPageAsync::onFail : code : " + code + ", msg : " + msg);
-                resultView.setText(msg);
-            }
-
-            @Override
-            public void onError(String error) {
-                Log.d(TAG, "CommonInfoCallerTestActivity::getCitizenPageAsync::onError : error : " + error);
-                resultView.setText(error);
-            }
-        });
-    }
-
-    private void getCitizenPageSync() {
-        AdlService.getService().executeSyncOnIo(RequestScope.of(this), () -> {
-            CitizenPageRequest request = CitizenPageRequest.builder()
-                    .build();
-            return AdlService.getService().getCommonInfoCaller().getCitizenPageSync(request);
-        }, new RequestCallback<CitizenPageData>() {
-            @Override
-            public void onSuccess(CitizenPageData data) {
-                if (data != null) {
-                    Log.d(TAG, "CommonInfoCallerTestActivity::getCitizenPageSync::onSuccess : data : " + data);
-                    resultView.setText(data.toString());
-                } else {
-                    Log.d(TAG, "CommonInfoCallerTestActivity::getCitizenPageSync::onSuccess : data is null");
-                }
-            }
-
-            @Override
-            public void onFail(int code, String msg) {
-                Log.d(TAG, "CommonInfoCallerTestActivity::getCitizenPageSync::onFail : code : " + code + ", msg : " + msg);
-                resultView.setText(msg);
-            }
-
-            @Override
-            public void onError(String error) {
-                Log.d(TAG, "CommonInfoCallerTestActivity::getCitizenPageSync::onError : error : " + error);
                 resultView.setText(error);
             }
         });
