@@ -2,7 +2,7 @@ package com.adl.service.web.request;
 
 import com.google.gson.annotations.SerializedName;
 
-public final class OverviewRequest {
+public final class OverviewRequest extends BaseRequest {
 
     /**
      * 1-今日 2-本周 3-本月 4-本季度 5-本年度

@@ -2,7 +2,7 @@ package com.adl.service.web.request;
 
 import com.google.gson.annotations.SerializedName;
 
-public final class DeviceFocusListRequest {
+public final class DeviceFocusListRequest extends BaseRequest {
 
     @SerializedName("deviceId")
     private String deviceId;

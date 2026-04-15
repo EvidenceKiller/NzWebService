@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public final class ReportStudentSportRequest {
+public final class ReportStudentSportRequest extends BaseRequest {
 
     /**
      * 用户标识码

@@ -6,7 +6,7 @@ import com.adl.service.web.request.CitizenPageRequest;
 import com.adl.service.web.request.ClassInfoRequest;
 import com.adl.service.web.request.ClassListRequest;
 import com.adl.service.web.request.DeviceActiveRequest;
-import com.adl.service.web.request.DictsRequest;
+import com.adl.service.web.request.DictRequest;
 import com.adl.service.web.request.RequestScope;
 import com.adl.service.web.request.StudentPageRequest;
 import com.adl.service.web.request.TeacherListRequest;
@@ -15,7 +15,7 @@ import com.adl.service.web.response.BasePageData;
 import com.adl.service.web.response.CitizenPageData;
 import com.adl.service.web.response.ClassInfoData;
 import com.adl.service.web.response.ClassData;
-import com.adl.service.web.response.DictsData;
+import com.adl.service.web.response.DictData;
 import com.adl.service.web.response.GradeChineseNameData;
 import com.adl.service.web.response.GradeTreeData;
 import com.adl.service.web.response.LoginInfoData;
@@ -141,13 +141,13 @@ public interface CommonInfoCaller {
      * 获取系统字典
      * <p>异步调用。</p>
      */
-    long getDictsAsync(RequestScope scope, DictsRequest request, RequestCallback<List<DictsData>> callback);
+    long getDictListAsync(RequestScope scope, DictRequest request, RequestCallback<List<DictData>> callback);
 
     /**
      * 获取系统字典
      * <p>同步调用。</p>
      */
-    List<DictsData> getDictsSync(DictsRequest request) throws NzBaseException;
+    List<DictData> getDictListSync(DictRequest request) throws NzBaseException;
 
     /**
      * 设备激活

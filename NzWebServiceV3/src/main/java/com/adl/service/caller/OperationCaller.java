@@ -25,11 +25,14 @@ import com.adl.service.web.response.WikiDetailData;
 import com.adl.service.web.response.WikiTypeData;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * OperationCaller。
  */
 public interface OperationCaller {
+
+    void reLoadAllSceneDataSync(Map<String, List<String>> map) throws NzBaseException;
 
     /**
      * 获取Banner详情列表
@@ -42,6 +45,10 @@ public interface OperationCaller {
      * <p>同步调用。</p>
      */
     List<BannerDetailData> getBannerDetailListSync(BannerDetailListRequest request) throws NzBaseException;
+
+    long getSportSkuPagesAllAsync(RequestScope scope, SportSkuPageRequest request, RequestCallback<List<SportSkuData>> callback);
+
+    List<SportSkuData> getSportSkuPagesAllSync(SportSkuPageRequest request) throws NzBaseException;
 
     /**
      * 获取项目库列表

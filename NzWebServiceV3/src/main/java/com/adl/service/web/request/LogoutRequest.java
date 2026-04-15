@@ -2,7 +2,7 @@ package com.adl.service.web.request;
 
 import com.google.gson.annotations.SerializedName;
 
-public final class LogoutRequest {
+public final class LogoutRequest extends BaseRequest {
     /**
      * 登录的token
      */

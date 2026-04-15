@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public final class WarRecordRankRequest {
+public final class WarRecordRankRequest extends BaseRequest {
 
     /**
      * 场景code数组

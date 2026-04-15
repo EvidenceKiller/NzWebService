@@ -2,7 +2,7 @@ package com.adl.service.web.request;
 
 import com.google.gson.annotations.SerializedName;
 
-public final class LoginRequest {
+public final class LoginRequest extends BaseRequest {
     @SerializedName("accountNum")
     private String accountNum;
 

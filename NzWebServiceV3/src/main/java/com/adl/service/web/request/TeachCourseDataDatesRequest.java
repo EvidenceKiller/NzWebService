@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public final class TeachCourseDataDatesRequest {
+public final class TeachCourseDataDatesRequest extends BaseRequest {
     /**
      * 班级Id
      */

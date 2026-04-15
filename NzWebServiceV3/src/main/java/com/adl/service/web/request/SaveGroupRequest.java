@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public final class SaveGroupRequest {
+public final class SaveGroupRequest extends BaseRequest {
 
     /**
      * 场景code

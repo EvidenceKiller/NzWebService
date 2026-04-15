@@ -5,6 +5,7 @@ import com.adl.service.callback.RequestCallback;
 import com.adl.service.caller.BusinessCaller;
 import com.adl.service.db.DaoManagerProxy;
 import com.adl.service.persistence.BasePagePersistence;
+import com.adl.service.persistence.BasePersistence;
 import com.adl.service.persistence.BusinessPersistenceHelper;
 import com.adl.service.exception.NzBaseException;
 import com.adl.service.internal.RxCallbackScheduler;
@@ -150,12 +151,22 @@ public final class BusinessCallerImpl implements BusinessCaller {
     }
 
     @Override
+    public long getSportMeetPagesAllAsync(RequestScope scope, SportMeetPageRequest request, RequestCallback<List<SportMeetData>> callback) {
+        CallerUtil.assertCurrent(request);
+        CallerUtil.assertScope(scope);
+        Disposable disposable = RxCallbackScheduler.schedule(BasePagePersistence.persistAllPagesAsSingle(
+                BusinessPersistenceHelper.createSportMeetPagePreparer(request.getAppCode()),
+                BusinessPersistenceHelper.createSportMeetPageRequester(request, req -> businessService.getSportMeetPage(req)),
+                BusinessPersistenceHelper.createSportMeetPagePersister(request.getAppCode())), callback);
+        SubscriptionManager.getInstance().add(scope.owner(), disposable);
+        return disposable.hashCode();
+    }
+
+    @Override
     public List<SportMeetData> getSportMeetPagesAllSync(SportMeetPageRequest request) throws NzBaseException {
         CallerUtil.assertCurrent(request);
-        DaoManagerProxy.getInstance().getSportMeetDao().clearByAppCode(request.getAppCode());
-        DaoManagerProxy.getInstance().getSportMeetGroupTeamDao().clearByAppCode(request.getAppCode());
-        DaoManagerProxy.getInstance().getSportMeetGroupDetailsDao().clearByAppCode(request.getAppCode());
         return RxCallbackScheduler.blockingGet(BasePagePersistence.persistAllPagesAsSingle(
+                BusinessPersistenceHelper.createSportMeetPagePreparer(request.getAppCode()),
                 BusinessPersistenceHelper.createSportMeetPageRequester(request, req -> businessService.getSportMeetPage(req)),
                 BusinessPersistenceHelper.createSportMeetPagePersister(request.getAppCode())));
     }
@@ -164,7 +175,8 @@ public final class BusinessCallerImpl implements BusinessCaller {
     public long getSportMeetPageAsync(RequestScope scope, SportMeetPageRequest request, RequestCallback<BasePageData<SportMeetData>> callback) {
         CallerUtil.assertScope(scope);
         Disposable disposable = RxCallbackScheduler.scheduleBaseResponse(BasePagePersistence.persistAfterFetch(
-                businessService.getSportMeetPage(request), BusinessPersistenceHelper.createSportMeetPagePersister(request.getAppCode())), callback);
+                BasePersistence.createBaseRequester(request, req -> businessService.getSportMeetPage(request)),
+                BusinessPersistenceHelper.createSportMeetPagePersister(request.getAppCode())), callback);
         SubscriptionManager.getInstance().add(scope.owner(), disposable);
         return disposable.hashCode();
     }
@@ -172,7 +184,8 @@ public final class BusinessCallerImpl implements BusinessCaller {
     @Override
     public BasePageData<SportMeetData> getSportMeetPageSync(SportMeetPageRequest request) throws NzBaseException {
         return RxCallbackScheduler.blockingGetData(BasePagePersistence.persistAfterFetch(
-                businessService.getSportMeetPage(request), BusinessPersistenceHelper.createSportMeetPagePersister(request.getAppCode())));
+                BasePersistence.createBaseRequester(request, req -> businessService.getSportMeetPage(request)),
+                BusinessPersistenceHelper.createSportMeetPagePersister(request.getAppCode())));
     }
 
     @Override

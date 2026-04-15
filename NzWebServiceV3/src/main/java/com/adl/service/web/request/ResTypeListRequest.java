@@ -2,7 +2,7 @@ package com.adl.service.web.request;
 
 import com.google.gson.annotations.SerializedName;
 
-public final class ResTypeListRequest {
+public final class ResTypeListRequest extends BaseRequest {
 
     @SerializedName("id")
     private String id;

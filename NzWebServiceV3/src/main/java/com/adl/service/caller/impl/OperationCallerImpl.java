@@ -3,9 +3,15 @@ package com.adl.service.caller.impl;
 import com.adl.service.AdlService;
 import com.adl.service.callback.RequestCallback;
 import com.adl.service.caller.OperationCaller;
+import com.adl.service.db.DaoManagerProxy;
 import com.adl.service.exception.NzBaseException;
 import com.adl.service.internal.RxCallbackScheduler;
 import com.adl.service.internal.SubscriptionManager;
+import com.adl.service.log.NzLog;
+import com.adl.service.persistence.BasePagePersistence;
+import com.adl.service.persistence.BasePersistence;
+import com.adl.service.persistence.OperationPersistenceHelper;
+import com.adl.service.utils.InnerUtil;
 import com.adl.service.web.request.BannerDetailListRequest;
 import com.adl.service.web.request.DeviceFocusListRequest;
 import com.adl.service.web.request.DictMapRequest;
@@ -30,6 +36,8 @@ import com.adl.service.web.response.WikiTypeData;
 import com.adl.service.web.service.OperationService;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import io.reactivex.rxjava3.disposables.Disposable;
 
@@ -42,6 +50,37 @@ public final class OperationCallerImpl implements OperationCaller {
 
     public OperationCallerImpl(OperationService operationService) {
         this.operationService = operationService;
+    }
+
+    @Override
+    public void reLoadAllSceneDataSync(Map<String, List<String>> map) throws NzBaseException {
+        long serverTime = InnerUtil.getServerTime();
+        NzLog.d("服务器时间: " + InnerUtil.formatByTimeCode(serverTime));
+
+        DaoManagerProxy.getInstance().getSceneDao().clearAll();
+        DaoManagerProxy.getInstance().getSceneSportDao().clearAll();
+
+        for (Map.Entry<String, List<String>> entry : map.entrySet()) {
+            String appCode = entry.getKey();
+            List<String> sceneIds = entry.getValue();
+            ////////////// 1.同步场景列表 ////////////
+            SceneListRequest request = SceneListRequest.builder()
+                    .appCode(appCode)
+                    .build();
+            List<SceneData> sceneList = getSceneListSync(request)
+                    .stream()
+                    .filter(sceneData -> sceneIds.contains(sceneData.getId()))
+                    .collect(Collectors.toList());
+
+            ////////////// 2.同步场景下运动列表 ////////////
+            for (SceneData sceneData : sceneList) {
+                SportSkuPageRequest req = SportSkuPageRequest.builder()
+                        .appCode(appCode)
+                        .sceneId(sceneData.getId())
+                        .build();
+                getSportSkuPagesAllSync(req);
+            }
+        }
     }
 
     @Override
@@ -58,16 +97,41 @@ public final class OperationCallerImpl implements OperationCaller {
     }
 
     @Override
+    public long getSportSkuPagesAllAsync(RequestScope scope, SportSkuPageRequest request, RequestCallback<List<SportSkuData>> callback) {
+        CallerUtil.assertCurrent(request);
+        CallerUtil.assertScope(scope);
+        Disposable disposable = RxCallbackScheduler.schedule(BasePagePersistence.persistAllPagesAsSingle(
+                OperationPersistenceHelper.createSportSkuPagePreparer(),
+                OperationPersistenceHelper.createSportSkuPageRequester(request, req -> operationService.getSportSkuPage(req)),
+                OperationPersistenceHelper.createSportSkuPagePersister(request.getAppCode(), request.getSceneId())), callback);
+        SubscriptionManager.getInstance().add(scope.owner(), disposable);
+        return disposable.hashCode();
+    }
+
+    @Override
+    public List<SportSkuData> getSportSkuPagesAllSync(SportSkuPageRequest request) throws NzBaseException {
+        CallerUtil.assertCurrent(request);
+        return RxCallbackScheduler.blockingGet(BasePagePersistence.persistAllPagesAsSingle(
+                OperationPersistenceHelper.createSportSkuPagePreparer(),
+                OperationPersistenceHelper.createSportSkuPageRequester(request, req -> operationService.getSportSkuPage(req)),
+                OperationPersistenceHelper.createSportSkuPagePersister(request.getAppCode(), request.getSceneId())));
+    }
+
+    @Override
     public long getSportSkuPageAsync(RequestScope scope, SportSkuPageRequest request, RequestCallback<BasePageData<SportSkuData>> callback) {
         CallerUtil.assertScope(scope);
-        Disposable disposable = RxCallbackScheduler.scheduleBaseResponse(operationService.getSportSkuPage(request), callback);
+        Disposable disposable = RxCallbackScheduler.scheduleBaseResponse(BasePagePersistence.persistAfterFetch(
+                BasePersistence.createBaseRequester(request, req -> operationService.getSportSkuPage(req)),
+                OperationPersistenceHelper.createSportSkuPagePersister(request.getAppCode(), request.getSceneId())), callback);
         SubscriptionManager.getInstance().add(scope.owner(), disposable);
         return disposable.hashCode();
     }
 
     @Override
     public BasePageData<SportSkuData> getSportSkuPageSync(SportSkuPageRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGetData(operationService.getSportSkuPage(request));
+        return RxCallbackScheduler.blockingGetData(BasePagePersistence.persistAfterFetch(
+                BasePersistence.createBaseRequester(request, req -> operationService.getSportSkuPage(req)),
+                OperationPersistenceHelper.createSportSkuPagePersister(request.getAppCode(), request.getSceneId())));
     }
 
     @Override
@@ -99,14 +163,20 @@ public final class OperationCallerImpl implements OperationCaller {
     @Override
     public long getSceneListAsync(RequestScope scope, SceneListRequest request, RequestCallback<List<SceneData>> callback) {
         CallerUtil.assertScope(scope);
-        Disposable disposable = RxCallbackScheduler.scheduleBaseResponse(operationService.getSceneList(request), callback);
+        Disposable disposable = RxCallbackScheduler.scheduleBaseResponse(BasePersistence.persistAfterFetch(
+                OperationPersistenceHelper.createSceneListPreparer(request.getAppCode()),
+                BasePersistence.createBaseRequester(request, req -> operationService.getSceneList(req)),
+                OperationPersistenceHelper.createSceneListPersister(request.getAppCode())), callback);
         SubscriptionManager.getInstance().add(scope.owner(), disposable);
         return disposable.hashCode();
     }
 
     @Override
     public List<SceneData> getSceneListSync(SceneListRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGetData(operationService.getSceneList(request));
+        return RxCallbackScheduler.blockingGetData(BasePersistence.persistAfterFetch(
+                OperationPersistenceHelper.createSceneListPreparer(request.getAppCode()),
+                BasePersistence.createBaseRequester(request, req -> operationService.getSceneList(req)),
+                OperationPersistenceHelper.createSceneListPersister(request.getAppCode())));
     }
 
     @Override

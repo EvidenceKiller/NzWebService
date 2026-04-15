@@ -1,14 +1,21 @@
 package com.adl.service.caller.impl;
 
+import android.text.TextUtils;
+import android.util.Pair;
+
 import com.adl.service.AdlService;
 import com.adl.service.callback.RequestCallback;
 import com.adl.service.caller.OrgTestCaller;
+import com.adl.service.common.IDefine;
 import com.adl.service.db.DaoManagerProxy;
 import com.adl.service.exception.NzBaseException;
 import com.adl.service.internal.RxCallbackScheduler;
 import com.adl.service.internal.SubscriptionManager;
+import com.adl.service.log.NzLog;
 import com.adl.service.persistence.BasePagePersistence;
+import com.adl.service.persistence.BasePersistence;
 import com.adl.service.persistence.OrgTestPersistenceHelper;
+import com.adl.service.utils.InnerUtil;
 import com.adl.service.web.request.CheckStudentInPlanRequest;
 import com.adl.service.web.request.PlanClassListRequest;
 import com.adl.service.web.request.PlanInfoRequest;
@@ -21,9 +28,12 @@ import com.adl.service.web.response.PlanClassData;
 import com.adl.service.web.response.PlanData;
 import com.adl.service.web.response.PlanInfoData;
 import com.adl.service.web.response.PlanStudentData;
+import com.adl.service.web.response.SportProjectData;
 import com.adl.service.web.response.StandardConfigPageData;
 import com.adl.service.web.service.OrgTestService;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import io.reactivex.rxjava3.disposables.Disposable;
@@ -40,10 +50,76 @@ public final class OrgTestCallerImpl implements OrgTestCaller {
     }
 
     @Override
-    public long getStandardConfigPagesAllAsync(RequestScope scope, StandardConfigPageRequest request, RequestCallback<List<StandardConfigPageData>> callback) throws NzBaseException {
+    public void reLoadAllOrgTestDataSync(boolean syncStandard) throws NzBaseException {
+        long serverTime = InnerUtil.getServerTime();
+        NzLog.d("服务器时间: " + InnerUtil.formatByTimeCode(serverTime));
+        List<Integer> statusList = Arrays.asList(IDefine.SportPlanStatusNew, IDefine.SportPlanStatusDoing);
+
+        ////////////// 1.同步全部运动计划 ////////////
+        clearPlanDataSync();
+        List<PlanData> planDataList = new ArrayList<>();
+        for (Integer status : statusList) {
+            PlanPageRequest planPageRequest = PlanPageRequest.builder()
+                    .standardType(IDefine.standardTypeALL)
+                    .status(String.valueOf(status))
+                    .build();
+            planDataList.addAll(getPlanPagesAllSync(planPageRequest));
+        }
+        NzLog.d("reGetAllOrgTestDataSync merged plan count: " + planDataList.size());
+
+        ////////////// 2.同步运动计划下学生 ////////////
+        clearPlanStudentDataSync();
+        for (PlanData plan : planDataList) {
+            if (TextUtils.isEmpty(plan.getEndTime()) || serverTime > Long.parseLong(plan.getEndTime())) {
+                continue;
+            }
+            PlanStudentPageRequest request = PlanStudentPageRequest.builder(plan.getPlanId())
+                    .build();
+            getPlanStudentPagesAllSync(request);
+        }
+
+        ////////////// 3.同步运动标准 ////////////
+        if (syncStandard) {
+            clearStandardConfigDataSync();
+            ArrayList<Pair<String, String>> standardList = new ArrayList<>();
+
+            for (PlanData plan : planDataList) {
+                if (plan.getSportProjects() == null) {
+                    continue;
+                }
+
+                if (TextUtils.isEmpty(plan.getEndTime()) || serverTime > Long.parseLong(plan.getEndTime())) {
+                    continue;
+                }
+
+                for (SportProjectData project : plan.getSportProjects()) {
+                    Pair<String, String> newPair = Pair.create(plan.getStandardId(), project.getSportSkuId());
+                    //  不包含添加
+                    if (standardList.stream().noneMatch(standard -> standard.equals(newPair))) {
+                        standardList.add(newPair);
+                    }
+                }
+            }
+
+            for (Pair<String, String> param : standardList) {
+                StandardConfigPageRequest request = StandardConfigPageRequest.builder("")
+                        .standardId(param.first)
+                        .sportProjectCode(param.second)
+                        .build();
+                getStandardConfigPagesAllSync(request);
+            }
+        }
+    }
+
+    @Override
+    public void clearStandardConfigDataSync() {
+        DaoManagerProxy.getInstance().getStandardConfigDao().clearAll();
+    }
+
+    @Override
+    public long getStandardConfigPagesAllAsync(RequestScope scope, StandardConfigPageRequest request, RequestCallback<List<StandardConfigPageData>> callback) {
         CallerUtil.assertCurrent(request);
         CallerUtil.assertScope(scope);
-        DaoManagerProxy.getInstance().getPlanDao().clearAll();
         Disposable disposable = RxCallbackScheduler.schedule(BasePagePersistence.persistAllPageListAsSingle(
                 OrgTestPersistenceHelper.createStandardConfigPageRequester(request, req -> orgTestService.getStandardConfigPage(req)),
                 OrgTestPersistenceHelper.createStandardConfigPagePersister()), callback);
@@ -54,7 +130,6 @@ public final class OrgTestCallerImpl implements OrgTestCaller {
     @Override
     public List<StandardConfigPageData> getStandardConfigPagesAllSync(StandardConfigPageRequest request) throws NzBaseException {
         CallerUtil.assertCurrent(request);
-        DaoManagerProxy.getInstance().getPlanDao().clearAll();
         return RxCallbackScheduler.blockingGet(BasePagePersistence.persistAllPageListAsSingle(
                 OrgTestPersistenceHelper.createStandardConfigPageRequester(request, req -> orgTestService.getStandardConfigPage(req)),
                 OrgTestPersistenceHelper.createStandardConfigPagePersister()));
@@ -79,10 +154,22 @@ public final class OrgTestCallerImpl implements OrgTestCaller {
     }
 
     @Override
+    public long getPlanStudentPagesAllASync(RequestScope scope, PlanStudentPageRequest request, RequestCallback<List<PlanStudentData>> callback) {
+        CallerUtil.assertCurrent(request);
+        CallerUtil.assertScope(scope);
+        Disposable disposable = RxCallbackScheduler.schedule(BasePagePersistence.persistAllPagesAsSingle(
+                OrgTestPersistenceHelper.createPlanStudentPagePreparer(request.getPlanId()),
+                OrgTestPersistenceHelper.createPlanStudentPageRequester(request, req -> orgTestService.getPlanStudentPage(req)),
+                OrgTestPersistenceHelper.createPlanStudentPagePersister(request.getPlanId())), callback);
+        SubscriptionManager.getInstance().add(scope.owner(), disposable);
+        return disposable.hashCode();
+    }
+
+    @Override
     public List<PlanStudentData> getPlanStudentPagesAllSync(PlanStudentPageRequest request) throws NzBaseException {
         CallerUtil.assertCurrent(request);
-        DaoManagerProxy.getInstance().getPlanStudentDao().clearByPlanId(request.getPlanId());
         return RxCallbackScheduler.blockingGet(BasePagePersistence.persistAllPagesAsSingle(
+                OrgTestPersistenceHelper.createPlanStudentPagePreparer(request.getPlanId()),
                 OrgTestPersistenceHelper.createPlanStudentPageRequester(request, req -> orgTestService.getPlanStudentPage(req)),
                 OrgTestPersistenceHelper.createPlanStudentPagePersister(request.getPlanId())));
     }
@@ -100,10 +187,15 @@ public final class OrgTestCallerImpl implements OrgTestCaller {
         return RxCallbackScheduler.blockingGetData(orgTestService.getPlanStudentPage(request));
     }
 
-    public long getPlanPagesAllAsync(RequestScope scope, PlanPageRequest request, RequestCallback<List<PlanData>> callback) throws NzBaseException {
+    @Override
+    public void clearPlanDataSync() {
+        DaoManagerProxy.getInstance().getPlanDao().clearAll();
+    }
+
+    @Override
+    public long getPlanPagesAllAsync(RequestScope scope, PlanPageRequest request, RequestCallback<List<PlanData>> callback) {
         CallerUtil.assertCurrent(request);
         CallerUtil.assertScope(scope);
-        DaoManagerProxy.getInstance().getPlanDao().clearAll();
         Disposable disposable = RxCallbackScheduler.schedule(BasePagePersistence.persistAllPagesAsSingle(
                 OrgTestPersistenceHelper.createPlanPageRequester(request, req -> orgTestService.getPlanPage(req)),
                 OrgTestPersistenceHelper.createPlanPagePersister()), callback);
@@ -114,7 +206,6 @@ public final class OrgTestCallerImpl implements OrgTestCaller {
     @Override
     public List<PlanData> getPlanPagesAllSync(PlanPageRequest request) throws NzBaseException {
         CallerUtil.assertCurrent(request);
-        DaoManagerProxy.getInstance().getPlanDao().clearAll();
         return RxCallbackScheduler.blockingGet(BasePagePersistence.persistAllPagesAsSingle(
                 OrgTestPersistenceHelper.createPlanPageRequester(request, req -> orgTestService.getPlanPage(req)),
                 OrgTestPersistenceHelper.createPlanPagePersister()));
@@ -124,7 +215,8 @@ public final class OrgTestCallerImpl implements OrgTestCaller {
     public long getPlanPageAsync(RequestScope scope, PlanPageRequest request, RequestCallback<BasePageData<PlanData>> callback) {
         CallerUtil.assertScope(scope);
         Disposable disposable = RxCallbackScheduler.scheduleBaseResponse(BasePagePersistence.persistAfterFetch(
-                orgTestService.getPlanPage(request), OrgTestPersistenceHelper.createPlanPagePersister()), callback);
+                BasePersistence.createBaseRequester(request, req -> orgTestService.getPlanPage(req)),
+                OrgTestPersistenceHelper.createPlanPagePersister()), callback);
         SubscriptionManager.getInstance().add(scope.owner(), disposable);
         return disposable.hashCode();
     }
@@ -132,7 +224,8 @@ public final class OrgTestCallerImpl implements OrgTestCaller {
     @Override
     public BasePageData<PlanData> getPlanPageSync(PlanPageRequest request) throws NzBaseException {
         return RxCallbackScheduler.blockingGetData(BasePagePersistence.persistAfterFetch(
-                orgTestService.getPlanPage(request), OrgTestPersistenceHelper.createPlanPagePersister()));
+                BasePersistence.createBaseRequester(request, req -> orgTestService.getPlanPage(req)),
+                OrgTestPersistenceHelper.createPlanPagePersister()));
     }
 
     @Override

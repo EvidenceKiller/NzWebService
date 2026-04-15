@@ -20,20 +20,39 @@ public final class BasePersistence {
     private BasePersistence() {
     }
 
+    public static <T> Single<BaseResponse<T>> persistAfterFetch(
+            Function<Void, Single<BaseResponse<T>>> requestFunc,
+            Function<T, Completable> persistFunc) {
+        return persistAfterFetch(createBaseEmptyPreparer(), requestFunc, persistFunc);
+    }
+
     /**
-     * @param requestCallable          网络请求 Single
+     * @param prepareFunc  最开始执行的函数，通常为清理数据库
+     * @param requestFunc 网络请求函数
      * @param persistFunc 仅当 {@code response.isSuccess() && response.getData()!=null} 时调用，对 {@code data} 执行插入；无需写入时返回 {@link Completable#complete()}
      */
     public static <T> Single<BaseResponse<T>> persistAfterFetch(
-            Single<BaseResponse<T>> requestCallable,
+            Function<Void, Completable> prepareFunc,
+            Function<Void, Single<BaseResponse<T>>> requestFunc,
             Function<T, Completable> persistFunc) {
         Log.i("ZXN_TEST", "BasePersistence : persistAfterFetch");
-        return requestCallable.flatMap(response -> {
-            if (!response.getSucceed() || response.getData() == null) {
-                return Single.error(new NzNetworkException(response.getCode(), response.getMsg()));
-            }
-            T data = response.getData();
-            return persistFunc.apply(data).andThen(Single.just(response));
-        });
+        return Completable.defer(() -> prepareFunc.apply(null))
+                .andThen(Single.defer(() -> requestFunc.apply(null)))
+                .flatMap(response -> {
+                    if (!response.getSucceed() || response.getData() == null) {
+                        return Single.error(new NzNetworkException(response.getCode(), response.getMsg()));
+                    }
+                    T data = response.getData();
+                    return persistFunc.apply(data).andThen(Single.just(response));
+                });
+    }
+
+    public static Function<Void, Completable> createBaseEmptyPreparer() {
+        return (v) -> Completable.complete();
+    }
+
+    public static <Q, T> Function<Void, Single<BaseResponse<T>>> createBaseRequester(
+            Q request, Function<Q, Single<BaseResponse<T>>> function) {
+        return (v) -> function.apply(request);
     }
 }

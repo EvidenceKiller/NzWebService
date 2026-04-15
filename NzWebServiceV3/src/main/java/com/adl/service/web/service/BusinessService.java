@@ -122,23 +122,4 @@ public interface BusinessService {
      */
     @POST("tis/device/org/res/getResInfo")
     Single<BaseResponse<ResData>> getResInfo(@Body ResInfoRequest request);
-
-    /**
-     * 获取服务端时间
-     */
-    default long getServerTime() throws NzBaseException {
-        try {
-            Request request = new Request.Builder().url(InnerUtil.getIpHost() + "/time").build();
-            Response response = RetrofitClient.getInstance("", false).getOkHttpClient().newCall(request).execute();
-            if (response.isSuccessful() && response.body() != null) {
-                JSONObject jo = JSON.parseObject(response.body().string());
-                // 服务器返回时间为秒
-                return (long) (jo.getDoubleValue("timestamp") * 1000L);
-            } else {
-                throw new NzCommonException("Get Server time meet some error : " + response.message());
-            }
-        } catch (IOException e) {
-            throw new NzCommonException("Get Server time meet some error", e);
-        }
-    }
 }

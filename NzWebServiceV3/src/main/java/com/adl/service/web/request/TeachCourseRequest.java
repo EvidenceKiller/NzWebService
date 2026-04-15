@@ -2,7 +2,7 @@ package com.adl.service.web.request;
 
 import com.google.gson.annotations.SerializedName;
 
-public final class TeachCourseRequest {
+public final class TeachCourseRequest extends BaseRequest {
     /**
      * 班级Id
      */

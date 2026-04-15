@@ -2,7 +2,7 @@ package com.adl.service.web.request;
 
 import com.google.gson.annotations.SerializedName;
 
-public final class PersonRankRequest {
+public final class PersonRankRequest extends BaseRequest {
 
     /**
      * 人员id

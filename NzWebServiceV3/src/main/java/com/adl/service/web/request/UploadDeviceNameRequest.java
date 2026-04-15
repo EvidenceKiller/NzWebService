@@ -2,7 +2,7 @@ package com.adl.service.web.request;
 
 import com.google.gson.annotations.SerializedName;
 
-public final class UploadDeviceNameRequest {
+public final class UploadDeviceNameRequest extends BaseRequest {
 
     /**
      * 设备 Id

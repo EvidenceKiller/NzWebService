@@ -9,7 +9,7 @@ import lombok.experimental.Accessors;
 @Data
 @NoArgsConstructor
 @Accessors(chain = true)
-public final class BaseCompetitionAthletics {
+public final class BaseCompetitionAthletics extends BaseRequest {
     /**
      * 赛事id
      */

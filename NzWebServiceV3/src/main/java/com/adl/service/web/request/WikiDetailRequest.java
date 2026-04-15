@@ -2,7 +2,7 @@ package com.adl.service.web.request;
 
 import com.google.gson.annotations.SerializedName;
 
-public final class WikiDetailRequest {
+public final class WikiDetailRequest extends BaseRequest {
 
     @SerializedName("id")
     private String id;

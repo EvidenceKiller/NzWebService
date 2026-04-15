@@ -2,7 +2,7 @@ package com.adl.service.web.request;
 
 import com.google.gson.annotations.SerializedName;
 
-public final class DictMapRequest {
+public final class DictMapRequest extends BaseRequest {
 
     /**
      * 运动编码

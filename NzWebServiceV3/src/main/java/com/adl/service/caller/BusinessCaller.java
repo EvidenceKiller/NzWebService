@@ -125,6 +125,8 @@ public interface BusinessCaller {
      */
     void clearSportMeetDataSync();
 
+    long getSportMeetPagesAllAsync(RequestScope scope, SportMeetPageRequest request, RequestCallback<List<SportMeetData>> callback);
+
     /**
      * 获取所有运动会列表
      * <p>同步调用。</p>

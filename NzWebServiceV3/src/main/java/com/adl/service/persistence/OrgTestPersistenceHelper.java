@@ -1,14 +1,9 @@
 package com.adl.service.persistence;
 
-import com.adl.service.common.CommonUtil;
 import com.adl.service.db.DaoManagerProxy;
 import com.adl.service.db.entity.PlanEntity;
 import com.adl.service.db.entity.PlanStudentEntity;
-import com.adl.service.db.entity.SportMeetEntity;
-import com.adl.service.db.entity.SportMeetGroupDetailEntity;
-import com.adl.service.db.entity.SportMeetGroupTeamEntity;
 import com.adl.service.db.entity.StandardConfigEntity;
-import com.adl.service.entity.SportPlanStudentEntity;
 import com.adl.service.web.request.PlanPageRequest;
 import com.adl.service.web.request.PlanStudentPageRequest;
 import com.adl.service.web.request.StandardConfigPageRequest;
@@ -16,12 +11,8 @@ import com.adl.service.web.response.BasePageData;
 import com.adl.service.web.response.BaseResponse;
 import com.adl.service.web.response.PlanData;
 import com.adl.service.web.response.PlanStudentData;
-import com.adl.service.web.response.SportMeetData;
 import com.adl.service.web.response.StandardConfigPageData;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,6 +23,13 @@ import io.reactivex.rxjava3.functions.Function;
 public final class OrgTestPersistenceHelper {
 
     private OrgTestPersistenceHelper() {
+    }
+
+    public static Function<Void, Completable> createStandardConfigPagePreparer() {
+        return (v) -> {
+            DaoManagerProxy.getInstance().getStandardConfigDao().clearAll();
+            return Completable.complete();
+        };
     }
 
     /**
@@ -66,10 +64,17 @@ public final class OrgTestPersistenceHelper {
         };
     }
 
+    public static Function<Void, Completable> createPlanStudentPagePreparer(String planId) {
+        return (v) -> {
+            DaoManagerProxy.getInstance().getPlanStudentDao().clearByPlanId(planId);
+            return Completable.complete();
+        };
+    }
 
-        /**
-         * 为 Plan 分页请求构建通用的 PageRequester
-         */
+
+    /**
+     * 为 Plan 分页请求构建通用的 PageRequester
+     */
     public static Function<Long, Single<BaseResponse<BasePageData<PlanStudentData>>>> createPlanStudentPageRequester(
             PlanStudentPageRequest request, Function<PlanStudentPageRequest, Single<BaseResponse<BasePageData<PlanStudentData>>>> function) {
         return (page) -> {
@@ -98,6 +103,13 @@ public final class OrgTestPersistenceHelper {
             entityList.forEach(plan -> plan.setPlanId(planId));
             DaoManagerProxy.getInstance().getPlanStudentDao().insertAll(entityList);
             return dataList;
+        };
+    }
+
+    public static Function<Void, Completable> createPlanPagePagePreparer() {
+        return (v) -> {
+            DaoManagerProxy.getInstance().getPlanDao().clearAll();
+            return Completable.complete();
         };
     }
 
@@ -133,7 +145,7 @@ public final class OrgTestPersistenceHelper {
             List<PlanEntity> entityList = dataList.stream()
                     .map(data -> PlanEntity.convertToEntity(data))
                     .collect(Collectors.toList());
-            
+
             DaoManagerProxy.getInstance().getPlanDao().insertPlanList(entityList);
             return dataList;
         };

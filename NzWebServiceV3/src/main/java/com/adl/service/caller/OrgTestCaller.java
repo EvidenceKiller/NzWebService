@@ -23,7 +23,11 @@ import java.util.List;
  */
 public interface OrgTestCaller {
 
-    long getStandardConfigPagesAllAsync(RequestScope scope, StandardConfigPageRequest request, RequestCallback<List<StandardConfigPageData>> callback) throws NzBaseException;
+    void reLoadAllOrgTestDataSync(boolean syncStandard) throws NzBaseException;
+
+    void clearStandardConfigDataSync();
+
+    long getStandardConfigPagesAllAsync(RequestScope scope, StandardConfigPageRequest request, RequestCallback<List<StandardConfigPageData>> callback);
 
     List<StandardConfigPageData> getStandardConfigPagesAllSync(StandardConfigPageRequest request) throws NzBaseException;
 
@@ -41,6 +45,8 @@ public interface OrgTestCaller {
 
     void clearPlanStudentDataSync();
 
+    long getPlanStudentPagesAllASync(RequestScope scope, PlanStudentPageRequest request, RequestCallback<List<PlanStudentData>> callback);
+
     List<PlanStudentData> getPlanStudentPagesAllSync(PlanStudentPageRequest request) throws NzBaseException;
 
     /**
@@ -55,6 +61,8 @@ public interface OrgTestCaller {
      */
     BasePageData<PlanStudentData> getPlanStudentPageSync(PlanStudentPageRequest request) throws NzBaseException;
 
+    void clearPlanDataSync();
+
     /**
      * 获取所有的分页计划列表
      * <p>异步调用。</p>
@@ -65,7 +73,7 @@ public interface OrgTestCaller {
      * @return
      * @throws NzBaseException
      */
-    long getPlanPagesAllAsync(RequestScope scope, PlanPageRequest request, RequestCallback<List<PlanData>> callback) throws NzBaseException;
+    long getPlanPagesAllAsync(RequestScope scope, PlanPageRequest request, RequestCallback<List<PlanData>> callback);
 
     /**
      * 获取所有的分页计划列表

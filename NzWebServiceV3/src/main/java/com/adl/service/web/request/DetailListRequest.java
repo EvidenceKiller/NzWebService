@@ -2,7 +2,7 @@ package com.adl.service.web.request;
 
 import com.google.gson.annotations.SerializedName;
 
-public final class DetailListRequest {
+public final class DetailListRequest extends BaseRequest {
 
     /** 班级Id */
     @SerializedName("classId")

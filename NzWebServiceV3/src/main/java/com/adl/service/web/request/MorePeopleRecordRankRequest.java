@@ -2,7 +2,7 @@ package com.adl.service.web.request;
 
 import com.google.gson.annotations.SerializedName;
 
-public final class MorePeopleRecordRankRequest {
+public final class MorePeopleRecordRankRequest extends BaseRequest {
 
     /**
      * 运动id

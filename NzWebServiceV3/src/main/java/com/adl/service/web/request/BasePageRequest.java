@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * 分页请求公共字段。
  */
-public class BasePageRequest {
+public class BasePageRequest extends BaseRequest {
 
     @SerializedName("noPaging")
     private Boolean noPaging;

@@ -2,7 +2,7 @@ package com.adl.service.web.request;
 
 import com.google.gson.annotations.SerializedName;
 
-public final class SoftwareReportRequest {
+public final class SoftwareReportRequest extends BaseRequest {
 
     /**
      * 产品代码

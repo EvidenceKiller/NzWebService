@@ -2,7 +2,7 @@ package com.adl.service.web.request;
 
 import com.google.gson.annotations.SerializedName;
 
-public final class DeviceQrcodeRequest {
+public final class DeviceQrcodeRequest extends BaseRequest {
 
     /** 路径参数 */
     @SerializedName("appCode")

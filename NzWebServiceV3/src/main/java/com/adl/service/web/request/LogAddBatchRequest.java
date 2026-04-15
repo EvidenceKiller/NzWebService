@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public final class LogAddBatchRequest {
+public final class LogAddBatchRequest extends BaseRequest {
 
     /**
      * 应用编码

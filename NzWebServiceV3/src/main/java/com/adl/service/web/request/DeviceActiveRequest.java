@@ -2,7 +2,7 @@ package com.adl.service.web.request;
 
 import com.google.gson.annotations.SerializedName;
 
-public final class DeviceActiveRequest {
+public final class DeviceActiveRequest extends BaseRequest {
 
     /**
      * 激活码

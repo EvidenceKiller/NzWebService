@@ -2,7 +2,7 @@ package com.adl.service.web.request;
 
 import com.google.gson.annotations.SerializedName;
 
-public final class TrainPlanOneDayProjectListRequest {
+public final class TrainPlanOneDayProjectListRequest extends BaseRequest {
 
     /**
      * 训练计划 id

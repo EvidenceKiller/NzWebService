@@ -4,42 +4,15 @@ import com.adl.service.internal.StrictJsonDeserializer;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.List;
-
 import lombok.Getter;
 import lombok.ToString;
 
 @Getter
 @ToString
 @JsonAdapter(StrictJsonDeserializer.class)
-public final class DictsData {
-
-    @SerializedName("noPaging")
-    private Boolean noPaging;
-
-    @SerializedName("pageSize")
-    private Long pageSize;
-
-    @SerializedName("current")
-    private Long current;
-
-    @SerializedName("detail")
-    private Boolean detail;
-
+public final class DictData {
     @SerializedName("enableSort")
     private Boolean enableSort;
-
-    @SerializedName("sorts")
-    private List<Object> sorts;
-
-    @SerializedName("sortsStr")
-    private String sortsStr;
-
-    @SerializedName("ignoreColumns")
-    private List<Object> ignoreColumns;
-
-    @SerializedName("containColumns")
-    private List<Object> containColumns;
 
     @SerializedName("moduleStr")
     private String moduleStr;

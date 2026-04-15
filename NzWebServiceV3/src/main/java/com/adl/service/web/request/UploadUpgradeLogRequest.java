@@ -2,7 +2,7 @@ package com.adl.service.web.request;
 
 import com.google.gson.annotations.SerializedName;
 
-public final class UploadUpgradeLogRequest {
+public final class UploadUpgradeLogRequest extends BaseRequest {
 
     /**
      * 设备id

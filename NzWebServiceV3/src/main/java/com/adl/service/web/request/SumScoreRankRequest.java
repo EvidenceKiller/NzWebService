@@ -2,7 +2,7 @@ package com.adl.service.web.request;
 
 import com.google.gson.annotations.SerializedName;
 
-public final class SumScoreRankRequest {
+public final class SumScoreRankRequest extends BaseRequest {
 
     /**
      * 运动sku标识码

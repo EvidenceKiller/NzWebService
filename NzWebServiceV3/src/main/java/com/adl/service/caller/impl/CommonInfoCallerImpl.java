@@ -6,20 +6,22 @@ import com.adl.service.caller.CommonInfoCaller;
 import com.adl.service.exception.NzBaseException;
 import com.adl.service.internal.RxCallbackScheduler;
 import com.adl.service.internal.SubscriptionManager;
+import com.adl.service.persistence.BasePersistence;
+import com.adl.service.persistence.CommonInfoPersistenceHelper;
 import com.adl.service.web.request.CitizenPageRequest;
 import com.adl.service.web.request.ClassInfoRequest;
 import com.adl.service.web.request.ClassListRequest;
 import com.adl.service.web.request.DeviceActiveRequest;
-import com.adl.service.web.request.DictsRequest;
+import com.adl.service.web.request.DictRequest;
 import com.adl.service.web.request.RequestScope;
 import com.adl.service.web.request.StudentPageRequest;
 import com.adl.service.web.request.TeacherListRequest;
 import com.adl.service.web.response.AcayearData;
 import com.adl.service.web.response.BasePageData;
 import com.adl.service.web.response.CitizenPageData;
-import com.adl.service.web.response.ClassInfoData;
 import com.adl.service.web.response.ClassData;
-import com.adl.service.web.response.DictsData;
+import com.adl.service.web.response.ClassInfoData;
+import com.adl.service.web.response.DictData;
 import com.adl.service.web.response.GradeChineseNameData;
 import com.adl.service.web.response.GradeTreeData;
 import com.adl.service.web.response.LoginInfoData;
@@ -160,16 +162,22 @@ public final class CommonInfoCallerImpl implements CommonInfoCaller {
     }
 
     @Override
-    public long getDictsAsync(RequestScope scope, DictsRequest request, RequestCallback<List<DictsData>> callback) {
+    public long getDictListAsync(RequestScope scope, DictRequest request, RequestCallback<List<DictData>> callback) {
         CallerUtil.assertScope(scope);
-        Disposable disposable = RxCallbackScheduler.scheduleBaseResponse(commonInfoService.getDicts(request), callback);
+        Disposable disposable = RxCallbackScheduler.scheduleBaseResponse(BasePersistence.persistAfterFetch(
+                CommonInfoPersistenceHelper.createDictListPreparer(request.getDictId()),
+                BasePersistence.createBaseRequester(request, req -> commonInfoService.getDictList(req)),
+                CommonInfoPersistenceHelper.createDictListPersister()), callback);
         SubscriptionManager.getInstance().add(scope.owner(), disposable);
         return disposable.hashCode();
     }
 
     @Override
-    public List<DictsData> getDictsSync(DictsRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGetData(commonInfoService.getDicts(request));
+    public List<DictData> getDictListSync(DictRequest request) throws NzBaseException {
+        return RxCallbackScheduler.blockingGetData(BasePersistence.persistAfterFetch(
+                CommonInfoPersistenceHelper.createDictListPreparer(request.getDictId()),
+                BasePersistence.createBaseRequester(request, req -> commonInfoService.getDictList(req)),
+                CommonInfoPersistenceHelper.createDictListPersister()));
     }
 
     @Override

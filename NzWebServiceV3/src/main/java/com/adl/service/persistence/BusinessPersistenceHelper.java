@@ -1,10 +1,13 @@
 package com.adl.service.persistence;
 
+import android.text.TextUtils;
+
 import com.adl.service.common.CommonUtil;
 import com.adl.service.db.DaoManagerProxy;
 import com.adl.service.db.entity.SportMeetEntity;
 import com.adl.service.db.entity.SportMeetGroupDetailEntity;
 import com.adl.service.db.entity.SportMeetGroupTeamEntity;
+import com.adl.service.web.request.SceneListRequest;
 import com.adl.service.web.request.SportMeetPageRequest;
 import com.adl.service.web.response.BasePageData;
 import com.adl.service.web.response.BaseResponse;
@@ -15,12 +18,28 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.functions.Function;
 
 public final class BusinessPersistenceHelper {
 
     private BusinessPersistenceHelper() {
+    }
+
+    public static Function<Void, Completable> createSportMeetPagePreparer(String appCode) {
+        return (v) -> {
+            if (TextUtils.isEmpty(appCode)) {
+                DaoManagerProxy.getInstance().getSportMeetDao().clearAll();
+                DaoManagerProxy.getInstance().getSportMeetGroupTeamDao().clearAll();
+                DaoManagerProxy.getInstance().getSportMeetGroupDetailsDao().clearAll();
+            } else {
+                DaoManagerProxy.getInstance().getSportMeetDao().clearByAppCode(appCode);
+                DaoManagerProxy.getInstance().getSportMeetGroupTeamDao().clearByAppCode(appCode);
+                DaoManagerProxy.getInstance().getSportMeetGroupDetailsDao().clearByAppCode(appCode);
+            }
+            return Completable.complete();
+        };
     }
 
     /**

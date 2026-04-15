@@ -2,7 +2,7 @@ package com.adl.service.web.request;
 
 import com.google.gson.annotations.SerializedName;
 
-public final class JoinCompetitionRankRequest {
+public final class JoinCompetitionRankRequest extends BaseRequest {
 
     /**
      * ID

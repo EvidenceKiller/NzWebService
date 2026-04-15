@@ -4,7 +4,7 @@ import com.adl.service.web.request.CitizenPageRequest;
 import com.adl.service.web.request.ClassInfoRequest;
 import com.adl.service.web.request.ClassListRequest;
 import com.adl.service.web.request.DeviceActiveRequest;
-import com.adl.service.web.request.DictsRequest;
+import com.adl.service.web.request.DictRequest;
 import com.adl.service.web.request.StudentPageRequest;
 import com.adl.service.web.request.TeacherListRequest;
 import com.adl.service.web.response.AcayearData;
@@ -13,7 +13,7 @@ import com.adl.service.web.response.BaseResponse;
 import com.adl.service.web.response.CitizenPageData;
 import com.adl.service.web.response.ClassInfoData;
 import com.adl.service.web.response.ClassData;
-import com.adl.service.web.response.DictsData;
+import com.adl.service.web.response.DictData;
 import com.adl.service.web.response.GradeChineseNameData;
 import com.adl.service.web.response.GradeTreeData;
 import com.adl.service.web.response.LoginInfoData;
@@ -88,7 +88,7 @@ public interface CommonInfoService {
      * 获取系统字典
      */
     @POST("tis/device/base/sys/dict/getDicts")
-    Single<BaseResponse<List<DictsData>>> getDicts(@Body DictsRequest request);
+    Single<BaseResponse<List<DictData>>> getDictList(@Body DictRequest request);
 
     /**
      * 设备激活

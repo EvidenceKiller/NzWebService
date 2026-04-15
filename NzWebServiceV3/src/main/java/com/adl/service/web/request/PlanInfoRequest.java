@@ -2,7 +2,7 @@ package com.adl.service.web.request;
 
 import com.google.gson.annotations.SerializedName;
 
-public final class PlanInfoRequest {
+public final class PlanInfoRequest extends BaseRequest {
     /**
      * 计划ID
      */

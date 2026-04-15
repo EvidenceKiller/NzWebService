@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public final class SportExerciseSumTimeRankRequest {
+public final class SportExerciseSumTimeRankRequest extends BaseRequest {
 
     /** 场景code 1001 锻炼 */
     @SerializedName("sportSceneCodes")

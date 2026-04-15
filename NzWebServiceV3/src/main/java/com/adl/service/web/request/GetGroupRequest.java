@@ -2,7 +2,7 @@ package com.adl.service.web.request;
 
 import com.google.gson.annotations.SerializedName;
 
-public final class GetGroupRequest {
+public final class GetGroupRequest extends BaseRequest {
 
     /**
      * 场景code

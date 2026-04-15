@@ -15,7 +15,7 @@ import com.adl.service.web.request.CitizenPageRequest;
 import com.adl.service.web.request.ClassInfoRequest;
 import com.adl.service.web.request.ClassListRequest;
 import com.adl.service.web.request.DeviceActiveRequest;
-import com.adl.service.web.request.DictsRequest;
+import com.adl.service.web.request.DictRequest;
 import com.adl.service.web.request.RequestScope;
 import com.adl.service.web.request.StudentPageRequest;
 import com.adl.service.web.request.TeacherListRequest;
@@ -24,7 +24,7 @@ import com.adl.service.web.response.BasePageData;
 import com.adl.service.web.response.CitizenPageData;
 import com.adl.service.web.response.ClassInfoData;
 import com.adl.service.web.response.ClassData;
-import com.adl.service.web.response.DictsData;
+import com.adl.service.web.response.DictData;
 import com.adl.service.web.response.GradeChineseNameData;
 import com.adl.service.web.response.GradeTreeData;
 import com.adl.service.web.response.LoginInfoData;
@@ -612,10 +612,10 @@ public class V3CommonInfoCallerTestActivity extends AppCompatActivity {
     }
 
     private void getDictsAsync() {
-        DictsRequest request = DictsRequest.builder().build();
-        AdlService.getService().getCommonInfoCaller().getDictsAsync(RequestScope.of(this), request, new RequestCallback<List<DictsData>>() {
+        DictRequest request = DictRequest.builder().build();
+        AdlService.getService().getCommonInfoCaller().getDictListAsync(RequestScope.of(this), request, new RequestCallback<List<DictData>>() {
             @Override
-            public void onSuccess(List<DictsData> data) {
+            public void onSuccess(List<DictData> data) {
                 if (data != null) {
                     Log.d(TAG, "CommonInfoCallerTestActivity::getDictsAsync::onSuccess : data size : " + data.size());
                     Log.d(TAG, "CommonInfoCallerTestActivity::getDictsAsync::onSuccess : data : " + data);
@@ -641,11 +641,11 @@ public class V3CommonInfoCallerTestActivity extends AppCompatActivity {
 
     private void getDictsSync() {
         AdlService.getService().executeSyncOnIo(RequestScope.of(this), () -> {
-            DictsRequest request = DictsRequest.builder().build();
-            return AdlService.getService().getCommonInfoCaller().getDictsSync(request);
-        }, new RequestCallback<List<DictsData>>() {
+            DictRequest request = DictRequest.builder().build();
+            return AdlService.getService().getCommonInfoCaller().getDictListSync(request);
+        }, new RequestCallback<List<DictData>>() {
             @Override
-            public void onSuccess(List<DictsData> data) {
+            public void onSuccess(List<DictData> data) {
                 if (data != null) {
                     Log.d(TAG, "CommonInfoCallerTestActivity::getDictsSync::onSuccess : data size : " + data.size());
                     Log.d(TAG, "CommonInfoCallerTestActivity::getDictsSync::onSuccess : data : " + data);

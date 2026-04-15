@@ -2,6 +2,10 @@ package com.adl.service.utils;
 
 import com.adl.service.AdlService;
 import com.adl.service.entity.PageInfo;
+import com.adl.service.exception.NzBaseException;
+import com.adl.service.exception.NzCommonException;
+import com.adl.service.internal.RetrofitClient;
+import com.alibaba.fastjson.JSON;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -10,12 +14,16 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.Closeable;
+import java.io.IOException;
 import java.security.MessageDigest;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import okhttp3.Request;
+import okhttp3.Response;
 
 /**
  * ProjectName: AiPowerAuth
@@ -37,6 +45,26 @@ public class InnerUtil {
             return matcher.group(0);
         }
         return SERVICE_HOST;
+    }
+
+    /**
+     * TODO 临时实现
+     * 获取服务端时间
+     */
+    public static long getServerTime() throws NzBaseException {
+        try {
+            Request request = new Request.Builder().url(InnerUtil.getIpHost() + "/time").build();
+            Response response = RetrofitClient.getInstance("", false).getOkHttpClient().newCall(request).execute();
+            if (response.isSuccessful() && response.body() != null) {
+                com.alibaba.fastjson.JSONObject jo = JSON.parseObject(response.body().string());
+                // 服务器返回时间为秒
+                return (long) (jo.getDoubleValue("timestamp") * 1000L);
+            } else {
+                throw new NzCommonException("Get Server time meet some error : " + response.message());
+            }
+        } catch (IOException e) {
+            throw new NzCommonException("Get Server time meet some error", e);
+        }
     }
 
     public static String formatByTimeCode(long time) {

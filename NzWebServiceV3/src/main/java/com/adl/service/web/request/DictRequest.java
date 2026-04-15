@@ -2,12 +2,12 @@ package com.adl.service.web.request;
 
 import com.google.gson.annotations.SerializedName;
 
-public final class DictsRequest {
+public final class DictRequest extends BaseRequest {
 
     @SerializedName("dictId")
     private String dictId;
 
-    private DictsRequest(Builder builder) {
+    private DictRequest(Builder builder) {
         this.dictId = builder.dictId;
     }
 
@@ -24,8 +24,8 @@ public final class DictsRequest {
             return this;
         }
 
-        public DictsRequest build() {
-            return new DictsRequest(this);
+        public DictRequest build() {
+            return new DictRequest(this);
         }
     }
 
