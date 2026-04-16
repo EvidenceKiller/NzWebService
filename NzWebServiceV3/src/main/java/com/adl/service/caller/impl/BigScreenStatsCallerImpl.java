@@ -53,7 +53,7 @@ public final class BigScreenStatsCallerImpl implements BigScreenStatsCaller {
 
     @Override
     public List<WarRecordRankData> getWarRecordRankSync(WarRecordRankRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGetData(bigScreenStatsService.getWarRecordRank(request));
+        return RxCallbackScheduler.blockingGetFromResponse(bigScreenStatsService.getWarRecordRank(request));
     }
 
     @Override
@@ -66,7 +66,7 @@ public final class BigScreenStatsCallerImpl implements BigScreenStatsCaller {
 
     @Override
     public PersonRankData getPersonRankSync(PersonRankRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGetData(bigScreenStatsService.getPersonRank(request));
+        return RxCallbackScheduler.blockingGetFromResponse(bigScreenStatsService.getPersonRank(request));
     }
 
     @Override
@@ -79,7 +79,7 @@ public final class BigScreenStatsCallerImpl implements BigScreenStatsCaller {
 
     @Override
     public List<MorePeopleVictoryRankData> getMorePeopleVictoryRankSync(MorePeopleVictoryRankRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGetData(bigScreenStatsService.getMorePeopleVictoryRank(request));
+        return RxCallbackScheduler.blockingGetFromResponse(bigScreenStatsService.getMorePeopleVictoryRank(request));
     }
 
     @Override
@@ -92,7 +92,7 @@ public final class BigScreenStatsCallerImpl implements BigScreenStatsCaller {
 
     @Override
     public List<MorePeopleRecordRankData> getMorePeopleRecordRankSync(MorePeopleRecordRankRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGetData(bigScreenStatsService.getMorePeopleRecordRank(request));
+        return RxCallbackScheduler.blockingGetFromResponse(bigScreenStatsService.getMorePeopleRecordRank(request));
     }
 
     @Override
@@ -105,7 +105,7 @@ public final class BigScreenStatsCallerImpl implements BigScreenStatsCaller {
 
     @Override
     public OverviewData getOverviewSync(OverviewRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGetData(bigScreenStatsService.getOverview(request));
+        return RxCallbackScheduler.blockingGetFromResponse(bigScreenStatsService.getOverview(request));
     }
 
     @Override
@@ -118,7 +118,7 @@ public final class BigScreenStatsCallerImpl implements BigScreenStatsCaller {
 
     @Override
     public CompetitionRankData getCompetitionRankSync(CompetitionRankRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGetData(bigScreenStatsService.getCompetitionRank(request));
+        return RxCallbackScheduler.blockingGetFromResponse(bigScreenStatsService.getCompetitionRank(request));
     }
 
     @Override
@@ -131,7 +131,7 @@ public final class BigScreenStatsCallerImpl implements BigScreenStatsCaller {
 
     @Override
     public List<SumScoreRankData> sumScoreRankSync(SumScoreRankRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGetData(bigScreenStatsService.sumScoreRank(request));
+        return RxCallbackScheduler.blockingGetFromResponse(bigScreenStatsService.sumScoreRank(request));
     }
 
     @Override
@@ -144,7 +144,7 @@ public final class BigScreenStatsCallerImpl implements BigScreenStatsCaller {
 
     @Override
     public List<SportSkuRankData> getSportSkuRankSync(SportRankRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGetData(bigScreenStatsService.getSportSkuRank(request));
+        return RxCallbackScheduler.blockingGetFromResponse(bigScreenStatsService.getSportSkuRank(request));
     }
 
     @Override
@@ -157,7 +157,7 @@ public final class BigScreenStatsCallerImpl implements BigScreenStatsCaller {
 
     @Override
     public List<SportRankKingData> getSportRankKingSync(SportRankRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGetData(bigScreenStatsService.getSportRankKing(request));
+        return RxCallbackScheduler.blockingGetFromResponse(bigScreenStatsService.getSportRankKing(request));
     }
 
     @Override
@@ -170,7 +170,7 @@ public final class BigScreenStatsCallerImpl implements BigScreenStatsCaller {
 
     @Override
     public List<SportRankKingData> getPhysicalTrainingRankSync(SportRankRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGetData(bigScreenStatsService.getPhysicalTrainingRank(request));
+        return RxCallbackScheduler.blockingGetFromResponse(bigScreenStatsService.getPhysicalTrainingRank(request));
     }
 
     @Override
@@ -183,7 +183,7 @@ public final class BigScreenStatsCallerImpl implements BigScreenStatsCaller {
 
     @Override
     public List<SportRankKingData> getExerciseSumTimeRankSync(SportRankRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGetData(bigScreenStatsService.getExerciseSumTimeRank(request));
+        return RxCallbackScheduler.blockingGetFromResponse(bigScreenStatsService.getExerciseSumTimeRank(request));
     }
 
     @Override
@@ -196,6 +196,6 @@ public final class BigScreenStatsCallerImpl implements BigScreenStatsCaller {
 
     @Override
     public List<BestRankTopData> getBestRankTopSync(BestRankTopRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGetData(bigScreenStatsService.getBestRankTop(request));
+        return RxCallbackScheduler.blockingGetFromResponse(bigScreenStatsService.getBestRankTop(request));
     }
 }

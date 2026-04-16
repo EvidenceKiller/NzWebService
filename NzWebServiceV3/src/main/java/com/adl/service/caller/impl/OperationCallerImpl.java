@@ -88,7 +88,7 @@ public final class OperationCallerImpl implements OperationCaller {
 
     @Override
     public List<BannerDetailData> getBannerDetailListSync(BannerDetailListRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGetData(operationService.getBannerDetailList(request));
+        return RxCallbackScheduler.blockingGetFromResponse(operationService.getBannerDetailList(request));
     }
 
     @Override
@@ -106,7 +106,7 @@ public final class OperationCallerImpl implements OperationCaller {
     @Override
     public GetPageResult getSportSkuPagesAllSync(SportSkuPageRequest request) throws NzBaseException {
         CallerUtil.assertCurrent(request);
-        return RxCallbackScheduler.blocking(BasePagePersistence.persistAllPagesAsSingle(
+        return RxCallbackScheduler.blockingGet(BasePagePersistence.persistAllPagesAsSingle(
                 OperationPersistenceHelper.createSportSkuPagePreparer(),
                 OperationPersistenceHelper.createSportSkuPageRequester(request, req -> operationService.getSportSkuPage(req)),
                 OperationPersistenceHelper.createSportSkuPagePersister(request.getAppCode(), request.getSceneId())));
@@ -124,7 +124,7 @@ public final class OperationCallerImpl implements OperationCaller {
 
     @Override
     public BasePageData<SportSkuData> getSportSkuPageSync(SportSkuPageRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGetData(BasePagePersistence.persistOnePageAsSingle(
+        return RxCallbackScheduler.blockingGetFromResponse(BasePagePersistence.persistOnePageAsSingle(
                 BasePersistence.createBaseRequester(request, req -> operationService.getSportSkuPage(req)),
                 OperationPersistenceHelper.createSportSkuPagePersister(request.getAppCode(), request.getSceneId())));
     }
@@ -139,7 +139,7 @@ public final class OperationCallerImpl implements OperationCaller {
 
     @Override
     public SportSkuDetailData getSportSkuDetailSync(SportSkuDetailRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGetData(operationService.getSportSkuDetail(request));
+        return RxCallbackScheduler.blockingGetFromResponse(operationService.getSportSkuDetail(request));
     }
 
     @Override
@@ -152,7 +152,7 @@ public final class OperationCallerImpl implements OperationCaller {
 
     @Override
     public List<DictMapData> getDictMapSync(DictMapRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGetData(operationService.getDictMap(request));
+        return RxCallbackScheduler.blockingGetFromResponse(operationService.getDictMap(request));
     }
 
     @Override
@@ -168,7 +168,7 @@ public final class OperationCallerImpl implements OperationCaller {
 
     @Override
     public List<SceneData> getSceneListSync(SceneListRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGetData(BasePersistence.persistAsSingle(
+        return RxCallbackScheduler.blockingGetFromResponse(BasePersistence.persistAsSingle(
                 OperationPersistenceHelper.createSceneListPreparer(request.getAppCode()),
                 BasePersistence.createBaseRequester(request, req -> operationService.getSceneList(req)),
                 OperationPersistenceHelper.createSceneListPersister(request.getAppCode())));
@@ -184,7 +184,7 @@ public final class OperationCallerImpl implements OperationCaller {
 
     @Override
     public Boolean uploadDeviceNameSync(UploadDeviceNameRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGetData(operationService.uploadDeviceName(request));
+        return RxCallbackScheduler.blockingGetFromResponse(operationService.uploadDeviceName(request));
     }
 
     @Override
@@ -197,6 +197,6 @@ public final class OperationCallerImpl implements OperationCaller {
 
     @Override
     public List<DeviceFocusData> getDeviceFocusListSync(DeviceFocusListRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGetData(operationService.getDeviceFocusList(request));
+        return RxCallbackScheduler.blockingGetFromResponse(operationService.getDeviceFocusList(request));
     }
 }

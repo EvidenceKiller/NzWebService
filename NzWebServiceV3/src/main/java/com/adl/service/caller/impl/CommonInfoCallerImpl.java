@@ -211,7 +211,7 @@ public final class CommonInfoCallerImpl implements CommonInfoCaller {
 
     @Override
     public List<GradeTreeData> getGradeTreeSync() throws NzBaseException {
-        return RxCallbackScheduler.blockingGetData(commonInfoService.getGradeTree());
+        return RxCallbackScheduler.blockingGetFromResponse(commonInfoService.getGradeTree());
     }
 
     @Override
@@ -224,7 +224,7 @@ public final class CommonInfoCallerImpl implements CommonInfoCaller {
 
     @Override
     public List<GradeChineseNameData> getGradeChineseNameListSync() throws NzBaseException {
-        return RxCallbackScheduler.blockingGetData(commonInfoService.getGradeChineseNameList());
+        return RxCallbackScheduler.blockingGetFromResponse(commonInfoService.getGradeChineseNameList());
     }
 
     @Override
@@ -237,7 +237,7 @@ public final class CommonInfoCallerImpl implements CommonInfoCaller {
 
     @Override
     public List<ClassData> getClassListSync(ClassListRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGetData(commonInfoService.getClassList(request));
+        return RxCallbackScheduler.blockingGetFromResponse(commonInfoService.getClassList(request));
     }
 
     @Override
@@ -250,7 +250,7 @@ public final class CommonInfoCallerImpl implements CommonInfoCaller {
 
     @Override
     public ClassInfoData getClassInfoSync(ClassInfoRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGetData(commonInfoService.getClassInfo(request));
+        return RxCallbackScheduler.blockingGetFromResponse(commonInfoService.getClassInfo(request));
     }
 
     public LoginInfoData queryLoginInfoSync() {
@@ -269,7 +269,7 @@ public final class CommonInfoCallerImpl implements CommonInfoCaller {
 
     @Override
     public LoginInfoData getLoginInfoSync() throws NzBaseException {
-        return RxCallbackScheduler.blockingGetData(BasePersistence.persistAsSingle(
+        return RxCallbackScheduler.blockingGetFromResponse(BasePersistence.persistAsSingle(
                 BasePersistence.createBaseRequester(null, (Void) -> commonInfoService.getLoginInfo()),
                 CommonInfoPersistenceHelper.createLoginPersister()));
     }
@@ -284,7 +284,7 @@ public final class CommonInfoCallerImpl implements CommonInfoCaller {
 
     @Override
     public List<AcayearData> getAcayearListSync() throws NzBaseException {
-        return RxCallbackScheduler.blockingGetData(commonInfoService.getAcayearList());
+        return RxCallbackScheduler.blockingGetFromResponse(commonInfoService.getAcayearList());
     }
 
     @Override
@@ -302,7 +302,7 @@ public final class CommonInfoCallerImpl implements CommonInfoCaller {
     @Override
     public GetPageResult getTeacherListsAllSync(TeacherListRequest request) throws NzBaseException {
         CallerUtil.assertCurrent(request);
-        return RxCallbackScheduler.blocking(BasePagePersistence.persistAllListsAsSingle(
+        return RxCallbackScheduler.blockingGet(BasePagePersistence.persistAllListsAsSingle(
                 CommonInfoPersistenceHelper.createTeacherListPreparer(),
                 CommonInfoPersistenceHelper.createTeacherListRequester(request, req -> commonInfoService.getTeacherList(req)),
                 CommonInfoPersistenceHelper.createTeacherListPersister()));
@@ -320,7 +320,7 @@ public final class CommonInfoCallerImpl implements CommonInfoCaller {
 
     @Override
     public List<TeacherData> getTeacherListSync(TeacherListRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGetData(BasePagePersistence.persistOneListAsSingle(
+        return RxCallbackScheduler.blockingGetFromResponse(BasePagePersistence.persistOneListAsSingle(
                 BasePersistence.createBaseRequester(null, (Void) -> commonInfoService.getTeacherList(request)),
                 CommonInfoPersistenceHelper.createTeacherListPersister()));
     }
@@ -340,7 +340,7 @@ public final class CommonInfoCallerImpl implements CommonInfoCaller {
     @Override
     public GetPageResult getStudentPagesAllSync(StudentPageRequest request) throws NzBaseException {
         CallerUtil.assertCurrent(request);
-        return RxCallbackScheduler.blocking(BasePagePersistence.persistAllPagesAsSingle(
+        return RxCallbackScheduler.blockingGet(BasePagePersistence.persistAllPagesAsSingle(
                 CommonInfoPersistenceHelper.createStudentPagePreparer(),
                 CommonInfoPersistenceHelper.createStudentPageRequester(request, req -> commonInfoService.getStudentPage(req)),
                 CommonInfoPersistenceHelper.createStudentPagePersister()));
@@ -358,7 +358,7 @@ public final class CommonInfoCallerImpl implements CommonInfoCaller {
 
     @Override
     public BasePageData<StudentData> getStudentPageSync(StudentPageRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGetData(BasePagePersistence.persistOnePageAsSingle(
+        return RxCallbackScheduler.blockingGetFromResponse(BasePagePersistence.persistOnePageAsSingle(
                 BasePersistence.createBaseRequester(null, (Void) -> commonInfoService.getStudentPage(request)),
                 CommonInfoPersistenceHelper.createStudentPagePersister()));
     }
@@ -376,7 +376,7 @@ public final class CommonInfoCallerImpl implements CommonInfoCaller {
 
     @Override
     public List<DictData> getDictListSync(DictRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGetData(BasePersistence.persistAsSingle(
+        return RxCallbackScheduler.blockingGetFromResponse(BasePersistence.persistAsSingle(
                 CommonInfoPersistenceHelper.createDictListPreparer(request.getDictId()),
                 BasePersistence.createBaseRequester(request, req -> commonInfoService.getDictList(req)),
                 CommonInfoPersistenceHelper.createDictListPersister()));
@@ -392,6 +392,6 @@ public final class CommonInfoCallerImpl implements CommonInfoCaller {
 
     @Override
     public Boolean deviceActiveSync(DeviceActiveRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGetData(commonInfoService.deviceActive(request));
+        return RxCallbackScheduler.blockingGetFromResponse(commonInfoService.deviceActive(request));
     }
 }

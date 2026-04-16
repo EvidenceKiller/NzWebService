@@ -43,7 +43,7 @@ public final class BigScreenH5CallerImpl implements BigScreenH5Caller {
 
     @Override
     public List<TeachCourseDetailData> getTeachCourseDetailListSync(TeachCourseRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGetData(bigScreenH5Service.getTeachCourseDetailList(request));
+        return RxCallbackScheduler.blockingGetFromResponse(bigScreenH5Service.getTeachCourseDetailList(request));
     }
 
     @Override
@@ -56,7 +56,7 @@ public final class BigScreenH5CallerImpl implements BigScreenH5Caller {
 
     @Override
     public List<String> getTeachCourseDataDatesSync(TeachCourseDataDatesRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGetData(bigScreenH5Service.getTeachCourseDataDates(request));
+        return RxCallbackScheduler.blockingGetFromResponse(bigScreenH5Service.getTeachCourseDataDates(request));
     }
 
     @Override
@@ -69,7 +69,7 @@ public final class BigScreenH5CallerImpl implements BigScreenH5Caller {
 
     @Override
     public Integer getTeachCourseTimesSync(TeachCourseRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGetData(bigScreenH5Service.getTeachCourseTimes(request));
+        return RxCallbackScheduler.blockingGetFromResponse(bigScreenH5Service.getTeachCourseTimes(request));
     }
 
     @Override
@@ -82,7 +82,7 @@ public final class BigScreenH5CallerImpl implements BigScreenH5Caller {
 
     @Override
     public Boolean getTeachCourseButtonClickableSync(TeachCourseButtonClickCountRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGetData(bigScreenH5Service.getTeachCourseButtonClickable(request));
+        return RxCallbackScheduler.blockingGetFromResponse(bigScreenH5Service.getTeachCourseButtonClickable(request));
     }
 
     @Override
@@ -95,7 +95,7 @@ public final class BigScreenH5CallerImpl implements BigScreenH5Caller {
 
     @Override
     public BasePageData<SunshineRunningSportDetailData> getSunshineRunningSportDetailPageSync(SunshineRunningSportDetailPageRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGetData(bigScreenH5Service.getSunshineRunningSportDetailPage(request));
+        return RxCallbackScheduler.blockingGetFromResponse(bigScreenH5Service.getSunshineRunningSportDetailPage(request));
     }
 
     @Override
@@ -108,6 +108,6 @@ public final class BigScreenH5CallerImpl implements BigScreenH5Caller {
 
     @Override
     public BasePageData<ClassroomCompetitionRecordData> getSunshineRunningCompetitionRecordPageSync(SunshineRunningCompetitionRecordPageRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGetData(bigScreenH5Service.getSunshineRunningCompetitionRecordPage(request));
+        return RxCallbackScheduler.blockingGetFromResponse(bigScreenH5Service.getSunshineRunningCompetitionRecordPage(request));
     }
 }

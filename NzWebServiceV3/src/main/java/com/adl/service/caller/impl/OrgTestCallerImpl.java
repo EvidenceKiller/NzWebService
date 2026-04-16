@@ -138,7 +138,7 @@ public final class OrgTestCallerImpl implements OrgTestCaller {
     @Override
     public GetPageResult getStandardConfigPagesAllSync(StandardConfigPageRequest request) throws NzBaseException {
         CallerUtil.assertCurrent(request);
-        return RxCallbackScheduler.blocking(BasePagePersistence.persistAllListsAsSingle(
+        return RxCallbackScheduler.blockingGet(BasePagePersistence.persistAllListsAsSingle(
                 OrgTestPersistenceHelper.createStandardConfigPageRequester(request, req -> orgTestService.getStandardConfigPage(req)),
                 OrgTestPersistenceHelper.createStandardConfigPagePersister()));
     }
@@ -146,14 +146,18 @@ public final class OrgTestCallerImpl implements OrgTestCaller {
     @Override
     public long getStandardConfigPageAsync(RequestScope scope, StandardConfigPageRequest request, RequestCallback<List<StandardConfigData>> callback) {
         CallerUtil.assertScope(scope);
-        Disposable disposable = RxCallbackScheduler.scheduleBaseResponse(orgTestService.getStandardConfigPage(request), callback);
+        Disposable disposable = RxCallbackScheduler.scheduleBaseResponse(BasePagePersistence.persistOneListAsSingle(
+                BasePersistence.createBaseRequester(request, req -> orgTestService.getStandardConfigPage(req)),
+                OrgTestPersistenceHelper.createStandardConfigPagePersister()), callback);
         SubscriptionManager.getInstance().add(scope.owner(), disposable);
         return disposable.hashCode();
     }
 
     @Override
     public List<StandardConfigData> getStandardConfigPageSync(StandardConfigPageRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGetData(orgTestService.getStandardConfigPage(request));
+        return RxCallbackScheduler.blockingGetFromResponse(BasePagePersistence.persistOneListAsSingle(
+                BasePersistence.createBaseRequester(request, req -> orgTestService.getStandardConfigPage(req)),
+                OrgTestPersistenceHelper.createStandardConfigPagePersister()));
     }
 
     @Override
@@ -176,7 +180,7 @@ public final class OrgTestCallerImpl implements OrgTestCaller {
     @Override
     public GetPageResult getPlanStudentPagesAllSync(PlanStudentPageRequest request) throws NzBaseException {
         CallerUtil.assertCurrent(request);
-        return RxCallbackScheduler.blocking(BasePagePersistence.persistAllPagesAsSingle(
+        return RxCallbackScheduler.blockingGet(BasePagePersistence.persistAllPagesAsSingle(
                 OrgTestPersistenceHelper.createPlanStudentPagePreparer(request.getPlanId()),
                 OrgTestPersistenceHelper.createPlanStudentPageRequester(request, req -> orgTestService.getPlanStudentPage(req)),
                 OrgTestPersistenceHelper.createPlanStudentPagePersister(request.getPlanId())));
@@ -185,14 +189,18 @@ public final class OrgTestCallerImpl implements OrgTestCaller {
     @Override
     public long getPlanStudentPageAsync(RequestScope scope, PlanStudentPageRequest request, RequestCallback<BasePageData<PlanStudentData>> callback) {
         CallerUtil.assertScope(scope);
-        Disposable disposable = RxCallbackScheduler.scheduleBaseResponse(orgTestService.getPlanStudentPage(request), callback);
+        Disposable disposable = RxCallbackScheduler.scheduleBaseResponse(BasePagePersistence.persistOnePageAsSingle(
+                BasePersistence.createBaseRequester(request, req -> orgTestService.getPlanStudentPage(req)),
+                OrgTestPersistenceHelper.createPlanStudentPagePersister(request.getPlanId())), callback);
         SubscriptionManager.getInstance().add(scope.owner(), disposable);
         return disposable.hashCode();
     }
 
     @Override
     public BasePageData<PlanStudentData> getPlanStudentPageSync(PlanStudentPageRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGetData(orgTestService.getPlanStudentPage(request));
+        return RxCallbackScheduler.blockingGetFromResponse(BasePagePersistence.persistOnePageAsSingle(
+                BasePersistence.createBaseRequester(request, req -> orgTestService.getPlanStudentPage(req)),
+                OrgTestPersistenceHelper.createPlanStudentPagePersister(request.getPlanId())));
     }
 
     @Override
@@ -214,7 +222,7 @@ public final class OrgTestCallerImpl implements OrgTestCaller {
     @Override
     public GetPageResult getPlanPagesAllSync(PlanPageRequest request) throws NzBaseException {
         CallerUtil.assertCurrent(request);
-        return RxCallbackScheduler.blocking(BasePagePersistence.persistAllPagesAsSingle(
+        return RxCallbackScheduler.blockingGet(BasePagePersistence.persistAllPagesAsSingle(
                 OrgTestPersistenceHelper.createPlanPageRequester(request, req -> orgTestService.getPlanPage(req)),
                 OrgTestPersistenceHelper.createPlanPagePersister()));
     }
@@ -231,7 +239,7 @@ public final class OrgTestCallerImpl implements OrgTestCaller {
 
     @Override
     public BasePageData<PlanData> getPlanPageSync(PlanPageRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGetData(BasePagePersistence.persistOnePageAsSingle(
+        return RxCallbackScheduler.blockingGetFromResponse(BasePagePersistence.persistOnePageAsSingle(
                 BasePersistence.createBaseRequester(request, req -> orgTestService.getPlanPage(req)),
                 OrgTestPersistenceHelper.createPlanPagePersister()));
     }
@@ -246,7 +254,7 @@ public final class OrgTestCallerImpl implements OrgTestCaller {
 
     @Override
     public PlanInfoData getPlanInfoSync(PlanInfoRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGetData(orgTestService.getPlanInfo(request));
+        return RxCallbackScheduler.blockingGetFromResponse(orgTestService.getPlanInfo(request));
     }
 
     @Override
@@ -259,7 +267,7 @@ public final class OrgTestCallerImpl implements OrgTestCaller {
 
     @Override
     public List<PlanClassData> getPlanClassListSync(PlanClassListRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGetData(orgTestService.getPlanClassList(request));
+        return RxCallbackScheduler.blockingGetFromResponse(orgTestService.getPlanClassList(request));
     }
 
     @Override
@@ -272,6 +280,6 @@ public final class OrgTestCallerImpl implements OrgTestCaller {
 
     @Override
     public Boolean checkStudentInPlanSync(CheckStudentInPlanRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGetData(orgTestService.checkStudentInPlan(request));
+        return RxCallbackScheduler.blockingGetFromResponse(orgTestService.checkStudentInPlan(request));
     }
 }

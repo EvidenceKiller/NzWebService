@@ -42,7 +42,7 @@ public final class SportInfoCallerImpl implements SportInfoCaller {
 
     @Override
     public Boolean updateStudentSportSync(ReportStudentSportRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGetData(sportInfoService.updateStudentSport(request));
+        return RxCallbackScheduler.blockingGetFromResponse(sportInfoService.updateStudentSport(request));
     }
 
     @Override
@@ -55,7 +55,7 @@ public final class SportInfoCallerImpl implements SportInfoCaller {
 
     @Override
     public Boolean reportTeacherSportSync(ReportTeacherSportRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGetData(sportInfoService.reportTeacherSport(request));
+        return RxCallbackScheduler.blockingGetFromResponse(sportInfoService.reportTeacherSport(request));
     }
 
     @Override
@@ -68,7 +68,7 @@ public final class SportInfoCallerImpl implements SportInfoCaller {
 
     @Override
     public Boolean reportStudentTrainSync(ReportStudentSportRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGetData(sportInfoService.reportStudentTrain(request));
+        return RxCallbackScheduler.blockingGetFromResponse(sportInfoService.reportStudentTrain(request));
     }
 
     @Override
@@ -81,7 +81,7 @@ public final class SportInfoCallerImpl implements SportInfoCaller {
 
     @Override
     public Boolean reportStudentSportSync(ReportStudentSportRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGetData(sportInfoService.reportStudentSport(request));
+        return RxCallbackScheduler.blockingGetFromResponse(sportInfoService.reportStudentSport(request));
     }
 
     @Override
@@ -94,7 +94,7 @@ public final class SportInfoCallerImpl implements SportInfoCaller {
 
     @Override
     public Boolean reportStudentPlanSync(ReportStudentPlanRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGetData(sportInfoService.reportStudentPlan(request));
+        return RxCallbackScheduler.blockingGetFromResponse(sportInfoService.reportStudentPlan(request));
     }
 
     @Override
@@ -107,7 +107,7 @@ public final class SportInfoCallerImpl implements SportInfoCaller {
 
     @Override
     public Boolean reportStudentMeetSync(ReportStudentMeetRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGetData(sportInfoService.reportStudentMeet(request));
+        return RxCallbackScheduler.blockingGetFromResponse(sportInfoService.reportStudentMeet(request));
     }
 
     @Override
@@ -120,7 +120,7 @@ public final class SportInfoCallerImpl implements SportInfoCaller {
 
     @Override
     public Boolean reportStudentCompetitionSync(ReportStudentCompetitionRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGetData(sportInfoService.reportStudentCompetition(request));
+        return RxCallbackScheduler.blockingGetFromResponse(sportInfoService.reportStudentCompetition(request));
     }
 
     @Override
@@ -133,7 +133,7 @@ public final class SportInfoCallerImpl implements SportInfoCaller {
 
     @Override
     public Boolean reportStudentAllSportSync(ReportStudentSportRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGetData(sportInfoService.reportStudentAllSport(request));
+        return RxCallbackScheduler.blockingGetFromResponse(sportInfoService.reportStudentAllSport(request));
     }
 
     @Override
@@ -146,7 +146,7 @@ public final class SportInfoCallerImpl implements SportInfoCaller {
 
     @Override
     public BasePageData<OrgRecordData> getOrgRecordPageSync(OrgRecordPageRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGetData(sportInfoService.getOrgRecordPage(request));
+        return RxCallbackScheduler.blockingGetFromResponse(sportInfoService.getOrgRecordPage(request));
     }
 
     @Override
@@ -159,6 +159,6 @@ public final class SportInfoCallerImpl implements SportInfoCaller {
 
     @Override
     public BasePageData<AccountRecordData> getAccountRecordPageSync(AccountRecordPageRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGetData(sportInfoService.getAccountRecordPage(request));
+        return RxCallbackScheduler.blockingGetFromResponse(sportInfoService.getAccountRecordPage(request));
     }
 }

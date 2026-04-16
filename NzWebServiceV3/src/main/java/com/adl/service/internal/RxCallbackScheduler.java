@@ -10,7 +10,6 @@ import com.adl.service.exception.NzExceptionMapper;
 import com.adl.service.exception.NzNetworkException;
 import com.adl.service.exception.NzUnknownException;
 import com.adl.service.web.response.BaseResponse;
-import com.adl.service.web.response.GetPageResult;
 
 import java.util.List;
 
@@ -22,7 +21,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 /**
  * RxJava 调度与 {@link BaseResponse} 处理封装（SDK 内部使用，不对外暴露）。
  * <p>
- * 包含：异步回调调度（{@link #schedule} / {@link #scheduleBaseResponse}），以及同步阻塞解包（{@link #blockingGetData} / {@link #requireSuccessData}）。
+ * 包含：异步回调调度（{@link #schedule} / {@link #scheduleBaseResponse}），以及同步阻塞解包（{@link #blockingGetFromResponse} / {@link #assertSuccessData}）。
  * </p>
  */
 public final class RxCallbackScheduler {
@@ -114,7 +113,7 @@ public final class RxCallbackScheduler {
      * 阻塞获取 Single，校验响应成功且 data 非空后返回 data；否则抛出 {@link NzNetworkException} 或 {@link NzUnknownException}；
      * 其它异常经 {@link NzExceptionMapper} 映射。
      */
-    public static <T> T blocking(Single<T> single) throws NzBaseException {
+    public static <T> T blockingGet(Single<T> single) throws NzBaseException {
         try {
             return single.blockingGet();
         } catch (Throwable t) {
@@ -126,21 +125,9 @@ public final class RxCallbackScheduler {
      * 阻塞获取 Single，校验响应成功且 data 非空后返回 data；否则抛出 {@link NzNetworkException} 或 {@link NzUnknownException}；
      * 其它异常经 {@link NzExceptionMapper} 映射。
      */
-    public static <T> List<T> blockingGet(Single<List<T>> single) throws NzBaseException {
+    public static <T> T blockingGetFromResponse(Single<BaseResponse<T>> single) throws NzBaseException {
         try {
-            return requireSuccess(single.blockingGet());
-        } catch (Throwable t) {
-            throw NzExceptionMapper.map(t);
-        }
-    }
-
-    /**
-     * 阻塞获取 Single，校验响应成功且 data 非空后返回 data；否则抛出 {@link NzNetworkException} 或 {@link NzUnknownException}；
-     * 其它异常经 {@link NzExceptionMapper} 映射。
-     */
-    public static <T> T blockingGetData(Single<BaseResponse<T>> single) throws NzBaseException {
-        try {
-            return requireSuccessData(single.blockingGet());
+            return assertSuccessData(single.blockingGet());
         } catch (Throwable t) {
             throw NzExceptionMapper.map(t);
         }
@@ -159,7 +146,7 @@ public final class RxCallbackScheduler {
     /**
      * 对已有 {@link BaseResponse} 做成功与 data 校验，成功则返回 data。
      */
-    private static <T> T requireSuccessData(BaseResponse<T> response) throws NzBaseException {
+    private static <T> T assertSuccessData(BaseResponse<T> response) throws NzBaseException {
         if (response == null) {
             throw new NzEmptyResponseException("Response is null");
         }
