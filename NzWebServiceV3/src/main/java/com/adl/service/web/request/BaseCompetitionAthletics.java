@@ -3,11 +3,13 @@ package com.adl.service.web.request;
 import com.google.gson.annotations.SerializedName;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 @Data
 @NoArgsConstructor
+@EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 public final class BaseCompetitionAthletics extends BaseRequest {
     /**

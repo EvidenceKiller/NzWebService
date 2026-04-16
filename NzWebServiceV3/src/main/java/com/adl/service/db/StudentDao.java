@@ -11,6 +11,7 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import androidx.room.RoomWarnings;
 import androidx.room.Update;
 import io.reactivex.rxjava3.core.Completable;
 
@@ -39,18 +40,22 @@ public interface StudentDao {
     @Query("select count (*) from _student")
     int countSize();
 
+    @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
     @Query("select _account_id from _student")
     List<StudentEntity> getAllAccountId();
 
     @Query("select * from _student")
     List<StudentEntity> getAll();
 
+    @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
     @Query("select _account_id,_account_name,_face_data_list from _student")
     List<StudentEntity> getAllFaceData();
 
+    @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
     @Query("select " + STUDENT_SELECT_FIELDS + " from _student")
     List<StudentEntity> getAllWithOutFaceData();
 
+    @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
     @Query("select " + STUDENT_SELECT_FIELDS + " from _student  limit :noOfRows,:rowNum")
     List<StudentEntity> getAllWithOutFaceDataByPage(int noOfRows, int rowNum);
 
@@ -60,6 +65,7 @@ public interface StudentDao {
     @Query("select * from _student where _account_id = :accountId limit 1")
     StudentEntity queryStudentByAccountId(String accountId);
 
+    @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
     @Query("select " + STUDENT_SELECT_FIELDS + " from _student where _account_id in (:accountIds)")
     List<StudentEntity> queryStudentByAccountIds(List<String> accountIds);
 
@@ -85,6 +91,7 @@ public interface StudentDao {
         }
     }
 
+    @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
     @Query("select " + STUDENT_SELECT_FIELDS + " from _student where " +
             "(:collegeId = '' or _college_id = :collegeId) and " +
             "(:majorId = '' or _major_id = :majorId) and " +
@@ -96,6 +103,7 @@ public interface StudentDao {
     )
     List<StudentEntity> queryStudentByPage(int noOfRows, int rowNum, String collegeId, String majorId, String gradeId, String classId, String sex, String keyWord);
 
+    @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
     @Query("select " + STUDENT_SELECT_FIELDS + " from _student where " +
             "(_account_id in (:accountIds)) and " +
             "(:collegeId = '' or _college_id = :collegeId) and " +
@@ -108,6 +116,7 @@ public interface StudentDao {
     )
     List<StudentEntity> queryStudentByPage(int noOfRows, int rowNum, List<String> accountIds, String collegeId, String majorId, String gradeId, String classId, String sex, String keyWord);
 
+    @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
     @Query("select " + STUDENT_SELECT_FIELDS + " from _student where " +
             "(_account_id in (:accountIds)) and " +
             "(:collegeId = '' or _college_id = :collegeId) and " +

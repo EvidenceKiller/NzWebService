@@ -9,6 +9,7 @@ import com.adl.service.caller.OrgTestCaller;
 import com.adl.service.common.IDefine;
 import com.adl.service.db.DaoManagerProxy;
 import com.adl.service.db.entity.PlanEntity;
+import com.adl.service.db.entity.SportProjectEntity;
 import com.adl.service.exception.NzBaseException;
 import com.adl.service.internal.RxCallbackScheduler;
 import com.adl.service.internal.SubscriptionManager;
@@ -25,12 +26,11 @@ import com.adl.service.web.request.PlanStudentPageRequest;
 import com.adl.service.web.request.RequestScope;
 import com.adl.service.web.request.StandardConfigPageRequest;
 import com.adl.service.web.response.BasePageData;
+import com.adl.service.web.response.GetPageResult;
 import com.adl.service.web.response.PlanClassData;
 import com.adl.service.web.response.PlanData;
 import com.adl.service.web.response.PlanInfoData;
 import com.adl.service.web.response.PlanStudentData;
-import com.adl.service.web.response.GetPageResult;
-import com.adl.service.web.response.SportProjectData;
 import com.adl.service.web.response.StandardConfigData;
 import com.adl.service.web.service.OrgTestService;
 
@@ -71,9 +71,9 @@ public final class OrgTestCallerImpl implements OrgTestCaller {
             planSyncResult.setPersistedCount(planSyncResult.getPersistedCount() + singleResult.getPersistedCount());
             planSyncResult.setTotalPages(planSyncResult.getTotalPages() + singleResult.getTotalPages());
         }
+        planSyncResult.setSuccess(true);
         List<PlanEntity> planDataList = DaoManagerProxy.getInstance().getPlanDao().getAll();
-        NzLog.d("reGetAllOrgTestDataSync merged plan count: " + planDataList.size()
-                + ", request result: " + planSyncResult);
+        NzLog.d("reGetAllOrgTestDataSync merged plan count: " + planDataList.size() + ", request result: " + planSyncResult);
 
         ////////////// 2.同步运动计划下学生 ////////////
         clearPlanStudentDataSync();
@@ -100,7 +100,7 @@ public final class OrgTestCallerImpl implements OrgTestCaller {
                     continue;
                 }
 
-                for (SportProjectData project : plan.getSportProjects()) {
+                for (SportProjectEntity project : plan.getSportProjects()) {
                     Pair<String, String> newPair = Pair.create(plan.getStandardId(), project.getSportSkuId());
                     //  不包含添加
                     if (standardList.stream().noneMatch(standard -> standard.equals(newPair))) {
