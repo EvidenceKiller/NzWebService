@@ -24,6 +24,7 @@ import com.adl.service.web.response.BannerDetailData;
 import com.adl.service.web.response.BasePageData;
 import com.adl.service.web.response.DeviceFocusData;
 import com.adl.service.web.response.DictMapData;
+import com.adl.service.web.response.GetPageResult;
 import com.adl.service.web.response.SceneData;
 import com.adl.service.web.response.SportSkuData;
 import com.adl.service.web.response.SportSkuDetailData;
@@ -91,7 +92,7 @@ public final class OperationCallerImpl implements OperationCaller {
     }
 
     @Override
-    public long getSportSkuPagesAllAsync(RequestScope scope, SportSkuPageRequest request, RequestCallback<List<SportSkuData>> callback) {
+    public long getSportSkuPagesAllAsync(RequestScope scope, SportSkuPageRequest request, RequestCallback<GetPageResult> callback) {
         CallerUtil.assertCurrent(request);
         CallerUtil.assertScope(scope);
         Disposable disposable = RxCallbackScheduler.schedule(BasePagePersistence.persistAllPagesAsSingle(
@@ -103,9 +104,9 @@ public final class OperationCallerImpl implements OperationCaller {
     }
 
     @Override
-    public List<SportSkuData> getSportSkuPagesAllSync(SportSkuPageRequest request) throws NzBaseException {
+    public GetPageResult getSportSkuPagesAllSync(SportSkuPageRequest request) throws NzBaseException {
         CallerUtil.assertCurrent(request);
-        return RxCallbackScheduler.blockingGet(BasePagePersistence.persistAllPagesAsSingle(
+        return RxCallbackScheduler.blocking(BasePagePersistence.persistAllPagesAsSingle(
                 OperationPersistenceHelper.createSportSkuPagePreparer(),
                 OperationPersistenceHelper.createSportSkuPageRequester(request, req -> operationService.getSportSkuPage(req)),
                 OperationPersistenceHelper.createSportSkuPagePersister(request.getAppCode(), request.getSceneId())));
@@ -157,7 +158,7 @@ public final class OperationCallerImpl implements OperationCaller {
     @Override
     public long getSceneListAsync(RequestScope scope, SceneListRequest request, RequestCallback<List<SceneData>> callback) {
         CallerUtil.assertScope(scope);
-        Disposable disposable = RxCallbackScheduler.scheduleBaseResponse(BasePersistence.persistAfterFetch(
+        Disposable disposable = RxCallbackScheduler.scheduleBaseResponse(BasePersistence.persistAsSingle(
                 OperationPersistenceHelper.createSceneListPreparer(request.getAppCode()),
                 BasePersistence.createBaseRequester(request, req -> operationService.getSceneList(req)),
                 OperationPersistenceHelper.createSceneListPersister(request.getAppCode())), callback);
@@ -167,7 +168,7 @@ public final class OperationCallerImpl implements OperationCaller {
 
     @Override
     public List<SceneData> getSceneListSync(SceneListRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGetData(BasePersistence.persistAfterFetch(
+        return RxCallbackScheduler.blockingGetData(BasePersistence.persistAsSingle(
                 OperationPersistenceHelper.createSceneListPreparer(request.getAppCode()),
                 BasePersistence.createBaseRequester(request, req -> operationService.getSceneList(req)),
                 OperationPersistenceHelper.createSceneListPersister(request.getAppCode())));

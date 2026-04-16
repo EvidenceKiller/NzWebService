@@ -8,6 +8,7 @@ import com.adl.service.callback.RequestCallback;
 import com.adl.service.caller.OrgTestCaller;
 import com.adl.service.common.IDefine;
 import com.adl.service.db.DaoManagerProxy;
+import com.adl.service.db.entity.PlanEntity;
 import com.adl.service.exception.NzBaseException;
 import com.adl.service.internal.RxCallbackScheduler;
 import com.adl.service.internal.SubscriptionManager;
@@ -28,6 +29,7 @@ import com.adl.service.web.response.PlanClassData;
 import com.adl.service.web.response.PlanData;
 import com.adl.service.web.response.PlanInfoData;
 import com.adl.service.web.response.PlanStudentData;
+import com.adl.service.web.response.GetPageResult;
 import com.adl.service.web.response.SportProjectData;
 import com.adl.service.web.response.StandardConfigData;
 import com.adl.service.web.service.OrgTestService;
@@ -57,19 +59,25 @@ public final class OrgTestCallerImpl implements OrgTestCaller {
 
         ////////////// 1.同步全部运动计划 ////////////
         clearPlanDataSync();
-        List<PlanData> planDataList = new ArrayList<>();
+        GetPageResult planSyncResult = new GetPageResult();
         for (Integer status : statusList) {
             PlanPageRequest planPageRequest = PlanPageRequest.builder()
                     .standardType(IDefine.standardTypeALL)
                     .status(String.valueOf(status))
                     .build();
-            planDataList.addAll(getPlanPagesAllSync(planPageRequest));
+            GetPageResult singleResult = getPlanPagesAllSync(planPageRequest);
+            planSyncResult.setSuccessedPages(planSyncResult.getSuccessedPages() + singleResult.getSuccessedPages());
+            planSyncResult.setFetchedCount(planSyncResult.getFetchedCount() + singleResult.getFetchedCount());
+            planSyncResult.setPersistedCount(planSyncResult.getPersistedCount() + singleResult.getPersistedCount());
+            planSyncResult.setTotalPages(planSyncResult.getTotalPages() + singleResult.getTotalPages());
         }
-        NzLog.d("reGetAllOrgTestDataSync merged plan count: " + planDataList.size());
+        List<PlanEntity> planDataList = DaoManagerProxy.getInstance().getPlanDao().getAll();
+        NzLog.d("reGetAllOrgTestDataSync merged plan count: " + planDataList.size()
+                + ", request result: " + planSyncResult);
 
         ////////////// 2.同步运动计划下学生 ////////////
         clearPlanStudentDataSync();
-        for (PlanData plan : planDataList) {
+        for (PlanEntity plan : planDataList) {
             if (TextUtils.isEmpty(plan.getEndTime()) || serverTime > Long.parseLong(plan.getEndTime())) {
                 continue;
             }
@@ -83,7 +91,7 @@ public final class OrgTestCallerImpl implements OrgTestCaller {
             clearStandardConfigDataSync();
             ArrayList<Pair<String, String>> standardList = new ArrayList<>();
 
-            for (PlanData plan : planDataList) {
+            for (PlanEntity plan : planDataList) {
                 if (plan.getSportProjects() == null) {
                     continue;
                 }
@@ -117,7 +125,7 @@ public final class OrgTestCallerImpl implements OrgTestCaller {
     }
 
     @Override
-    public long getStandardConfigPagesAllAsync(RequestScope scope, StandardConfigPageRequest request, RequestCallback<List<StandardConfigData>> callback) {
+    public long getStandardConfigPagesAllAsync(RequestScope scope, StandardConfigPageRequest request, RequestCallback<GetPageResult> callback) {
         CallerUtil.assertCurrent(request);
         CallerUtil.assertScope(scope);
         Disposable disposable = RxCallbackScheduler.schedule(BasePagePersistence.persistAllListsAsSingle(
@@ -128,9 +136,9 @@ public final class OrgTestCallerImpl implements OrgTestCaller {
     }
 
     @Override
-    public List<StandardConfigData> getStandardConfigPagesAllSync(StandardConfigPageRequest request) throws NzBaseException {
+    public GetPageResult getStandardConfigPagesAllSync(StandardConfigPageRequest request) throws NzBaseException {
         CallerUtil.assertCurrent(request);
-        return RxCallbackScheduler.blockingGet(BasePagePersistence.persistAllListsAsSingle(
+        return RxCallbackScheduler.blocking(BasePagePersistence.persistAllListsAsSingle(
                 OrgTestPersistenceHelper.createStandardConfigPageRequester(request, req -> orgTestService.getStandardConfigPage(req)),
                 OrgTestPersistenceHelper.createStandardConfigPagePersister()));
     }
@@ -154,7 +162,7 @@ public final class OrgTestCallerImpl implements OrgTestCaller {
     }
 
     @Override
-    public long getPlanStudentPagesAllASync(RequestScope scope, PlanStudentPageRequest request, RequestCallback<List<PlanStudentData>> callback) {
+    public long getPlanStudentPagesAllASync(RequestScope scope, PlanStudentPageRequest request, RequestCallback<GetPageResult> callback) {
         CallerUtil.assertCurrent(request);
         CallerUtil.assertScope(scope);
         Disposable disposable = RxCallbackScheduler.schedule(BasePagePersistence.persistAllPagesAsSingle(
@@ -166,9 +174,9 @@ public final class OrgTestCallerImpl implements OrgTestCaller {
     }
 
     @Override
-    public List<PlanStudentData> getPlanStudentPagesAllSync(PlanStudentPageRequest request) throws NzBaseException {
+    public GetPageResult getPlanStudentPagesAllSync(PlanStudentPageRequest request) throws NzBaseException {
         CallerUtil.assertCurrent(request);
-        return RxCallbackScheduler.blockingGet(BasePagePersistence.persistAllPagesAsSingle(
+        return RxCallbackScheduler.blocking(BasePagePersistence.persistAllPagesAsSingle(
                 OrgTestPersistenceHelper.createPlanStudentPagePreparer(request.getPlanId()),
                 OrgTestPersistenceHelper.createPlanStudentPageRequester(request, req -> orgTestService.getPlanStudentPage(req)),
                 OrgTestPersistenceHelper.createPlanStudentPagePersister(request.getPlanId())));
@@ -193,7 +201,7 @@ public final class OrgTestCallerImpl implements OrgTestCaller {
     }
 
     @Override
-    public long getPlanPagesAllAsync(RequestScope scope, PlanPageRequest request, RequestCallback<List<PlanData>> callback) {
+    public long getPlanPagesAllAsync(RequestScope scope, PlanPageRequest request, RequestCallback<GetPageResult> callback) {
         CallerUtil.assertCurrent(request);
         CallerUtil.assertScope(scope);
         Disposable disposable = RxCallbackScheduler.schedule(BasePagePersistence.persistAllPagesAsSingle(
@@ -204,9 +212,9 @@ public final class OrgTestCallerImpl implements OrgTestCaller {
     }
 
     @Override
-    public List<PlanData> getPlanPagesAllSync(PlanPageRequest request) throws NzBaseException {
+    public GetPageResult getPlanPagesAllSync(PlanPageRequest request) throws NzBaseException {
         CallerUtil.assertCurrent(request);
-        return RxCallbackScheduler.blockingGet(BasePagePersistence.persistAllPagesAsSingle(
+        return RxCallbackScheduler.blocking(BasePagePersistence.persistAllPagesAsSingle(
                 OrgTestPersistenceHelper.createPlanPageRequester(request, req -> orgTestService.getPlanPage(req)),
                 OrgTestPersistenceHelper.createPlanPagePersister()));
     }

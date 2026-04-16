@@ -20,10 +20,10 @@ public final class BasePersistence {
     private BasePersistence() {
     }
 
-    public static <T> Single<BaseResponse<T>> persistAfterFetch(
+    public static <T> Single<BaseResponse<T>> persistAsSingle(
             Function<Void, Single<BaseResponse<T>>> requestFunc,
             Function<T, Completable> persistFunc) {
-        return persistAfterFetch(createBaseEmptyPreparer(), requestFunc, persistFunc);
+        return persistAsSingle(createBaseEmptyPreparer(), requestFunc, persistFunc);
     }
 
     /**
@@ -31,7 +31,7 @@ public final class BasePersistence {
      * @param requestFunc 网络请求函数
      * @param persistFunc 仅当 {@code response.isSuccess() && response.getData()!=null} 时调用，对 {@code data} 执行插入；无需写入时返回 {@link Completable#complete()}
      */
-    public static <T> Single<BaseResponse<T>> persistAfterFetch(
+    public static <T> Single<BaseResponse<T>> persistAsSingle(
             Function<Void, Completable> prepareFunc,
             Function<Void, Single<BaseResponse<T>>> requestFunc,
             Function<T, Completable> persistFunc) {

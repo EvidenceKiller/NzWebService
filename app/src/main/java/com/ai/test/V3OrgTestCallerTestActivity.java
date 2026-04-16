@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import com.adl.service.AdlService;
 import com.adl.service.callback.RequestCallback;
-import com.adl.service.exception.NzBaseException;
 import com.adl.service.web.request.CheckStudentInPlanRequest;
 import com.adl.service.web.request.PlanClassListRequest;
 import com.adl.service.web.request.PlanInfoRequest;
@@ -22,6 +21,7 @@ import com.adl.service.web.response.PlanClassData;
 import com.adl.service.web.response.PlanInfoData;
 import com.adl.service.web.response.PlanData;
 import com.adl.service.web.response.PlanStudentData;
+import com.adl.service.web.response.GetPageResult;
 import com.adl.service.web.response.StandardConfigData;
 import com.adl.ts.general.R;
 
@@ -266,9 +266,9 @@ public class V3OrgTestCallerTestActivity extends AppCompatActivity {
 
     private void getAllPlanPagesAsync() {
         PlanPageRequest request = buildPlanListRequest();
-        AdlService.getService().getOrgTestCaller().getPlanPagesAllAsync(RequestScope.of(this), request, new RequestCallback<List<PlanData>>() {
+        AdlService.getService().getOrgTestCaller().getPlanPagesAllAsync(RequestScope.of(this), request, new RequestCallback<GetPageResult>() {
             @Override
-            public void onSuccess(List<PlanData> data) {
+            public void onSuccess(GetPageResult data) {
                 if (data != null) {
                     Log.d(TAG, "OrgTestCallerTestActivity::getAllPlanPagesAsync::onSuccess : data : " + data);
                     resultView.setText(data.toString());
@@ -295,9 +295,9 @@ public class V3OrgTestCallerTestActivity extends AppCompatActivity {
         AdlService.getService().executeSyncOnIo(RequestScope.of(this), () -> {
             PlanPageRequest request = buildPlanListRequest();
             return AdlService.getService().getOrgTestCaller().getPlanPagesAllSync(request);
-        }, new RequestCallback<List<PlanData>>() {
+        }, new RequestCallback<GetPageResult>() {
             @Override
-            public void onSuccess(List<PlanData> data) {
+            public void onSuccess(GetPageResult data) {
                 if (data != null) {
                     Log.d(TAG, "OrgTestCallerTestActivity::getAllPlanPagesSync::onSuccess : data : " + data);
                     resultView.setText(data.toString());

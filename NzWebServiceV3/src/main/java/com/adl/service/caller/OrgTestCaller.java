@@ -14,6 +14,7 @@ import com.adl.service.web.response.PlanClassData;
 import com.adl.service.web.response.PlanInfoData;
 import com.adl.service.web.response.PlanData;
 import com.adl.service.web.response.PlanStudentData;
+import com.adl.service.web.response.GetPageResult;
 import com.adl.service.web.response.StandardConfigData;
 
 import java.util.List;
@@ -27,9 +28,9 @@ public interface OrgTestCaller {
 
     void clearStandardConfigDataSync();
 
-    long getStandardConfigPagesAllAsync(RequestScope scope, StandardConfigPageRequest request, RequestCallback<List<StandardConfigData>> callback);
+    long getStandardConfigPagesAllAsync(RequestScope scope, StandardConfigPageRequest request, RequestCallback<GetPageResult> callback);
 
-    List<StandardConfigData> getStandardConfigPagesAllSync(StandardConfigPageRequest request) throws NzBaseException;
+    GetPageResult getStandardConfigPagesAllSync(StandardConfigPageRequest request) throws NzBaseException;
 
     /**
      * 获取标准列表
@@ -45,9 +46,9 @@ public interface OrgTestCaller {
 
     void clearPlanStudentDataSync();
 
-    long getPlanStudentPagesAllASync(RequestScope scope, PlanStudentPageRequest request, RequestCallback<List<PlanStudentData>> callback);
+    long getPlanStudentPagesAllASync(RequestScope scope, PlanStudentPageRequest request, RequestCallback<GetPageResult> callback);
 
-    List<PlanStudentData> getPlanStudentPagesAllSync(PlanStudentPageRequest request) throws NzBaseException;
+    GetPageResult getPlanStudentPagesAllSync(PlanStudentPageRequest request) throws NzBaseException;
 
     /**
      * 获取计划下学生
@@ -73,7 +74,7 @@ public interface OrgTestCaller {
      * @return
      * @throws NzBaseException
      */
-    long getPlanPagesAllAsync(RequestScope scope, PlanPageRequest request, RequestCallback<List<PlanData>> callback);
+    long getPlanPagesAllAsync(RequestScope scope, PlanPageRequest request, RequestCallback<GetPageResult> callback);
 
     /**
      * 获取所有的分页计划列表
@@ -83,7 +84,7 @@ public interface OrgTestCaller {
      * @return
      * @throws NzBaseException
      */
-    List<PlanData> getPlanPagesAllSync(PlanPageRequest request) throws NzBaseException;
+    GetPageResult getPlanPagesAllSync(PlanPageRequest request) throws NzBaseException;
 
     /**
      * 获取计划列表

@@ -24,6 +24,7 @@ import com.adl.service.web.response.GroupTeamData;
 import com.adl.service.web.response.GroupTeamDetailData;
 import com.adl.service.web.response.ResData;
 import com.adl.service.web.response.ResTypeData;
+import com.adl.service.web.response.GetPageResult;
 import com.adl.service.web.response.SportMeetData;
 import com.adl.service.web.response.TrainPlanInfoData;
 import com.adl.service.web.response.TrainPlanOneDayProjectData;
@@ -107,9 +108,9 @@ public interface BusinessCaller {
      */
     CompetitionRankDetailData getCompetitionRankDetailSync(CompetitionRankDetailRequest request) throws NzBaseException;
 
-    long getCompetitionPagesAllAsync(RequestScope scope, CompetitionPageRequest request, RequestCallback<List<CompetitionData>> callback);
+    long getCompetitionPagesAllAsync(RequestScope scope, CompetitionPageRequest request, RequestCallback<GetPageResult> callback);
 
-    List<CompetitionData> getCompetitionPagesAllSync(CompetitionPageRequest request) throws NzBaseException;
+    GetPageResult getCompetitionPagesAllSync(CompetitionPageRequest request) throws NzBaseException;
 
     /**
      * 赛事列表
@@ -129,13 +130,13 @@ public interface BusinessCaller {
      */
     void clearSportMeetDataSync();
 
-    long getSportMeetPagesAllAsync(RequestScope scope, SportMeetPageRequest request, RequestCallback<List<SportMeetData>> callback);
+    long getSportMeetPagesAllAsync(RequestScope scope, SportMeetPageRequest request, RequestCallback<GetPageResult> callback);
 
     /**
      * 获取所有运动会列表
      * <p>同步调用。</p>
      */
-    List<SportMeetData> getSportMeetPagesAllSync(SportMeetPageRequest request) throws NzBaseException;
+    GetPageResult getSportMeetPagesAllSync(SportMeetPageRequest request) throws NzBaseException;
 
     /**
      * 分页获取运动会列表

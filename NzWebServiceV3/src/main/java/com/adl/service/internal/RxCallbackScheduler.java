@@ -10,6 +10,7 @@ import com.adl.service.exception.NzExceptionMapper;
 import com.adl.service.exception.NzNetworkException;
 import com.adl.service.exception.NzUnknownException;
 import com.adl.service.web.response.BaseResponse;
+import com.adl.service.web.response.GetPageResult;
 
 import java.util.List;
 
@@ -107,6 +108,18 @@ public final class RxCallbackScheduler {
                             }
                         }
                 );
+    }
+
+    /**
+     * 阻塞获取 Single，校验响应成功且 data 非空后返回 data；否则抛出 {@link NzNetworkException} 或 {@link NzUnknownException}；
+     * 其它异常经 {@link NzExceptionMapper} 映射。
+     */
+    public static <T> T blocking(Single<T> single) throws NzBaseException {
+        try {
+            return single.blockingGet();
+        } catch (Throwable t) {
+            throw NzExceptionMapper.map(t);
+        }
     }
 
     /**

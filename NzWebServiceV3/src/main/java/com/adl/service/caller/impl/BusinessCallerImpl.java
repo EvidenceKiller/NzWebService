@@ -30,6 +30,7 @@ import com.adl.service.web.response.CompetitionRankDetailData;
 import com.adl.service.web.response.GroupData;
 import com.adl.service.web.response.GroupTeamData;
 import com.adl.service.web.response.GroupTeamDetailData;
+import com.adl.service.web.response.GetPageResult;
 import com.adl.service.web.response.ResData;
 import com.adl.service.web.response.ResTypeData;
 import com.adl.service.web.response.SportMeetData;
@@ -131,7 +132,7 @@ public final class BusinessCallerImpl implements BusinessCaller {
     }
 
     @Override
-    public long getCompetitionPagesAllAsync(RequestScope scope, CompetitionPageRequest request, RequestCallback<List<CompetitionData>> callback) {
+    public long getCompetitionPagesAllAsync(RequestScope scope, CompetitionPageRequest request, RequestCallback<GetPageResult> callback) {
         CallerUtil.assertCurrent(request);
         CallerUtil.assertScope(scope);
         Disposable disposable = RxCallbackScheduler.schedule(BasePagePersistence.persistAllPagesAsSingle(
@@ -143,8 +144,8 @@ public final class BusinessCallerImpl implements BusinessCaller {
     }
 
     @Override
-    public List<CompetitionData> getCompetitionPagesAllSync(CompetitionPageRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGet(BasePagePersistence.persistAllPagesAsSingle(
+    public GetPageResult getCompetitionPagesAllSync(CompetitionPageRequest request) throws NzBaseException {
+        return RxCallbackScheduler.blocking(BasePagePersistence.persistAllPagesAsSingle(
                 BusinessPersistenceHelper.createCompetitionPagePreparer(),
                 BusinessPersistenceHelper.createCompetitionPageRequester(request, req -> businessService.getCompetitionPage(req)),
                 BusinessPersistenceHelper.createCompetitionPagePersister()));
@@ -175,7 +176,7 @@ public final class BusinessCallerImpl implements BusinessCaller {
     }
 
     @Override
-    public long getSportMeetPagesAllAsync(RequestScope scope, SportMeetPageRequest request, RequestCallback<List<SportMeetData>> callback) {
+    public long getSportMeetPagesAllAsync(RequestScope scope, SportMeetPageRequest request, RequestCallback<GetPageResult> callback) {
         CallerUtil.assertCurrent(request);
         CallerUtil.assertScope(scope);
         Disposable disposable = RxCallbackScheduler.schedule(BasePagePersistence.persistAllPagesAsSingle(
@@ -187,9 +188,9 @@ public final class BusinessCallerImpl implements BusinessCaller {
     }
 
     @Override
-    public List<SportMeetData> getSportMeetPagesAllSync(SportMeetPageRequest request) throws NzBaseException {
+    public GetPageResult getSportMeetPagesAllSync(SportMeetPageRequest request) throws NzBaseException {
         CallerUtil.assertCurrent(request);
-        return RxCallbackScheduler.blockingGet(BasePagePersistence.persistAllPagesAsSingle(
+        return RxCallbackScheduler.blocking(BasePagePersistence.persistAllPagesAsSingle(
                 BusinessPersistenceHelper.createSportMeetPagePreparer(request.getAppCode()),
                 BusinessPersistenceHelper.createSportMeetPageRequester(request, req -> businessService.getSportMeetPage(req)),
                 BusinessPersistenceHelper.createSportMeetPagePersister(request.getAppCode())));

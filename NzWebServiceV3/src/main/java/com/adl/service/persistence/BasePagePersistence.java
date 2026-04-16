@@ -2,14 +2,14 @@ package com.adl.service.persistence;
 
 import android.util.Log;
 
-import com.adl.service.exception.NzCommonException;
 import com.adl.service.exception.NzEmptyDataException;
+import com.adl.service.exception.NzGetPageException;
 import com.adl.service.web.response.BasePageData;
 import com.adl.service.web.response.BaseResponse;
+import com.adl.service.web.response.GetPageResult;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Observable;
@@ -39,7 +39,7 @@ public final class BasePagePersistence {
             Function<Void, Single<BaseResponse<BasePageData<T>>>> requestFunc,
             Function<List<T>, List<T>> persistFunc) {
         Log.i("ZXN_TEST", "BasePagePersistence : persistOnePageAsSingle");
-        return BasePersistence.persistAfterFetch(prepareFunc, requestFunc, data -> {
+        return BasePersistence.persistAsSingle(prepareFunc, requestFunc, data -> {
             if (data == null || data.getSize() == 0) {
                 return Completable.error(new NzEmptyDataException("request data is null before persist"));
             }
@@ -61,7 +61,7 @@ public final class BasePagePersistence {
             Function<Void, Single<BaseResponse<List<T>>>> requestFunc,
             Function<List<T>, List<T>> persistFunc) {
         Log.i("ZXN_TEST", "BasePagePersistence : persistOneListAsSingle");
-        return BasePersistence.persistAfterFetch(prepareFunc, requestFunc, data -> {
+        return BasePersistence.persistAsSingle(prepareFunc, requestFunc, data -> {
             if (data == null || data.size() == 0) {
                 return Completable.error(new NzEmptyDataException("request data is null before persist"));
             }
@@ -69,7 +69,7 @@ public final class BasePagePersistence {
         });
     }
 
-    public static <T> Single<List<T>> persistAllListsAsSingle(
+    public static <T> Single<GetPageResult> persistAllListsAsSingle(
             Function<Long, Single<BaseResponse<List<T>>>> pageRequestFunc,
             Function<List<T>, List<T>> persistFunc) {
         return persistAllListsAsSingle(BasePersistence.createBaseEmptyPreparer(), pageRequestFunc, persistFunc);
@@ -86,11 +86,12 @@ public final class BasePagePersistence {
      * @param persistFunc     每页成功后的持久化逻辑
      * @return 包含所有分页记录的汇总 {@link List}
      */
-    public static <T> Single<List<T>> persistAllListsAsSingle(
+    public static <T> Single<GetPageResult> persistAllListsAsSingle(
             Function<Void, Completable> prepareFunc,
             Function<Long, Single<BaseResponse<List<T>>>> pageRequestFunc,
             Function<List<T>, List<T>> persistFunc) {
         Log.i("ZXN_TEST", "BasePagePersistence : persistAllListsAsSingle");
+        final String uuId = UUID.randomUUID().toString();
         return Completable.defer(() -> prepareFunc.apply(null))
                 .andThen(Observable.<Long, Long>generate(() -> 1L, (current, emitter) -> {
                             emitter.onNext(current);
@@ -99,26 +100,29 @@ public final class BasePagePersistence {
                         .concatMapSingle(currentPage -> pageRequestFunc.apply(currentPage)
                                 .flatMap(resp -> {
                                     if (!resp.getSucceed()) {
-                                        return Single.error(new RuntimeException("request page " + currentPage + " failed: " + resp.getMsg()));
+                                        return Single.error(new NzGetPageException(createFailedPageResult(uuId, "request page " + currentPage + " failed: " + resp.getMsg())));
                                     }
-                                    List<T> dataList = resp.getData();
-                                    if (dataList == null || dataList.isEmpty()) {
-                                        return Single.just(Collections.emptyList());
+                                    List<T> fetchedList = resp.getData();
+                                    if (fetchedList == null || fetchedList.isEmpty()) {
+                                        return Single.just(createCurrentPageResult(currentPage, 0L, 0L));
                                     }
                                     return Single.fromCallable(() -> {
                                         try {
-                                            return persistFunc.apply(dataList);
+                                            List<T> persistedList = persistFunc.apply(fetchedList);
+                                            long fetchedCount = fetchedList == null ? 0 : fetchedList.size();
+                                            long persistedCount = persistedList == null ? 0 : persistedList.size();
+                                            return createCurrentPageResult(currentPage, fetchedCount, persistedCount);
                                         } catch (Throwable e) {
-                                            throw new NzCommonException("persist page " + currentPage + " failed", e);
+                                            throw new NzGetPageException(createFailedPageResult(uuId, "persist page " + currentPage + " failed"), e);
                                         }
                                     });
                                 }))
-                        .takeWhile(pageData -> !pageData.isEmpty())
-                        .collect(ArrayList::new, (result, page) -> result.addAll((List<T>) page)));
-
+                        .takeWhile(stat -> stat.getFetchedCount() > 0)
+                        .collect(GetPageResult::new, (lastResult, currentResult) -> accumulatePageResult(uuId, lastResult, currentResult)))
+                .onErrorResumeNext(throwable -> Single.error(throwable));
     }
 
-    public static <T> Single<List<T>> persistAllPagesAsSingle(
+    public static <T> Single<GetPageResult> persistAllPagesAsSingle(
             Function<Long, Single<BaseResponse<BasePageData<T>>>> pageRequestFunc,
             Function<List<T>, List<T>> persistFunc) {
         return persistAllPagesAsSingle(BasePersistence.createBaseEmptyPreparer(), pageRequestFunc, persistFunc);
@@ -135,65 +139,99 @@ public final class BasePagePersistence {
      * @param persistFunc     每页成功后的持久化逻辑
      * @return 包含所有分页记录的汇总 {@link List}
      */
-    public static <T> Single<List<T>> persistAllPagesAsSingle(
+    public static <T> Single<GetPageResult> persistAllPagesAsSingle(
             Function<Void, Completable> prepareFunc,
             Function<Long, Single<BaseResponse<BasePageData<T>>>> pageRequestFunc,
             Function<List<T>, List<T>> persistFunc) {
         Log.i("ZXN_TEST", "BasePagePersistence : persistAllPagesAsSingle");
+        final String uuId = UUID.randomUUID().toString();
         return Completable.defer(() -> prepareFunc.apply(null))
                 .andThen(Single.defer(() -> pageRequestFunc.apply(1L)))
                 .flatMap(firstResp -> {
                     if (!firstResp.getSucceed() || firstResp.getData() == null) {
-                        return Single.error(new RuntimeException("request page 1 failed: " + firstResp.getMsg()));
+                        return Single.error(new NzGetPageException(createFailedPageResult(uuId, "request page 1 failed: " + firstResp.getMsg())));
                     }
 
                     BasePageData<T> firstPage = firstResp.getData();
-                    List<T> firstPageDataList = firstPage.getRecords();
+                    List<T> firstFetchedList = firstPage.getRecords();
+                    List<T> firstPersistedList = persistFunc.apply(firstFetchedList);
 
-                    // 持久化第一页
-                    List<T> persistedFirstPageDataList = persistFunc.apply(firstPageDataList);
-                    return Single.defer(() -> {
-                        long totalPages = firstPage.getPages();
-                        if (totalPages <= 1L) {
-                            // 只有一页，直接返回
-                            return Single.just(firstPageDataList);
-                        }
+                    GetPageResult firstResult = new GetPageResult();
+                    firstResult.setUuId(uuId);
+                    firstResult.setSuccess(true);
+                    firstResult.setMessage("success");
+                    firstResult.setTotalPages(firstPage.getPages() == null ? 0L : firstPage.getPages());
+                    firstResult.setSuccessedPages(1L);
+                    firstResult.setFetchedCount(firstFetchedList == null ? 0 : firstFetchedList.size());
+                    firstResult.setPersistedCount(firstPersistedList == null ? 0 : firstPersistedList.size());
 
-                        // 获取剩余页并汇总
-                        return persistAndAccumulateRemainingPages(pageRequestFunc, persistFunc, persistedFirstPageDataList, 2L, totalPages - 1);
-                    });
-                });
+                    if (firstResult.getTotalPages() <= 1L) {
+                        return Single.just(firstResult);
+                    }
+                    return persistAndAccumulateRemainingPages(pageRequestFunc, persistFunc, firstResult, 2L, firstResult.getTotalPages() - 1L);
+                })
+                .onErrorResumeNext(throwable ->
+                        Single.error(new NzGetPageException(createFailedPageResult(uuId, throwable.getMessage()), throwable)));
     }
 
-    /**
-     * 获取剩余分页数据，逐页持久化并累加到总列表中
-     */
-    private static <T> Single<List<T>> persistAndAccumulateRemainingPages(
+    private static <T> Single<GetPageResult> persistAndAccumulateRemainingPages(
             Function<Long, Single<BaseResponse<BasePageData<T>>>> pageRequestFunc,
             Function<List<T>, List<T>> persistFunc,
-            List<T> accumulatedList,
-            long startPage,
-            long pageCount) {
-        Log.i("ZXN_TEST", "BasePagePersistence : persistAndAccumulateRemainingPages : pageCount : " + pageCount);
-        Log.i("ZXN_TEST", "BasePagePersistence : persistAndAccumulateRemainingPages : startPage : " + startPage);
+            GetPageResult firstResult,
+            Long startPage,
+            Long pageCount) {
         return Observable.rangeLong(startPage, pageCount)
                 .concatMapSingle(currentPage -> pageRequestFunc.apply(currentPage)
                         .flatMap(resp -> {
                             if (!resp.getSucceed() || resp.getData() == null) {
-                                return Single.error(new RuntimeException("request page " + currentPage + " failed: " + resp.getMsg()));
+                                return Single.error(new NzGetPageException(createFailedPageResult(firstResult.getUuId(), "request page " + currentPage + " failed: " + resp.getMsg())));
                             }
-                            List<T> records = resp.getData().getRecords();
-                            // 持久化当前页
-                            return Single.just(persistFunc.apply(records));
+                            List<T> fetchedList = resp.getData().getRecords();
+                            return Single.fromCallable(() -> {
+                                try {
+                                    List<T> persistedList = persistFunc.apply(fetchedList);
+                                    long fetchedCount = fetchedList == null ? 0 : fetchedList.size();
+                                    long persistedCount = persistedList == null ? 0 : persistedList.size();
+                                    return createCurrentPageResult(firstResult.getTotalPages(), fetchedCount, persistedCount);
+                                } catch (Throwable e) {
+                                    throw new NzGetPageException(createFailedPageResult(firstResult.getUuId(), "persist page " + currentPage + " failed"), e);
+                                }
+                            });
                         }))
-                // 将每一页的 List<T> 累加到初始的 accumulatedList 中
-                .toList()
-                .map(allPages -> {
-                    List<T> result = new ArrayList<>(accumulatedList);
-                    for (List<T> page : allPages) {
-                        result.addAll(page);
-                    }
-                    return result;
-                });
+                .reduce(firstResult, (lastResult, currentResult) -> accumulatePageResult(firstResult.getUuId(), lastResult, currentResult));
+    }
+
+    private static GetPageResult createCurrentPageResult(long totalPages, long fetchedCount, long persistedCount) {
+        GetPageResult thisResult = new GetPageResult();
+        thisResult.setSuccess(true);
+        thisResult.setMessage("success");
+        thisResult.setTotalPages(totalPages);
+        thisResult.setFetchedCount(fetchedCount);
+        thisResult.setPersistedCount(persistedCount);
+        return thisResult;
+    }
+
+    private static GetPageResult createFailedPageResult(String uuId, String message) {
+        GetPageResult result = new GetPageResult();
+        result.setUuId(uuId);
+        result.setSuccess(false);
+        result.setMessage(message);
+        return result;
+    }
+
+    public static GetPageResult accumulatePageResult(String uuId, GetPageResult lastResult, GetPageResult currentResult) throws NzGetPageException {
+        if (!currentResult.isSuccess()) {
+            throw new NzGetPageException(createFailedPageResult(currentResult.getUuId(), "accumulate page meet some error"));
+        }
+        lastResult.setUuId(uuId);
+        lastResult.setSuccess(true);
+        lastResult.setMessage(currentResult.getMessage()) ;
+        if (currentResult.getFetchedCount() > 0L) {
+            lastResult.setSuccessedPages(lastResult.getSuccessedPages() + 1L);
+            lastResult.setFetchedCount(lastResult.getFetchedCount() + currentResult.getFetchedCount());
+            lastResult.setPersistedCount(lastResult.getPersistedCount() + currentResult.getPersistedCount());
+        }
+        lastResult.setTotalPages (Math.max(lastResult.getTotalPages(), currentResult.getTotalPages()));
+        return lastResult;
     }
 }

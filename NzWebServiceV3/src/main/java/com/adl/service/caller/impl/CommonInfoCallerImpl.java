@@ -36,6 +36,7 @@ import com.adl.service.web.response.DictData;
 import com.adl.service.web.response.GradeChineseNameData;
 import com.adl.service.web.response.GradeTreeData;
 import com.adl.service.web.response.LoginInfoData;
+import com.adl.service.web.response.GetPageResult;
 import com.adl.service.web.response.StudentData;
 import com.adl.service.web.response.TeacherData;
 import com.adl.service.web.service.CommonInfoService;
@@ -259,7 +260,7 @@ public final class CommonInfoCallerImpl implements CommonInfoCaller {
     @Override
     public long getLoginInfoAsync(RequestScope scope, RequestCallback<LoginInfoData> callback) {
         CallerUtil.assertScope(scope);
-        Disposable disposable = RxCallbackScheduler.scheduleBaseResponse(BasePersistence.persistAfterFetch(
+        Disposable disposable = RxCallbackScheduler.scheduleBaseResponse(BasePersistence.persistAsSingle(
                 BasePersistence.createBaseRequester(null, (Void) -> commonInfoService.getLoginInfo()),
                 CommonInfoPersistenceHelper.createLoginPersister()), callback);
         SubscriptionManager.getInstance().add(scope.owner(), disposable);
@@ -268,7 +269,7 @@ public final class CommonInfoCallerImpl implements CommonInfoCaller {
 
     @Override
     public LoginInfoData getLoginInfoSync() throws NzBaseException {
-        return RxCallbackScheduler.blockingGetData(BasePersistence.persistAfterFetch(
+        return RxCallbackScheduler.blockingGetData(BasePersistence.persistAsSingle(
                 BasePersistence.createBaseRequester(null, (Void) -> commonInfoService.getLoginInfo()),
                 CommonInfoPersistenceHelper.createLoginPersister()));
     }
@@ -287,7 +288,7 @@ public final class CommonInfoCallerImpl implements CommonInfoCaller {
     }
 
     @Override
-    public long getTeacherListsAllAsync(RequestScope scope, TeacherListRequest request, RequestCallback<List<TeacherData>> callback) {
+    public long getTeacherListsAllAsync(RequestScope scope, TeacherListRequest request, RequestCallback<GetPageResult> callback) {
         CallerUtil.assertCurrent(request);
         CallerUtil.assertScope(scope);
         Disposable disposable = RxCallbackScheduler.schedule(BasePagePersistence.persistAllListsAsSingle(
@@ -299,9 +300,9 @@ public final class CommonInfoCallerImpl implements CommonInfoCaller {
     }
 
     @Override
-    public List<TeacherData> getTeacherListsAllSync(TeacherListRequest request) throws NzBaseException {
+    public GetPageResult getTeacherListsAllSync(TeacherListRequest request) throws NzBaseException {
         CallerUtil.assertCurrent(request);
-        return RxCallbackScheduler.blockingGet(BasePagePersistence.persistAllListsAsSingle(
+        return RxCallbackScheduler.blocking(BasePagePersistence.persistAllListsAsSingle(
                 CommonInfoPersistenceHelper.createTeacherListPreparer(),
                 CommonInfoPersistenceHelper.createTeacherListRequester(request, req -> commonInfoService.getTeacherList(req)),
                 CommonInfoPersistenceHelper.createTeacherListPersister()));
@@ -325,7 +326,7 @@ public final class CommonInfoCallerImpl implements CommonInfoCaller {
     }
 
     @Override
-    public long getStudentPagesAllAsync(RequestScope scope, StudentPageRequest request, RequestCallback<List<StudentData>> callback) {
+    public long getStudentPagesAllAsync(RequestScope scope, StudentPageRequest request, RequestCallback<GetPageResult> callback) {
         CallerUtil.assertCurrent(request);
         CallerUtil.assertScope(scope);
         Disposable disposable = RxCallbackScheduler.schedule(BasePagePersistence.persistAllPagesAsSingle(
@@ -337,9 +338,9 @@ public final class CommonInfoCallerImpl implements CommonInfoCaller {
     }
 
     @Override
-    public List<StudentData> getStudentPagesAllSync(StudentPageRequest request) throws NzBaseException {
+    public GetPageResult getStudentPagesAllSync(StudentPageRequest request) throws NzBaseException {
         CallerUtil.assertCurrent(request);
-        return RxCallbackScheduler.blockingGet(BasePagePersistence.persistAllPagesAsSingle(
+        return RxCallbackScheduler.blocking(BasePagePersistence.persistAllPagesAsSingle(
                 CommonInfoPersistenceHelper.createStudentPagePreparer(),
                 CommonInfoPersistenceHelper.createStudentPageRequester(request, req -> commonInfoService.getStudentPage(req)),
                 CommonInfoPersistenceHelper.createStudentPagePersister()));
@@ -365,7 +366,7 @@ public final class CommonInfoCallerImpl implements CommonInfoCaller {
     @Override
     public long getDictListAsync(RequestScope scope, DictRequest request, RequestCallback<List<DictData>> callback) {
         CallerUtil.assertScope(scope);
-        Disposable disposable = RxCallbackScheduler.scheduleBaseResponse(BasePersistence.persistAfterFetch(
+        Disposable disposable = RxCallbackScheduler.scheduleBaseResponse(BasePersistence.persistAsSingle(
                 CommonInfoPersistenceHelper.createDictListPreparer(request.getDictId()),
                 BasePersistence.createBaseRequester(request, req -> commonInfoService.getDictList(req)),
                 CommonInfoPersistenceHelper.createDictListPersister()), callback);
@@ -375,7 +376,7 @@ public final class CommonInfoCallerImpl implements CommonInfoCaller {
 
     @Override
     public List<DictData> getDictListSync(DictRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGetData(BasePersistence.persistAfterFetch(
+        return RxCallbackScheduler.blockingGetData(BasePersistence.persistAsSingle(
                 CommonInfoPersistenceHelper.createDictListPreparer(request.getDictId()),
                 BasePersistence.createBaseRequester(request, req -> commonInfoService.getDictList(req)),
                 CommonInfoPersistenceHelper.createDictListPersister()));

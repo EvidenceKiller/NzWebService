@@ -10,19 +10,14 @@ import com.adl.service.web.request.SceneListRequest;
 import com.adl.service.web.request.SportSkuDetailRequest;
 import com.adl.service.web.request.SportSkuPageRequest;
 import com.adl.service.web.request.UploadDeviceNameRequest;
-import com.adl.service.web.request.WikiDetailRequest;
-import com.adl.service.web.request.WikiPageRequest;
-import com.adl.service.web.request.WikiTypePageRequest;
 import com.adl.service.web.response.BannerDetailData;
 import com.adl.service.web.response.BasePageData;
 import com.adl.service.web.response.DeviceFocusData;
 import com.adl.service.web.response.DictMapData;
 import com.adl.service.web.response.SceneData;
+import com.adl.service.web.response.GetPageResult;
 import com.adl.service.web.response.SportSkuDetailData;
 import com.adl.service.web.response.SportSkuData;
-import com.adl.service.web.response.WikiData;
-import com.adl.service.web.response.WikiDetailData;
-import com.adl.service.web.response.WikiTypeData;
 
 import java.util.List;
 import java.util.Map;
@@ -46,9 +41,9 @@ public interface OperationCaller {
      */
     List<BannerDetailData> getBannerDetailListSync(BannerDetailListRequest request) throws NzBaseException;
 
-    long getSportSkuPagesAllAsync(RequestScope scope, SportSkuPageRequest request, RequestCallback<List<SportSkuData>> callback);
+    long getSportSkuPagesAllAsync(RequestScope scope, SportSkuPageRequest request, RequestCallback<GetPageResult> callback);
 
-    List<SportSkuData> getSportSkuPagesAllSync(SportSkuPageRequest request) throws NzBaseException;
+    GetPageResult getSportSkuPagesAllSync(SportSkuPageRequest request) throws NzBaseException;
 
     /**
      * 获取项目库列表

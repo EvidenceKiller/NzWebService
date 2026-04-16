@@ -17,6 +17,7 @@ import com.adl.service.web.response.DictData;
 import com.adl.service.web.response.GradeChineseNameData;
 import com.adl.service.web.response.GradeTreeData;
 import com.adl.service.web.response.LoginInfoData;
+import com.adl.service.web.response.GetPageResult;
 import com.adl.service.web.response.StudentData;
 import com.adl.service.web.response.TeacherData;
 
@@ -125,9 +126,9 @@ public interface CommonInfoCaller {
      */
     List<AcayearData> getAcayearListSync() throws NzBaseException;
 
-    long getTeacherListsAllAsync(RequestScope scope, TeacherListRequest request, RequestCallback<List<TeacherData>> callback);
+    long getTeacherListsAllAsync(RequestScope scope, TeacherListRequest request, RequestCallback<GetPageResult> callback);
 
-    List<TeacherData> getTeacherListsAllSync(TeacherListRequest request) throws NzBaseException;
+    GetPageResult getTeacherListsAllSync(TeacherListRequest request) throws NzBaseException;
 
     /**
      * 获取教师用户列表（全量）
@@ -141,9 +142,9 @@ public interface CommonInfoCaller {
      */
     List<TeacherData> getTeacherListSync(TeacherListRequest request) throws NzBaseException;
 
-    long getStudentPagesAllAsync(RequestScope scope, StudentPageRequest request, RequestCallback<List<StudentData>> callback);
+    long getStudentPagesAllAsync(RequestScope scope, StudentPageRequest request, RequestCallback<GetPageResult> callback);
 
-    List<StudentData> getStudentPagesAllSync(StudentPageRequest request) throws NzBaseException;
+    GetPageResult getStudentPagesAllSync(StudentPageRequest request) throws NzBaseException;
 
     /**
      * 获取学生增量数据
