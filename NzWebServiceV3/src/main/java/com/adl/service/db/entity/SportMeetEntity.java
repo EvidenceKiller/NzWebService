@@ -1,12 +1,10 @@
 package com.adl.service.db.entity;
 
-import com.adl.service.db.converter.ListClassSimpleDataConverter;
+import com.adl.service.db.converter.ListClassSimpleEntityConverter;
 import com.adl.service.db.converter.ListSportMeetGroupTeamEntityConverter;
-import com.adl.service.db.converter.ListSportMeetSimpleClassDataConverter;
+import com.adl.service.db.converter.ListSportMeetSimpleClassEntityConverter;
 import com.adl.service.db.converter.ListSportMeetSkuEntityConverter;
-import com.adl.service.web.response.ClassSimpleData;
 import com.adl.service.web.response.SportMeetData;
-import com.adl.service.web.response.SportMeetSimpleClassData;
 
 import java.io.Serializable;
 import java.util.List;
@@ -22,10 +20,12 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @Entity(tableName = "_sport_meet")
-@TypeConverters(value = {ListSportMeetSkuEntityConverter.class,
+@TypeConverters(value = {
+        ListSportMeetSkuEntityConverter.class,
         ListSportMeetGroupTeamEntityConverter.class,
-        ListSportMeetSimpleClassDataConverter.class,
-        ListClassSimpleDataConverter.class})
+        ListSportMeetSimpleClassEntityConverter.class,
+        ListClassSimpleEntityConverter.class
+})
 public final class SportMeetEntity implements Serializable {
 
     @PrimaryKey(autoGenerate = true)
@@ -177,7 +177,7 @@ public final class SportMeetEntity implements Serializable {
      * 班级列表
      */
     @ColumnInfo(name = "_class_list")
-    private List<SportMeetSimpleClassData> classList;
+    private List<SportMeetSimpleClassEntity> classList;
 
     /**
      * 状态
@@ -201,7 +201,7 @@ public final class SportMeetEntity implements Serializable {
      * 班级
      */
     @ColumnInfo(name = "_classes")
-    private List<ClassSimpleData> classes;
+    private List<ClassSimpleEntity> classes;
 
     /**
      * 机构名称
@@ -260,30 +260,92 @@ public final class SportMeetEntity implements Serializable {
         entity.setAcayearSemCode(data.getAcayearSemCode());
         entity.setSportStyleImages(data.getSportStyleImages());
         if (data.getSkuList() != null) {
-            List<SportMeetSkuEntity> skuEntities = data.getSkuList().stream()
-                    .map(sku -> SportMeetSkuEntity.convertToEntity(sku))
-                    .collect(Collectors.toList());
-            entity.setSkuList(skuEntities);
+            entity.setSkuList(data.getSkuList().stream()
+                    .map(SportMeetSkuEntity::convertToEntity)
+                    .collect(Collectors.toList()));
         }
-        // classList 可能需要特殊处理，这里假设直接对应或忽略，视具体业务而定
-        entity.setClassList(data.getClassList());
+        if (data.getClassList() != null) {
+            entity.setClassList(data.getClassList().stream()
+                    .map(SportMeetSimpleClassEntity::convertToEntity)
+                    .collect(Collectors.toList()));
+        }
         entity.setState(data.getState());
         entity.setApplyState(data.getApplyState());
         entity.setClassIds(data.getClassIds());
-        entity.setClasses(data.getClasses());
+        if (data.getClasses() != null) {
+            entity.setClasses(data.getClasses().stream()
+                    .map(ClassSimpleEntity::convertToEntity)
+                    .collect(Collectors.toList()));
+        }
         entity.setOrgName(data.getOrgName());
         entity.setApplyUserCount(data.getApplyUserCount());
         entity.setPlayersNum(data.getPlayersNum());
         // password 和 groupTeams 在 SportMeetData 中未明确展示 getter，若存在则设置
         entity.setPassword(data.getPassword());
         if (data.getGroupTeams() != null) {
-            List<SportMeetGroupTeamEntity> teamEntities = data.getGroupTeams().stream()
+            entity.setGroupTeams(data.getGroupTeams().stream()
                     .map(team -> SportMeetGroupTeamEntity.convertToEntity(team, appCode))
-                    .collect(Collectors.toList());
-            entity.setGroupTeams(teamEntities);
+                    .collect(Collectors.toList()));
         }
         entity.setEnableSort(data.getEnableSort());
         entity.setModuleStr(data.getModuleStr());
         return entity;
+    }
+
+    public static SportMeetData convertToData(SportMeetEntity entity) {
+        if (entity == null) {
+            return null;
+        }
+        SportMeetData data = new SportMeetData();
+        data.setEnableSort(entity.getEnableSort());
+        data.setModuleStr(entity.getModuleStr());
+        data.setId(entity.getId());
+        data.setOrgId(entity.getOrgId());
+        data.setMeetTitle(entity.getMeetTitle());
+        data.setStartTime(entity.getStartTime());
+        data.setEndTime(entity.getEndTime());
+        data.setApplyStartTime(entity.getApplyStartTime());
+        data.setApplyEndTime(entity.getApplyEndTime());
+        data.setCreatorNum(entity.getCreatorNum());
+        data.setFileUrl(entity.getFileUrl());
+        data.setFileName(entity.getFileName());
+        data.setAppCodes(entity.getAppCodes());
+        data.setDelFlag(entity.getDelFlag());
+        data.setCreateTime(entity.getCreateTime());
+        data.setUpdateTime(entity.getUpdateTime());
+        data.setLimitTeamNum(entity.getLimitTeamNum());
+        data.setLimitPersonNum(entity.getLimitPersonNum());
+        data.setMeetSubtitle(entity.getMeetSubtitle());
+        data.setMeetCover(entity.getMeetCover());
+        data.setAcayearSemCode(entity.getAcayearSemCode());
+        data.setSportStyleImages(entity.getSportStyleImages());
+        if (entity.getSkuList() != null) {
+            data.setSkuList(entity.getSkuList().stream()
+                    .map(SportMeetSkuEntity::convertToData)
+                    .collect(Collectors.toList()));
+        }
+        if (entity.getClassList() != null) {
+            data.setClassList(entity.getClassList().stream()
+                    .map(SportMeetSimpleClassEntity::convertToData)
+                    .collect(Collectors.toList()));
+        }
+        data.setState(entity.getState());
+        data.setApplyState(entity.getApplyState());
+        data.setClassIds(entity.getClassIds());
+        if (entity.getClasses() != null) {
+            data.setClasses(entity.getClasses().stream()
+                    .map(ClassSimpleEntity::convertToData)
+                    .collect(Collectors.toList()));
+        }
+        data.setOrgName(entity.getOrgName());
+        data.setApplyUserCount(entity.getApplyUserCount());
+        data.setPlayersNum(entity.getPlayersNum());
+        data.setPassword(entity.getPassword());
+        if (entity.getGroupTeams() != null) {
+            data.setGroupTeams(entity.getGroupTeams().stream()
+                    .map(SportMeetGroupTeamEntity::convertToData)
+                    .collect(Collectors.toList()));
+        }
+        return data;
     }
 }

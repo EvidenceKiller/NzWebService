@@ -81,7 +81,6 @@ public class SportMeetGroupTeamEntity implements Serializable {
         }
         SportMeetGroupTeamEntity entity = new SportMeetGroupTeamEntity();
         entity.setAppCode(appCode);
-        // 假设 data 中有对应的 getter 方法，根据字段名进行映射
         entity.setMeetId(data.getMeetId());
         entity.setTeamUnitCode(data.getTeamUnitCode());
         entity.setTeamUnitName(data.getTeamUnitName());
@@ -96,12 +95,35 @@ public class SportMeetGroupTeamEntity implements Serializable {
         
         // 转换详情列表
         if (data.getDetails() != null && !data.getDetails().isEmpty()) {
-            List<SportMeetGroupDetailEntity> detailEntities = data.getDetails().stream()
+            entity.setDetails(data.getDetails().stream()
                     .map(detailData -> SportMeetGroupDetailEntity.convertToEntity(detailData, appCode))
-                    .collect(Collectors.toList());
-            entity.setDetails(detailEntities);
+                    .collect(Collectors.toList()));
         }
         
         return entity;
+    }
+
+    public static SportMeetGroupTeamData convertToData(SportMeetGroupTeamEntity entity) {
+        if (entity == null) {
+            return null;
+        }
+        SportMeetGroupTeamData data = new SportMeetGroupTeamData();
+        data.setMeetId(entity.getMeetId());
+        data.setTeamUnitCode(entity.getTeamUnitCode());
+        data.setTeamUnitName(entity.getTeamUnitName());
+        data.setSportSkuName(entity.getSportSkuName());
+        data.setSportSkuId(entity.getSportSkuId());
+        data.setMeetSportSkuId(entity.getMeetSportSkuId());
+        data.setTeamNum(entity.getTeamNum());
+        data.setNumber(entity.getNumber());
+        data.setCompetitionStatus(entity.getCompetitionStatus());
+        data.setCompetitionType(entity.getCompetitionType());
+        data.setCompetitionRound(entity.getCompetitionRound());
+        if (entity.getDetails() != null) {
+            data.setDetails(entity.getDetails().stream()
+                    .map(SportMeetGroupDetailEntity::convertToData)
+                    .collect(Collectors.toList()));
+        }
+        return data;
     }
 }

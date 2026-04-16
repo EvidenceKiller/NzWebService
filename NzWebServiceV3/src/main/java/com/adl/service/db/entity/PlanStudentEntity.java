@@ -1,7 +1,6 @@
 package com.adl.service.db.entity;
 
 import com.adl.service.db.converter.ListPlanSportEntityConverter;
-import com.adl.service.web.response.PlanSportData;
 import com.adl.service.web.response.PlanStudentData;
 
 import java.io.Serializable;
@@ -14,9 +13,7 @@ import androidx.room.Index;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 @Data
 @NoArgsConstructor
@@ -172,10 +169,9 @@ public final class PlanStudentEntity implements Serializable {
         entity.setGradeName(data.getGradeName());
         entity.setPlanId(data.getPlanId());
         if (data.getProjects() != null) {
-            List<PlanSportEntity> projectEntities = data.getProjects().stream()
+            entity.setProjects(data.getProjects().stream()
                     .map(PlanSportEntity::convertToEntity)
-                    .collect(Collectors.toList());
-            entity.setProjects(projectEntities);
+                    .collect(Collectors.toList()));
         }
         entity.setSex(data.getSex());
         entity.setStudentCode(data.getStudentCode());
@@ -192,5 +188,39 @@ public final class PlanStudentEntity implements Serializable {
         entity.setFirstLetterPinYin(data.getFirstLetterPinYin());
         entity.setMajorId(data.getMajorId());
         return entity;
+    }
+
+    public static PlanStudentData convertToData(PlanStudentEntity entity) {
+        if (entity == null) {
+            return null;
+        }
+        PlanStudentData data = new PlanStudentData();
+        data.setAccountId(entity.getAccountId());
+        data.setAdmissionNum(entity.getAdmissionNum());
+        data.setClassId(entity.getClassId());
+        data.setClassName(entity.getClassName());
+        data.setGradeId(entity.getGradeId());
+        data.setGradeName(entity.getGradeName());
+        data.setPlanId(entity.getPlanId());
+        if (entity.getProjects() != null) {
+            data.setProjects(entity.getProjects().stream()
+                    .map(PlanSportEntity::convertToData)
+                    .collect(Collectors.toList()));
+        }
+        data.setSex(entity.getSex());
+        data.setStudentCode(entity.getStudentCode());
+        data.setStudentName(entity.getStudentName());
+        data.setClassNum(entity.getClassNum());
+        data.setGradeNum(entity.getGradeNum());
+        data.setStageId(entity.getStageId());
+        data.setStudentNum(entity.getStudentNum());
+        data.setAccountNamePinYin(entity.getAccountNamePinYin());
+        data.setCollegeId(entity.getCollegeId());
+        data.setCollegeName(entity.getCollegeName());
+        data.setFacultyId(entity.getFacultyId());
+        data.setFacultyName(entity.getFacultyName());
+        data.setFirstLetterPinYin(entity.getFirstLetterPinYin());
+        data.setMajorId(entity.getMajorId());
+        return data;
     }
 }

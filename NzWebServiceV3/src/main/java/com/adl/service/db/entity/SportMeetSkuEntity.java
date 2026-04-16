@@ -1,16 +1,12 @@
 package com.adl.service.db.entity;
 
-import com.adl.service.internal.StrictJsonDeserializer;
 import com.adl.service.web.response.SportMeetSkuData;
-import com.google.gson.annotations.JsonAdapter;
 
 import java.io.Serializable;
 import java.util.List;
 
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 @Data
 @NoArgsConstructor
@@ -85,5 +81,34 @@ public final class SportMeetSkuEntity implements Serializable {
         entity.setCompetitionNum(data.getCompetitionNum());
         entity.setAppCodes(data.getAppCodes());
         return entity;
+    }
+
+    public static SportMeetSkuData convertToData(SportMeetSkuEntity entity) {
+        if (entity == null) {
+            return null;
+        }
+        SportMeetSkuData data = new SportMeetSkuData();
+        data.setId(entity.getId());
+        data.setMeetId(entity.getMeetId());
+        data.setSportSkuId(entity.getSportSkuId());
+        data.setSportSkuName(entity.getSportSkuName());
+        data.setSportTypeName(entity.getSportTypeName());
+        data.setAccuracyMethod(entity.getAccuracyMethod());
+        data.setAccuracyType(entity.getAccuracyType());
+        data.setApplyUserCount(entity.getApplyUserCount());
+        data.setCompetitionType(entity.getCompetitionType());
+        data.setCoverUrl(entity.getCoverUrl());
+        data.setEndType(entity.getEndType());
+        data.setEndValue(entity.getEndValue());
+        data.setEndRemark(entity.getEndRemark());
+        data.setMeasureMode(entity.getMeasureMode());
+        data.setMeasureUnitCode(entity.getMeasureUnitCode());
+        data.setMeetSkuSort(entity.getMeetSkuSort());
+        data.setSettingId(entity.getSettingId());
+        data.setSportPriority(entity.getSportPriority());
+        data.setTestCount(entity.getTestCount());
+        data.setCompetitionNum(entity.getCompetitionNum());
+        data.setAppCodes(entity.getAppCodes());
+        return data;
     }
 }

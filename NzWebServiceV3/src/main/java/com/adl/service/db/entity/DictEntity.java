@@ -115,4 +115,26 @@ public final class DictEntity {
         entity.setModuleStr(dictData.getModuleStr());
         return entity;
     }
+
+    public static DictData convertToData(DictEntity entity) {
+        if (entity == null) {
+            return null;
+        }
+        DictData data = new DictData();
+        data.setEnableSort(entity.getEnableSort());
+        data.setModuleStr(entity.getModuleStr());
+        data.setId(entity.getId());
+        data.setDictCode(entity.getDictCode());
+        data.setDictValue(entity.getDictValue());
+        data.setDictLabel(entity.getDictLabel());
+        data.setSortNum(entity.getSortNum());
+        data.setDefaultFlag(entity.getDefaultFlag());
+        data.setExtData(entity.getExtData());
+        data.setRemark(entity.getRemark());
+        data.setLang(entity.getLang());
+        data.setCreateTime(entity.getCreateTime());
+        data.setUpdateTime(entity.getUpdateTime());
+        data.setDataType(entity.getDataType());
+        return data;
+    }
 }

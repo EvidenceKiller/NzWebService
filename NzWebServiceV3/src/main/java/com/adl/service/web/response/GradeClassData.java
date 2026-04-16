@@ -4,11 +4,11 @@ import com.adl.service.internal.StrictJsonDeserializer;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 
-import lombok.Getter;
-import lombok.ToString;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Getter
-@ToString
+@Data
+@NoArgsConstructor
 @JsonAdapter(StrictJsonDeserializer.class)
 class GradeClassData {
     /**

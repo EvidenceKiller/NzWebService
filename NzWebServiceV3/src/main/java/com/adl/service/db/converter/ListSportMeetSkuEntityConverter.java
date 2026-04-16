@@ -1,7 +1,6 @@
 package com.adl.service.db.converter;
 
 import com.adl.service.db.entity.SportMeetSkuEntity;
-import com.adl.service.web.response.SportProjectData;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 

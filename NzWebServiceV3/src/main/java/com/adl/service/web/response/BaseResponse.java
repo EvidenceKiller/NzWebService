@@ -1,7 +1,7 @@
 package com.adl.service.web.response;
 
-import lombok.Getter;
-import lombok.ToString;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * 统一返回结构
@@ -16,8 +16,8 @@ import lombok.ToString;
  *
  * @param <T> 业务数据类型
  */
-@Getter
-@ToString
+@Data
+@NoArgsConstructor
 public final class BaseResponse<T> {
 
     /**

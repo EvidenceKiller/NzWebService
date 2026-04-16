@@ -1,13 +1,13 @@
 package com.adl.service.db.entity;
 
+import com.adl.service.db.converter.ListSportProjectEntityConverter;
 import com.adl.service.web.response.PlanData;
-import com.adl.service.web.response.SportProjectData;
-import com.adl.service.db.converter.ListSportProjectDataConverter;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
@@ -19,7 +19,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @Entity(tableName = "_sport_plan")
-@TypeConverters(value = {ListSportProjectDataConverter.class})
+@TypeConverters(value = {ListSportProjectEntityConverter.class})
 public final class PlanEntity implements Serializable {
     /**
      * 创建时间
@@ -57,7 +57,7 @@ public final class PlanEntity implements Serializable {
      * 运动项目列表
      */
     @ColumnInfo(name = "_sport_projects")
-    private List<SportProjectData> sportProjects;
+    private List<SportProjectEntity> sportProjects;
 
     /**
      * 标准id
@@ -123,7 +123,11 @@ public final class PlanEntity implements Serializable {
         entity.setEndTime(data.getEndTime());
         entity.setPlanId(data.getPlanId());
         entity.setPlanName(data.getPlanName());
-        entity.setSportProjects(data.getSportProjects());
+        if (data.getSportProjects() != null) {
+            entity.setSportProjects(data.getSportProjects().stream()
+                    .map(SportProjectEntity::convertToEntity)
+                    .collect(java.util.stream.Collectors.toList()));
+        }
         entity.setStandardId(data.getStandardId());
         entity.setStandardName(data.getStandardName());
         entity.setStandardType(data.getStandardType());
@@ -134,5 +138,32 @@ public final class PlanEntity implements Serializable {
         entity.setFinishNum(data.getFinishNum());
         entity.setSelfTest(data.getSelfTest());
         return entity;
+    }
+
+    public static PlanData convertToData(PlanEntity entity) {
+        if (entity == null) {
+            return null;
+        }
+        PlanData data = new PlanData();
+        data.setCreateTime(entity.getCreateTime());
+        data.setCreatorName(entity.getCreatorName());
+        data.setEndTime(entity.getEndTime());
+        data.setPlanId(entity.getPlanId());
+        data.setPlanName(entity.getPlanName());
+        if (entity.getSportProjects() != null) {
+            data.setSportProjects(entity.getSportProjects().stream()
+                    .map(SportProjectEntity::convertToData)
+                    .collect(Collectors.toList()));
+        }
+        data.setStandardId(entity.getStandardId());
+        data.setStandardName(entity.getStandardName());
+        data.setStandardType(entity.getStandardType());
+        data.setStartTime(entity.getStartTime());
+        data.setStatus(entity.getStatus());
+        data.setStudentNum(entity.getStudentNum());
+        data.setArrangeNum(entity.getArrangeNum());
+        data.setFinishNum(entity.getFinishNum());
+        data.setSelfTest(entity.getSelfTest());
+        return data;
     }
 }

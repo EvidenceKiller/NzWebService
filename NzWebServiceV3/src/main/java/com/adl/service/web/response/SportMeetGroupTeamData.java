@@ -9,11 +9,11 @@ import java.util.List;
 
 import androidx.room.ColumnInfo;
 import androidx.room.PrimaryKey;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Getter
-@ToString
+@Data
+@NoArgsConstructor
 @JsonAdapter(StrictJsonDeserializer.class)
 public class SportMeetGroupTeamData {
     //  运动会id【手动添加】

@@ -10,11 +10,11 @@ import java.io.Serializable;
 import java.util.List;
 
 import androidx.room.PrimaryKey;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Getter
-@ToString
+@Data
+@NoArgsConstructor
 @JsonAdapter(StrictJsonDeserializer.class)
 public final class PlanData implements Serializable {
     /**

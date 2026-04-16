@@ -34,4 +34,17 @@ public final class SportSkuSimpleEntity {
         entity.setSettlementType(data.getSettlementType());
         return entity;
     }
+
+    public static SportSkuSimpleData convertToData(SportSkuSimpleEntity entity) {
+        if (entity == null) {
+            return null;
+        }
+        SportSkuSimpleData data = new SportSkuSimpleData();
+        data.setSportSkuId(entity.getSportSkuId());
+        data.setSportSkuName(entity.getSportSkuName());
+        data.setCreateTime(entity.getCreateTime());
+        data.setLevelType(entity.getLevelType());
+        data.setSettlementType(entity.getSettlementType());
+        return data;
+    }
 }

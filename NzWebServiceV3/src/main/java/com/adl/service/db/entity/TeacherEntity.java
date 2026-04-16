@@ -1,7 +1,6 @@
 package com.adl.service.db.entity;
 
-import com.adl.service.db.converter.ListFaceDataConverter;
-import com.adl.service.web.response.FaceData;
+import com.adl.service.db.converter.ListFaceEntityConverter;
 import com.adl.service.web.response.TeacherData;
 
 import org.jetbrains.annotations.NotNull;
@@ -18,7 +17,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @Entity(tableName = "_teacher")
-@TypeConverters(value = {ListFaceDataConverter.class})
+@TypeConverters(value = {ListFaceEntityConverter.class})
 public final class TeacherEntity {
 
     @ColumnInfo(name = "_user_id")
@@ -75,7 +74,7 @@ public final class TeacherEntity {
     private Boolean delFlag;
 
     @ColumnInfo(name = "_face_data_list")
-    private List<FaceData> faceDataList;
+    private List<FaceEntity> faceDataList;
 
     public static TeacherEntity convertToEntity(TeacherData teacherData) {
         if (teacherData == null) {
@@ -99,7 +98,11 @@ public final class TeacherEntity {
         entity.setAvatarFlag(teacherData.getAvatarFlag());
         entity.setRecordFlag(teacherData.getRecordFlag());
         entity.setDelFlag(teacherData.getDelFlag());
-        entity.setFaceDataList(teacherData.getFaceDataList());
+        if (teacherData.getFaceDataList() != null) {
+            entity.setFaceDataList(teacherData.getFaceDataList().stream()
+                    .map(FaceEntity::convertToEntity)
+                    .collect(java.util.stream.Collectors.toList()));
+        }
         return entity;
     }
 
@@ -125,7 +128,11 @@ public final class TeacherEntity {
         data.setAvatarFlag(entity.getAvatarFlag());
         data.setRecordFlag(entity.getRecordFlag());
         data.setDelFlag(entity.getDelFlag());
-        data.setFaceDataList(entity.getFaceDataList());
+        if (entity.getFaceDataList() != null) {
+            data.setFaceDataList(entity.getFaceDataList().stream()
+                    .map(FaceEntity::convertToData)
+                    .collect(java.util.stream.Collectors.toList()));
+        }
         return data;
     }
 }

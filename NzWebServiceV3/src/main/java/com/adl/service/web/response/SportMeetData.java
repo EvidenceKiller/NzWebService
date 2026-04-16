@@ -10,11 +10,10 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import lombok.Data;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.NoArgsConstructor;
 
-@Getter
-@ToString
+@Data
+@NoArgsConstructor
 @JsonAdapter(StrictJsonDeserializer.class)
 public final class SportMeetData {
     /**

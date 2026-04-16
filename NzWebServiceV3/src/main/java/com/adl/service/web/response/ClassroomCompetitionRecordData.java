@@ -6,8 +6,8 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-import lombok.Getter;
-import lombok.ToString;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 
 /**
@@ -16,8 +16,8 @@ import lombok.ToString;
  * Date : 2026/4/7
  * Describe : 定义接口响应数据结构
  */
-@Getter
-@ToString
+@Data
+@NoArgsConstructor
 @JsonAdapter(StrictJsonDeserializer.class)
 public final class ClassroomCompetitionRecordData {
     private String orgId;

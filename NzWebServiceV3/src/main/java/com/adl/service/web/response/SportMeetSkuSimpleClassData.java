@@ -7,8 +7,10 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 @JsonAdapter(StrictJsonDeserializer.class)
 public final class SportMeetSkuSimpleClassData {
     @SerializedName("accounts")

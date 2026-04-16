@@ -76,4 +76,34 @@ public final class SceneEntity implements Serializable {
         entity.setEnabled(data.getEnabled());
         return entity;
     }
+
+    public static SceneEntity convertToEntity(SceneData data) {
+        if (data == null) {
+            return null;
+        }
+        SceneEntity entity = new SceneEntity();
+        entity.setId(data.getId());
+        entity.setSceneCode(data.getSceneCode());
+        entity.setSceneName(data.getSceneName());
+        entity.setAppCodes(data.getAppCodes());
+        entity.setSceneSort(data.getSceneSort());
+        entity.setSceneType(data.getSceneType());
+        entity.setEnabled(data.getEnabled());
+        return entity;
+    }
+
+    public static SceneData convertToData(SceneEntity entity) {
+        if (entity == null) {
+            return null;
+        }
+        SceneData data = new SceneData();
+        data.setId(entity.getId());
+        data.setSceneCode(entity.getSceneCode());
+        data.setSceneName(entity.getSceneName());
+        data.setAppCodes(entity.getAppCodes());
+        data.setSceneSort(entity.getSceneSort());
+        data.setSceneType(entity.getSceneType());
+        data.setEnabled(entity.getEnabled());
+        return data;
+    }
 }

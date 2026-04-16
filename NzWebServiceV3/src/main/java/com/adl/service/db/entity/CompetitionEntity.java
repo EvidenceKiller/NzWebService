@@ -151,4 +151,30 @@ public final class CompetitionEntity {
         entity.setJoinNum(data.getJoinNum());
         return entity;
     }
+
+    public static CompetitionData convertToData(CompetitionEntity entity) {
+        if (entity == null) {
+            return null;
+        }
+        CompetitionData data = new CompetitionData();
+        data.setId(entity.getId());
+        data.setOrgId(entity.getOrgId());
+        data.setOnlineTitle(entity.getOnlineTitle());
+        data.setOnlineSubtitle(entity.getOnlineSubtitle());
+        data.setOnlineCover(entity.getOnlineCover());
+        data.setOnlineType(entity.getOnlineType());
+        data.setOrgLevel(entity.getOrgLevel());
+        data.setStartTime(entity.getStartTime());
+        data.setEndTime(entity.getEndTime());
+        data.setAppCodes(entity.getAppCodes());
+        data.setCreatorNum(entity.getCreatorNum());
+        data.setCreateTime(entity.getCreateTime());
+        data.setCompetitionEnabled(entity.getCompetitionEnabled());
+        data.setEditFlag(entity.getEditFlag());
+        data.setOrgNames(entity.getOrgNames());
+        data.setOrgType(entity.getOrgType());
+        data.setCreatorOrgName(entity.getCreatorOrgName());
+        data.setJoinNum(entity.getJoinNum());
+        return data;
+    }
 }

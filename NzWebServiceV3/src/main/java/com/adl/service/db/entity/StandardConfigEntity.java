@@ -80,16 +80,33 @@ public final class StandardConfigEntity {
         entity.setStandardType(data.getStandardType());
         entity.setEnabled(data.getEnabled());
         entity.setOrgAllFlag(data.getOrgAllFlag());
-
         if (data.getSportSkuList() != null) {
-            List<SportSkuSimpleEntity> skuEntities = data.getSportSkuList().stream()
+            entity.setSportSkuList(data.getSportSkuList().stream()
                     .map(SportSkuSimpleEntity::convertToEntity)
-                    .collect(Collectors.toList());
-            entity.setSportSkuList(skuEntities);
+                    .collect(Collectors.toList()));
         }
-
         entity.setAreaNames(data.getAreaNames());
         entity.setCreateTime(data.getCreateTime());
         return entity;
+    }
+
+    public static StandardConfigData convertToData(StandardConfigEntity entity) {
+        if (entity == null) {
+            return null;
+        }
+        StandardConfigData data = new StandardConfigData();
+        data.setStandardId(entity.getStandardId());
+        data.setStandardName(entity.getStandardName());
+        data.setStandardType(entity.getStandardType());
+        data.setEnabled(entity.getEnabled());
+        data.setOrgAllFlag(entity.getOrgAllFlag());
+        if (entity.getSportSkuList() != null) {
+            data.setSportSkuList(entity.getSportSkuList().stream()
+                    .map(SportSkuSimpleEntity::convertToData)
+                    .collect(Collectors.toList()));
+        }
+        data.setAreaNames(entity.getAreaNames());
+        data.setCreateTime(entity.getCreateTime());
+        return data;
     }
 }

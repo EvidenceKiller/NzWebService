@@ -1,9 +1,7 @@
 package com.adl.service.db.entity;
 
-import com.adl.service.db.converter.ListFaceDataConverter;
-import com.adl.service.db.converter.ListSportSkuDescDataConverter;
+import com.adl.service.db.converter.ListSportSkuDescEntityConverter;
 import com.adl.service.web.response.SportSkuData;
-import com.adl.service.web.response.SportSkuDescData;
 
 import java.util.List;
 
@@ -15,7 +13,7 @@ import lombok.Data;
 
 @Data
 @Entity(tableName = "_sport_sku")
-@TypeConverters(value = {ListSportSkuDescDataConverter.class})
+@TypeConverters(value = {ListSportSkuDescEntityConverter.class})
 public final class SportSkuEntity {
 
     @PrimaryKey(autoGenerate = true)
@@ -199,7 +197,7 @@ public final class SportSkuEntity {
      * sku标识码 {运动单项code} + {四位顺序号}
      */
     @ColumnInfo(name = "_sport_sku_desc")
-    private List<SportSkuDescData> sportSkuDesc;
+    private List<SportSkuDescEntity> sportSkuDesc;
 
     /**
      * 运动类型代码 参考字典编码：adl_sport_type
@@ -302,7 +300,11 @@ public final class SportSkuEntity {
         entity.setSportNatureCodes(data.getSportNatureCodes());
         entity.setSportNatureNames(data.getSportNatureNames());
         entity.setSportPriority(data.getSportPriority());
-        entity.setSportSkuDesc(data.getSportSkuDesc());
+        if (data.getSportSkuDesc() != null) {
+            entity.setSportSkuDesc(data.getSportSkuDesc().stream()
+                    .map(SportSkuDescEntity::convertToEntity)
+                    .collect(java.util.stream.Collectors.toList()));
+        }
         entity.setSportSkuId(data.getSportSkuId());
         entity.setSportSkuName(data.getSportSkuName());
         entity.setSportTypeCode(data.getSportTypeCode());
@@ -315,5 +317,57 @@ public final class SportSkuEntity {
         entity.setVideoUrl(data.getVideoUrl());
         entity.setSceneSkuType(data.getSceneSkuType());
         return entity;
+    }
+
+    public static SportSkuData convertToData(SportSkuEntity entity) {
+        if (entity == null) {
+            return null;
+        }
+        SportSkuData data = new SportSkuData();
+        data.setAccuracyMethod(entity.getAccuracyMethod());
+        data.setAccuracyType(entity.getAccuracyType());
+        data.setActionVideoUrl(entity.getActionVideoUrl());
+        data.setAppCodes(entity.getAppCodes());
+        data.setAudioName(entity.getAudioName());
+        data.setAudioUrl(entity.getAudioUrl());
+        data.setCoverUrl(entity.getCoverUrl());
+        data.setDelFlag(entity.getDelFlag());
+        data.setEnabled(entity.getEnabled());
+        data.setEndRemark(entity.getEndRemark());
+        data.setEndType(entity.getEndType());
+        data.setEndValue(entity.getEndValue());
+        data.setIconUrl(entity.getIconUrl());
+        data.setMeasureMode(entity.getMeasureMode());
+        data.setMeasureUnitCode(entity.getMeasureUnitCode());
+        data.setQualities(entity.getQualities());
+        data.setQosTemplateName(entity.getQosTemplateName());
+        data.setRangeEndValue(entity.getRangeEndValue());
+        data.setRangeStartValue(entity.getRangeStartValue());
+        data.setRemark(entity.getRemark());
+        data.setSceneCode(entity.getSceneCode());
+        data.setSceneSkuld(entity.getSceneSkuld());
+        data.setSceneSkuSort(entity.getSceneSkuSort());
+        data.setSportItemCode(entity.getSportItemCode());
+        data.setSportItemName(entity.getSportItemName());
+        data.setSportNatureCodes(entity.getSportNatureCodes());
+        data.setSportNatureNames(entity.getSportNatureNames());
+        data.setSportPriority(entity.getSportPriority());
+        if (entity.getSportSkuDesc() != null) {
+            data.setSportSkuDesc(entity.getSportSkuDesc().stream()
+                    .map(SportSkuDescEntity::convertToData)
+                    .collect(java.util.stream.Collectors.toList()));
+        }
+        data.setSportSkuId(entity.getSportSkuId());
+        data.setSportSkuName(entity.getSportSkuName());
+        data.setSportTypeCode(entity.getSportTypeCode());
+        data.setSportTypeName(entity.getSportTypeName());
+        data.setTestCount(entity.getTestCount());
+        data.setTestTemplateName(entity.getTestTemplateName());
+        data.setTestTemplateUrl(entity.getTestTemplateUrl());
+        data.setTxVid(entity.getTxVid());
+        data.setVideoCoverUrl(entity.getVideoCoverUrl());
+        data.setVideoUrl(entity.getVideoUrl());
+        data.setSceneSkuType(entity.getSceneSkuType());
+        return data;
     }
 }

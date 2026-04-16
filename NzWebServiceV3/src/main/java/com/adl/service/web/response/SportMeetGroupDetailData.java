@@ -6,11 +6,11 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-import lombok.Getter;
-import lombok.ToString;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Getter
-@ToString
+@Data
+@NoArgsConstructor
 @JsonAdapter(StrictJsonDeserializer.class)
 public class SportMeetGroupDetailData implements Serializable {
     //  运动会id【手动添加】

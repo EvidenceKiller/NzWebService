@@ -1,13 +1,13 @@
 package com.adl.service.db.entity;
 
-import com.adl.service.db.converter.ListFaceDataConverter;
-import com.adl.service.web.response.FaceData;
+import com.adl.service.db.converter.ListFaceEntityConverter;
 import com.adl.service.web.response.StudentData;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
@@ -20,7 +20,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @Entity(tableName = "_student", indices = {@Index(value = {"_account_id"})})
-@TypeConverters(value = {ListFaceDataConverter.class})
+@TypeConverters(value = {ListFaceEntityConverter.class})
 public class StudentEntity implements Serializable {
 
     @ColumnInfo(name = "_user_id")
@@ -188,7 +188,7 @@ public class StudentEntity implements Serializable {
     private Boolean recordFlag;
 
     @ColumnInfo(name = "_face_data_list")
-    private List<FaceData> faceDataList;
+    private List<FaceEntity> faceDataList;
 
     @ColumnInfo(name = "_account_name_pin_yin")
     private String accountNamePinYin;
@@ -254,7 +254,11 @@ public class StudentEntity implements Serializable {
         entity.setCertNum(studentData.getCertNum());
         entity.setAvatarFlag(studentData.getAvatarFlag());
         entity.setRecordFlag(studentData.getRecordFlag());
-        entity.setFaceDataList(studentData.getFaceDataList());
+        if (studentData.getFaceDataList() != null) {
+            entity.setFaceDataList(studentData.getFaceDataList().stream()
+                    .map(FaceEntity::convertToEntity)
+                    .collect(Collectors.toList()));
+        }
         entity.setAccountNamePinYin(studentData.getAccountNamePinYin());
         entity.setAccountNameFirstLetterPinYin(studentData.getAccountNameFirstLetterPinYin());
         entity.setBirthday(studentData.getBirthday());
@@ -314,7 +318,11 @@ public class StudentEntity implements Serializable {
         data.setCertNum(entity.getCertNum());
         data.setAvatarFlag(entity.getAvatarFlag());
         data.setRecordFlag(entity.getRecordFlag());
-        data.setFaceDataList(entity.getFaceDataList());
+        if (entity.getFaceDataList() != null) {
+            data.setFaceDataList(entity.getFaceDataList().stream()
+                    .map(FaceEntity::convertToData)
+                    .collect(java.util.stream.Collectors.toList()));
+        }
         data.setAccountNamePinYin(entity.getAccountNamePinYin());
         data.setAccountNameFirstLetterPinYin(entity.getAccountNameFirstLetterPinYin());
         data.setBirthday(entity.getBirthday());

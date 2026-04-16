@@ -6,14 +6,14 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-import lombok.Getter;
-import lombok.ToString;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * 账户信息（与接口文档字段对应）。
  */
-@Getter
-@ToString
+@Data
+@NoArgsConstructor
 @JsonAdapter(StrictJsonDeserializer.class)
 public final class LoginInfoAccountData {
     /**

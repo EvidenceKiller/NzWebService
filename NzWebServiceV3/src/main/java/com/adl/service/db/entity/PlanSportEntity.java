@@ -37,4 +37,15 @@ public final class PlanSportEntity {
         entity.setSportSkuName(data.getSportSkuName());
         return entity;
     }
+
+    public static PlanSportData convertToData(PlanSportEntity entity) {
+        if (entity == null) {
+            return null;
+        }
+        PlanSportData data = new PlanSportData();
+        data.setSex(entity.getSex());
+        data.setSportSkuId(entity.getSportSkuId());
+        data.setSportSkuName(entity.getSportSkuName());
+        return data;
+    }
 }

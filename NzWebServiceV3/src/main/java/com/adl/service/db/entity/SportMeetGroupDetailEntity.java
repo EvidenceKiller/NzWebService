@@ -147,4 +147,29 @@ public class SportMeetGroupDetailEntity implements Serializable {
         entity.setSportResult(data.getSportResult());
         return entity;
     }
+
+    public static SportMeetGroupDetailData convertToData(SportMeetGroupDetailEntity entity) {
+        if (entity == null) {
+            return null;
+        }
+        SportMeetGroupDetailData data = new SportMeetGroupDetailData();
+        data.setMeetId(entity.getMeetId());
+        data.setMeetSportSkuId(entity.getMeetSportSkuId());
+        data.setCompetitionRound(entity.getCompetitionRound());
+        data.setTeamUnitCode(entity.getTeamUnitCode());
+        data.setTeamUnitName(entity.getTeamUnitName());
+        data.setGroupNo(entity.getGroupNo());
+        data.setIdentifyType(entity.getIdentifyType());
+        data.setRunwayCode(entity.getRunwayCode());
+        data.setNumberCode(entity.getNumberCode());
+        data.setSerialCode(entity.getSerialCode());
+        data.setSportAccountNum(entity.getSportAccountNum());
+        data.setAccountName(entity.getAccountName());
+        data.setAccountId(entity.getAccountId());
+        data.setClassId(entity.getClassId());
+        data.setClassName(entity.getClassName());
+        data.setAccountAvatar(entity.getAccountAvatar());
+        data.setSportResult(entity.getSportResult());
+        return data;
+    }
 }

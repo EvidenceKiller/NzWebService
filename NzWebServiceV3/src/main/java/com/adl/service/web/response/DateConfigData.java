@@ -6,8 +6,10 @@ import com.google.gson.annotations.JsonAdapter;
 import java.io.Serializable;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 @JsonAdapter(StrictJsonDeserializer.class)
 public final class DateConfigData implements Serializable {
     private String id;

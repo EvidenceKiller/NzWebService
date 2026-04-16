@@ -3,11 +3,11 @@ package com.adl.service.web.response;
 import com.adl.service.internal.StrictJsonDeserializer;
 import com.google.gson.annotations.JsonAdapter;
 
-import lombok.Getter;
-import lombok.ToString;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Getter
-@ToString
+@Data
+@NoArgsConstructor
 @JsonAdapter(StrictJsonDeserializer.class)
 public final class FaceData {
 
