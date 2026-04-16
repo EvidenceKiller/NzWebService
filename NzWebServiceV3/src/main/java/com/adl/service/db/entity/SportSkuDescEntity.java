@@ -1,6 +1,6 @@
 package com.adl.service.db.entity;
 
-import com.adl.service.web.response.SportSkuDescData;
+import com.adl.service.data.SportSkuDescData;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

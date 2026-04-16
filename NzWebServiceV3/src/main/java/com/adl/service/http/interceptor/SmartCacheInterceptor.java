@@ -3,7 +3,7 @@ package com.adl.service.http.interceptor;
 import android.content.Context;
 import android.util.Log;
 
-import com.adl.service.db.entity.CacheEntry;
+import com.adl.service.http.cache.CacheEntry;
 import com.adl.service.log.NzLog;
 import com.adl.service.utils.HttpCacheUtil;
 import com.adl.service.http.cache.CacheEventListener;

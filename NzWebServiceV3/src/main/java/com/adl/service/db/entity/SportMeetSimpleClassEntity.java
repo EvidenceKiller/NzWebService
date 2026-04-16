@@ -1,6 +1,6 @@
 package com.adl.service.db.entity;
 
-import com.adl.service.web.response.SportMeetSimpleClassData;
+import com.adl.service.data.SportMeetSimpleClassData;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

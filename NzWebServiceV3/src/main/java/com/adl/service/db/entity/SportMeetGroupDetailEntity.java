@@ -1,11 +1,8 @@
 package com.adl.service.db.entity;
 
-import com.adl.service.web.response.SportMeetData;
-import com.adl.service.web.response.SportMeetGroupDetailData;
+import com.adl.service.data.SportMeetGroupDetailData;
 
 import java.io.Serializable;
-import java.util.List;
-import java.util.stream.Collectors;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;

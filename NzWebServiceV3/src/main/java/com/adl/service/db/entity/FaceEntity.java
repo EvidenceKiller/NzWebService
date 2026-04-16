@@ -1,6 +1,6 @@
 package com.adl.service.db.entity;
 
-import com.adl.service.web.response.FaceData;
+import com.adl.service.data.FaceData;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

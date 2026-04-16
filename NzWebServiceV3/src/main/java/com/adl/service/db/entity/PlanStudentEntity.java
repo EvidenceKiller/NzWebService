@@ -1,7 +1,7 @@
 package com.adl.service.db.entity;
 
 import com.adl.service.db.converter.ListPlanSportEntityConverter;
-import com.adl.service.web.response.PlanStudentData;
+import com.adl.service.data.PlanStudentData;
 
 import java.io.Serializable;
 import java.util.List;

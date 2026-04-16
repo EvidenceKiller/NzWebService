@@ -1,7 +1,7 @@
 package com.adl.service.db.entity;
 
 import com.adl.service.db.converter.ListSportMeetGroupDetailEntityConverter;
-import com.adl.service.web.response.SportMeetGroupTeamData;
+import com.adl.service.data.SportMeetGroupTeamData;
 
 import java.io.Serializable;
 import java.util.List;

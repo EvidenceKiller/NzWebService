@@ -6,13 +6,11 @@ import com.adl.service.db.DaoManagerProxy;
 import com.adl.service.db.entity.SceneEntity;
 import com.adl.service.db.entity.SportSkuEntity;
 import com.adl.service.exception.NzEmptyDataException;
-import com.adl.service.web.request.SportMeetPageRequest;
-import com.adl.service.web.request.SportSkuPageRequest;
-import com.adl.service.web.response.BasePageData;
-import com.adl.service.web.response.BaseResponse;
-import com.adl.service.web.response.SceneData;
-import com.adl.service.web.response.SportMeetData;
-import com.adl.service.web.response.SportSkuData;
+import com.adl.service.http.request.SportSkuPageRequest;
+import com.adl.service.data.BasePageData;
+import com.adl.service.data.BaseResponse;
+import com.adl.service.data.SceneData;
+import com.adl.service.data.SportSkuData;
 
 import java.util.List;
 import java.util.stream.Collectors;

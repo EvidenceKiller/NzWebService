@@ -2,18 +2,18 @@ package com.adl.service.persistence;
 
 import android.text.TextUtils;
 
-import com.adl.service.common.CommonUtil;
+import com.adl.service.utils.CommonUtil;
 import com.adl.service.db.DaoManagerProxy;
 import com.adl.service.db.entity.CompetitionEntity;
 import com.adl.service.db.entity.SportMeetEntity;
 import com.adl.service.db.entity.SportMeetGroupDetailEntity;
 import com.adl.service.db.entity.SportMeetGroupTeamEntity;
-import com.adl.service.web.request.CompetitionPageRequest;
-import com.adl.service.web.request.SportMeetPageRequest;
-import com.adl.service.web.response.BasePageData;
-import com.adl.service.web.response.BaseResponse;
-import com.adl.service.web.response.CompetitionData;
-import com.adl.service.web.response.SportMeetData;
+import com.adl.service.http.request.CompetitionPageRequest;
+import com.adl.service.http.request.SportMeetPageRequest;
+import com.adl.service.data.BasePageData;
+import com.adl.service.data.BaseResponse;
+import com.adl.service.data.CompetitionData;
+import com.adl.service.data.SportMeetData;
 
 import java.util.Iterator;
 import java.util.LinkedList;

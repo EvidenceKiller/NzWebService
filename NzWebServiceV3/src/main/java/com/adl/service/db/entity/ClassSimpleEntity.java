@@ -1,6 +1,6 @@
 package com.adl.service.db.entity;
 
-import com.adl.service.web.response.ClassSimpleData;
+import com.adl.service.data.ClassSimpleData;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

@@ -4,7 +4,7 @@ import com.adl.service.db.converter.ListClassSimpleEntityConverter;
 import com.adl.service.db.converter.ListSportMeetGroupTeamEntityConverter;
 import com.adl.service.db.converter.ListSportMeetSimpleClassEntityConverter;
 import com.adl.service.db.converter.ListSportMeetSkuEntityConverter;
-import com.adl.service.web.response.SportMeetData;
+import com.adl.service.data.SportMeetData;
 
 import java.io.Serializable;
 import java.util.List;

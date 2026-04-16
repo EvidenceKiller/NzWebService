@@ -1,6 +1,6 @@
 package com.adl.service.db.entity;
 
-import com.adl.service.web.response.SportSkuSimpleData;
+import com.adl.service.data.SportSkuSimpleData;
 import com.google.gson.annotations.SerializedName;
 
 import lombok.Data;

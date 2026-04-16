@@ -15,7 +15,7 @@ import com.adl.service.caller.OrgTestCaller;
 import com.adl.service.caller.SportInfoCaller;
 import com.adl.service.common.BaseService;
 import com.adl.service.common.FileDownManager;
-import com.adl.service.common.FileUtil;
+import com.adl.service.utils.FileUtil;
 import com.adl.service.common.IDefine;
 import com.adl.service.common.InnerPreferences;
 import com.adl.service.common.NzConfig;
@@ -27,7 +27,7 @@ import com.adl.service.internal.RxCallbackScheduler;
 import com.adl.service.internal.SubscriptionManager;
 import com.adl.service.log.NzLog;
 import com.adl.service.upload.OssFileUploadService;
-import com.adl.service.web.request.RequestScope;
+import com.adl.service.http.request.RequestScope;
 import com.google.gson.Gson;
 
 import java.io.File;

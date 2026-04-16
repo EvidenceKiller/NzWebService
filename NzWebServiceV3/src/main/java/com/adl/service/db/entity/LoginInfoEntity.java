@@ -1,6 +1,6 @@
 package com.adl.service.db.entity;
 
-import com.adl.service.web.response.LoginInfoData;
+import com.adl.service.data.LoginInfoData;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;

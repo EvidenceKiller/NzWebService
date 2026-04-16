@@ -1,7 +1,7 @@
 package com.adl.service.db.entity;
 
 import com.adl.service.db.converter.ListFaceEntityConverter;
-import com.adl.service.web.response.TeacherData;
+import com.adl.service.data.TeacherData;
 
 import org.jetbrains.annotations.NotNull;
 

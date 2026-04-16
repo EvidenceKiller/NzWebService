@@ -9,7 +9,7 @@ import com.adl.service.exception.NzEmptyResponseException;
 import com.adl.service.exception.NzExceptionMapper;
 import com.adl.service.exception.NzNetworkException;
 import com.adl.service.exception.NzUnknownException;
-import com.adl.service.web.response.BaseResponse;
+import com.adl.service.data.BaseResponse;
 
 import java.util.List;
 

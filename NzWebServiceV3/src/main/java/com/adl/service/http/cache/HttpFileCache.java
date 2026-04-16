@@ -2,7 +2,6 @@ package com.adl.service.http.cache;
 
 import android.content.Context;
 
-import com.adl.service.db.entity.CacheEntry;
 import com.adl.service.log.NzLog;
 import com.google.gson.Gson;
 

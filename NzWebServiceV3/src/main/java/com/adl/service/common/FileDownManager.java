@@ -11,6 +11,7 @@ import com.adl.service.db.entity.StudentEntity;
 import com.adl.service.db.entity.TeacherEntity;
 import com.adl.service.internal.RetrofitClient;
 import com.adl.service.log.NzLog;
+import com.adl.service.utils.FileUtil;
 import com.adl.service.utils.InnerUtil;
 
 import java.io.File;

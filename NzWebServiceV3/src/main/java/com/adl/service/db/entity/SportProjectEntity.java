@@ -1,6 +1,6 @@
 package com.adl.service.db.entity;
 
-import com.adl.service.web.response.SportProjectData;
+import com.adl.service.data.SportProjectData;
 
 import java.io.Serializable;
 

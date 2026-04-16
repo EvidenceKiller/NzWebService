@@ -16,14 +16,14 @@ import com.adl.service.caller.impl.LoginAuthCallerImpl;
 import com.adl.service.caller.impl.OperationCallerImpl;
 import com.adl.service.caller.impl.OrgTestCallerImpl;
 import com.adl.service.caller.impl.SportInfoCallerImpl;
-import com.adl.service.web.service.BigScreenH5Service;
-import com.adl.service.web.service.BigScreenStatsService;
-import com.adl.service.web.service.BusinessService;
-import com.adl.service.web.service.CommonInfoService;
-import com.adl.service.web.service.LoginAuthService;
-import com.adl.service.web.service.OperationService;
-import com.adl.service.web.service.OrgTestService;
-import com.adl.service.web.service.SportInfoService;
+import com.adl.service.web.BigScreenH5Service;
+import com.adl.service.web.BigScreenStatsService;
+import com.adl.service.web.BusinessService;
+import com.adl.service.web.CommonInfoService;
+import com.adl.service.web.LoginAuthService;
+import com.adl.service.web.OperationService;
+import com.adl.service.web.OrgTestService;
+import com.adl.service.web.SportInfoService;
 
 /**
  * Retrofit 与 Caller 统一管理器（单例）。

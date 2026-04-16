@@ -1,14 +1,9 @@
 package com.ai.test;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
-import com.adl.auth.core.AdlAuthFactory;
-import com.adl.service.common.FileUtil;
+import com.adl.service.utils.FileUtil;
 import com.adl.ts.general.R;
 
 import java.io.File;

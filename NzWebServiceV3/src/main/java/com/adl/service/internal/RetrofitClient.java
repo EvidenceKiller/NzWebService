@@ -2,14 +2,12 @@ package com.adl.service.internal;
 
 import com.adl.service.AdlService;
 import com.adl.service.http.interceptor.SmartCacheInterceptor;
-import com.adl.service.http.interceptor.TokenInjectionInterceptor;
+import com.adl.service.http.interceptor.HeaderInterceptor;
 import com.adl.service.http.interceptor.TokenRefreshInterceptor;
-import com.google.gson.Gson;
 
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
-import okhttp3.Request;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory;
@@ -32,7 +30,7 @@ public final class RetrofitClient {
                 .connectTimeout(15, TimeUnit.SECONDS)
                 .readTimeout(30, TimeUnit.SECONDS)
                 .writeTimeout(30, TimeUnit.SECONDS)
-                .addInterceptor(new TokenInjectionInterceptor())
+                .addInterceptor(new HeaderInterceptor())
                 .addInterceptor(new TokenRefreshInterceptor())
                 .addInterceptor(new HttpLoggingInterceptor().setLevel(debug ? HttpLoggingInterceptor.Level.BODY : HttpLoggingInterceptor.Level.NONE))
                 .addInterceptor(new SmartCacheInterceptor(AdlService.getService().getContext(), true, HTTP_CACHE_TIME))

@@ -1,6 +1,6 @@
 package com.adl.service.db.entity;
 
-import com.adl.service.web.response.DictData;
+import com.adl.service.data.DictData;
 
 import org.jetbrains.annotations.NotNull;
 

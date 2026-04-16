@@ -1,6 +1,6 @@
 package com.adl.service.exception;
 
-import com.adl.service.web.response.GetPageResult;
+import com.adl.service.callback.GetPageResult;
 
 public final class NzGetPageException extends NzBaseException {
     private static final String CODE = "NZ_PAGE_REQUEST_EXCEPTION";

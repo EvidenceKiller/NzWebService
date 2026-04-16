@@ -6,11 +6,11 @@ import com.adl.service.caller.LoginAuthCaller;
 import com.adl.service.exception.NzBaseException;
 import com.adl.service.internal.RxCallbackScheduler;
 import com.adl.service.internal.SubscriptionManager;
-import com.adl.service.web.request.LoginRequest;
-import com.adl.service.web.request.LogoutRequest;
-import com.adl.service.web.request.RequestScope;
-import com.adl.service.web.response.LoginData;
-import com.adl.service.web.service.LoginAuthService;
+import com.adl.service.http.request.LoginRequest;
+import com.adl.service.http.request.LogoutRequest;
+import com.adl.service.http.request.RequestScope;
+import com.adl.service.data.LoginData;
+import com.adl.service.web.LoginAuthService;
 
 import io.reactivex.rxjava3.disposables.Disposable;
 

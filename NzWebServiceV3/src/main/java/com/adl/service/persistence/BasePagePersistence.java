@@ -4,9 +4,9 @@ import android.util.Log;
 
 import com.adl.service.exception.NzEmptyDataException;
 import com.adl.service.exception.NzGetPageException;
-import com.adl.service.web.response.BasePageData;
-import com.adl.service.web.response.BaseResponse;
-import com.adl.service.web.response.GetPageResult;
+import com.adl.service.data.BasePageData;
+import com.adl.service.data.BaseResponse;
+import com.adl.service.callback.GetPageResult;
 
 import java.util.List;
 import java.util.UUID;

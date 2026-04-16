@@ -3,7 +3,7 @@ package com.adl.service.persistence;
 import android.util.Log;
 
 import com.adl.service.exception.NzNetworkException;
-import com.adl.service.web.response.BaseResponse;
+import com.adl.service.data.BaseResponse;
 
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Single;

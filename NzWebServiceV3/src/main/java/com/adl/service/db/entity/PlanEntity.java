@@ -1,7 +1,7 @@
 package com.adl.service.db.entity;
 
 import com.adl.service.db.converter.ListSportProjectEntityConverter;
-import com.adl.service.web.response.PlanData;
+import com.adl.service.data.PlanData;
 
 import org.jetbrains.annotations.NotNull;
 

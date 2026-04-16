@@ -1,8 +1,7 @@
 package com.adl.service.caller.impl;
 
-import com.adl.service.exception.NzCommonException;
-import com.adl.service.web.request.BasePageRequest;
-import com.adl.service.web.request.RequestScope;
+import com.adl.service.http.request.BasePageRequest;
+import com.adl.service.http.request.RequestScope;
 
 /**
  * Caller 层通用参数校验工具。

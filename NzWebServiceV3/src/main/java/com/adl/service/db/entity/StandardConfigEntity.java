@@ -1,7 +1,7 @@
 package com.adl.service.db.entity;
 
 import com.adl.service.db.converter.ListSportSkuSimpleEntityConverter;
-import com.adl.service.web.response.StandardConfigData;
+import com.adl.service.data.StandardConfigData;
 
 import java.util.List;
 import java.util.stream.Collectors;

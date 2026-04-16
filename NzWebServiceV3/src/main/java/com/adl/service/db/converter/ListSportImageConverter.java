@@ -1,6 +1,6 @@
 package com.adl.service.db.converter;
 
-import com.adl.service.web.response.SportImageData;
+import com.adl.service.data.SportImageData;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 

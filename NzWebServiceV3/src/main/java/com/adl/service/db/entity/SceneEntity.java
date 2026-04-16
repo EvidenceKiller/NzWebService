@@ -1,6 +1,6 @@
 package com.adl.service.db.entity;
 
-import com.adl.service.web.response.SceneData;
+import com.adl.service.data.SceneData;
 
 import java.io.Serializable;
 
