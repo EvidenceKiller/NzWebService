@@ -11,7 +11,7 @@ import com.adl.service.web.response.BasePageData;
 import com.adl.service.web.response.BaseResponse;
 import com.adl.service.web.response.PlanData;
 import com.adl.service.web.response.PlanStudentData;
-import com.adl.service.web.response.StandardConfigPageData;
+import com.adl.service.web.response.StandardConfigData;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -35,8 +35,8 @@ public final class OrgTestPersistenceHelper {
     /**
      * 为 Plan 分页请求构建通用的 PageRequester
      */
-    public static Function<Long, Single<BaseResponse<List<StandardConfigPageData>>>> createStandardConfigPageRequester(
-            StandardConfigPageRequest request, Function<StandardConfigPageRequest, Single<BaseResponse<List<StandardConfigPageData>>>> function) {
+    public static Function<Long, Single<BaseResponse<List<StandardConfigData>>>> createStandardConfigPageRequester(
+            StandardConfigPageRequest request, Function<StandardConfigPageRequest, Single<BaseResponse<List<StandardConfigData>>>> function) {
         return (page) -> {
             StandardConfigPageRequest pageReq = StandardConfigPageRequest.builder(request.getStandardType())
                     .current(page)
@@ -51,7 +51,7 @@ public final class OrgTestPersistenceHelper {
     /**
      * 为 Plan 数据构建通用的 Persister
      */
-    public static Function<List<StandardConfigPageData>, List<StandardConfigPageData>> createStandardConfigPagePersister() {
+    public static Function<List<StandardConfigData>, List<StandardConfigData>> createStandardConfigPagePersister() {
         return (dataList) -> {
             if (dataList == null || dataList.isEmpty()) {
                 return dataList;

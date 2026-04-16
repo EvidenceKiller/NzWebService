@@ -1,12 +1,14 @@
 package com.adl.service.db;
 
 
+import com.adl.service.db.converter.ListIntegerConverter;
 import com.adl.service.db.converter.ListStringConverter;
 import com.adl.service.db.entity.CompetitionEntity;
 import com.adl.service.db.entity.DictEntity;
 import com.adl.service.db.entity.FileDownInfoEntity;
 import com.adl.service.db.entity.FileUploadInfoEntity;
 import com.adl.service.db.entity.LoginInfoEntity;
+import com.adl.service.db.entity.PlanEntity;
 import com.adl.service.db.entity.PlanStudentEntity;
 import com.adl.service.db.entity.SceneEntity;
 import com.adl.service.db.entity.SportMeetEntity;
@@ -16,7 +18,6 @@ import com.adl.service.db.entity.SportSkuEntity;
 import com.adl.service.db.entity.StandardConfigEntity;
 import com.adl.service.db.entity.StudentEntity;
 import com.adl.service.db.entity.TeacherEntity;
-import com.adl.service.web.response.PlanData;
 
 import androidx.room.Database;
 import androidx.room.RoomDatabase;
@@ -30,7 +31,7 @@ import androidx.room.TypeConverters;
  */
 @Database(entities = {StudentEntity.class, TeacherEntity.class,
         FileDownInfoEntity.class, FileUploadInfoEntity.class,
-        PlanData.class, PlanStudentEntity.class, StandardConfigEntity.class,
+        PlanEntity.class, PlanStudentEntity.class, StandardConfigEntity.class,
         SceneEntity.class, SportSkuEntity.class,
         SportMeetEntity.class, SportMeetGroupTeamEntity.class, SportMeetGroupDetailEntity.class,
         CompetitionEntity.class,
@@ -39,7 +40,7 @@ import androidx.room.TypeConverters;
         version = 1,
         autoMigrations = {}
 )
-@TypeConverters(ListStringConverter.class)
+@TypeConverters(value = {ListStringConverter.class, ListIntegerConverter.class})
 public abstract class DaoManager extends RoomDatabase {
 
     public abstract StudentDao getStudentDao();
@@ -62,10 +63,6 @@ public abstract class DaoManager extends RoomDatabase {
 
     public abstract SceneSportDao getSceneSportDao();
 
-    public abstract RecordLocalDao getRecordLocalDao();
-
-    public abstract RecordUploadDao getRecordUploadDao();
-
     public abstract DictDao getDictDao();
 
     public abstract SportMeetDao getSportMeetDao();
@@ -73,8 +70,6 @@ public abstract class DaoManager extends RoomDatabase {
     public abstract SportMeetGroupTeamDao getSportMeetGroupTeamDao();
 
     public abstract SportMeetGroupDetailDao getSportMeetGroupDetailDao();
-
-    public abstract TeacherSportDao getTeacherSportDao();
 
     public abstract LoginInfoDao getLoginInfoDao();
 }

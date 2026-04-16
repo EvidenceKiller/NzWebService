@@ -1,7 +1,7 @@
 package com.adl.service.db.entity;
 
 import com.adl.service.db.converter.ListSportSkuSimpleEntityConverter;
-import com.adl.service.web.response.StandardConfigPageData;
+import com.adl.service.web.response.StandardConfigData;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -70,7 +70,7 @@ public final class StandardConfigEntity {
     @ColumnInfo(name = "_create_time")
     private String createTime;
 
-    public static StandardConfigEntity convertToEntity(StandardConfigPageData data) {
+    public static StandardConfigEntity convertToEntity(StandardConfigData data) {
         if (data == null) {
             return null;
         }

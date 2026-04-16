@@ -1,7 +1,6 @@
 package com.adl.service.utils;
 
 import com.adl.service.AdlService;
-import com.adl.service.entity.PageInfo;
 import com.adl.service.exception.NzBaseException;
 import com.adl.service.exception.NzCommonException;
 import com.adl.service.internal.RetrofitClient;
@@ -153,32 +152,6 @@ public class InnerUtil {
     public static String readRecords(String json) {
         try {
             JSONObject repObj = new JSONObject(json);
-            if (repObj.has("records")) {
-                return repObj.optString("records");
-            }
-
-            if (repObj.has("list")) {
-                return repObj.optString("list");
-            }
-        } catch (JSONException ignored) {
-        }
-
-        try {
-            new JSONArray(json);
-            return json;
-        } catch (JSONException ignored) {
-        }
-        return null;
-    }
-
-    public static String readRecords(String json, PageInfo info) {
-        try {
-            JSONObject repObj = new JSONObject(json);
-            info.setCurrent(repObj.optInt("current"));
-            info.setPages(repObj.optInt("pages"));
-            info.setSize(repObj.optInt("size"));
-            info.setTotal(repObj.optInt("total"));
-
             if (repObj.has("records")) {
                 return repObj.optString("records");
             }

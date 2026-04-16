@@ -1,5 +1,7 @@
 package com.adl.service.db.entity;
 
+import com.adl.service.db.converter.ListFaceDataConverter;
+import com.adl.service.db.converter.ListSportSkuDescDataConverter;
 import com.adl.service.web.response.SportSkuData;
 import com.adl.service.web.response.SportSkuDescData;
 
@@ -8,10 +10,12 @@ import java.util.List;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
 import lombok.Data;
 
 @Data
 @Entity(tableName = "_sport_sku")
+@TypeConverters(value = {ListSportSkuDescDataConverter.class})
 public final class SportSkuEntity {
 
     @PrimaryKey(autoGenerate = true)
@@ -200,8 +204,8 @@ public final class SportSkuEntity {
     /**
      * 运动类型代码 参考字典编码：adl_sport_type
      */
-    @ColumnInfo(name = "_sport_skuld")
-    private String sportSkuld;
+    @ColumnInfo(name = "_sport_sku_id")
+    private String sportSkuId;
 
     /**
      * 运动类型代码 参考字典编码：adl_sport_type
@@ -299,7 +303,7 @@ public final class SportSkuEntity {
         entity.setSportNatureNames(data.getSportNatureNames());
         entity.setSportPriority(data.getSportPriority());
         entity.setSportSkuDesc(data.getSportSkuDesc());
-        entity.setSportSkuld(data.getSportSkuld());
+        entity.setSportSkuId(data.getSportSkuId());
         entity.setSportSkuName(data.getSportSkuName());
         entity.setSportTypeCode(data.getSportTypeCode());
         entity.setSportTypeName(data.getSportTypeName());

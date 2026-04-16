@@ -18,13 +18,13 @@ import androidx.room.Query;
 @Dao
 public interface SportMeetGroupDetailDao {
 
-    @Query("select * from _meet_group_detail where _app_code = :appCode")
+    @Query("select * from _sport_meet_group_detail where _app_code = :appCode")
     List<SportMeetGroupDetailEntity> getAll(String appCode);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(List<SportMeetGroupDetailEntity> list);
 
-    @Query("select * from _meet_group_detail where " +
+    @Query("select * from _sport_meet_group_detail where " +
             "_app_code = :appCode and " +
             "_meet_id = :meetId and " +
             "_meet_sport_skuId = :meetSportSkuId and " +
@@ -39,7 +39,7 @@ public interface SportMeetGroupDetailDao {
             String teamUnitCode
     );
 
-    @Query("select * from _meet_group_detail where " +
+    @Query("select * from _sport_meet_group_detail where " +
             "_app_code = :appCode and " +
             "_meet_id = :meetId and " +
             "_meet_sport_skuId = :meetSportSkuId and " +
@@ -54,10 +54,10 @@ public interface SportMeetGroupDetailDao {
             String teamUnitCode,
             int groupNo);
 
-    @Query("delete from _meet_group_detail where _app_code = :appCode")
+    @Query("delete from _sport_meet_group_detail where _app_code = :appCode")
     void clearByAppCode(String appCode);
 
-    @Query("delete from _meet_group_detail")
+    @Query("delete from _sport_meet_group_detail")
     void clearAll();
 
 

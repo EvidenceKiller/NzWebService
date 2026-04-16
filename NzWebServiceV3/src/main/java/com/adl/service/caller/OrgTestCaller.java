@@ -14,7 +14,7 @@ import com.adl.service.web.response.PlanClassData;
 import com.adl.service.web.response.PlanInfoData;
 import com.adl.service.web.response.PlanData;
 import com.adl.service.web.response.PlanStudentData;
-import com.adl.service.web.response.StandardConfigPageData;
+import com.adl.service.web.response.StandardConfigData;
 
 import java.util.List;
 
@@ -27,21 +27,21 @@ public interface OrgTestCaller {
 
     void clearStandardConfigDataSync();
 
-    long getStandardConfigPagesAllAsync(RequestScope scope, StandardConfigPageRequest request, RequestCallback<List<StandardConfigPageData>> callback);
+    long getStandardConfigPagesAllAsync(RequestScope scope, StandardConfigPageRequest request, RequestCallback<List<StandardConfigData>> callback);
 
-    List<StandardConfigPageData> getStandardConfigPagesAllSync(StandardConfigPageRequest request) throws NzBaseException;
+    List<StandardConfigData> getStandardConfigPagesAllSync(StandardConfigPageRequest request) throws NzBaseException;
 
     /**
      * 获取标准列表
      * <p>异步调用。</p>
      */
-    long getStandardConfigPageAsync(RequestScope scope, StandardConfigPageRequest request, RequestCallback<List<StandardConfigPageData>> callback);
+    long getStandardConfigPageAsync(RequestScope scope, StandardConfigPageRequest request, RequestCallback<List<StandardConfigData>> callback);
 
     /**
      * 获取标准列表
      * <p>同步调用。</p>
      */
-    List<StandardConfigPageData> getStandardConfigPageSync(StandardConfigPageRequest request) throws NzBaseException;
+    List<StandardConfigData> getStandardConfigPageSync(StandardConfigPageRequest request) throws NzBaseException;
 
     void clearPlanStudentDataSync();
 

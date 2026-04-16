@@ -19,7 +19,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-@Entity(tableName = "_student_entity", indices = {@Index(value = {"_account_id"})})
+@Entity(tableName = "_student", indices = {@Index(value = {"_account_id"})})
 @TypeConverters(value = {ListFaceDataConverter.class})
 public class StudentEntity implements Serializable {
 

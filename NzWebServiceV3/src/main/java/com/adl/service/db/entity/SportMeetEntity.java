@@ -1,6 +1,8 @@
 package com.adl.service.db.entity;
 
+import com.adl.service.db.converter.ListClassSimpleDataConverter;
 import com.adl.service.db.converter.ListSportMeetGroupTeamEntityConverter;
+import com.adl.service.db.converter.ListSportMeetSimpleClassDataConverter;
 import com.adl.service.db.converter.ListSportMeetSkuEntityConverter;
 import com.adl.service.web.response.ClassSimpleData;
 import com.adl.service.web.response.SportMeetData;
@@ -20,7 +22,10 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @Entity(tableName = "_sport_meet")
-@TypeConverters(value = {ListSportMeetSkuEntityConverter.class, ListSportMeetGroupTeamEntityConverter.class})
+@TypeConverters(value = {ListSportMeetSkuEntityConverter.class,
+        ListSportMeetGroupTeamEntityConverter.class,
+        ListSportMeetSimpleClassDataConverter.class,
+        ListClassSimpleDataConverter.class})
 public final class SportMeetEntity implements Serializable {
 
     @PrimaryKey(autoGenerate = true)
@@ -220,7 +225,7 @@ public final class SportMeetEntity implements Serializable {
      * 密码
      */
     @ColumnInfo(name = "_password")
-    private Object password;
+    private String password;
 
     /**
      * 分组团队

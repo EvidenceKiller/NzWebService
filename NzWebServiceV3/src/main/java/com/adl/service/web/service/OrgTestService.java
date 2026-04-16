@@ -12,7 +12,7 @@ import com.adl.service.web.response.PlanClassData;
 import com.adl.service.web.response.PlanInfoData;
 import com.adl.service.web.response.PlanData;
 import com.adl.service.web.response.PlanStudentData;
-import com.adl.service.web.response.StandardConfigPageData;
+import com.adl.service.web.response.StandardConfigData;
 
 import java.util.List;
 
@@ -28,7 +28,7 @@ public interface OrgTestService {
      * 获取标准列表
      */
     @POST("tis/device/pte/organizeTest/getStandardConfig")
-    Single<BaseResponse<List<StandardConfigPageData>>> getStandardConfigPage(@Body StandardConfigPageRequest request);
+    Single<BaseResponse<List<StandardConfigData>>> getStandardConfigPage(@Body StandardConfigPageRequest request);
 
     /**
      * 获取计划下学生

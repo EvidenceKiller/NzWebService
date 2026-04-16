@@ -125,14 +125,6 @@ public final class DaoManagerProxy {
         return mDaoManager.getSceneSportDao();
     }
 
-    public RecordLocalDao getRecordLocalDao() {
-        return mDaoManager.getRecordLocalDao();
-    }
-
-    public RecordUploadDao getRecordUploadDao() {
-        return mDaoManager.getRecordUploadDao();
-    }
-
     public DictDao getDictDao() {
         return mDaoManager.getDictDao();
     }
@@ -147,10 +139,6 @@ public final class DaoManagerProxy {
 
     public SportMeetGroupDetailDao getSportMeetGroupDetailsDao() {
         return mDaoManager.getSportMeetGroupDetailDao();
-    }
-
-    public TeacherSportDao getTeacherSportDao() {
-        return mDaoManager.getTeacherSportDao();
     }
 
     public SceneDao getSceneDao() {

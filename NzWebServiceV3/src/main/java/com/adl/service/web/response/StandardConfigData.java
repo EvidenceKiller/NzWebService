@@ -12,7 +12,7 @@ import lombok.ToString;
 @Getter
 @ToString
 @JsonAdapter(StrictJsonDeserializer.class)
-public final class StandardConfigPageData {
+public final class StandardConfigData {
 
     /**
      * 标准ID

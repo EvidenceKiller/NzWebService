@@ -29,7 +29,7 @@ import com.adl.service.web.response.PlanData;
 import com.adl.service.web.response.PlanInfoData;
 import com.adl.service.web.response.PlanStudentData;
 import com.adl.service.web.response.SportProjectData;
-import com.adl.service.web.response.StandardConfigPageData;
+import com.adl.service.web.response.StandardConfigData;
 import com.adl.service.web.service.OrgTestService;
 
 import java.util.ArrayList;
@@ -117,7 +117,7 @@ public final class OrgTestCallerImpl implements OrgTestCaller {
     }
 
     @Override
-    public long getStandardConfigPagesAllAsync(RequestScope scope, StandardConfigPageRequest request, RequestCallback<List<StandardConfigPageData>> callback) {
+    public long getStandardConfigPagesAllAsync(RequestScope scope, StandardConfigPageRequest request, RequestCallback<List<StandardConfigData>> callback) {
         CallerUtil.assertCurrent(request);
         CallerUtil.assertScope(scope);
         Disposable disposable = RxCallbackScheduler.schedule(BasePagePersistence.persistAllListsAsSingle(
@@ -128,7 +128,7 @@ public final class OrgTestCallerImpl implements OrgTestCaller {
     }
 
     @Override
-    public List<StandardConfigPageData> getStandardConfigPagesAllSync(StandardConfigPageRequest request) throws NzBaseException {
+    public List<StandardConfigData> getStandardConfigPagesAllSync(StandardConfigPageRequest request) throws NzBaseException {
         CallerUtil.assertCurrent(request);
         return RxCallbackScheduler.blockingGet(BasePagePersistence.persistAllListsAsSingle(
                 OrgTestPersistenceHelper.createStandardConfigPageRequester(request, req -> orgTestService.getStandardConfigPage(req)),
@@ -136,7 +136,7 @@ public final class OrgTestCallerImpl implements OrgTestCaller {
     }
 
     @Override
-    public long getStandardConfigPageAsync(RequestScope scope, StandardConfigPageRequest request, RequestCallback<List<StandardConfigPageData>> callback) {
+    public long getStandardConfigPageAsync(RequestScope scope, StandardConfigPageRequest request, RequestCallback<List<StandardConfigData>> callback) {
         CallerUtil.assertScope(scope);
         Disposable disposable = RxCallbackScheduler.scheduleBaseResponse(orgTestService.getStandardConfigPage(request), callback);
         SubscriptionManager.getInstance().add(scope.owner(), disposable);
@@ -144,7 +144,7 @@ public final class OrgTestCallerImpl implements OrgTestCaller {
     }
 
     @Override
-    public List<StandardConfigPageData> getStandardConfigPageSync(StandardConfigPageRequest request) throws NzBaseException {
+    public List<StandardConfigData> getStandardConfigPageSync(StandardConfigPageRequest request) throws NzBaseException {
         return RxCallbackScheduler.blockingGetData(orgTestService.getStandardConfigPage(request));
     }
 

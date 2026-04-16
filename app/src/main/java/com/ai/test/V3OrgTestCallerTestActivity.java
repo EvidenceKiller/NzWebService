@@ -22,7 +22,7 @@ import com.adl.service.web.response.PlanClassData;
 import com.adl.service.web.response.PlanInfoData;
 import com.adl.service.web.response.PlanData;
 import com.adl.service.web.response.PlanStudentData;
-import com.adl.service.web.response.StandardConfigPageData;
+import com.adl.service.web.response.StandardConfigData;
 import com.adl.ts.general.R;
 
 import java.util.List;
@@ -96,9 +96,9 @@ public class V3OrgTestCallerTestActivity extends AppCompatActivity {
 
     private void getStandardConfigPageAsync() {
         StandardConfigPageRequest request = buildStandardConfigPageRequest();
-        AdlService.getService().getOrgTestCaller().getStandardConfigPageAsync(RequestScope.of(this), request, new RequestCallback<List<StandardConfigPageData>>() {
+        AdlService.getService().getOrgTestCaller().getStandardConfigPageAsync(RequestScope.of(this), request, new RequestCallback<List<StandardConfigData>>() {
             @Override
-            public void onSuccess(List<StandardConfigPageData> data) {
+            public void onSuccess(List<StandardConfigData> data) {
                 if (data != null) {
                     Log.d(TAG, "OrgTestCallerTestActivity::getStandardConfigPageAsync::onSuccess : data size : " + data.size());
                     Log.d(TAG, "OrgTestCallerTestActivity::getStandardConfigPageAsync::onSuccess : data : " + data);
@@ -126,9 +126,9 @@ public class V3OrgTestCallerTestActivity extends AppCompatActivity {
         AdlService.getService().executeSyncOnIo(RequestScope.of(this), () -> {
             StandardConfigPageRequest request = buildStandardConfigPageRequest();
             return AdlService.getService().getOrgTestCaller().getStandardConfigPageSync(request);
-        }, new RequestCallback<List<StandardConfigPageData>>() {
+        }, new RequestCallback<List<StandardConfigData>>() {
             @Override
-            public void onSuccess(List<StandardConfigPageData> data) {
+            public void onSuccess(List<StandardConfigData> data) {
                 if (data != null) {
                     Log.d(TAG, "OrgTestCallerTestActivity::getStandardConfigPageSync::onSuccess : data size : " + data.size());
                     Log.d(TAG, "OrgTestCallerTestActivity::getStandardConfigPageSync::onSuccess : data : " + data);
@@ -266,33 +266,29 @@ public class V3OrgTestCallerTestActivity extends AppCompatActivity {
 
     private void getAllPlanPagesAsync() {
         PlanPageRequest request = buildPlanListRequest();
-        try {
-            AdlService.getService().getOrgTestCaller().getPlanPagesAllAsync(RequestScope.of(this), request, new RequestCallback<List<PlanData>>() {
-                @Override
-                public void onSuccess(List<PlanData> data) {
-                    if (data != null) {
-                        Log.d(TAG, "OrgTestCallerTestActivity::getAllPlanPagesAsync::onSuccess : data : " + data);
-                        resultView.setText(data.toString());
-                    } else {
-                        Log.d(TAG, "OrgTestCallerTestActivity::getAllPlanPagesAsync::onSuccess : data is null");
-                    }
+        AdlService.getService().getOrgTestCaller().getPlanPagesAllAsync(RequestScope.of(this), request, new RequestCallback<List<PlanData>>() {
+            @Override
+            public void onSuccess(List<PlanData> data) {
+                if (data != null) {
+                    Log.d(TAG, "OrgTestCallerTestActivity::getAllPlanPagesAsync::onSuccess : data : " + data);
+                    resultView.setText(data.toString());
+                } else {
+                    Log.d(TAG, "OrgTestCallerTestActivity::getAllPlanPagesAsync::onSuccess : data is null");
                 }
+            }
 
-                @Override
-                public void onFail(int code, String msg) {
-                    Log.d(TAG, "OrgTestCallerTestActivity::getAllPlanPagesAsync::onFail : code : " + code + ", msg : " + msg);
-                    resultView.setText(msg);
-                }
+            @Override
+            public void onFail(int code, String msg) {
+                Log.d(TAG, "OrgTestCallerTestActivity::getAllPlanPagesAsync::onFail : code : " + code + ", msg : " + msg);
+                resultView.setText(msg);
+            }
 
-                @Override
-                public void onError(String error) {
-                    Log.d(TAG, "OrgTestCallerTestActivity::getAllPlanPagesAsync::onError : error : " + error);
-                    resultView.setText(error);
-                }
-            });
-        } catch (NzBaseException e) {
-            throw new RuntimeException(e);
-        }
+            @Override
+            public void onError(String error) {
+                Log.d(TAG, "OrgTestCallerTestActivity::getAllPlanPagesAsync::onError : error : " + error);
+                resultView.setText(error);
+            }
+        });
     }
 
     private void getAllPlanPagesSync() {

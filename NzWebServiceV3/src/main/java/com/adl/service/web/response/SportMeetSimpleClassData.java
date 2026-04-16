@@ -1,13 +1,8 @@
 package com.adl.service.web.response;
 
-import com.adl.service.common.CommonUtil;
 import com.adl.service.internal.StrictJsonDeserializer;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
-
-import java.util.List;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 import lombok.Getter;
 import lombok.ToString;

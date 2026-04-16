@@ -4,6 +4,7 @@ import com.adl.service.web.response.LoginInfoData;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,6 +12,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity(tableName = "_login_info")
 public final class LoginInfoEntity {
+
+    @PrimaryKey(autoGenerate = true)
+    private long lid;
+
     /**
      * 上级机构ID
      */

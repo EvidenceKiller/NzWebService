@@ -190,8 +190,8 @@ public final class SportSkuData {
     /**
      * 运动类型代码 参考字典编码：adl_sport_type
      */
-    @SerializedName("sportSkuld")
-    private String sportSkuld;
+    @SerializedName("sportSkuId")
+    private String sportSkuId;
 
     /**
      * 运动类型代码 参考字典编码：adl_sport_type

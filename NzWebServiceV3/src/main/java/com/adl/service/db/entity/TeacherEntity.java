@@ -1,73 +1,81 @@
 package com.adl.service.db.entity;
 
 import com.adl.service.db.converter.ListFaceDataConverter;
-import com.adl.service.internal.StrictJsonDeserializer;
+import com.adl.service.web.response.FaceData;
 import com.adl.service.web.response.TeacherData;
-import com.google.gson.annotations.JsonAdapter;
-import com.google.gson.annotations.SerializedName;
 
+import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
+
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 @Data
 @NoArgsConstructor
 @Entity(tableName = "_teacher")
+@TypeConverters(value = {ListFaceDataConverter.class})
 public final class TeacherEntity {
 
-    @SerializedName("userId")
+    @ColumnInfo(name = "_user_id")
     private String userId;
 
-    @SerializedName("accountId")
+    @NotNull
+    @PrimaryKey
+    @ColumnInfo(name = "_account_id")
     private String accountId;
 
-    @SerializedName("accountName")
+    @ColumnInfo(name = "_account_name")
     private String accountName;
 
-    @SerializedName("accountNum")
+    @ColumnInfo(name = "_account_num")
     private String accountNum;
 
-    @SerializedName("accountPhoneNum")
+    @ColumnInfo(name = "_account_phone_num")
     private String accountPhoneNum;
 
-    @SerializedName("userSex")
+    @ColumnInfo(name = "_user_sex")
     private Integer userSex;
 
-    @SerializedName("jobNum")
+    @ColumnInfo(name = "_job_num")
     private String jobNum;
 
-    @SerializedName("accountAvatar")
+    @ColumnInfo(name = "_account_avatar")
     private String accountAvatar;
 
-    @SerializedName("accountNamePinYin")
+    @ColumnInfo(name = "_account_name_pin_yin")
     private String accountNamePinYin;
 
-    @SerializedName("accountNameFirstLetterPinYin")
+    @ColumnInfo(name = "_account_name_first_letter_pin_yin")
     private String accountNameFirstLetterPinYin;
 
-    @SerializedName("userFaceImgUrl")
+    @ColumnInfo(name = "_user_face_img_url")
     private String userFaceImgUrl;
 
-    @SerializedName("thumbnailUserFaceImgUrl")
+    @ColumnInfo(name = "_thumbnail_user_face_img_url")
     private String thumbnailUserFaceImgUrl;
 
-    @SerializedName("createTime")
+    @ColumnInfo(name = "_create_time")
     private String createTime;
 
-    @SerializedName("updateTime")
+    @ColumnInfo(name = "_update_time")
     private String updateTime;
 
-    @SerializedName("avatarFlag")
+    @ColumnInfo(name = "_avatar_flag")
     private Boolean avatarFlag;
 
-    @SerializedName("recordFlag")
+    @ColumnInfo(name = "_record_flag")
     private Boolean recordFlag;
 
-    @SerializedName("delFlag")
+    @ColumnInfo(name = "_del_flag")
     private Boolean delFlag;
+
+    @ColumnInfo(name = "_face_data_list")
+    private List<FaceData> faceDataList;
 
     public static TeacherEntity convertToEntity(TeacherData teacherData) {
         if (teacherData == null) {
@@ -91,6 +99,7 @@ public final class TeacherEntity {
         entity.setAvatarFlag(teacherData.getAvatarFlag());
         entity.setRecordFlag(teacherData.getRecordFlag());
         entity.setDelFlag(teacherData.getDelFlag());
+        entity.setFaceDataList(teacherData.getFaceDataList());
         return entity;
     }
 
@@ -116,6 +125,7 @@ public final class TeacherEntity {
         data.setAvatarFlag(entity.getAvatarFlag());
         data.setRecordFlag(entity.getRecordFlag());
         data.setDelFlag(entity.getDelFlag());
+        data.setFaceDataList(entity.getFaceDataList());
         return data;
     }
 }

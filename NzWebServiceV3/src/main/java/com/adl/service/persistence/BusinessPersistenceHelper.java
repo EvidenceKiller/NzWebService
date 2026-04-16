@@ -8,15 +8,12 @@ import com.adl.service.db.entity.CompetitionEntity;
 import com.adl.service.db.entity.SportMeetEntity;
 import com.adl.service.db.entity.SportMeetGroupDetailEntity;
 import com.adl.service.db.entity.SportMeetGroupTeamEntity;
-import com.adl.service.db.entity.SportSkuEntity;
 import com.adl.service.web.request.CompetitionPageRequest;
-import com.adl.service.web.request.SceneListRequest;
 import com.adl.service.web.request.SportMeetPageRequest;
 import com.adl.service.web.response.BasePageData;
 import com.adl.service.web.response.BaseResponse;
 import com.adl.service.web.response.CompetitionData;
 import com.adl.service.web.response.SportMeetData;
-import com.adl.service.web.response.SportSkuData;
 
 import java.util.Iterator;
 import java.util.LinkedList;
