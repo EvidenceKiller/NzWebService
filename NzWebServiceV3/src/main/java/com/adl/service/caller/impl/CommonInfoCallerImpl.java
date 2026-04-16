@@ -313,6 +313,7 @@ public final class CommonInfoCallerImpl implements CommonInfoCaller {
         Disposable disposable = RxCallbackScheduler.scheduleBaseResponse(BasePagePersistence.persistOneListAsSingle(
                 BasePersistence.createBaseRequester(null, (Void) -> commonInfoService.getTeacherList(request)),
                 CommonInfoPersistenceHelper.createTeacherListPersister()), callback);
+        SubscriptionManager.getInstance().add(scope.owner(), disposable);
         return disposable.hashCode();
     }
 
