@@ -1,6 +1,6 @@
 package com.adl.service.data;
 
-import com.adl.service.internal.StrictJsonDeserializer;
+import com.adl.service.internal.json.StrictJsonDeserializer;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 
@@ -110,10 +110,16 @@ public final class SportSkuData {
     private List<Integer> qualities;
 
     /**
+     * 题库模板名称
+     */
+    @SerializedName("qusTemplateName")
+    private String qusTemplateName;
+
+    /**
      * 题库模板地址
      */
-    @SerializedName("qosTemplateName")
-    private String qosTemplateName;
+    @SerializedName("qusTemplateUrl")
+    private String qusTemplateUrl;
 
     /**
      * 测量范围结束值
@@ -142,8 +148,8 @@ public final class SportSkuData {
     /**
      * 场景运动Id
      */
-    @SerializedName("sceneSkuld")
-    private String sceneSkuld;
+    @SerializedName("sceneSkuId")
+    private String sceneSkuId;
 
     /**
      * 场景运动排序
@@ -182,10 +188,10 @@ public final class SportSkuData {
     private Integer sportPriority;
 
     /**
-     * sku标识码 {运动单项code} + {四位顺序号}
+     * sku描述，是个json string
      */
     @SerializedName("sportSkuDesc")
-    private List<SportSkuDescData> sportSkuDesc;
+    private String sportSkuDesc;
 
     /**
      * 运动类型代码 参考字典编码：adl_sport_type

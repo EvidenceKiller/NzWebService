@@ -1,19 +1,17 @@
 package com.adl.service.db.entity;
 
-import com.adl.service.db.converter.ListSportSkuDescEntityConverter;
 import com.adl.service.data.SportSkuData;
+import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
-import androidx.room.TypeConverters;
 import lombok.Data;
 
 @Data
 @Entity(tableName = "_sport_sku")
-@TypeConverters(value = {ListSportSkuDescEntityConverter.class})
 public final class SportSkuEntity {
 
     @PrimaryKey(autoGenerate = true)
@@ -122,10 +120,16 @@ public final class SportSkuEntity {
     private List<Integer> qualities;
 
     /**
+     * 题库模板名称
+     */
+    @ColumnInfo(name = "_qus_template_name")
+    private String qusTemplateName;
+
+    /**
      * 题库模板地址
      */
-    @ColumnInfo(name = "_qos_template_name")
-    private String qosTemplateName;
+    @ColumnInfo(name = "_qus_template_url")
+    private String qusTemplateUrl;
 
     /**
      * 测量范围结束值
@@ -154,8 +158,8 @@ public final class SportSkuEntity {
     /**
      * 场景运动Id
      */
-    @ColumnInfo(name = "_scene_skuld")
-    private String sceneSkuld;
+    @ColumnInfo(name = "_scene_sku_id")
+    private String sceneSkuId;
 
     /**
      * 场景运动排序
@@ -194,10 +198,10 @@ public final class SportSkuEntity {
     private Integer sportPriority;
 
     /**
-     * sku标识码 {运动单项code} + {四位顺序号}
+     * sku描述，是个json string
      */
     @ColumnInfo(name = "_sport_sku_desc")
-    private List<SportSkuDescEntity> sportSkuDesc;
+    private String sportSkuDesc;
 
     /**
      * 运动类型代码 参考字典编码：adl_sport_type
@@ -288,23 +292,20 @@ public final class SportSkuEntity {
         entity.setMeasureMode(data.getMeasureMode());
         entity.setMeasureUnitCode(data.getMeasureUnitCode());
         entity.setQualities(data.getQualities());
-        entity.setQosTemplateName(data.getQosTemplateName());
+        entity.setQusTemplateName(data.getQusTemplateName());
+        entity.setQusTemplateUrl(data.getQusTemplateUrl());
         entity.setRangeEndValue(data.getRangeEndValue());
         entity.setRangeStartValue(data.getRangeStartValue());
         entity.setRemark(data.getRemark());
         entity.setSceneCode(data.getSceneCode());
-        entity.setSceneSkuld(data.getSceneSkuld());
+        entity.setSceneSkuId(data.getSceneSkuId());
         entity.setSceneSkuSort(data.getSceneSkuSort());
         entity.setSportItemCode(data.getSportItemCode());
         entity.setSportItemName(data.getSportItemName());
         entity.setSportNatureCodes(data.getSportNatureCodes());
         entity.setSportNatureNames(data.getSportNatureNames());
         entity.setSportPriority(data.getSportPriority());
-        if (data.getSportSkuDesc() != null) {
-            entity.setSportSkuDesc(data.getSportSkuDesc().stream()
-                    .map(SportSkuDescEntity::convertToEntity)
-                    .collect(java.util.stream.Collectors.toList()));
-        }
+        entity.setSportSkuDesc(data.getSportSkuDesc());
         entity.setSportSkuId(data.getSportSkuId());
         entity.setSportSkuName(data.getSportSkuName());
         entity.setSportTypeCode(data.getSportTypeCode());
@@ -340,23 +341,20 @@ public final class SportSkuEntity {
         data.setMeasureMode(entity.getMeasureMode());
         data.setMeasureUnitCode(entity.getMeasureUnitCode());
         data.setQualities(entity.getQualities());
-        data.setQosTemplateName(entity.getQosTemplateName());
+        data.setQusTemplateName(entity.getQusTemplateName());
+        data.setQusTemplateUrl(entity.getQusTemplateUrl());
         data.setRangeEndValue(entity.getRangeEndValue());
         data.setRangeStartValue(entity.getRangeStartValue());
         data.setRemark(entity.getRemark());
         data.setSceneCode(entity.getSceneCode());
-        data.setSceneSkuld(entity.getSceneSkuld());
+        data.setSceneSkuId(entity.getSceneSkuId());
         data.setSceneSkuSort(entity.getSceneSkuSort());
         data.setSportItemCode(entity.getSportItemCode());
         data.setSportItemName(entity.getSportItemName());
         data.setSportNatureCodes(entity.getSportNatureCodes());
         data.setSportNatureNames(entity.getSportNatureNames());
         data.setSportPriority(entity.getSportPriority());
-        if (entity.getSportSkuDesc() != null) {
-            data.setSportSkuDesc(entity.getSportSkuDesc().stream()
-                    .map(SportSkuDescEntity::convertToData)
-                    .collect(java.util.stream.Collectors.toList()));
-        }
+        data.setSportSkuDesc(entity.getSportSkuDesc());
         data.setSportSkuId(entity.getSportSkuId());
         data.setSportSkuName(entity.getSportSkuName());
         data.setSportTypeCode(entity.getSportTypeCode());

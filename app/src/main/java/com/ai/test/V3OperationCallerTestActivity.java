@@ -73,6 +73,8 @@ public class V3OperationCallerTestActivity extends AppCompatActivity {
 
     private SportSkuPageRequest buildSportSkuPageRequest() {
         return SportSkuPageRequest.builder()
+                .current(1L)
+                .pageSize(2L)
                 .build();
     }
 

@@ -60,7 +60,6 @@ public final class CommonInfoCallerImpl implements CommonInfoCaller {
     @Override
     public void reloadCommonInfoData(boolean forceUpdate, int faceType, long pageSize) throws NzBaseException {
         InnerPreferences pf = InnerPreferences.instance();
-        AdlService adlService = AdlService.getService();
 
         ////////////// 1.同步机构信息 ////////////
         NzLog.i("同步机构信息");

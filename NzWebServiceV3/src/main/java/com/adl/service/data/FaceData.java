@@ -1,6 +1,6 @@
 package com.adl.service.data;
 
-import com.adl.service.internal.StrictJsonDeserializer;
+import com.adl.service.internal.json.StrictJsonDeserializer;
 import com.google.gson.annotations.JsonAdapter;
 
 import lombok.Data;
