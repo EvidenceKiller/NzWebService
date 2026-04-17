@@ -13,6 +13,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @JsonAdapter(StrictJsonDeserializer.class)
 public final class SportSkuData {
+
+    @SerializedName("enableSort")
+    private Boolean enableSort;
+
+    @SerializedName("moduleStr")
+    private String moduleStr;
+
     /**
      * 精度方式 详见码表
      */
@@ -194,6 +201,12 @@ public final class SportSkuData {
     private String sportSkuDesc;
 
     /**
+     * sku描述列表
+     */
+    @SerializedName("sportSkuDescJson")
+    private List<SportSkuDescData> sportSkuDescJson;
+
+    /**
      * 运动类型代码 参考字典编码：adl_sport_type
      */
     @SerializedName("sportSkuId")
@@ -258,4 +271,10 @@ public final class SportSkuData {
      */
     @SerializedName("sceneSkuType")
     private String sceneSkuType;
+
+    @SerializedName("createTime")
+    private Long createTime;
+
+    @SerializedName("updateTime")
+    private Long updateTime;
 }

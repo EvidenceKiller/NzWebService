@@ -2,11 +2,11 @@ package com.adl.service.persistence;
 
 import android.util.Log;
 
-import com.adl.service.exception.NzEmptyDataException;
-import com.adl.service.exception.NzGetPageException;
+import com.adl.service.callback.GetPageResult;
 import com.adl.service.data.BasePageData;
 import com.adl.service.data.BaseResponse;
-import com.adl.service.callback.GetPageResult;
+import com.adl.service.exception.NzEmptyDataException;
+import com.adl.service.exception.NzGetPageException;
 
 import java.util.List;
 import java.util.UUID;
@@ -103,15 +103,17 @@ public final class BasePagePersistence {
                                         return Single.error(new NzGetPageException(createFailedPageResult(uuId, "request page " + currentPage + " failed: " + resp.getMsg())));
                                     }
                                     List<T> fetchedList = resp.getData();
+                                    GetPageResult pageResult = new GetPageResult();
+                                    pageResult.setTotalPages(currentPage);
                                     if (fetchedList == null || fetchedList.isEmpty()) {
-                                        return Single.just(createCurrentPageResult(currentPage, 0L, 0L));
+                                        return Single.just(createCurrentPageResult(pageResult, 0L, 0L));
                                     }
                                     return Single.fromCallable(() -> {
                                         try {
                                             List<T> persistedList = persistFunc.apply(fetchedList);
                                             long fetchedCount = fetchedList == null ? 0 : fetchedList.size();
                                             long persistedCount = persistedList == null ? 0 : persistedList.size();
-                                            return createCurrentPageResult(currentPage, fetchedCount, persistedCount);
+                                            return createCurrentPageResult(pageResult, fetchedCount, persistedCount);
                                         } catch (Throwable e) {
                                             throw new NzGetPageException(createFailedPageResult(uuId, "persist page " + currentPage + " failed"), e);
                                         }
@@ -160,6 +162,7 @@ public final class BasePagePersistence {
                     firstResult.setUuId(uuId);
                     firstResult.setSuccess(true);
                     firstResult.setMessage("success");
+                    firstResult.setServerCount(firstPage.getTotal() == null ? 0L : firstPage.getTotal());
                     firstResult.setTotalPages(firstPage.getPages() == null ? 0L : firstPage.getPages());
                     firstResult.setSuccessedPages(1L);
                     firstResult.setFetchedCount(firstFetchedList == null ? 0 : firstFetchedList.size());
@@ -186,13 +189,18 @@ public final class BasePagePersistence {
                             if (!resp.getSucceed() || resp.getData() == null) {
                                 return Single.error(new NzGetPageException(createFailedPageResult(firstResult.getUuId(), "request page " + currentPage + " failed: " + resp.getMsg())));
                             }
+                            if (resp.getData().getCurrent() != currentPage
+                                    || resp.getData().getPages() != firstResult.getTotalPages()
+                                    || resp.getData().getTotal() != firstResult.getServerCount()) {
+                                throw new NzGetPageException(createFailedPageResult(firstResult.getUuId(), "request current page " + currentPage + " does not match the pagination data on the server side "));
+                            }
                             List<T> fetchedList = resp.getData().getRecords();
                             return Single.fromCallable(() -> {
                                 try {
                                     List<T> persistedList = persistFunc.apply(fetchedList);
                                     long fetchedCount = fetchedList == null ? 0 : fetchedList.size();
                                     long persistedCount = persistedList == null ? 0 : persistedList.size();
-                                    return createCurrentPageResult(firstResult.getTotalPages(), fetchedCount, persistedCount);
+                                    return createCurrentPageResult(firstResult, fetchedCount, persistedCount);
                                 } catch (Throwable e) {
                                     throw new NzGetPageException(createFailedPageResult(firstResult.getUuId(), "persist page " + currentPage + " failed"), e);
                                 }
@@ -201,11 +209,12 @@ public final class BasePagePersistence {
                 .reduce(firstResult, (lastResult, currentResult) -> accumulatePageResult(firstResult.getUuId(), lastResult, currentResult));
     }
 
-    private static GetPageResult createCurrentPageResult(long totalPages, long fetchedCount, long persistedCount) {
+    private static GetPageResult createCurrentPageResult(GetPageResult firstPageResult, long fetchedCount, long persistedCount) {
         GetPageResult thisResult = new GetPageResult();
         thisResult.setSuccess(true);
         thisResult.setMessage("success");
-        thisResult.setTotalPages(totalPages);
+        thisResult.setServerCount(firstPageResult.getServerCount());
+        thisResult.setTotalPages(firstPageResult.getTotalPages());
         thisResult.setFetchedCount(fetchedCount);
         thisResult.setPersistedCount(persistedCount);
         return thisResult;
@@ -225,13 +234,13 @@ public final class BasePagePersistence {
         }
         lastResult.setUuId(uuId);
         lastResult.setSuccess(true);
-        lastResult.setMessage(currentResult.getMessage()) ;
+        lastResult.setMessage(currentResult.getMessage());
         if (currentResult.getFetchedCount() > 0L) {
             lastResult.setSuccessedPages(lastResult.getSuccessedPages() + 1L);
             lastResult.setFetchedCount(lastResult.getFetchedCount() + currentResult.getFetchedCount());
             lastResult.setPersistedCount(lastResult.getPersistedCount() + currentResult.getPersistedCount());
         }
-        lastResult.setTotalPages (Math.max(lastResult.getTotalPages(), currentResult.getTotalPages()));
+        lastResult.setTotalPages(Math.max(lastResult.getTotalPages(), currentResult.getTotalPages()));
         return lastResult;
     }
 }

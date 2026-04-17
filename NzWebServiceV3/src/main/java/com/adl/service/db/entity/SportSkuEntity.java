@@ -1,17 +1,19 @@
 package com.adl.service.db.entity;
 
 import com.adl.service.data.SportSkuData;
-import com.google.gson.annotations.SerializedName;
+import com.adl.service.db.converter.ListSportSkuDescEntityConverter;
 
 import java.util.List;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
 import lombok.Data;
 
 @Data
 @Entity(tableName = "_sport_sku")
+@TypeConverters(value = {ListSportSkuDescEntityConverter.class})
 public final class SportSkuEntity {
 
     @PrimaryKey(autoGenerate = true)
@@ -22,6 +24,12 @@ public final class SportSkuEntity {
 
     @ColumnInfo(name = "_scene_id")
     private String sceneId;
+
+    @ColumnInfo(name = "_enable_sort")
+    private Boolean enableSort;
+
+    @ColumnInfo(name = "_module_str")
+    private String moduleStr;
 
     /**
      * 精度方式 详见码表
@@ -204,6 +212,12 @@ public final class SportSkuEntity {
     private String sportSkuDesc;
 
     /**
+     * sku描述列表
+     */
+    @ColumnInfo(name = "_sport_sku_desc_json")
+    private List<SportSkuDescEntity> sportSkuDescJson;
+
+    /**
      * 运动类型代码 参考字典编码：adl_sport_type
      */
     @ColumnInfo(name = "_sport_sku_id")
@@ -268,6 +282,12 @@ public final class SportSkuEntity {
      */
     @ColumnInfo(name = "_scene_sku_type")
     private String sceneSkuType;
+
+    @ColumnInfo(name = "_create_time")
+    private Long createTime;
+
+    @ColumnInfo(name = "_update_time")
+    private Long updateTime;
 
     public static SportSkuEntity convertToEntity(SportSkuData data, String appCode, String sceneId) {
         if (data == null) {

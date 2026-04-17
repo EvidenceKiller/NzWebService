@@ -8,6 +8,7 @@ import android.widget.GridLayout;
 import android.widget.TextView;
 
 import com.adl.service.AdlService;
+import com.adl.service.callback.GetPageResult;
 import com.adl.service.callback.RequestCallback;
 import com.adl.service.http.request.BannerDetailListRequest;
 import com.adl.service.http.request.DeviceFocusListRequest;
@@ -52,6 +53,8 @@ public class V3OperationCallerTestActivity extends AppCompatActivity {
 
         createButton("getDetailListAsync").setOnClickListener(v -> getBannerDetailListAsync());
         createButton("getDetailListSync").setOnClickListener(v -> getBannerDetailListSync());
+        createButton("getSportSkuPagesAllAsync").setOnClickListener(v -> getSportSkuPagesAllAsync());
+        createButton("getSportSkuPagesAllSync").setOnClickListener(v -> getSportSkuPagesAllSync());
         createButton("getSportSkuPageAsync").setOnClickListener(v -> getSportSkuPageAsync());
         createButton("getSportSkuPageSync").setOnClickListener(v -> getSportSkuPageSync());
         createButton("getSportSkuDetailAsync").setOnClickListener(v -> getSportSkuDetailAsync());
@@ -73,8 +76,6 @@ public class V3OperationCallerTestActivity extends AppCompatActivity {
 
     private SportSkuPageRequest buildSportSkuPageRequest() {
         return SportSkuPageRequest.builder()
-                .current(1L)
-                .pageSize(2L)
                 .build();
     }
 
@@ -168,6 +169,62 @@ public class V3OperationCallerTestActivity extends AppCompatActivity {
             @Override
             public void onError(String error) {
                 Log.d(TAG, "OperationCallerTestActivity::getDetailListSync::onError : error : " + error);
+                resultView.setText(error);
+            }
+        });
+    }
+
+    private void getSportSkuPagesAllAsync() {
+        SportSkuPageRequest request = buildSportSkuPageRequest();
+        AdlService.getService().getOperationCaller().getSportSkuPagesAllAsync(RequestScope.of(this), request, new RequestCallback<GetPageResult>() {
+            @Override
+            public void onSuccess(GetPageResult data) {
+                if (data != null) {
+                    Log.d(TAG, "OperationCallerTestActivity::getSportSkuPagesAllAsync::onSuccess : data : " + data);
+                    resultView.setText(data.toString());
+                } else {
+                    Log.d(TAG, "OperationCallerTestActivity::getSportSkuPagesAllAsync::onSuccess : data is null");
+                }
+            }
+
+            @Override
+            public void onFail(int code, String msg) {
+                Log.d(TAG, "OperationCallerTestActivity::getSportSkuPagesAllAsync::onFail : code : " + code + ", msg : " + msg);
+                resultView.setText(msg);
+            }
+
+            @Override
+            public void onError(String error) {
+                Log.d(TAG, "OperationCallerTestActivity::getSportSkuPagesAllAsync::onError : error : " + error);
+                resultView.setText(error);
+            }
+        });
+    }
+
+    private void getSportSkuPagesAllSync() {
+        AdlService.getService().executeSyncOnIo(RequestScope.of(this), () -> {
+            SportSkuPageRequest request = buildSportSkuPageRequest();
+            return AdlService.getService().getOperationCaller().getSportSkuPagesAllSync(request);
+        }, new RequestCallback<GetPageResult>() {
+            @Override
+            public void onSuccess(GetPageResult data) {
+                if (data != null) {
+                    Log.d(TAG, "OperationCallerTestActivity::getSportSkuPagesAllSync::onSuccess : data : " + data);
+                    resultView.setText(data.toString());
+                } else {
+                    Log.d(TAG, "OperationCallerTestActivity::getSportSkuPagesAllSync::onSuccess : data is null");
+                }
+            }
+
+            @Override
+            public void onFail(int code, String msg) {
+                Log.d(TAG, "OperationCallerTestActivity::getSportSkuPagesAllSync::onFail : code : " + code + ", msg : " + msg);
+                resultView.setText(msg);
+            }
+
+            @Override
+            public void onError(String error) {
+                Log.d(TAG, "OperationCallerTestActivity::getSportSkuPagesAllSync::onError : error : " + error);
                 resultView.setText(error);
             }
         });

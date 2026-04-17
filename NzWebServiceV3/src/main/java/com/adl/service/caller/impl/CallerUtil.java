@@ -15,7 +15,7 @@ final class CallerUtil {
     }
 
     static void assertCurrent(BasePageRequest request) {
-        if (request.getCurrent() != 1) {
+        if (request.getCurrent() != null && request.getCurrent() != 1) {
             throw new IllegalArgumentException("get all pages must set current is 1");
         }
     }

@@ -33,7 +33,7 @@ public final class RetrofitClient {
                 .addInterceptor(new HeaderInterceptor())
                 .addInterceptor(new TokenRefreshInterceptor())
                 .addInterceptor(new HttpLoggingInterceptor().setLevel(debug ? HttpLoggingInterceptor.Level.BODY : HttpLoggingInterceptor.Level.NONE))
-                .addInterceptor(new SmartCacheInterceptor(AdlService.getService().getContext(), true, HTTP_CACHE_TIME))
+//                .addInterceptor(new SmartCacheInterceptor(AdlService.getService().getContext(), true, HTTP_CACHE_TIME))
                 .build();
 
         // 2. Retrofit（支持 RxJava3）
