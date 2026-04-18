@@ -2,6 +2,9 @@ package com.adl.service.http.request;
 
 import com.google.gson.annotations.SerializedName;
 
+import lombok.Getter;
+
+@Getter
 public final class DictMapRequest extends BaseRequest {
 
     /**
@@ -11,6 +14,7 @@ public final class DictMapRequest extends BaseRequest {
     private String sportSkuId;
 
     private DictMapRequest(Builder builder) {
+        super(builder);
         this.sportSkuId = builder.sportSkuId;
     }
 
@@ -18,8 +22,11 @@ public final class DictMapRequest extends BaseRequest {
         return new Builder(sportSkuId);
     }
 
-
-    public static class Builder {
+    public static class Builder extends BaseRequest.Builder<Builder> {
+        @Override
+        protected Builder self() {
+            return this;
+        }
         private String sportSkuId;
 
         Builder(String sportSkuId) {
@@ -29,9 +36,5 @@ public final class DictMapRequest extends BaseRequest {
         public DictMapRequest build() {
             return new DictMapRequest(this);
         }
-    }
-
-    public String getSportSkuId() {
-        return sportSkuId;
     }
 }

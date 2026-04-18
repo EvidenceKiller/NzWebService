@@ -2,6 +2,9 @@ package com.adl.service.http.request;
 
 import com.google.gson.annotations.SerializedName;
 
+import lombok.Getter;
+
+@Getter
 public final class TeachCourseRequest extends BaseRequest {
     /**
      * 班级Id
@@ -34,6 +37,7 @@ public final class TeachCourseRequest extends BaseRequest {
     private Integer times;
 
     private TeachCourseRequest(Builder builder) {
+        super(builder);
         this.classId = builder.classId;
         this.sportSkuId = builder.sportSkuId;
         this.sportItemCode = builder.sportItemCode;
@@ -45,7 +49,11 @@ public final class TeachCourseRequest extends BaseRequest {
         return new Builder(classId, date);
     }
 
-    public static class Builder {
+    public static class Builder extends BaseRequest.Builder<Builder> {
+        @Override
+        protected Builder self() {
+            return this;
+        }
         private String classId;
         private String sportSkuId;
         private String sportItemCode;
@@ -75,25 +83,5 @@ public final class TeachCourseRequest extends BaseRequest {
         public TeachCourseRequest build() {
             return new TeachCourseRequest(this);
         }
-    }
-
-    public String getClassId() {
-        return classId;
-    }
-
-    public String getSportSkuId() {
-        return sportSkuId;
-    }
-
-    public String getSportItemCode() {
-        return sportItemCode;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public Integer getTimes() {
-        return times;
     }
 }

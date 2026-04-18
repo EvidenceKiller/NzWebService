@@ -2,6 +2,9 @@ package com.adl.service.http.request;
 
 import com.google.gson.annotations.SerializedName;
 
+import lombok.Getter;
+
+@Getter
 public final class SceneListRequest extends BaseRequest {
 
     @SerializedName("appCode")
@@ -14,6 +17,7 @@ public final class SceneListRequest extends BaseRequest {
     private String sceneType;
 
     private SceneListRequest(Builder builder) {
+        super(builder);
         this.appCode = builder.appCode;
         this.enabled = builder.enabled;
         this.sceneType = builder.sceneType;
@@ -23,8 +27,11 @@ public final class SceneListRequest extends BaseRequest {
         return new Builder();
     }
 
-
-    public static class Builder {
+    public static class Builder extends BaseRequest.Builder<Builder> {
+        @Override
+        protected Builder self() {
+            return this;
+        }
         private String appCode;
         private Boolean enabled;
         private String sceneType;
@@ -47,17 +54,5 @@ public final class SceneListRequest extends BaseRequest {
         public SceneListRequest build() {
             return new SceneListRequest(this);
         }
-    }
-
-    public String getAppCode() {
-        return appCode;
-    }
-
-    public Boolean getEnabled() {
-        return enabled;
-    }
-
-    public String getSceneType() {
-        return sceneType;
     }
 }

@@ -2,6 +2,9 @@ package com.adl.service.http.request;
 
 import com.google.gson.annotations.SerializedName;
 
+import lombok.Getter;
+
+@Getter
 public final class PlanClassListRequest extends BasePageRequest {
 
     /**
@@ -54,7 +57,6 @@ public final class PlanClassListRequest extends BasePageRequest {
         return new Builder(planId);
     }
 
-
     public static class Builder extends BasePageRequest.Builder<Builder> {
         @Override
         protected Builder self() {
@@ -100,29 +102,5 @@ public final class PlanClassListRequest extends BasePageRequest {
         public PlanClassListRequest build() {
             return new PlanClassListRequest(this);
         }
-    }
-
-    public String getPlanId() {
-        return planId;
-    }
-
-    public String getOrgId() {
-        return orgId;
-    }
-
-    public String getStandardType() {
-        return standardType;
-    }
-
-    public String getAcayearCode() {
-        return acayearCode;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public Boolean getShowStatistic() {
-        return showStatistic;
     }
 }

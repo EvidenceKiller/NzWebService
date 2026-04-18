@@ -2,6 +2,9 @@ package com.adl.service.http.request;
 
 import com.google.gson.annotations.SerializedName;
 
+import lombok.Getter;
+
+@Getter
 public final class PlanPageRequest extends BasePageRequest {
 
     /**
@@ -101,29 +104,5 @@ public final class PlanPageRequest extends BasePageRequest {
         public PlanPageRequest build() {
             return new PlanPageRequest(this);
         }
-    }
-
-    public String getOrgId() {
-        return orgId;
-    }
-
-    public String getStandardType() {
-        return standardType;
-    }
-
-    public String getAcayearCode() {
-        return acayearCode;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public Boolean getShowStatistic() {
-        return showStatistic;
-    }
-
-    public String getPlanId() {
-        return planId;
     }
 }

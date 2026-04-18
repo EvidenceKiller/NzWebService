@@ -4,6 +4,9 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
+import lombok.Getter;
+
+@Getter
 public final class TrainPlanInfoPageRequest extends BasePageRequest {
 
     /**
@@ -218,65 +221,5 @@ public final class TrainPlanInfoPageRequest extends BasePageRequest {
         public TrainPlanInfoPageRequest build() {
             return new TrainPlanInfoPageRequest(this);
         }
-    }
-
-    public String getKeyword() {
-        return keyword;
-    }
-
-    public String getOrgId() {
-        return orgId;
-    }
-
-    public String getUid() {
-        return uid;
-    }
-
-    public String getTimeStatus() {
-        return timeStatus;
-    }
-
-    public String getGradeUid() {
-        return gradeUid;
-    }
-
-    public String getClassUid() {
-        return classUid;
-    }
-
-    public String getTrainPlanTime() {
-        return trainPlanTime;
-    }
-
-    public String getSportTime() {
-        return sportTime;
-    }
-
-    public String getTrainPlanStartTime() {
-        return trainPlanStartTime;
-    }
-
-    public String getTrainPlanEndTime() {
-        return trainPlanEndTime;
-    }
-
-    public String getSportStarTime() {
-        return sportStarTime;
-    }
-
-    public String getSportEndTime() {
-        return sportEndTime;
-    }
-
-    public String getAcayearSemCode() {
-        return acayearSemCode;
-    }
-
-    public String getAccountId() {
-        return accountId;
-    }
-
-    public List<String> getTrainPlanIds() {
-        return trainPlanIds;
     }
 }

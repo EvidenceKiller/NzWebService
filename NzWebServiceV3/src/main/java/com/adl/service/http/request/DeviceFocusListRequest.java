@@ -2,6 +2,9 @@ package com.adl.service.http.request;
 
 import com.google.gson.annotations.SerializedName;
 
+import lombok.Getter;
+
+@Getter
 public final class DeviceFocusListRequest extends BaseRequest {
 
     @SerializedName("deviceId")
@@ -11,6 +14,7 @@ public final class DeviceFocusListRequest extends BaseRequest {
     private String appCode;
 
     private DeviceFocusListRequest(Builder builder) {
+        super(builder);
         this.deviceId = builder.deviceId;
         this.appCode = builder.appCode;
     }
@@ -19,8 +23,11 @@ public final class DeviceFocusListRequest extends BaseRequest {
         return new Builder(deviceId);
     }
 
-
-    public static class Builder {
+    public static class Builder extends BaseRequest.Builder<Builder> {
+        @Override
+        protected Builder self() {
+            return this;
+        }
         private String deviceId;
         private String appCode;
 
@@ -36,13 +43,5 @@ public final class DeviceFocusListRequest extends BaseRequest {
         public DeviceFocusListRequest build() {
             return new DeviceFocusListRequest(this);
         }
-    }
-
-    public String getDeviceId() {
-        return deviceId;
-    }
-
-    public String getAppCode() {
-        return appCode;
     }
 }

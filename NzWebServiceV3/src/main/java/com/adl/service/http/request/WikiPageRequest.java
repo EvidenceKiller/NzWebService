@@ -2,6 +2,9 @@ package com.adl.service.http.request;
 
 import com.google.gson.annotations.SerializedName;
 
+import lombok.Getter;
+
+@Getter
 public final class WikiPageRequest extends BasePageRequest {
 
     /** 标题 */
@@ -80,10 +83,4 @@ public final class WikiPageRequest extends BasePageRequest {
 
         public WikiPageRequest build() { return new WikiPageRequest(this); }
     }
-    public String getKeyword() { return keyword; }
-    public String getWikiType() { return wikiType; }
-    public String getWikiTypeId() { return wikiTypeId; }
-    public String getEnabled() { return enabled; }
-    public String getAppCode() { return appCode; }
-    public String getOrgId() { return orgId; }
 }

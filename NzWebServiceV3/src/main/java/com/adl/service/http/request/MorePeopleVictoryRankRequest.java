@@ -2,6 +2,9 @@ package com.adl.service.http.request;
 
 import com.google.gson.annotations.SerializedName;
 
+import lombok.Getter;
+
+@Getter
 public final class MorePeopleVictoryRankRequest extends BaseRequest {
 
     /**
@@ -23,6 +26,7 @@ public final class MorePeopleVictoryRankRequest extends BaseRequest {
     private Integer top;
 
     private MorePeopleVictoryRankRequest(Builder builder) {
+        super(builder);
         this.skuId = builder.skuId;
         this.maxRank = builder.maxRank;
         this.top = builder.top;
@@ -32,8 +36,11 @@ public final class MorePeopleVictoryRankRequest extends BaseRequest {
         return new Builder(skuId);
     }
 
-
-    public static class Builder {
+    public static class Builder extends BaseRequest.Builder<Builder> {
+        @Override
+        protected Builder self() {
+            return this;
+        }
         private String skuId;
         private Integer maxRank;
         private Integer top;
@@ -55,17 +62,5 @@ public final class MorePeopleVictoryRankRequest extends BaseRequest {
         public MorePeopleVictoryRankRequest build() {
             return new MorePeopleVictoryRankRequest(this);
         }
-    }
-
-    public String getSkuId() {
-        return skuId;
-    }
-
-    public Integer getMaxRank() {
-        return maxRank;
-    }
-
-    public Integer getTop() {
-        return top;
     }
 }

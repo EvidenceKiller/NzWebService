@@ -2,6 +2,9 @@ package com.adl.service.http.request;
 
 import com.google.gson.annotations.SerializedName;
 
+import lombok.Getter;
+
+@Getter
 public final class PlanStudentPageRequest extends BasePageRequest {
 
     /** 机构ID */
@@ -41,17 +44,21 @@ public final class PlanStudentPageRequest extends BasePageRequest {
         private String planId;
         private String classId;
         private String keyword;
+
         Builder(String planId) {
             this.planId = planId;
         }
+
         public Builder orgId(String orgId) {
             this.orgId = orgId;
             return this;
         }
+
         public Builder classId(String classId) {
             this.classId = classId;
             return this;
         }
+
         public Builder keyword(String keyword) {
             this.keyword = keyword;
             return this;
@@ -59,8 +66,4 @@ public final class PlanStudentPageRequest extends BasePageRequest {
 
         public PlanStudentPageRequest build() { return new PlanStudentPageRequest(this); }
     }
-    public String getOrgId() { return orgId; }
-    public String getPlanId() { return planId; }
-    public String getClassId() { return classId; }
-    public String getKeyword() { return keyword; }
 }

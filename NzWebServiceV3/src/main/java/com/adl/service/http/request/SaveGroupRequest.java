@@ -4,6 +4,9 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
+import lombok.Getter;
+
+@Getter
 public final class SaveGroupRequest extends BaseRequest {
 
     /**
@@ -49,6 +52,7 @@ public final class SaveGroupRequest extends BaseRequest {
     private Integer longModeType;
 
     private SaveGroupRequest(Builder builder) {
+        super(builder);
         this.sceneCode = builder.sceneCode;
         this.ptPlanId = builder.ptPlanId;
         this.classId = builder.classId;
@@ -62,8 +66,11 @@ public final class SaveGroupRequest extends BaseRequest {
         return new Builder(sceneCode, groups);
     }
 
-
-    public static class Builder {
+    public static class Builder extends BaseRequest.Builder<Builder> {
+        @Override
+        protected Builder self() {
+            return this;
+        }
         private String sceneCode;
         private String ptPlanId;
         private String classId;
@@ -105,33 +112,5 @@ public final class SaveGroupRequest extends BaseRequest {
         public SaveGroupRequest build() {
             return new SaveGroupRequest(this);
         }
-    }
-
-    public String getSceneCode() {
-        return sceneCode;
-    }
-
-    public String getPtPlanId() {
-        return ptPlanId;
-    }
-
-    public String getClassId() {
-        return classId;
-    }
-
-    public BaseGroupRule getGroupRule() {
-        return groupRule;
-    }
-
-    public String getSportSkuId() {
-        return sportSkuId;
-    }
-
-    public List<BaseGroup> getGroups() {
-        return groups;
-    }
-
-    public Integer getLongModeType() {
-        return longModeType;
     }
 }

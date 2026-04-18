@@ -4,6 +4,9 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
+import lombok.Getter;
+
+@Getter
 public final class TeachCourseDataDatesRequest extends BaseRequest {
     /**
      * 班级Id
@@ -23,8 +26,8 @@ public final class TeachCourseDataDatesRequest extends BaseRequest {
     @SerializedName("classId")
     private String classId;
 
-
     private TeachCourseDataDatesRequest(Builder builder) {
+        super(builder);
         this.sceneCodes = builder.sceneCodes;
         this.skuIds = builder.skuIds;
         this.classId = builder.classId;
@@ -34,7 +37,11 @@ public final class TeachCourseDataDatesRequest extends BaseRequest {
         return new Builder();
     }
 
-    public static class Builder {
+    public static class Builder extends BaseRequest.Builder<Builder> {
+        @Override
+        protected Builder self() {
+            return this;
+        }
         private List<String> sceneCodes;
         private List<String> skuIds;
         private String classId;
@@ -57,17 +64,5 @@ public final class TeachCourseDataDatesRequest extends BaseRequest {
         public TeachCourseDataDatesRequest build() {
             return new TeachCourseDataDatesRequest(this);
         }
-    }
-
-    public List<String> getSceneCodes() {
-        return sceneCodes;
-    }
-
-    public List<String> getSkuIds() {
-        return skuIds;
-    }
-
-    public String getClassId() {
-        return classId;
     }
 }

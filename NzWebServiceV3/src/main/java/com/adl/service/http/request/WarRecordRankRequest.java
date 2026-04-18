@@ -4,6 +4,9 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
+import lombok.Getter;
+
+@Getter
 public final class WarRecordRankRequest extends BaseRequest {
 
     /**
@@ -61,6 +64,7 @@ public final class WarRecordRankRequest extends BaseRequest {
     private String appCode;
 
     private WarRecordRankRequest(Builder builder) {
+        super(builder);
         this.sportSceneCodes = builder.sportSceneCodes;
         this.sportSceneType = builder.sportSceneType;
         this.sportSkuId = builder.sportSkuId;
@@ -76,8 +80,11 @@ public final class WarRecordRankRequest extends BaseRequest {
         return new Builder();
     }
 
-
-    public static class Builder {
+    public static class Builder extends BaseRequest.Builder<Builder> {
+        @Override
+        protected Builder self() {
+            return this;
+        }
         private List<String> sportSceneCodes;
         private String sportSceneType;
         private String sportSkuId;
@@ -136,5 +143,4 @@ public final class WarRecordRankRequest extends BaseRequest {
         public WarRecordRankRequest build() { return new WarRecordRankRequest(this); }
     }
 
-    public String getSportSkuId() { return sportSkuId; }
 }

@@ -2,6 +2,9 @@ package com.adl.service.http.request;
 
 import com.google.gson.annotations.SerializedName;
 
+import lombok.Getter;
+
+@Getter
 public final class UploadDeviceInfoRequest extends BaseRequest {
 
     /**
@@ -23,6 +26,7 @@ public final class UploadDeviceInfoRequest extends BaseRequest {
     private String macAddress;
 
     private UploadDeviceInfoRequest(Builder builder) {
+        super(builder);
         this.id = builder.id;
         this.deviceName = builder.deviceName;
         this.macAddress = builder.macAddress;
@@ -32,8 +36,11 @@ public final class UploadDeviceInfoRequest extends BaseRequest {
         return new Builder(id);
     }
 
-
-    public static class Builder {
+    public static class Builder extends BaseRequest.Builder<Builder> {
+        @Override
+        protected Builder self() {
+            return this;
+        }
         private String id;
         private String deviceName;
         private String macAddress;
@@ -55,17 +62,5 @@ public final class UploadDeviceInfoRequest extends BaseRequest {
         public UploadDeviceInfoRequest build() {
             return new UploadDeviceInfoRequest(this);
         }
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public String getDeviceName() {
-        return deviceName;
-    }
-
-    public String getMacAddress() {
-        return macAddress;
     }
 }

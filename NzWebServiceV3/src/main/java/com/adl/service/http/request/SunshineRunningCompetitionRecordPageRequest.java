@@ -2,12 +2,15 @@ package com.adl.service.http.request;
 
 import com.google.gson.annotations.SerializedName;
 
+import lombok.Getter;
+
 /**
  * Name : SportDetailListRequest
  * Author : zhouxiangnan
  * Date : 2026/4/7
  * Describe : 定义接口请求参数结构
  */
+@Getter
 public final class SunshineRunningCompetitionRecordPageRequest extends BasePageRequest {
 
     /**
@@ -144,41 +147,5 @@ public final class SunshineRunningCompetitionRecordPageRequest extends BasePageR
         public SunshineRunningCompetitionRecordPageRequest build() {
             return new SunshineRunningCompetitionRecordPageRequest(this);
         }
-    }
-
-    public String getOrgId() {
-        return orgId;
-    }
-
-    public String getGradeId() {
-        return gradeId;
-    }
-
-    public String getClassId() {
-        return classId;
-    }
-
-    public Integer getMultiPersonIndex() {
-        return multiPersonIndex;
-    }
-
-    public String getStartDate() {
-        return startDate;
-    }
-
-    public String getEndDate() {
-        return endDate;
-    }
-
-    public String getSportSkuId() {
-        return sportSkuId;
-    }
-
-    public String getAppCode() {
-        return appCode;
-    }
-
-    public String getKeyword() {
-        return keyword;
     }
 }

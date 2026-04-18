@@ -2,6 +2,9 @@ package com.adl.service.http.request;
 
 import com.google.gson.annotations.SerializedName;
 
+import lombok.Getter;
+
+@Getter
 public final class OrgRecordPageRequest extends BasePageRequest {
 
     /**
@@ -138,41 +141,5 @@ public final class OrgRecordPageRequest extends BasePageRequest {
         public OrgRecordPageRequest build() {
             return new OrgRecordPageRequest(this);
         }
-    }
-
-    public String getPtPlanId() {
-        return ptPlanId;
-    }
-
-    public String getSportTypeCode() {
-        return sportTypeCode;
-    }
-
-    public String getSportItemCode() {
-        return sportItemCode;
-    }
-
-    public String getSemesterId() {
-        return semesterId;
-    }
-
-    public String getSceneCode() {
-        return sceneCode;
-    }
-
-    public String getAppCode() {
-        return appCode;
-    }
-
-    public String getAccountId() {
-        return accountId;
-    }
-
-    public String getSportSkuId() {
-        return sportSkuId;
-    }
-
-    public String getGradeId() {
-        return gradeId;
     }
 }

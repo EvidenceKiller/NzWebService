@@ -4,6 +4,9 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
+import lombok.Getter;
+
+@Getter
 public final class SportMeetPageRequest extends BasePageRequest {
 
     /**
@@ -153,45 +156,5 @@ public final class SportMeetPageRequest extends BasePageRequest {
         public SportMeetPageRequest build() {
             return new SportMeetPageRequest(this);
         }
-    }
-
-    public String getAppCode() {
-        return appCode;
-    }
-
-    public List<String> getClassIds() {
-        return classIds;
-    }
-
-    public String getOrgId() {
-        return orgId;
-    }
-
-    public Integer getState() {
-        return state;
-    }
-
-    public String getKeyword() {
-        return keyword;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public Boolean getShowGroup() {
-        return showGroup;
-    }
-
-    public String getCheckTime() {
-        return checkTime;
-    }
-
-    public Integer getOrderByField() {
-        return orderByField;
-    }
-
-    public Long getLastUpdateTime() {
-        return lastUpdateTime;
     }
 }

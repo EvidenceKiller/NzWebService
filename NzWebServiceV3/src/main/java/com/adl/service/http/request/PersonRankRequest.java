@@ -2,6 +2,9 @@ package com.adl.service.http.request;
 
 import com.google.gson.annotations.SerializedName;
 
+import lombok.Getter;
+
+@Getter
 public final class PersonRankRequest extends BaseRequest {
 
     /**
@@ -65,6 +68,7 @@ public final class PersonRankRequest extends BaseRequest {
     private String majorId;
 
     private PersonRankRequest(Builder builder) {
+        super(builder);
         this.accountId = builder.accountId;
         this.sportSkuId = builder.sportSkuId;
         this.sportSkuSubType = builder.sportSkuSubType;
@@ -81,8 +85,11 @@ public final class PersonRankRequest extends BaseRequest {
         return new Builder(accountId, sportSkuId);
     }
 
-
-    public static class Builder {
+    public static class Builder extends BaseRequest.Builder<Builder> {
+        @Override
+        protected Builder self() {
+            return this;
+        }
         private String accountId;
         private String sportSkuId;
         private String sportSkuSubType;
@@ -142,45 +149,5 @@ public final class PersonRankRequest extends BaseRequest {
         public PersonRankRequest build() {
             return new PersonRankRequest(this);
         }
-    }
-
-    public String getAccountId() {
-        return accountId;
-    }
-
-    public String getSportSkuId() {
-        return sportSkuId;
-    }
-
-    public String getSportSkuSubType() {
-        return sportSkuSubType;
-    }
-
-    public Integer getTimeType() {
-        return timeType;
-    }
-
-    public String getClassId() {
-        return classId;
-    }
-
-    public String getGradeId() {
-        return gradeId;
-    }
-
-    public String getOrgId() {
-        return orgId;
-    }
-
-    public String getCollegeId() {
-        return collegeId;
-    }
-
-    public String getFacultyId() {
-        return facultyId;
-    }
-
-    public String getMajorId() {
-        return majorId;
     }
 }

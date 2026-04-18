@@ -2,12 +2,15 @@ package com.adl.service.http.request;
 
 import com.google.gson.annotations.SerializedName;
 
+import lombok.Getter;
+
 /**
  * Name : SportDetailListRequest
  * Author : zhouxiangnan
  * Date : 2026/4/7
  * Describe : 定义接口请求参数结构
  */
+@Getter
 public final class SunshineRunningSportDetailPageRequest extends BasePageRequest {
 
     /**
@@ -65,17 +68,5 @@ public final class SunshineRunningSportDetailPageRequest extends BasePageRequest
         public SunshineRunningSportDetailPageRequest build() {
             return new SunshineRunningSportDetailPageRequest(this);
         }
-    }
-
-    public String getSemesterId() {
-        return semesterId;
-    }
-
-    public String getOrgId() {
-        return orgId;
-    }
-
-    public String getDate() {
-        return date;
     }
 }

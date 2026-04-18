@@ -2,6 +2,9 @@ package com.adl.service.http.request;
 
 import com.google.gson.annotations.SerializedName;
 
+import lombok.Getter;
+
+@Getter
 public final class SoftwareReportRequest extends BaseRequest {
 
     /**
@@ -41,6 +44,7 @@ public final class SoftwareReportRequest extends BaseRequest {
     private String remark;
 
     private SoftwareReportRequest(Builder builder) {
+        super(builder);
         this.productCode = builder.productCode;
         this.appCode = builder.appCode;
         this.softwareVersion = builder.softwareVersion;
@@ -53,8 +57,11 @@ public final class SoftwareReportRequest extends BaseRequest {
         return new Builder();
     }
 
-
-    public static class Builder {
+    public static class Builder extends BaseRequest.Builder<Builder> {
+        @Override
+        protected Builder self() {
+            return this;
+        }
         private String productCode;
         private String appCode;
         private String softwareVersion;
@@ -95,29 +102,5 @@ public final class SoftwareReportRequest extends BaseRequest {
         public SoftwareReportRequest build() {
             return new SoftwareReportRequest(this);
         }
-    }
-
-    public String getProductCode() {
-        return productCode;
-    }
-
-    public String getAppCode() {
-        return appCode;
-    }
-
-    public String getSoftwareVersion() {
-        return softwareVersion;
-    }
-
-    public String getPackageName() {
-        return packageName;
-    }
-
-    public String getDeviceNickname() {
-        return deviceNickname;
-    }
-
-    public String getRemark() {
-        return remark;
     }
 }

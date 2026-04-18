@@ -4,6 +4,9 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
+import lombok.Getter;
+
+@Getter
 public final class SportSportRankKingRequest extends BaseRequest {
 
     /** 场景code 1001 锻炼 */
@@ -27,6 +30,7 @@ public final class SportSportRankKingRequest extends BaseRequest {
     private String appCode;
 
     private SportSportRankKingRequest(Builder builder) {
+        super(builder);
         this.sportSceneCodes = builder.sportSceneCodes;
         this.dayType = builder.dayType;
         this.orgId = builder.orgId;
@@ -38,8 +42,11 @@ public final class SportSportRankKingRequest extends BaseRequest {
         return new Builder(sportSceneCodes, dayType, appCode);
     }
 
-
-    public static class Builder {
+    public static class Builder extends BaseRequest.Builder<Builder> {
+        @Override
+        protected Builder self() {
+            return this;
+        }
         private List<String> sportSceneCodes;
         private String dayType;
         private String orgId;
@@ -61,10 +68,4 @@ public final class SportSportRankKingRequest extends BaseRequest {
 
         public SportSportRankKingRequest build() { return new SportSportRankKingRequest(this); }
     }
-
-    public List<String> getSportSceneCodes() { return sportSceneCodes; }
-    public String getDayType() { return dayType; }
-    public String getOrgId() { return orgId; }
-    public Long getRankNumber() { return rankNumber; }
-    public String getAppCode() { return appCode; }
 }

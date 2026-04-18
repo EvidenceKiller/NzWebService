@@ -4,6 +4,9 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
+import lombok.Getter;
+
+@Getter
 public final class ReportTeacherSportRequest extends BaseRequest {
 
     /**
@@ -145,6 +148,7 @@ public final class ReportTeacherSportRequest extends BaseRequest {
     private Integer sportViolationStatus;
 
     private ReportTeacherSportRequest(Builder builder) {
+        super(builder);
         this.accountId = builder.accountId;
         this.appCode = builder.appCode;
         this.appName = builder.appName;
@@ -174,8 +178,11 @@ public final class ReportTeacherSportRequest extends BaseRequest {
         return new Builder(accountId, appCode, appName, invalidFlag, sportCount, sportStartTime, sportEndTime, sportResult, sportSceneCode, sportSkuId, sportSkuSubType, sportTime);
     }
 
-
-    public static class Builder {
+    public static class Builder extends BaseRequest.Builder<Builder> {
+        @Override
+        protected Builder self() {
+            return this;
+        }
         private String accountId;
         private String appCode;
         private String appName;
@@ -273,97 +280,5 @@ public final class ReportTeacherSportRequest extends BaseRequest {
         public ReportTeacherSportRequest build() {
             return new ReportTeacherSportRequest(this);
         }
-    }
-
-    public String getAccountId() {
-        return accountId;
-    }
-
-    public String getAppCode() {
-        return appCode;
-    }
-
-    public String getAppName() {
-        return appName;
-    }
-
-    public Integer getPerfectCount() {
-        return perfectCount;
-    }
-
-    public Integer getBravoCount() {
-        return bravoCount;
-    }
-
-    public Integer getGoodeviceount() {
-        return goodeviceount;
-    }
-
-    public String getExtraJson() {
-        return extraJson;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public Integer getInvalidFlag() {
-        return invalidFlag;
-    }
-
-    public Long getSportCount() {
-        return sportCount;
-    }
-
-    public String getSportStartTime() {
-        return sportStartTime;
-    }
-
-    public String getSportEndTime() {
-        return sportEndTime;
-    }
-
-    public List<BaseSportImage> getSportImages() {
-        return sportImages;
-    }
-
-    public List<BaseSportVideo> getSportVideos() {
-        return sportVideos;
-    }
-
-    public String getSportResult() {
-        return sportResult;
-    }
-
-    public String getSportSceneCode() {
-        return sportSceneCode;
-    }
-
-    public Double getSportScore() {
-        return sportScore;
-    }
-
-    public String getSportSkuId() {
-        return sportSkuId;
-    }
-
-    public String getSportSkuSubType() {
-        return sportSkuSubType;
-    }
-
-    public Long getSportTime() {
-        return sportTime;
-    }
-
-    public String getSportUnitCode() {
-        return sportUnitCode;
-    }
-
-    public String getOriginalSportResult() {
-        return originalSportResult;
-    }
-
-    public Integer getSportViolationStatus() {
-        return sportViolationStatus;
     }
 }

@@ -11,7 +11,7 @@ import lombok.experimental.Accessors;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-public final class BaseCompetitionAthletics extends BaseRequest {
+public final class BaseCompetitionAthletics {
     /**
      * 赛事id
      */

@@ -1,5 +1,8 @@
 package com.adl.service.http.request;
 
+import lombok.Getter;
+
+@Getter
 public final class WikiTypePageRequest extends BasePageRequest {
 
     private WikiTypePageRequest(Builder builder) {

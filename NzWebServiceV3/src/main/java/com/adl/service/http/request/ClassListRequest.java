@@ -2,6 +2,9 @@ package com.adl.service.http.request;
 
 import com.google.gson.annotations.SerializedName;
 
+import lombok.Getter;
+
+@Getter
 public final class ClassListRequest extends BasePageRequest {
 
     /**
@@ -61,7 +64,6 @@ public final class ClassListRequest extends BasePageRequest {
         return new Builder();
     }
 
-
     public static class Builder extends BasePageRequest.Builder<Builder> {
         @Override
         protected Builder self() {
@@ -113,33 +115,5 @@ public final class ClassListRequest extends BasePageRequest {
         public ClassListRequest build() {
             return new ClassListRequest(this);
         }
-    }
-
-    public String getOrgId() {
-        return orgId;
-    }
-
-    public String getGradeCode() {
-        return gradeCode;
-    }
-
-    public String getAcayearSem() {
-        return acayearSem;
-    }
-
-    public String getKeyword() {
-        return keyword;
-    }
-
-    public String getCollegeId() {
-        return collegeId;
-    }
-
-    public String getFacultyId() {
-        return facultyId;
-    }
-
-    public String getMajorId() {
-        return majorId;
     }
 }

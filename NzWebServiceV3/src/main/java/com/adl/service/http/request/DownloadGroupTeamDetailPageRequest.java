@@ -2,6 +2,9 @@ package com.adl.service.http.request;
 
 import com.google.gson.annotations.SerializedName;
 
+import lombok.Getter;
+
+@Getter
 public final class DownloadGroupTeamDetailPageRequest extends BasePageRequest {
 
     /**
@@ -99,29 +102,5 @@ public final class DownloadGroupTeamDetailPageRequest extends BasePageRequest {
         public DownloadGroupTeamDetailPageRequest build() {
             return new DownloadGroupTeamDetailPageRequest(this);
         }
-    }
-
-    public String getMeetId() {
-        return meetId;
-    }
-
-    public String getMeetSportSkuId() {
-        return meetSportSkuId;
-    }
-
-    public Integer getCompetitionType() {
-        return competitionType;
-    }
-
-    public Integer getCompetitionRound() {
-        return competitionRound;
-    }
-
-    public String getCheckTime() {
-        return checkTime;
-    }
-
-    public String getTeamUnitCode() {
-        return teamUnitCode;
     }
 }

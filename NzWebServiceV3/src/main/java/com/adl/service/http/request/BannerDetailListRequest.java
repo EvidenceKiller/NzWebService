@@ -2,6 +2,9 @@ package com.adl.service.http.request;
 
 import com.google.gson.annotations.SerializedName;
 
+import lombok.Getter;
+
+@Getter
 public final class BannerDetailListRequest extends BaseRequest {
 
     @SerializedName("id")
@@ -14,6 +17,7 @@ public final class BannerDetailListRequest extends BaseRequest {
     private Integer resType;
 
     private BannerDetailListRequest(Builder builder) {
+        super(builder);
         this.id = builder.id;
         this.wikiId = builder.wikiId;
         this.resType = builder.resType;
@@ -24,7 +28,11 @@ public final class BannerDetailListRequest extends BaseRequest {
     }
 
 
-    public static class Builder {
+    public static class Builder extends BaseRequest.Builder<Builder> {
+        @Override
+        protected Builder self() {
+            return this;
+        }
         private String id;
         private String wikiId;
         private Integer resType;
@@ -46,17 +54,5 @@ public final class BannerDetailListRequest extends BaseRequest {
         public BannerDetailListRequest build() {
             return new BannerDetailListRequest(this);
         }
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public String getWikiId() {
-        return wikiId;
-    }
-
-    public Integer getResType() {
-        return resType;
     }
 }

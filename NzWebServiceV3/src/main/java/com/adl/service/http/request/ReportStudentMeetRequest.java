@@ -4,6 +4,9 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
+import lombok.Getter;
+
+@Getter
 public final class ReportStudentMeetRequest extends BaseRequest {
 
     /**
@@ -181,6 +184,7 @@ public final class ReportStudentMeetRequest extends BaseRequest {
     private BaseSportMeet sportMeet;
 
     private ReportStudentMeetRequest(Builder builder) {
+        super(builder);
         this.accountId = builder.accountId;
         this.appCode = builder.appCode;
         this.perfectCount = builder.perfectCount;
@@ -217,7 +221,11 @@ public final class ReportStudentMeetRequest extends BaseRequest {
     }
 
 
-    public static class Builder {
+    public static class Builder extends BaseRequest.Builder<Builder> {
+        @Override
+        protected Builder self() {
+            return this;
+        }
         private String accountId;
         private String appCode;
         private Integer perfectCount;
@@ -355,121 +363,5 @@ public final class ReportStudentMeetRequest extends BaseRequest {
         public ReportStudentMeetRequest build() {
             return new ReportStudentMeetRequest(this);
         }
-    }
-
-    public String getAccountId() {
-        return accountId;
-    }
-
-    public String getAppCode() {
-        return appCode;
-    }
-
-    public Integer getPerfectCount() {
-        return perfectCount;
-    }
-
-    public Integer getBravoCount() {
-        return bravoCount;
-    }
-
-    public Integer getGoodeviceount() {
-        return goodeviceount;
-    }
-
-    public String getExtraJson() {
-        return extraJson;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public Integer getInvalidFlag() {
-        return invalidFlag;
-    }
-
-    public String getMultiPersonId() {
-        return multiPersonId;
-    }
-
-    public Integer getMultiPersonRank() {
-        return multiPersonRank;
-    }
-
-    public Long getSportCount() {
-        return sportCount;
-    }
-
-    public String getSportStartTime() {
-        return sportStartTime;
-    }
-
-    public String getSportEndTime() {
-        return sportEndTime;
-    }
-
-    public List<BaseSportImage> getSportImages() {
-        return sportImages;
-    }
-
-    public List<BaseSportVideo> getSportVideos() {
-        return sportVideos;
-    }
-
-    public List<BaseSportIndicator> getSportIndicators() {
-        return sportIndicators;
-    }
-
-    public String getSportResult() {
-        return sportResult;
-    }
-
-    public String getSportSceneCode() {
-        return sportSceneCode;
-    }
-
-    public Double getSportScore() {
-        return sportScore;
-    }
-
-    public String getSportSkuId() {
-        return sportSkuId;
-    }
-
-    public String getSportSkuSubType() {
-        return sportSkuSubType;
-    }
-
-    public Long getSportTime() {
-        return sportTime;
-    }
-
-    public String getOriginalSportResult() {
-        return originalSportResult;
-    }
-
-    public Integer getSportViolationStatus() {
-        return sportViolationStatus;
-    }
-
-    public Integer getMultiPersonIndex() {
-        return multiPersonIndex;
-    }
-
-    public String getPlaceId() {
-        return placeId;
-    }
-
-    public String getPlaceName() {
-        return placeName;
-    }
-
-    public String getReportCode() {
-        return reportCode;
-    }
-
-    public BaseSportMeet getSportMeet() {
-        return sportMeet;
     }
 }

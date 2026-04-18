@@ -2,6 +2,9 @@ package com.adl.service.http.request;
 
 import com.google.gson.annotations.SerializedName;
 
+import lombok.Getter;
+
+@Getter
 public final class StudentPageRequest extends BasePageRequest {
 
     /**
@@ -109,33 +112,5 @@ public final class StudentPageRequest extends BasePageRequest {
         public StudentPageRequest build() {
             return new StudentPageRequest(this);
         }
-    }
-
-    public String getOrgId() {
-        return orgId;
-    }
-
-    public Integer getAccountType() {
-        return accountType;
-    }
-
-    public String getLastUpdateTime() {
-        return lastUpdateTime;
-    }
-
-    public String getAcayearSem() {
-        return acayearSem;
-    }
-
-    public String getAcayearSemCode() {
-        return acayearSemCode;
-    }
-
-    public Integer getFaceType() {
-        return faceType;
-    }
-
-    public Boolean getDelFlag() {
-        return delFlag;
     }
 }

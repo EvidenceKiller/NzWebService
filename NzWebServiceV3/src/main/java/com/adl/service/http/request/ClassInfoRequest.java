@@ -2,8 +2,10 @@ package com.adl.service.http.request;
 
 import com.google.gson.annotations.SerializedName;
 
-public final class ClassInfoRequest extends BasePageRequest {
+import lombok.Getter;
 
+@Getter
+public final class ClassInfoRequest extends BasePageRequest {
     /**
      * 班级id
      */
@@ -24,7 +26,6 @@ public final class ClassInfoRequest extends BasePageRequest {
         protected Builder self() {
             return this;
         }
-
         private String classId;
 
         Builder(String classId) {
@@ -34,9 +35,5 @@ public final class ClassInfoRequest extends BasePageRequest {
         public ClassInfoRequest build() {
             return new ClassInfoRequest(this);
         }
-    }
-
-    public String getClassId() {
-        return classId;
     }
 }

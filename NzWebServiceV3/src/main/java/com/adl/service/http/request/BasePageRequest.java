@@ -4,11 +4,13 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
+import lombok.Getter;
+
 /**
  * 分页请求公共字段。
  */
-public class BasePageRequest extends BaseRequest {
-
+@Getter
+public abstract class BasePageRequest extends BaseRequest {
     @SerializedName("noPaging")
     private Boolean noPaging;
 
@@ -39,10 +41,8 @@ public class BasePageRequest extends BaseRequest {
     @SerializedName("moduleStr")
     private String moduleStr;
 
-    protected BasePageRequest() {
-    }
-
     protected BasePageRequest(Builder<?> builder) {
+        super(builder);
         this.noPaging = builder.noPaging;
         this.pageSize = builder.pageSize;
         this.current = builder.current;
@@ -55,7 +55,7 @@ public class BasePageRequest extends BaseRequest {
         this.moduleStr = builder.moduleStr;
     }
 
-    public static abstract class Builder<T extends Builder<T>> {
+    public static abstract class Builder<T extends Builder<T>> extends BaseRequest.Builder<T> {
         protected Boolean noPaging;
         protected Long pageSize;
         protected Long current;
@@ -66,8 +66,6 @@ public class BasePageRequest extends BaseRequest {
         protected List<String> ignoreColumns;
         protected List<String> containColumns;
         protected String moduleStr;
-
-        protected abstract T self();
 
         public T noPaging(Boolean noPaging) {
             this.noPaging = noPaging;
@@ -119,15 +117,4 @@ public class BasePageRequest extends BaseRequest {
             return self();
         }
     }
-
-    public Boolean getNoPaging() { return noPaging; }
-    public Long getPageSize() { return pageSize; }
-    public Long getCurrent() { return current; }
-    public Boolean getDetail() { return detail; }
-    public Boolean getEnableSort() { return enableSort; }
-    public List<BaseSort> getSorts() { return sorts; }
-    public String getSortsStr() { return sortsStr; }
-    public List<String> getIgnoreColumns() { return ignoreColumns; }
-    public List<String> getContainColumns() { return containColumns; }
-    public String getModuleStr() { return moduleStr; }
 }

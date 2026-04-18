@@ -2,7 +2,10 @@ package com.adl.service.http.request;
 
 import com.google.gson.annotations.SerializedName;
 
-public final class BestRankTopRequest {
+import lombok.Getter;
+
+@Getter
+public final class BestRankTopRequest extends BaseRequest {
 
     /**
      * 产品应用标识码
@@ -83,6 +86,7 @@ public final class BestRankTopRequest {
     private String sportSceneType;
 
     private BestRankTopRequest(Builder builder) {
+        super(builder);
         this.appCode = builder.appCode;
         this.sportSkuId = builder.sportSkuId;
         this.classId = builder.classId;
@@ -102,8 +106,11 @@ public final class BestRankTopRequest {
         return new Builder(sportSkuId, timeType);
     }
 
-
-    public static class Builder {
+    public static class Builder extends BaseRequest.Builder<Builder> {
+        @Override
+        protected Builder self() {
+            return this;
+        }
         private String appCode;
         private String sportSkuId;
         private String classId;
@@ -181,57 +188,5 @@ public final class BestRankTopRequest {
         public BestRankTopRequest build() {
             return new BestRankTopRequest(this);
         }
-    }
-
-    public String getAppCode() {
-        return appCode;
-    }
-
-    public String getSportSkuId() {
-        return sportSkuId;
-    }
-
-    public String getClassId() {
-        return classId;
-    }
-
-    public String getGradeId() {
-        return gradeId;
-    }
-
-    public String getOrgId() {
-        return orgId;
-    }
-
-    public String getCollegeId() {
-        return collegeId;
-    }
-
-    public String getFacultyId() {
-        return facultyId;
-    }
-
-    public String getMajorId() {
-        return majorId;
-    }
-
-    public Integer getSex() {
-        return sex;
-    }
-
-    public Integer getTop() {
-        return top;
-    }
-
-    public Integer getTimeType() {
-        return timeType;
-    }
-
-    public String getSportSceneCode() {
-        return sportSceneCode;
-    }
-
-    public String getSportSceneType() {
-        return sportSceneType;
     }
 }

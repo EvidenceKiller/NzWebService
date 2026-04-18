@@ -2,6 +2,9 @@ package com.adl.service.http.request;
 
 import com.google.gson.annotations.SerializedName;
 
+import lombok.Getter;
+
+@Getter
 public final class SportSkuDetailRequest extends BaseRequest {
 
     /** 运动编码 */
@@ -9,6 +12,7 @@ public final class SportSkuDetailRequest extends BaseRequest {
     private String sportSkuId;
 
     private SportSkuDetailRequest(Builder builder) {
+        super(builder);
         this.sportSkuId = builder.sportSkuId;
     }
 
@@ -16,8 +20,11 @@ public final class SportSkuDetailRequest extends BaseRequest {
         return new Builder(sportSkuId);
     }
 
-
-    public static class Builder {
+    public static class Builder extends BaseRequest.Builder<Builder> {
+        @Override
+        protected Builder self() {
+            return this;
+        }
         private String sportSkuId;
         Builder(String sportSkuId) {
             this.sportSkuId = sportSkuId;
@@ -26,5 +33,4 @@ public final class SportSkuDetailRequest extends BaseRequest {
         public SportSkuDetailRequest build() { return new SportSkuDetailRequest(this); }
     }
 
-    public String getSportSkuId() { return sportSkuId; }
 }

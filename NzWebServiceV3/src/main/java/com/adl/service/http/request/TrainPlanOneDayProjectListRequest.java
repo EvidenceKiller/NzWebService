@@ -2,6 +2,9 @@ package com.adl.service.http.request;
 
 import com.google.gson.annotations.SerializedName;
 
+import lombok.Getter;
+
+@Getter
 public final class TrainPlanOneDayProjectListRequest extends BaseRequest {
 
     /**
@@ -23,6 +26,7 @@ public final class TrainPlanOneDayProjectListRequest extends BaseRequest {
     private String trainPlanTime;
 
     private TrainPlanOneDayProjectListRequest(Builder builder) {
+        super(builder);
         this.trainPlanId = builder.trainPlanId;
         this.accountId = builder.accountId;
         this.trainPlanTime = builder.trainPlanTime;
@@ -32,8 +36,11 @@ public final class TrainPlanOneDayProjectListRequest extends BaseRequest {
         return new Builder(accountId, trainPlanId);
     }
 
-
-    public static class Builder {
+    public static class Builder extends BaseRequest.Builder<Builder> {
+        @Override
+        protected Builder self() {
+            return this;
+        }
         private String trainPlanId;
         private String accountId;
         private String trainPlanTime;
@@ -51,17 +58,5 @@ public final class TrainPlanOneDayProjectListRequest extends BaseRequest {
         public TrainPlanOneDayProjectListRequest build() {
             return new TrainPlanOneDayProjectListRequest(this);
         }
-    }
-
-    public String getTrainPlanId() {
-        return trainPlanId;
-    }
-
-    public String getAccountId() {
-        return accountId;
-    }
-
-    public String getTrainPlanTime() {
-        return trainPlanTime;
     }
 }

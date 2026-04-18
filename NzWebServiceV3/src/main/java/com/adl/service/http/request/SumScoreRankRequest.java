@@ -2,6 +2,9 @@ package com.adl.service.http.request;
 
 import com.google.gson.annotations.SerializedName;
 
+import lombok.Getter;
+
+@Getter
 public final class SumScoreRankRequest extends BaseRequest {
 
     /**
@@ -65,6 +68,7 @@ public final class SumScoreRankRequest extends BaseRequest {
     private Integer topLimit;
 
     private SumScoreRankRequest(Builder builder) {
+        super(builder);
         this.sportSkuId = builder.sportSkuId;
         this.sportSkuSubType = builder.sportSkuSubType;
         this.timeType = builder.timeType;
@@ -81,8 +85,11 @@ public final class SumScoreRankRequest extends BaseRequest {
         return new Builder(sportSkuId, timeType);
     }
 
-
-    public static class Builder {
+    public static class Builder extends BaseRequest.Builder<Builder> {
+        @Override
+        protected Builder self() {
+            return this;
+        }
         private String sportSkuId;
         private String sportSkuSubType;
         private Integer timeType;
@@ -142,45 +149,5 @@ public final class SumScoreRankRequest extends BaseRequest {
         public SumScoreRankRequest build() {
             return new SumScoreRankRequest(this);
         }
-    }
-
-    public String getSportSkuId() {
-        return sportSkuId;
-    }
-
-    public String getSportSkuSubType() {
-        return sportSkuSubType;
-    }
-
-    public Integer getTimeType() {
-        return timeType;
-    }
-
-    public String getClassId() {
-        return classId;
-    }
-
-    public String getGradeId() {
-        return gradeId;
-    }
-
-    public String getOrgId() {
-        return orgId;
-    }
-
-    public String getCollegeId() {
-        return collegeId;
-    }
-
-    public String getFacultyId() {
-        return facultyId;
-    }
-
-    public String getMajorId() {
-        return majorId;
-    }
-
-    public Integer getTopLimit() {
-        return topLimit;
     }
 }

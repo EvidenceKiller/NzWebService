@@ -2,6 +2,9 @@ package com.adl.service.http.request;
 
 import com.google.gson.annotations.SerializedName;
 
+import lombok.Getter;
+
+@Getter
 public final class UploadUpgradeLogRequest extends BaseRequest {
 
     /**
@@ -29,6 +32,7 @@ public final class UploadUpgradeLogRequest extends BaseRequest {
     private String upgradeFlag;
 
     private UploadUpgradeLogRequest(Builder builder) {
+        super(builder);
         this.deviceId = builder.deviceId;
         this.planId = builder.planId;
         this.reason = builder.reason;
@@ -39,8 +43,11 @@ public final class UploadUpgradeLogRequest extends BaseRequest {
         return new Builder();
     }
 
-
-    public static class Builder {
+    public static class Builder extends BaseRequest.Builder<Builder> {
+        @Override
+        protected Builder self() {
+            return this;
+        }
         private String deviceId;
         private String planId;
         private String reason;
@@ -69,21 +76,5 @@ public final class UploadUpgradeLogRequest extends BaseRequest {
         public UploadUpgradeLogRequest build() {
             return new UploadUpgradeLogRequest(this);
         }
-    }
-
-    public String getDeviceId() {
-        return deviceId;
-    }
-
-    public String getPlanId() {
-        return planId;
-    }
-
-    public String getReason() {
-        return reason;
-    }
-
-    public String getUpgradeFlag() {
-        return upgradeFlag;
     }
 }

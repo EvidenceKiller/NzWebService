@@ -4,6 +4,9 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
+import lombok.Getter;
+
+@Getter
 public final class SportSkuPageRequest extends BasePageRequest {
 
     /** 运动性质 */
@@ -122,14 +125,4 @@ public final class SportSkuPageRequest extends BasePageRequest {
 
         public SportSkuPageRequest build() { return new SportSkuPageRequest(this); }
     }
-    public String getSportNature() { return sportNature; }
-    public String getSportType() { return sportType; }
-    public String getKeyword() { return keyword; }
-    public Integer getTemplateFlag() { return templateFlag; }
-    public List<String> getIds() { return ids; }
-    public List<String> getAppCodes() { return appCodes; }
-    public String getAppCode() { return appCode; }
-    public String getSceneId() { return sceneId; }
-    public Boolean getDelFlag() { return delFlag; }
-    public Boolean getEnabled() { return enabled; }
 }

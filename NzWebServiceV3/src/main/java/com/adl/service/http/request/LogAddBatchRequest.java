@@ -4,6 +4,9 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
+import lombok.Getter;
+
+@Getter
 public final class LogAddBatchRequest extends BaseRequest {
 
     /**
@@ -43,6 +46,7 @@ public final class LogAddBatchRequest extends BaseRequest {
     private List<String> tags;
 
     private LogAddBatchRequest(Builder builder) {
+        super(builder);
         this.appCode = builder.appCode;
         this.content = builder.content;
         this.expireTime = builder.expireTime;
@@ -55,8 +59,11 @@ public final class LogAddBatchRequest extends BaseRequest {
         return new Builder();
     }
 
-
-    public static class Builder {
+    public static class Builder extends BaseRequest.Builder<Builder> {
+        @Override
+        protected Builder self() {
+            return this;
+        }
         private String appCode;
         private String content;
         private String expireTime;
@@ -97,29 +104,5 @@ public final class LogAddBatchRequest extends BaseRequest {
         public LogAddBatchRequest build() {
             return new LogAddBatchRequest(this);
         }
-    }
-
-    public String getAppCode() {
-        return appCode;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public String getExpireTime() {
-        return expireTime;
-    }
-
-    public String getLevel() {
-        return level;
-    }
-
-    public String getProductCode() {
-        return productCode;
-    }
-
-    public List<String> getTags() {
-        return tags;
     }
 }

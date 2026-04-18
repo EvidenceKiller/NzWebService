@@ -2,6 +2,9 @@ package com.adl.service.http.request;
 
 import com.google.gson.annotations.SerializedName;
 
+import lombok.Getter;
+
+@Getter
 public final class StandardConfigPageRequest extends BasePageRequest {
 
     /** 测试标准标识码 */
@@ -49,7 +52,4 @@ public final class StandardConfigPageRequest extends BasePageRequest {
 
         public StandardConfigPageRequest build() { return new StandardConfigPageRequest(this); }
     }
-    public String getStandardId() { return standardId; }
-    public String getSportProjectCode() { return sportProjectCode; }
-    public String getStandardType() { return standardType; }
 }

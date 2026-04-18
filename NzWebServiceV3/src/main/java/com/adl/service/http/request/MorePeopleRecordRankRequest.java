@@ -2,6 +2,9 @@ package com.adl.service.http.request;
 
 import com.google.gson.annotations.SerializedName;
 
+import lombok.Getter;
+
+@Getter
 public final class MorePeopleRecordRankRequest extends BaseRequest {
 
     /**
@@ -23,6 +26,7 @@ public final class MorePeopleRecordRankRequest extends BaseRequest {
     private Long rankNumber;
 
     private MorePeopleRecordRankRequest(Builder builder) {
+        super(builder);
         this.sportSkuId = builder.sportSkuId;
         this.orgId = builder.orgId;
         this.rankNumber = builder.rankNumber;
@@ -32,8 +36,11 @@ public final class MorePeopleRecordRankRequest extends BaseRequest {
         return new Builder();
     }
 
-
-    public static class Builder {
+    public static class Builder extends BaseRequest.Builder<Builder> {
+        @Override
+        protected Builder self() {
+            return this;
+        }
         private String sportSkuId;
         private String orgId;
         private Long rankNumber;
@@ -56,17 +63,5 @@ public final class MorePeopleRecordRankRequest extends BaseRequest {
         public MorePeopleRecordRankRequest build() {
             return new MorePeopleRecordRankRequest(this);
         }
-    }
-
-    public String getSportSkuId() {
-        return sportSkuId;
-    }
-
-    public String getOrgId() {
-        return orgId;
-    }
-
-    public Long getRankNumber() {
-        return rankNumber;
     }
 }

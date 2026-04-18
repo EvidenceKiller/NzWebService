@@ -4,6 +4,9 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
+import lombok.Getter;
+
+@Getter
 public final class ResPageRequest extends BasePageRequest {
 
     /** 资源id */
@@ -130,15 +133,4 @@ public final class ResPageRequest extends BasePageRequest {
 
         public ResPageRequest build() { return new ResPageRequest(this); }
     }
-    public String getId() { return id; }
-    public Boolean getEnabled() { return enabled; }
-    public Integer getType() { return type; }
-    public String getStartTime() { return startTime; }
-    public String getEndTime() { return endTime; }
-    public String getTitle() { return title; }
-    public String getCreateNum() { return createNum; }
-    public Integer getResType() { return resType; }
-    public String getAppCode() { return appCode; }
-    public String getResTypeId() { return resTypeId; }
-    public List<String> getIds() { return ids; }
 }

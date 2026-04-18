@@ -4,6 +4,9 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
+import lombok.Getter;
+
+@Getter
 public final class SportRankRequest extends BaseRequest {
 
     /** 场景code 1001 锻炼 */
@@ -43,6 +46,7 @@ public final class SportRankRequest extends BaseRequest {
     private String appCode;
 
     private SportRankRequest(Builder builder) {
+        super(builder);
         this.sportSceneCodes = builder.sportSceneCodes;
         this.sportSceneType = builder.sportSceneType;
         this.sportSkuId = builder.sportSkuId;
@@ -58,8 +62,11 @@ public final class SportRankRequest extends BaseRequest {
         return new Builder(appCode, sportSceneType);
     }
 
-
-    public static class Builder {
+    public static class Builder extends BaseRequest.Builder<Builder> {
+        @Override
+        protected Builder self() {
+            return this;
+        }
         private List<String> sportSceneCodes;
         private String sportSceneType;
         private String sportSkuId;
@@ -111,41 +118,5 @@ public final class SportRankRequest extends BaseRequest {
         }
 
         public SportRankRequest build() { return new SportRankRequest(this); }
-    }
-
-    public List<String> getSportSceneCodes() {
-        return sportSceneCodes;
-    }
-
-    public String getSportSceneType() {
-        return sportSceneType;
-    }
-
-    public String getSportSkuId() {
-        return sportSkuId;
-    }
-
-    public String getDayType() {
-        return dayType;
-    }
-
-    public String getOrgId() {
-        return orgId;
-    }
-
-    public String getTenantOrgId() {
-        return tenantOrgId;
-    }
-
-    public List<String> getSportDateList() {
-        return sportDateList;
-    }
-
-    public Long getRankNumber() {
-        return rankNumber;
-    }
-
-    public String getAppCode() {
-        return appCode;
     }
 }
