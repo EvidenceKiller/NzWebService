@@ -3,7 +3,7 @@ package com.adl.service.common;
 import android.text.TextUtils;
 
 import com.adl.service.ConfigService;
-import com.adl.service.internal.RetrofitClient;
+import com.adl.service.internal.RetrofitManager;
 import com.adl.service.utils.InnerUtil;
 
 import java.util.HashMap;
@@ -78,7 +78,7 @@ public abstract class BaseService implements IDefine {
             //  post 请求
             Request request = new Request.Builder().url(url)
                     .post(RequestBody.create(param, MediaType.parse("application/json; charset=utf-8"))).build();
-            Response response = RetrofitClient.getInstance("", false).getOkHttpClient().newCall(request).execute();
+            Response response = RetrofitManager.getInstance().newCall(request);
             if (response.isSuccessful() && response.body() != null) {
                 String content = response.body().string();
                 //  去除双引号

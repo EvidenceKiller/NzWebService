@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "f66b83d7ba1cd5b8c7b83ae7e3949158",
+    "identityHash": "d61f3f245803e846015e7148b8dbb69a",
     "entities": [
       {
         "tableName": "_student",
@@ -1864,7 +1864,7 @@
       },
       {
         "tableName": "_dict",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`_enable_sort` INTEGER, `_module_str` TEXT, `_id` TEXT NOT NULL, `_dict_code` TEXT, `_dict_value` TEXT, `_dict_label` TEXT, `_sort_num` INTEGER, `_default_flag` TEXT, `_ext_data` TEXT, `_remark` TEXT, `_lang` TEXT, `_create_time` TEXT, `_update_time` TEXT, `_data_type` INTEGER, PRIMARY KEY(`_id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`_enable_sort` INTEGER, `_module_str` TEXT, `_id` TEXT NOT NULL, `_dict_code` TEXT, `_dict_value` TEXT, `_dict_label` TEXT, `_sort_num` INTEGER, `_default_flag` TEXT, `_ext_data` TEXT, `_remark` TEXT, `_lang` TEXT, `_create_time` TEXT, `_update_time` TEXT, `_data_type` INTEGER, `_record_time` INTEGER DEFAULT (strftime('%s', 'now') * 1000), PRIMARY KEY(`_id`))",
         "fields": [
           {
             "fieldPath": "enableSort",
@@ -1949,6 +1949,13 @@
             "columnName": "_data_type",
             "affinity": "INTEGER",
             "notNull": false
+          },
+          {
+            "fieldPath": "recordTime",
+            "columnName": "_record_time",
+            "affinity": "INTEGER",
+            "notNull": false,
+            "defaultValue": "(strftime('%s', 'now') * 1000)"
           }
         ],
         "primaryKey": {
@@ -2110,7 +2117,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'f66b83d7ba1cd5b8c7b83ae7e3949158')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'd61f3f245803e846015e7148b8dbb69a')"
     ]
   }
 }

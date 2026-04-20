@@ -16,7 +16,6 @@ import com.adl.service.data.StandardConfigData;
 
 import java.util.List;
 
-import io.reactivex.rxjava3.core.Single;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
 
@@ -28,35 +27,35 @@ public interface OrgTestService {
      * 获取标准列表
      */
     @POST("tis/device/pte/organizeTest/getStandardConfig")
-    Single<BaseResponse<List<StandardConfigData>>> getStandardConfigPage(@Body StandardConfigPageRequest request);
+    BaseResponse<List<StandardConfigData>> getStandardConfigPage(@Body StandardConfigPageRequest request);
 
     /**
      * 获取计划下学生
      */
     @POST("tis/device/pte/organizeTest/getPlanStudents")
-    Single<BaseResponse<BasePageData<PlanStudentData>>> getPlanStudentPage(@Body PlanStudentPageRequest request);
+    BaseResponse<BasePageData<PlanStudentData>> getPlanStudentPage(@Body PlanStudentPageRequest request);
 
     /**
      * 获取计划列表
      */
     @POST("tis/device/pte/organizeTest/getPlanList")
-    Single<BaseResponse<BasePageData<PlanData>>> getPlanPage(@Body PlanPageRequest request);
+    BaseResponse<BasePageData<PlanData>> getPlanPage(@Body PlanPageRequest request);
 
     /**
      * 获取组织测试计划详情
      */
     @POST("tis/device/pte/organizeTest/getPlanInfo")
-    Single<BaseResponse<PlanInfoData>> getPlanInfo(@Body PlanInfoRequest request);
+    BaseResponse<PlanInfoData> getPlanInfo(@Body PlanInfoRequest request);
 
     /**
      * 获取计划班级列表
      */
     @POST("tis/device/pte/organizeTest/getPlanClassList")
-    Single<BaseResponse<List<PlanClassData>>> getPlanClassList(@Body PlanClassListRequest request);
+    BaseResponse<List<PlanClassData>> getPlanClassList(@Body PlanClassListRequest request);
 
     /**
      * 查询学生是否在计划下
      */
     @POST("tis/device/pte/organizeTest/checkStudent")
-    Single<BaseResponse<Boolean>> checkStudentInPlan(@Body CheckStudentInPlanRequest request);
+    BaseResponse<Boolean> checkStudentInPlan(@Body CheckStudentInPlanRequest request);
 }

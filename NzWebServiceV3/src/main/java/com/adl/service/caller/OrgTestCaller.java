@@ -1,6 +1,13 @@
 package com.adl.service.caller;
 
+import com.adl.service.callback.GetPageResult;
 import com.adl.service.callback.RequestCallback;
+import com.adl.service.data.BasePageData;
+import com.adl.service.data.PlanClassData;
+import com.adl.service.data.PlanData;
+import com.adl.service.data.PlanInfoData;
+import com.adl.service.data.PlanStudentData;
+import com.adl.service.data.StandardConfigData;
 import com.adl.service.exception.NzBaseException;
 import com.adl.service.http.request.CheckStudentInPlanRequest;
 import com.adl.service.http.request.PlanClassListRequest;
@@ -9,13 +16,6 @@ import com.adl.service.http.request.PlanPageRequest;
 import com.adl.service.http.request.PlanStudentPageRequest;
 import com.adl.service.http.request.RequestScope;
 import com.adl.service.http.request.StandardConfigPageRequest;
-import com.adl.service.data.BasePageData;
-import com.adl.service.data.PlanClassData;
-import com.adl.service.data.PlanInfoData;
-import com.adl.service.data.PlanData;
-import com.adl.service.data.PlanStudentData;
-import com.adl.service.callback.GetPageResult;
-import com.adl.service.data.StandardConfigData;
 
 import java.util.List;
 
@@ -26,7 +26,7 @@ public interface OrgTestCaller {
 
     void reLoadAllOrgTestDataSync(boolean syncStandard) throws NzBaseException;
 
-    void clearStandardConfigDataSync();
+    void clearStandardConfigDataSync() throws NzBaseException;
 
     long getStandardConfigPagesAllAsync(RequestScope scope, StandardConfigPageRequest request, RequestCallback<GetPageResult> callback);
 
@@ -44,7 +44,7 @@ public interface OrgTestCaller {
      */
     List<StandardConfigData> getStandardConfigPageSync(StandardConfigPageRequest request) throws NzBaseException;
 
-    void clearPlanStudentDataSync();
+    void clearPlanStudentDataSync() throws NzBaseException;
 
     long getPlanStudentPagesAllASync(RequestScope scope, PlanStudentPageRequest request, RequestCallback<GetPageResult> callback);
 
@@ -62,7 +62,7 @@ public interface OrgTestCaller {
      */
     BasePageData<PlanStudentData> getPlanStudentPageSync(PlanStudentPageRequest request) throws NzBaseException;
 
-    void clearPlanDataSync();
+    void clearPlanDataSync() throws NzBaseException;
 
     /**
      * 获取所有的分页计划列表

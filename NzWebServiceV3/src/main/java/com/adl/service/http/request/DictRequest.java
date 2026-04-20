@@ -2,9 +2,11 @@ package com.adl.service.http.request;
 
 import com.google.gson.annotations.SerializedName;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 @Getter
+@EqualsAndHashCode
 public final class DictRequest extends BaseRequest {
 
     @SerializedName("dictId")

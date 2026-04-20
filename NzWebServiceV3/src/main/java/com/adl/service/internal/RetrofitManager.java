@@ -16,6 +16,7 @@ import com.adl.service.caller.impl.LoginAuthCallerImpl;
 import com.adl.service.caller.impl.OperationCallerImpl;
 import com.adl.service.caller.impl.OrgTestCallerImpl;
 import com.adl.service.caller.impl.SportInfoCallerImpl;
+import com.adl.service.log.NzLog;
 import com.adl.service.web.BigScreenH5Service;
 import com.adl.service.web.BigScreenStatsService;
 import com.adl.service.web.BusinessService;
@@ -24,6 +25,11 @@ import com.adl.service.web.LoginAuthService;
 import com.adl.service.web.OperationService;
 import com.adl.service.web.OrgTestService;
 import com.adl.service.web.SportInfoService;
+
+import java.io.IOException;
+
+import okhttp3.Request;
+import okhttp3.Response;
 
 /**
  * Retrofit 与 Caller 统一管理器（单例）。
@@ -34,6 +40,10 @@ public final class RetrofitManager {
 
     private String host;
     private boolean debug;
+
+    private volatile boolean isInit = false;
+
+    private RetrofitClient retrofitClient;
 
     private CommonInfoCaller commonInfoCaller;
     private SportInfoCaller sportInfoCaller;
@@ -59,42 +69,49 @@ public final class RetrofitManager {
     }
 
     public synchronized void init(String host, boolean debug) {
-        boolean needRebuild = this.commonInfoCaller == null
-                || this.sportInfoCaller == null
-                || this.orgTestCaller == null
-                || this.operationCaller == null
-                || this.businessCaller == null
-                || this.loginAuthCaller == null
-                || this.bigScreenStatsCaller == null
-                || this.bigScreenH5Caller == null
-                || !host.equals(this.host)
-                || debug != this.debug;
-        if (!needRebuild) {
+        if (isInit) {
+            NzLog.i("RetrofitManager has been initialized.");
             return;
         }
+        isInit = true;
 
         this.host = host;
         this.debug = debug;
-        RetrofitClient.reset();
-        RetrofitClient retrofitClient = RetrofitClient.getInstance(host, debug);
+        retrofitClient = new RetrofitClient();
+        retrofitClient.init(host, debug);
 
-        CommonInfoService commonInfoService = retrofitClient.create(CommonInfoService.class);
-        SportInfoService sportInfoService = retrofitClient.create(SportInfoService.class);
-        OrgTestService orgTestService = retrofitClient.create(OrgTestService.class);
-        OperationService operationService = retrofitClient.create(OperationService.class);
-        BusinessService businessService = retrofitClient.create(BusinessService.class);
-        LoginAuthService loginAuthService = retrofitClient.create(LoginAuthService.class);
-        BigScreenStatsService bigScreenStatsService = retrofitClient.create(BigScreenStatsService.class);
-        BigScreenH5Service bigScreenH5Service = retrofitClient.create(BigScreenH5Service.class);
+        this.commonInfoCaller = new CommonInfoCallerImpl();
+        this.sportInfoCaller = new SportInfoCallerImpl();
+        this.orgTestCaller = new OrgTestCallerImpl();
+        this.operationCaller = new OperationCallerImpl();
+        this.businessCaller = new BusinessCallerImpl();
+        this.loginAuthCaller = new LoginAuthCallerImpl();
+        this.bigScreenStatsCaller = new BigScreenStatsCallerImpl();
+        this.bigScreenH5Caller = new BigScreenH5CallerImpl();
+    }
 
-        this.commonInfoCaller = new CommonInfoCallerImpl(commonInfoService);
-        this.sportInfoCaller = new SportInfoCallerImpl(sportInfoService);
-        this.orgTestCaller = new OrgTestCallerImpl(orgTestService);
-        this.operationCaller = new OperationCallerImpl(operationService);
-        this.businessCaller = new BusinessCallerImpl(businessService);
-        this.loginAuthCaller = new LoginAuthCallerImpl(loginAuthService);
-        this.bigScreenStatsCaller = new BigScreenStatsCallerImpl(bigScreenStatsService);
-        this.bigScreenH5Caller = new BigScreenH5CallerImpl(bigScreenH5Service);
+    public <T> T create(Class<T> service) {
+        return retrofitClient.create(service);
+    }
+
+    // TODO 临时开放
+    public Response newCall(Request request) throws IOException {
+        return retrofitClient.newCall(request);
+    }
+
+    public synchronized void release() {
+        isInit = false;
+        retrofitClient.release();
+        retrofitClient = null;
+
+        commonInfoCaller = null;
+        sportInfoCaller = null;
+        orgTestCaller = null;
+        operationCaller = null;
+        businessCaller = null;
+        loginAuthCaller = null;
+        bigScreenStatsCaller = null;
+        bigScreenH5Caller = null;
     }
 
     public CommonInfoCaller getCommonInfoCaller() {

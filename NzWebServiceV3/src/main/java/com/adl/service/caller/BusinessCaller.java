@@ -1,6 +1,18 @@
 package com.adl.service.caller;
 
+import com.adl.service.callback.GetPageResult;
 import com.adl.service.callback.RequestCallback;
+import com.adl.service.data.BasePageData;
+import com.adl.service.data.CompetitionData;
+import com.adl.service.data.CompetitionRankDetailData;
+import com.adl.service.data.GroupData;
+import com.adl.service.data.GroupTeamData;
+import com.adl.service.data.GroupTeamDetailData;
+import com.adl.service.data.ResData;
+import com.adl.service.data.ResTypeData;
+import com.adl.service.data.SportMeetData;
+import com.adl.service.data.TrainPlanInfoData;
+import com.adl.service.data.TrainPlanOneDayProjectData;
 import com.adl.service.exception.NzBaseException;
 import com.adl.service.http.request.CompetitionPageRequest;
 import com.adl.service.http.request.CompetitionRankDetailRequest;
@@ -16,18 +28,6 @@ import com.adl.service.http.request.SaveGroupRequest;
 import com.adl.service.http.request.SportMeetPageRequest;
 import com.adl.service.http.request.TrainPlanInfoPageRequest;
 import com.adl.service.http.request.TrainPlanOneDayProjectListRequest;
-import com.adl.service.data.BasePageData;
-import com.adl.service.data.CompetitionData;
-import com.adl.service.data.CompetitionRankDetailData;
-import com.adl.service.data.GroupData;
-import com.adl.service.data.GroupTeamData;
-import com.adl.service.data.GroupTeamDetailData;
-import com.adl.service.data.ResData;
-import com.adl.service.data.ResTypeData;
-import com.adl.service.callback.GetPageResult;
-import com.adl.service.data.SportMeetData;
-import com.adl.service.data.TrainPlanInfoData;
-import com.adl.service.data.TrainPlanOneDayProjectData;
 
 import java.util.List;
 
@@ -123,12 +123,6 @@ public interface BusinessCaller {
      * <p>同步调用。</p>
      */
     BasePageData<CompetitionData> getCompetitionPageSync(CompetitionPageRequest request) throws NzBaseException;
-
-    /**
-     * 清空运动会数据
-     * <p>同步调用。</p>
-     */
-    void clearSportMeetDataSync();
 
     long getSportMeetPagesAllAsync(RequestScope scope, SportMeetPageRequest request, RequestCallback<GetPageResult> callback);
 

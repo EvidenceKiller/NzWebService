@@ -3,14 +3,14 @@ package com.adl.service.caller.impl;
 import com.adl.service.AdlService;
 import com.adl.service.callback.RequestCallback;
 import com.adl.service.caller.LoginAuthCaller;
+import com.adl.service.data.LoginData;
 import com.adl.service.exception.NzBaseException;
-import com.adl.service.internal.RxCallbackScheduler;
-import com.adl.service.internal.SubscriptionManager;
 import com.adl.service.http.request.LoginRequest;
 import com.adl.service.http.request.LogoutRequest;
 import com.adl.service.http.request.RequestScope;
-import com.adl.service.data.LoginData;
-import com.adl.service.web.LoginAuthService;
+import com.adl.service.internal.RxCallbackScheduler;
+import com.adl.service.internal.SubscriptionManager;
+import com.adl.service.repository.LoginAuthRepository;
 
 import io.reactivex.rxjava3.disposables.Disposable;
 
@@ -19,35 +19,35 @@ import io.reactivex.rxjava3.disposables.Disposable;
  */
 public final class LoginAuthCallerImpl implements LoginAuthCaller {
 
-    private final LoginAuthService loginAuthService;
+    private final LoginAuthRepository loginAuthRepository;
 
-    public LoginAuthCallerImpl(LoginAuthService loginAuthService) {
-        this.loginAuthService = loginAuthService;
+    public LoginAuthCallerImpl() {
+        this.loginAuthRepository = new LoginAuthRepository();
     }
 
     @Override
     public long loginAsync(RequestScope scope, LoginRequest request, RequestCallback<LoginData> callback) {
         CallerUtil.assertScope(scope);
-        Disposable disposable = RxCallbackScheduler.scheduleBaseResponse(loginAuthService.login(request), callback);
+        Disposable disposable = RxCallbackScheduler.schedule(loginAuthRepository.login(request), callback);
         SubscriptionManager.getInstance().add(scope.owner(), disposable);
         return disposable.hashCode();
     }
 
     @Override
     public LoginData loginSync(LoginRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGetFromResponse(loginAuthService.login(request));
+        return RxCallbackScheduler.blockingGet(loginAuthRepository.login(request));
     }
 
     @Override
     public long logoutAsync(RequestScope scope, LogoutRequest request, RequestCallback<String> callback) {
         CallerUtil.assertScope(scope);
-        Disposable disposable = RxCallbackScheduler.scheduleBaseResponse(loginAuthService.logout(request), callback);
+        Disposable disposable = RxCallbackScheduler.schedule(loginAuthRepository.logout(request), callback);
         SubscriptionManager.getInstance().add(scope.owner(), disposable);
         return disposable.hashCode();
     }
 
     @Override
     public String logoutSync(LogoutRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGetFromResponse(loginAuthService.logout(request));
+        return RxCallbackScheduler.blockingGet(loginAuthRepository.logout(request));
     }
 }

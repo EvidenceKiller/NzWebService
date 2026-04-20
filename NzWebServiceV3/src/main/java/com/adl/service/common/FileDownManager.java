@@ -9,7 +9,7 @@ import com.adl.service.db.FileDownDao;
 import com.adl.service.db.entity.FileDownInfoEntity;
 import com.adl.service.db.entity.StudentEntity;
 import com.adl.service.db.entity.TeacherEntity;
-import com.adl.service.internal.RetrofitClient;
+import com.adl.service.internal.RetrofitManager;
 import com.adl.service.log.NzLog;
 import com.adl.service.utils.FileUtil;
 import com.adl.service.utils.InnerUtil;
@@ -476,7 +476,7 @@ public final class FileDownManager {
             String url = bean.url;
             Request request = new Request.Builder().url(url).build();
             // TODO 临时写法，后续需优化
-            Response response = RetrofitClient.getInstance("", false).getOkHttpClient().newCall(request).execute();
+            Response response = RetrofitManager.getInstance().newCall(request);
             if (response.isSuccessful() && response.body() != null) {
                 ResponseBody respBody = response.body();
                 MediaType mediaType = respBody.contentType();

@@ -1,4 +1,4 @@
-package com.adl.service.cache;
+package com.adl.service.repository.prepare;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -8,30 +8,30 @@ import java.util.concurrent.ConcurrentHashMap;
  *
  * <p>约定：当 ttlMillis <= 0 时，视为永不过期。</p>
  */
-public final class SimpleCacheManager<K, V> {
+public final class MemoryCacheManager<K, V> {
 
     public static final long NEVER_EXPIRE = 0;
 
-    private static volatile SimpleCacheManager<?, ?> sInstance;
+    private static volatile MemoryCacheManager<?, ?> sInstance;
 
     private final Map<K, CacheItem<V>> cache = new ConcurrentHashMap<>();
 
-    private SimpleCacheManager() {
+    private MemoryCacheManager() {
     }
 
     @SuppressWarnings("unchecked")
-    public static <K, V> SimpleCacheManager<K, V> getInstance() {
-        SimpleCacheManager<?, ?> local = sInstance;
+    public static <K, V> MemoryCacheManager<K, V> getInstance() {
+        MemoryCacheManager<?, ?> local = sInstance;
         if (local == null) {
-            synchronized (SimpleCacheManager.class) {
+            synchronized (MemoryCacheManager.class) {
                 local = sInstance;
                 if (local == null) {
-                    local = new SimpleCacheManager<>();
+                    local = new MemoryCacheManager<>();
                     sInstance = local;
                 }
             }
         }
-        return (SimpleCacheManager<K, V>) local;
+        return (MemoryCacheManager<K, V>) local;
     }
 
     public void put(K key, V value, long ttlMillis) {

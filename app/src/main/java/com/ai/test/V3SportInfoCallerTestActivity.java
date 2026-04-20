@@ -99,7 +99,8 @@ public class V3SportInfoCallerTestActivity extends AppCompatActivity {
     }
 
     private AccountRecordPageRequest buildAccountRecordPageRequest() {
-        return AccountRecordPageRequest.builder().build();
+        AccountRecordPageRequest request = AccountRecordPageRequest.builder().foreceUpdate(true).pageSize(10L).semesterId("101101").build();
+        return request;
     }
 
     private RequestCallback<Boolean> booleanCallback(String methodName) {

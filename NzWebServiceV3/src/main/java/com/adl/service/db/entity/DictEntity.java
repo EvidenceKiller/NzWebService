@@ -14,6 +14,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity(tableName = "_dict")
 public final class DictEntity {
+    public static final long EXPIRED_TIME = 1000L * 60L * 60L * 12L;
+
     @ColumnInfo(name = "_enable_sort")
     private Boolean enableSort;
 
@@ -93,6 +95,9 @@ public final class DictEntity {
      */
     @ColumnInfo(name = "_data_type")
     private Integer dataType;
+
+    @ColumnInfo(name = "_record_time", defaultValue = "(strftime('%s', 'now') * 1000)")
+    private Long recordTime;
 
     public static DictEntity convertToEntity(DictData dictData) {
         if (dictData == null) {

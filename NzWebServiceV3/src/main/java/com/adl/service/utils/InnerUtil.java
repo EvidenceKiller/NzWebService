@@ -3,7 +3,7 @@ package com.adl.service.utils;
 import com.adl.service.AdlService;
 import com.adl.service.exception.NzBaseException;
 import com.adl.service.exception.NzCommonException;
-import com.adl.service.internal.RetrofitClient;
+import com.adl.service.internal.RetrofitManager;
 import com.alibaba.fastjson.JSON;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -53,7 +53,7 @@ public class InnerUtil {
     public static long getServerTime() throws NzBaseException {
         try {
             Request request = new Request.Builder().url(InnerUtil.getIpHost() + "/time").build();
-            Response response = RetrofitClient.getInstance("", false).getOkHttpClient().newCall(request).execute();
+            Response response = RetrofitManager.getInstance().newCall(request);
             if (response.isSuccessful() && response.body() != null) {
                 com.alibaba.fastjson.JSONObject jo = JSON.parseObject(response.body().string());
                 // 服务器返回时间为秒
