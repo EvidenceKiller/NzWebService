@@ -7,6 +7,7 @@ import com.adl.service.exception.NzCommonException;
 import com.adl.service.http.request.CompetitionPageRequest;
 import com.adl.service.http.request.SportMeetPageRequest;
 
+import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.functions.Function;
 
 public final class BusinessPrepareHelper {
@@ -14,14 +15,14 @@ public final class BusinessPrepareHelper {
     public BusinessPrepareHelper() {
     }
 
-    public Function<CompetitionPageRequest, Void> createPrepareCompetitionPageFunc() {
+    public Function<CompetitionPageRequest, Single<Void>> createPrepareCompetitionPageFunc() {
         return (request) -> {
             DaoManagerProxy.getInstance().getCompetitionDao().clearAll();
-            return null;
+            return Single.just((Void) null);
         };
     }
 
-    public Function<SportMeetPageRequest, Void> createPrepareSportMeetPageFunc() {
+    public Function<SportMeetPageRequest, Single<Void>> createPrepareSportMeetPageFunc() {
         return (request) -> {
             if (request == null) {
                 throw new NzCommonException("request is null when getSportMeetPage");
@@ -35,7 +36,7 @@ public final class BusinessPrepareHelper {
                 DaoManagerProxy.getInstance().getSportMeetGroupTeamDao().clearByAppCode(request.getAppCode());
                 DaoManagerProxy.getInstance().getSportMeetGroupDetailsDao().clearByAppCode(request.getAppCode());
             }
-            return null;
+            return Single.just((Void) null);
         };
     }
 }

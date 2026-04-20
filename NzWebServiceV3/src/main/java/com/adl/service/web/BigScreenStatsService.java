@@ -23,6 +23,7 @@ import com.adl.service.data.WarRecordRankData;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Single;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
 
@@ -34,71 +35,71 @@ public interface BigScreenStatsService {
      * 双人对战排行榜
      */
     @POST("tis/device/statistics/account/sport/warRecordRank")
-    BaseResponse<List<WarRecordRankData>> getWarRecordRank(@Body WarRecordRankRequest request);
+    Single<BaseResponse<List<WarRecordRankData>>> getWarRecordRank(@Body WarRecordRankRequest request);
 
     /**
      * 个人运动排名
      */
     @POST("tis/device/statistics/account/sport/personRank")
-    BaseResponse<PersonRankData> getPersonRank(@Body PersonRankRequest request);
+    Single<BaseResponse<PersonRankData>> getPersonRank(@Body PersonRankRequest request);
 
     /**
      * 多人对战胜利榜
      */
     @POST("tis/device/statistics/account/sport/morePeopleVictoryRank")
-    BaseResponse<List<MorePeopleVictoryRankData>> getMorePeopleVictoryRank(@Body MorePeopleVictoryRankRequest request);
+    Single<BaseResponse<List<MorePeopleVictoryRankData>>> getMorePeopleVictoryRank(@Body MorePeopleVictoryRankRequest request);
 
     /**
      * 多人对战排行榜
      */
     @POST("tis/device/statistics/account/sport/morePeopleRecordRank")
-    BaseResponse<List<MorePeopleRecordRankData>> getMorePeopleRecordRank(@Body MorePeopleRecordRankRequest request);
+    Single<BaseResponse<List<MorePeopleRecordRankData>>> getMorePeopleRecordRank(@Body MorePeopleRecordRankRequest request);
 
     /**
      * 总览数据
      */
     @POST("tis/device/statistics/home/sport/overview")
-    BaseResponse<OverviewData> getOverview(@Body OverviewRequest request);
+    Single<BaseResponse<OverviewData>> getOverview(@Body OverviewRequest request);
 
     /**
      * 赛事排行榜
      */
     @POST("tis/device/statistics/pco/sport/competitionRank")
-    BaseResponse<CompetitionRankData> getCompetitionRank(@Body CompetitionRankRequest request);
+    Single<BaseResponse<CompetitionRankData>> getCompetitionRank(@Body CompetitionRankRequest request);
 
     /**
      * 项目结果求和排名
      */
     @POST("tis/device/statistics/exercise/sport/sumScoreRank")
-    BaseResponse<List<SumScoreRankData>> sumScoreRank(@Body SumScoreRankRequest request);
+    Single<BaseResponse<List<SumScoreRankData>>> sumScoreRank(@Body SumScoreRankRequest request);
 
     /**
      * 项目热度排行
      */
     @POST("tis/device/statistics/exercise/sport/sportSkuRank")
-    BaseResponse<List<SportSkuRankData>> getSportSkuRank(@Body SportRankRequest request);
+    Single<BaseResponse<List<SportSkuRankData>>> getSportSkuRank(@Body SportRankRequest request);
 
     /**
      * 霸榜之王
      */
     @POST("tis/device/statistics/exercise/sport/sportRankKing")
-    BaseResponse<List<SportRankKingData>> getSportRankKing(@Body SportRankRequest request);
+    Single<BaseResponse<List<SportRankKingData>>> getSportRankKing(@Body SportRankRequest request);
 
     /**
      * 锻炼排行榜、历史最佳
      */
     @POST("tis/device/statistics/exercise/sport/physicalTrainingRank")
-    BaseResponse<List<SportRankKingData>> getPhysicalTrainingRank(@Body SportRankRequest request);
+    Single<BaseResponse<List<SportRankKingData>>> getPhysicalTrainingRank(@Body SportRankRequest request);
 
     /**
      * 锻炼之星
      */
     @POST("tis/device/statistics/exercise/sport/exerciseSumTimeRank")
-    BaseResponse<List<SportRankKingData>> getExerciseSumTimeRank(@Body SportRankRequest request);
+    Single<BaseResponse<List<SportRankKingData>>> getExerciseSumTimeRank(@Body SportRankRequest request);
 
     /**
      * 最佳榜单
      */
     @POST("tis/device/statistics/exercise/sport/bestRankTop")
-    BaseResponse<List<BestRankTopData>> getBestRankTop(@Body BestRankTopRequest request);
+    Single<BaseResponse<List<BestRankTopData>>> getBestRankTop(@Body BestRankTopRequest request);
 }

@@ -15,6 +15,7 @@ import com.adl.service.http.request.PlanStudentPageRequest;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.functions.Function;
 
 public final class OrgTestPersistHelper {
@@ -22,7 +23,7 @@ public final class OrgTestPersistHelper {
     public OrgTestPersistHelper() {
     }
 
-    public Function<BasePageData<PlanStudentData>, BasePageData<PlanStudentData>> createPersistPlanStudentPageFunc(PlanStudentPageRequest request) {
+    public Function<BasePageData<PlanStudentData>, Single<BasePageData<PlanStudentData>>> createPersistPlanStudentPageFunc(PlanStudentPageRequest request) {
         return (pageData) -> {
             if (pageData == null || pageData.getRecords() == null || pageData.getRecords().isEmpty()) {
                 throw new NzCommonException("plan student page data is empty");
@@ -32,11 +33,11 @@ public final class OrgTestPersistHelper {
                     .collect(Collectors.toList());
             entityList.forEach(plan -> plan.setPlanId(request.getPlanId()));
             DaoManagerProxy.getInstance().getPlanStudentDao().insertAll(entityList);
-            return pageData;
+            return Single.just(pageData);
         };
     }
 
-    public Function<BasePageData<PlanData>, BasePageData<PlanData>> createPersistPlanPageFunc(PlanPageRequest request) {
+    public Function<BasePageData<PlanData>, Single<BasePageData<PlanData>>> createPersistPlanPageFunc(PlanPageRequest request) {
         return (pageData) -> {
             if (pageData == null || pageData.getRecords() == null || pageData.getRecords().isEmpty()) {
                 throw new NzCommonException("plan page data is empty");
@@ -47,20 +48,20 @@ public final class OrgTestPersistHelper {
                     .collect(Collectors.toList());
 
             DaoManagerProxy.getInstance().getPlanDao().insertPlanList(entityList);
-            return pageData;
+            return Single.just(pageData);
         };
     }
 
-    public Function<List<StandardConfigData>, List<StandardConfigData>> createPersistStandardConfigPageFunc() {
+    public Function<List<StandardConfigData>, Single<List<StandardConfigData>>> createPersistStandardConfigPageFunc() {
         return (dataList) -> {
             if (dataList == null || dataList.isEmpty()) {
-                return dataList;
+                return Single.just(dataList);
             }
             List<StandardConfigEntity> entityList = dataList.stream()
                     .map(data -> StandardConfigEntity.convertToEntity(data))
                     .collect(Collectors.toList());
             DaoManagerProxy.getInstance().getStandardConfigDao().insertAll(entityList);
-            return dataList;
+            return Single.just(dataList);
         };
     }
 }

@@ -13,6 +13,7 @@ import com.adl.service.http.request.ReportTeacherSportRequest;
 import com.adl.service.internal.RetrofitManager;
 import com.adl.service.web.SportInfoService;
 
+import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.functions.Function;
 
 public final class SportInfoFetchHelper {
@@ -23,43 +24,43 @@ public final class SportInfoFetchHelper {
         this.sportInfoService = RetrofitManager.getInstance().create(SportInfoService.class);
     }
 
-    public Function<ReportStudentSportRequest, Boolean> createUpdateStudentSportFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(sportInfoService.updateStudentSport(request));
+    public Function<ReportStudentSportRequest, Single<Boolean>> createUpdateStudentSportFunc() {
+        return (request) -> sportInfoService.updateStudentSport(request).map(BaseFetchUtil::scheduleResponse);
     }
 
-    public Function<ReportTeacherSportRequest, Boolean> createReportTeacherSportFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(sportInfoService.reportTeacherSport(request));
+    public Function<ReportTeacherSportRequest, Single<Boolean>> createReportTeacherSportFunc() {
+        return (request) -> sportInfoService.reportTeacherSport(request).map(BaseFetchUtil::scheduleResponse);
     }
 
-    public Function<ReportStudentSportRequest, Boolean> createReportStudentTrainFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(sportInfoService.reportStudentTrain(request));
+    public Function<ReportStudentSportRequest, Single<Boolean>> createReportStudentTrainFunc() {
+        return (request) -> sportInfoService.reportStudentTrain(request).map(BaseFetchUtil::scheduleResponse);
     }
 
-    public Function<ReportStudentSportRequest, Boolean> createReportStudentSportFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(sportInfoService.reportStudentSport(request));
+    public Function<ReportStudentSportRequest, Single<Boolean>> createReportStudentSportFunc() {
+        return (request) -> sportInfoService.reportStudentSport(request).map(BaseFetchUtil::scheduleResponse);
     }
 
-    public Function<ReportStudentPlanRequest, Boolean> createReportStudentPlanFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(sportInfoService.reportStudentPlan(request));
+    public Function<ReportStudentPlanRequest, Single<Boolean>> createReportStudentPlanFunc() {
+        return (request) -> sportInfoService.reportStudentPlan(request).map(BaseFetchUtil::scheduleResponse);
     }
 
-    public Function<ReportStudentMeetRequest, Boolean> createReportStudentMeetFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(sportInfoService.reportStudentMeet(request));
+    public Function<ReportStudentMeetRequest, Single<Boolean>> createReportStudentMeetFunc() {
+        return (request) -> sportInfoService.reportStudentMeet(request).map(BaseFetchUtil::scheduleResponse);
     }
 
-    public Function<ReportStudentCompetitionRequest, Boolean> createReportStudentCompetitionFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(sportInfoService.reportStudentCompetition(request));
+    public Function<ReportStudentCompetitionRequest, Single<Boolean>> createReportStudentCompetitionFunc() {
+        return (request) -> sportInfoService.reportStudentCompetition(request).map(BaseFetchUtil::scheduleResponse);
     }
 
-    public Function<ReportStudentSportRequest, Boolean> createReportStudentAllSportFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(sportInfoService.reportStudentAllSport(request));
+    public Function<ReportStudentSportRequest, Single<Boolean>> createReportStudentAllSportFunc() {
+        return (request) -> sportInfoService.reportStudentAllSport(request).map(BaseFetchUtil::scheduleResponse);
     }
 
-    public Function<OrgRecordPageRequest, BasePageData<OrgRecordData>> createGetOrgRecordPageFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(sportInfoService.getOrgRecordPage(request));
+    public Function<OrgRecordPageRequest, Single<BasePageData<OrgRecordData>>> createGetOrgRecordPageFunc() {
+        return (request) -> sportInfoService.getOrgRecordPage(request).map(BaseFetchUtil::scheduleResponse);
     }
 
-    public Function<AccountRecordPageRequest, BasePageData<AccountRecordData>> createGetAccountRecordPageFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(sportInfoService.getAccountRecordPage(request));
+    public Function<AccountRecordPageRequest, Single<BasePageData<AccountRecordData>>> createGetAccountRecordPageFunc() {
+        return (request) -> sportInfoService.getAccountRecordPage(request).map(BaseFetchUtil::scheduleResponse);
     }
 }

@@ -5,6 +5,7 @@ import com.adl.service.http.request.LogoutRequest;
 import com.adl.service.data.BaseResponse;
 import com.adl.service.data.LoginData;
 
+import io.reactivex.rxjava3.core.Single;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
 
@@ -16,11 +17,11 @@ public interface LoginAuthService {
      * 设备登录
      */
     @POST("sso/login")
-    BaseResponse<LoginData> login(@Body LoginRequest request);
+    Single<BaseResponse<LoginData>> login(@Body LoginRequest request);
 
     /**
      * 退出登录
      */
     @POST("sso/logout")
-    BaseResponse<String> logout(@Body LogoutRequest request);
+    Single<BaseResponse<String>> logout(@Body LogoutRequest request);
 }

@@ -3,6 +3,7 @@ package com.adl.service.repository.prepare;
 import com.adl.service.db.DaoManagerProxy;
 import com.adl.service.http.request.PlanStudentPageRequest;
 
+import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.functions.Function;
 
 public final class OrgTestPrepareHelper {
@@ -10,32 +11,32 @@ public final class OrgTestPrepareHelper {
     public OrgTestPrepareHelper() {
     }
 
-    public Function<Void, Void> createPrepareStandardConfigDataFunc() {
+    public Function<Void, Single<Void>> createPrepareStandardConfigDataFunc() {
         return (v) -> {
             DaoManagerProxy.getInstance().getStandardConfigDao().clearAll();
-            return null;
+            return Single.just(null);
         };
     }
 
-    public Function<Void, Void> createClearPlanStudentPagesAllFunc() {
+    public Function<Void, Single<Void>> createClearPlanStudentPagesAllFunc() {
         return (v) -> {
             DaoManagerProxy.getInstance().getPlanStudentDao().clearAll();
-            return null;
+            return Single.just(null);
         };
     }
 
 
-    public Function<PlanStudentPageRequest, Void> createPreparePlanStudentPagesAllFunc() {
+    public Function<PlanStudentPageRequest, Single<Void>> createPreparePlanStudentPagesAllFunc() {
         return (request) -> {
             DaoManagerProxy.getInstance().getPlanStudentDao().clearByPlanId(request.getPlanId());
-            return null;
+            return Single.just(null);
         };
     }
 
-    public Function<Void, Void> createClearPlanPagesAllFunc() {
+    public Function<Void, Single<Void>> createClearPlanPagesAllFunc() {
         return (v) -> {
             DaoManagerProxy.getInstance().getPlanStudentDao().clearAll();
-            return null;
+            return Single.just(null);
         };
     }
 }

@@ -15,6 +15,7 @@ import com.adl.service.http.request.ClassInfoRequest;
 import com.adl.service.http.request.ClassListRequest;
 import com.adl.service.http.request.DeviceActiveRequest;
 import com.adl.service.http.request.DictRequest;
+import com.adl.service.http.request.EmptyRequest;
 import com.adl.service.http.request.RequestScope;
 import com.adl.service.http.request.StudentPageRequest;
 import com.adl.service.http.request.TeacherListRequest;
@@ -86,7 +87,7 @@ public class V3CommonInfoCallerTestActivity extends AppCompatActivity {
     }
 
     private void getGradeTreeAsync() {
-        AdlService.getService().getCommonInfoCaller().getGradeTreeAsync(RequestScope.of(this), new RequestCallback<List<GradeTreeData>>() {
+        AdlService.getService().getCommonInfoCaller().getGradeTreeAsync(RequestScope.of(this), EmptyRequest.builder().build(), new RequestCallback<List<GradeTreeData>>() {
             @Override
             public void onSuccess(List<GradeTreeData> data) {
                 if (data != null) {
@@ -114,7 +115,7 @@ public class V3CommonInfoCallerTestActivity extends AppCompatActivity {
 
     private void getGradeTreeSync() {
         AdlService.getService().executeSyncOnIo(RequestScope.of(this), () -> {
-            return AdlService.getService().getCommonInfoCaller().getGradeTreeSync();
+            return AdlService.getService().getCommonInfoCaller().getGradeTreeSync(EmptyRequest.builder().build());
         }, new RequestCallback<List<GradeTreeData>>() {
             @Override
             public void onSuccess(List<GradeTreeData> data) {
@@ -142,7 +143,7 @@ public class V3CommonInfoCallerTestActivity extends AppCompatActivity {
     }
 
     private void getGradeChineseNameListAsync() {
-        AdlService.getService().getCommonInfoCaller().getGradeChineseNameListAsync(RequestScope.of(this), new RequestCallback<List<GradeChineseNameData>>() {
+        AdlService.getService().getCommonInfoCaller().getGradeChineseNameListAsync(RequestScope.of(this), EmptyRequest.builder().build(), new RequestCallback<List<GradeChineseNameData>>() {
             @Override
             public void onSuccess(List<GradeChineseNameData> data) {
                 if (data != null) {
@@ -170,7 +171,7 @@ public class V3CommonInfoCallerTestActivity extends AppCompatActivity {
 
     private void getGradeChineseNameListSync() {
         AdlService.getService().executeSyncOnIo(RequestScope.of(this), () -> {
-            return AdlService.getService().getCommonInfoCaller().getGradeChineseNameListSync();
+            return AdlService.getService().getCommonInfoCaller().getGradeChineseNameListSync(EmptyRequest.builder().build());
         }, new RequestCallback<List<GradeChineseNameData>>() {
             @Override
             public void onSuccess(List<GradeChineseNameData> data) {
@@ -322,7 +323,7 @@ public class V3CommonInfoCallerTestActivity extends AppCompatActivity {
     }
 
     private void getLoginInfoAsync() {
-        AdlService.getService().getCommonInfoCaller().getLoginInfoAsync(RequestScope.of(this), new RequestCallback<LoginInfoData>() {
+        AdlService.getService().getCommonInfoCaller().getLoginInfoAsync(RequestScope.of(this), EmptyRequest.builder().build(), new RequestCallback<LoginInfoData>() {
             @Override
             public void onSuccess(LoginInfoData data) {
                 if (data != null) {
@@ -349,7 +350,7 @@ public class V3CommonInfoCallerTestActivity extends AppCompatActivity {
 
     private void getLoginInfoSync() {
         AdlService.getService().executeSyncOnIo(RequestScope.of(this), () -> {
-            return AdlService.getService().getCommonInfoCaller().getLoginInfoSync();
+            return AdlService.getService().getCommonInfoCaller().getLoginInfoSync(EmptyRequest.builder().build());
         }, new RequestCallback<LoginInfoData>() {
             @Override
             public void onSuccess(LoginInfoData data) {
@@ -376,7 +377,7 @@ public class V3CommonInfoCallerTestActivity extends AppCompatActivity {
     }
 
     private void getAcayearListAsync() {
-        AdlService.getService().getCommonInfoCaller().getAcayearListAsync(RequestScope.of(this), new RequestCallback<List<AcayearData>>() {
+        AdlService.getService().getCommonInfoCaller().getAcayearListAsync(RequestScope.of(this), EmptyRequest.builder().build(), new RequestCallback<List<AcayearData>>() {
             @Override
             public void onSuccess(List<AcayearData> data) {
                 if (data != null) {
@@ -403,7 +404,7 @@ public class V3CommonInfoCallerTestActivity extends AppCompatActivity {
     }
 
     private void getAcayearListSync() {
-        AdlService.getService().executeSyncOnIo(RequestScope.of(this), () -> AdlService.getService().getCommonInfoCaller().getAcayearListSync(), new RequestCallback<List<AcayearData>>() {
+        AdlService.getService().executeSyncOnIo(RequestScope.of(this), () -> AdlService.getService().getCommonInfoCaller().getAcayearListSync(EmptyRequest.builder().build()), new RequestCallback<List<AcayearData>>() {
             @Override
             public void onSuccess(List<AcayearData> data) {
                 if (data != null) {

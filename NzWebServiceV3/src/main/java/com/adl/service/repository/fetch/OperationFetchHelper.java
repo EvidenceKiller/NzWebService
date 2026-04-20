@@ -19,6 +19,7 @@ import com.adl.service.web.OperationService;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.functions.Function;
 
 public final class OperationFetchHelper {
@@ -29,11 +30,11 @@ public final class OperationFetchHelper {
         this.operationService = RetrofitManager.getInstance().create(OperationService.class);
     }
 
-    public Function<BannerDetailListRequest, List<BannerDetailData>> createGetBannerDetailListFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(operationService.getBannerDetailList(request));
+    public Function<BannerDetailListRequest, Single<List<BannerDetailData>>> createGetBannerDetailListFunc() {
+        return (request) -> operationService.getBannerDetailList(request).map(BaseFetchUtil::scheduleResponse);
     }
 
-    public Function<Long, BasePageData<SportSkuData>> createGetSportSkuPagesAllFunc(SportSkuPageRequest request) {
+    public Function<Long, Single<BasePageData<SportSkuData>>> createGetSportSkuPagesAllFunc(SportSkuPageRequest request) {
         return (page) -> {
             SportSkuPageRequest pageReq = SportSkuPageRequest.builder()
                     .current(page)
@@ -49,31 +50,31 @@ public final class OperationFetchHelper {
                     .delFlag(request.getDelFlag())
                     .enabled(request.getEnabled())
                     .build();
-            return BaseFetchUtil.scheduleResponse(operationService.getSportSkuPage(pageReq));
+            return operationService.getSportSkuPage(pageReq).map(BaseFetchUtil::scheduleResponse);
         };
     }
 
-    public Function<SportSkuPageRequest, BasePageData<SportSkuData>> createGetSportSkuPageFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(operationService.getSportSkuPage(request));
+    public Function<SportSkuPageRequest, Single<BasePageData<SportSkuData>>> createGetSportSkuPageFunc() {
+        return (request) -> operationService.getSportSkuPage(request).map(BaseFetchUtil::scheduleResponse);
     }
 
-    public Function<SportSkuDetailRequest, SportSkuDetailData> createGetSportSkuDetailFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(operationService.getSportSkuDetail(request));
+    public Function<SportSkuDetailRequest, Single<SportSkuDetailData>> createGetSportSkuDetailFunc() {
+        return (request) -> operationService.getSportSkuDetail(request).map(BaseFetchUtil::scheduleResponse);
     }
 
-    public Function<DictMapRequest, List<DictMapData>> createGetDictMapFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(operationService.getDictMap(request));
+    public Function<DictMapRequest, Single<List<DictMapData>>> createGetDictMapFunc() {
+        return (request) -> operationService.getDictMap(request).map(BaseFetchUtil::scheduleResponse);
     }
 
-    public Function<SceneListRequest, List<SceneData>> createGetSceneListFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(operationService.getSceneList(request));
+    public Function<SceneListRequest, Single<List<SceneData>>> createGetSceneListFunc() {
+        return (request) -> operationService.getSceneList(request).map(BaseFetchUtil::scheduleResponse);
     }
 
-    public Function<UploadDeviceNameRequest, Boolean> createUploadDeviceNameFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(operationService.uploadDeviceName(request));
+    public Function<UploadDeviceNameRequest, Single<Boolean>> createUploadDeviceNameFunc() {
+        return (request) -> operationService.uploadDeviceName(request).map(BaseFetchUtil::scheduleResponse);
     }
 
-    public Function<DeviceFocusListRequest, List<DeviceFocusData>> createGetDeviceFocusListFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(operationService.getDeviceFocusList(request));
+    public Function<DeviceFocusListRequest, Single<List<DeviceFocusData>>> createGetDeviceFocusListFunc() {
+        return (request) -> operationService.getDeviceFocusList(request).map(BaseFetchUtil::scheduleResponse);
     }
 }

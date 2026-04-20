@@ -14,6 +14,7 @@ import com.adl.service.web.BigScreenH5Service;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.functions.Function;
 
 public final class BigScreenH5FetchHelper {
@@ -24,27 +25,27 @@ public final class BigScreenH5FetchHelper {
         this.bigScreenH5Service = RetrofitManager.getInstance().create(BigScreenH5Service.class);
     }
 
-    public Function<TeachCourseRequest, List<TeachCourseDetailData>> createGetTeachCourseDetailListFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(bigScreenH5Service.getTeachCourseDetailList(request));
+    public Function<TeachCourseRequest, Single<List<TeachCourseDetailData>>> createGetTeachCourseDetailListFunc() {
+        return (request) -> bigScreenH5Service.getTeachCourseDetailList(request).map(BaseFetchUtil::scheduleResponse);
     }
 
-    public Function<TeachCourseDataDatesRequest, List<String>> createGetTeachCourseDataDatesFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(bigScreenH5Service.getTeachCourseDataDates(request));
+    public Function<TeachCourseDataDatesRequest, Single<List<String>>> createGetTeachCourseDataDatesFunc() {
+        return (request) -> bigScreenH5Service.getTeachCourseDataDates(request).map(BaseFetchUtil::scheduleResponse);
     }
 
-    public Function<TeachCourseRequest, Integer> createGetTeachCourseTimesFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(bigScreenH5Service.getTeachCourseTimes(request));
+    public Function<TeachCourseRequest, Single<Integer>> createGetTeachCourseTimesFunc() {
+        return (request) -> bigScreenH5Service.getTeachCourseTimes(request).map(BaseFetchUtil::scheduleResponse);
     }
 
-    public Function<TeachCourseButtonClickCountRequest, Boolean> createGetTeachCourseButtonClickableFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(bigScreenH5Service.getTeachCourseButtonClickable(request));
+    public Function<TeachCourseButtonClickCountRequest, Single<Boolean>> createGetTeachCourseButtonClickableFunc() {
+        return (request) -> bigScreenH5Service.getTeachCourseButtonClickable(request).map(BaseFetchUtil::scheduleResponse);
     }
 
-    public Function<SunshineRunningSportDetailPageRequest, BasePageData<SunshineRunningSportDetailData>> createGetSunshineRunningSportDetailPageFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(bigScreenH5Service.getSunshineRunningSportDetailPage(request));
+    public Function<SunshineRunningSportDetailPageRequest, Single<BasePageData<SunshineRunningSportDetailData>>> createGetSunshineRunningSportDetailPageFunc() {
+        return (request) -> bigScreenH5Service.getSunshineRunningSportDetailPage(request).map(BaseFetchUtil::scheduleResponse);
     }
 
-    public Function<SunshineRunningCompetitionRecordPageRequest, BasePageData<ClassroomCompetitionRecordData>> createGetSunshineRunningCompetitionRecordPageFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(bigScreenH5Service.getSunshineRunningCompetitionRecordPage(request));
+    public Function<SunshineRunningCompetitionRecordPageRequest, Single<BasePageData<ClassroomCompetitionRecordData>>> createGetSunshineRunningCompetitionRecordPageFunc() {
+        return (request) -> bigScreenH5Service.getSunshineRunningCompetitionRecordPage(request).map(BaseFetchUtil::scheduleResponse);
     }
 }

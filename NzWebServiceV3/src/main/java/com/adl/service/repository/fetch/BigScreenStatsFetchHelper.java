@@ -24,6 +24,7 @@ import com.adl.service.web.BigScreenStatsService;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.functions.Function;
 
 public final class BigScreenStatsFetchHelper {
@@ -34,51 +35,51 @@ public final class BigScreenStatsFetchHelper {
         this.bigScreenStatsService = RetrofitManager.getInstance().create(BigScreenStatsService.class);
     }
 
-    public Function<WarRecordRankRequest, List<WarRecordRankData>> createGetWarRecordRankFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(bigScreenStatsService.getWarRecordRank(request));
+    public Function<WarRecordRankRequest, Single<List<WarRecordRankData>>> createGetWarRecordRankFunc() {
+        return (request) -> bigScreenStatsService.getWarRecordRank(request).map(BaseFetchUtil::scheduleResponse);
     }
 
-    public Function<PersonRankRequest, PersonRankData> createGetPersonRankFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(bigScreenStatsService.getPersonRank(request));
+    public Function<PersonRankRequest, Single<PersonRankData>> createGetPersonRankFunc() {
+        return (request) -> bigScreenStatsService.getPersonRank(request).map(BaseFetchUtil::scheduleResponse);
     }
 
-    public Function<MorePeopleVictoryRankRequest, List<MorePeopleVictoryRankData>> createGetMorePeopleVictoryRankFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(bigScreenStatsService.getMorePeopleVictoryRank(request));
+    public Function<MorePeopleVictoryRankRequest, Single<List<MorePeopleVictoryRankData>>> createGetMorePeopleVictoryRankFunc() {
+        return (request) -> bigScreenStatsService.getMorePeopleVictoryRank(request).map(BaseFetchUtil::scheduleResponse);
     }
 
-    public Function<MorePeopleRecordRankRequest, List<MorePeopleRecordRankData>> createGetMorePeopleRecordRankFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(bigScreenStatsService.getMorePeopleRecordRank(request));
+    public Function<MorePeopleRecordRankRequest, Single<List<MorePeopleRecordRankData>>> createGetMorePeopleRecordRankFunc() {
+        return (request) -> bigScreenStatsService.getMorePeopleRecordRank(request).map(BaseFetchUtil::scheduleResponse);
     }
 
-    public Function<OverviewRequest, OverviewData> createGetOverviewFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(bigScreenStatsService.getOverview(request));
+    public Function<OverviewRequest, Single<OverviewData>> createGetOverviewFunc() {
+        return (request) -> bigScreenStatsService.getOverview(request).map(BaseFetchUtil::scheduleResponse);
     }
 
-    public Function<CompetitionRankRequest, CompetitionRankData> createGetCompetitionRankFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(bigScreenStatsService.getCompetitionRank(request));
+    public Function<CompetitionRankRequest, Single<CompetitionRankData>> createGetCompetitionRankFunc() {
+        return (request) -> bigScreenStatsService.getCompetitionRank(request).map(BaseFetchUtil::scheduleResponse);
     }
 
-    public Function<SumScoreRankRequest, List<SumScoreRankData>> createSumScoreRankFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(bigScreenStatsService.sumScoreRank(request));
+    public Function<SumScoreRankRequest, Single<List<SumScoreRankData>>> createSumScoreRankFunc() {
+        return (request) -> bigScreenStatsService.sumScoreRank(request).map(BaseFetchUtil::scheduleResponse);
     }
 
-    public Function<SportRankRequest, List<SportSkuRankData>> createGetSportSkuRankFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(bigScreenStatsService.getSportSkuRank(request));
+    public Function<SportRankRequest, Single<List<SportSkuRankData>>> createGetSportSkuRankFunc() {
+        return (request) -> bigScreenStatsService.getSportSkuRank(request).map(BaseFetchUtil::scheduleResponse);
     }
 
-    public Function<SportRankRequest, List<SportRankKingData>> createGetSportRankKingFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(bigScreenStatsService.getSportRankKing(request));
+    public Function<SportRankRequest, Single<List<SportRankKingData>>> createGetSportRankKingFunc() {
+        return (request) -> bigScreenStatsService.getSportRankKing(request).map(BaseFetchUtil::scheduleResponse);
     }
 
-    public Function<SportRankRequest, List<SportRankKingData>> createGetPhysicalTrainingRankFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(bigScreenStatsService.getPhysicalTrainingRank(request));
+    public Function<SportRankRequest, Single<List<SportRankKingData>>> createGetPhysicalTrainingRankFunc() {
+        return (request) -> bigScreenStatsService.getPhysicalTrainingRank(request).map(BaseFetchUtil::scheduleResponse);
     }
 
-    public Function<SportRankRequest, List<SportRankKingData>> createGetExerciseSumTimeRankFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(bigScreenStatsService.getExerciseSumTimeRank(request));
+    public Function<SportRankRequest, Single<List<SportRankKingData>>> createGetExerciseSumTimeRankFunc() {
+        return (request) -> bigScreenStatsService.getExerciseSumTimeRank(request).map(BaseFetchUtil::scheduleResponse);
     }
 
-    public Function<BestRankTopRequest, List<BestRankTopData>> createGetBestRankTopFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(bigScreenStatsService.getBestRankTop(request));
+    public Function<BestRankTopRequest, Single<List<BestRankTopData>>> createGetBestRankTopFunc() {
+        return (request) -> bigScreenStatsService.getBestRankTop(request).map(BaseFetchUtil::scheduleResponse);
     }
 }

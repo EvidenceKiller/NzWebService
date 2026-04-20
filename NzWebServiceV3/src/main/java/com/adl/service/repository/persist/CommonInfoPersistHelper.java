@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.functions.Function;
 
 public final class CommonInfoPersistHelper {
@@ -28,17 +29,17 @@ public final class CommonInfoPersistHelper {
     public CommonInfoPersistHelper() {
     }
 
-    public static Function<LoginInfoData, LoginInfoData> createPersistLoginInfoFunc() {
+    public static Function<LoginInfoData, Single<LoginInfoData>> createPersistLoginInfoFunc() {
         return (data) -> {
             if (data == null) {
                 throw new NzCommonException("login info data is empty");
             }
             DaoManagerProxy.getInstance().getLoginInfoDao().saveLoginInfoWithClear(LoginInfoEntity.convertToEntity(data));
-            return data;
+            return Single.just(data);
         };
     }
 
-    public static Function<List<TeacherData>, List<TeacherData>> createPersistTeacherList() {
+    public static Function<List<TeacherData>, Single<List<TeacherData>>> createPersistTeacherList() {
         return (dataList) -> {
             if (dataList == null || dataList.isEmpty()) {
                 throw new NzCommonException("teacher page data is empty");
@@ -48,11 +49,11 @@ public final class CommonInfoPersistHelper {
                     .collect(Collectors.partitioningBy(data -> !data.getDelFlag()));
             DaoManagerProxy.getInstance().getTeacherDao().insertAll(partitioned.get(true));
             DaoManagerProxy.getInstance().getTeacherDao().clear(partitioned.get(false));
-            return dataList;
+            return Single.just(dataList);
         };
     }
 
-    public Function<BasePageData<StudentData>, BasePageData<StudentData>> createPersistStudentPageFunc() {
+    public Function<BasePageData<StudentData>, Single<BasePageData<StudentData>>> createPersistStudentPageFunc() {
         return (pageData) -> {
             if (pageData == null || pageData.getRecords() == null || pageData.getRecords().isEmpty()) {
                 throw new NzCommonException("student page data is empty");
@@ -64,11 +65,11 @@ public final class CommonInfoPersistHelper {
             DaoManagerProxy.getInstance().getStudentDao().clear(partitioned.get(false));
             FileDownManager.instance().clearByUrls(partitioned.get(false).stream().map(StudentEntity::getUserFaceImgUrl).collect(Collectors.toList()));
             FileDownManager.instance().clearByUrls(partitioned.get(false).stream().map(StudentEntity::getThumbnailUserFaceImgUrl).collect(Collectors.toList()));
-            return pageData;
+            return Single.just(pageData);
         };
     }
 
-    public Function<List<DictData>, List<DictData>> createPersistDictListFunc(DictRequest request) {
+    public Function<List<DictData>, Single<List<DictData>>> createPersistDictListFunc(DictRequest request) {
         return (dataList) -> {
             if (dataList == null || dataList.isEmpty()) {
                 throw new NzCommonException("dict data is empty");
@@ -79,7 +80,7 @@ public final class CommonInfoPersistHelper {
                     .map(data -> DictEntity.convertToEntity(data))
                     .collect(Collectors.toList());
             DaoManagerProxy.getInstance().getDictDao().insertAll(entityList);
-            return dataList;
+            return Single.just(dataList);
         };
     }
 

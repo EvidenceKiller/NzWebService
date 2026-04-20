@@ -17,6 +17,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.functions.Function;
 
 public final class BusinessPersistHelper {
@@ -24,7 +25,7 @@ public final class BusinessPersistHelper {
     public BusinessPersistHelper() {
     }
 
-    public Function<BasePageData<CompetitionData>, BasePageData<CompetitionData>> createPersistCompetitionPageFunc() {
+    public Function<BasePageData<CompetitionData>, Single<BasePageData<CompetitionData>>> createPersistCompetitionPageFunc() {
         return (pageData) -> {
             if (pageData == null || pageData.getRecords() == null || pageData.getRecords().isEmpty()) {
                 throw new NzCommonException("competition page data is empty");
@@ -33,11 +34,11 @@ public final class BusinessPersistHelper {
                     .map(data -> CompetitionEntity.convertToEntity(data))
                     .collect(Collectors.toList());
             DaoManagerProxy.getInstance().getCompetitionDao().insertCompetitionList(entityList);
-            return pageData;
+            return Single.just(pageData);
         };
     }
 
-    public Function<BasePageData<SportMeetData>, BasePageData<SportMeetData>> createPersistSportMeetPageFunc(SportMeetPageRequest request) {
+    public Function<BasePageData<SportMeetData>, Single<BasePageData<SportMeetData>>> createPersistSportMeetPageFunc(SportMeetPageRequest request) {
         return (pageData) -> {
             if (pageData == null || pageData.getRecords() == null || pageData.getRecords().isEmpty()) {
                 throw new NzCommonException("sport meet page data is empty");
@@ -97,7 +98,7 @@ public final class BusinessPersistHelper {
             }
 
             DaoManagerProxy.getInstance().getSportMeetDao().insertAll(persistList);
-            return pageData;
+            return Single.just(pageData);
         };
     }
 }

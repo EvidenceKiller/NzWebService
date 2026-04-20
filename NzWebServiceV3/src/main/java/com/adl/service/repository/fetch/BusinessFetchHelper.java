@@ -29,6 +29,7 @@ import com.adl.service.web.BusinessService;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.functions.Function;
 
 public final class BusinessFetchHelper {
@@ -39,31 +40,31 @@ public final class BusinessFetchHelper {
         this.businessService = RetrofitManager.getInstance().create(BusinessService.class);
     }
 
-    public Function<SaveGroupRequest, Boolean> createSaveGroupFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(businessService.saveGroup(request));
+    public Function<SaveGroupRequest, Single<Boolean>> createSaveGroupFunc() {
+        return (request) -> businessService.saveGroup(request).map(BaseFetchUtil::scheduleResponse);
     }
 
-    public Function<GetGroupRequest, GroupData> createGetGroupFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(businessService.getGroup(request));
+    public Function<GetGroupRequest, Single<GroupData>> createGetGroupFunc() {
+        return (request) -> businessService.getGroup(request).map(BaseFetchUtil::scheduleResponse);
     }
 
-    public Function<TrainPlanOneDayProjectListRequest, List<TrainPlanOneDayProjectData>> createGetTrainPlanOneDayProjectListFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(businessService.getTrainPlanOneDayProjectList(request));
+    public Function<TrainPlanOneDayProjectListRequest, Single<List<TrainPlanOneDayProjectData>>> createGetTrainPlanOneDayProjectListFunc() {
+        return (request) -> businessService.getTrainPlanOneDayProjectList(request).map(BaseFetchUtil::scheduleResponse);
     }
 
-    public Function<TrainPlanInfoPageRequest, BasePageData<TrainPlanInfoData>> createGetTrainPlanInfoPageFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(businessService.getTrainPlanInfoPage(request));
+    public Function<TrainPlanInfoPageRequest, Single<BasePageData<TrainPlanInfoData>>> createGetTrainPlanInfoPageFunc() {
+        return (request) -> businessService.getTrainPlanInfoPage(request).map(BaseFetchUtil::scheduleResponse);
     }
 
-    public Function<JoinCompetitionRankRequest, Boolean> createJoinCompetitionRankFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(businessService.joinCompetitionRank(request));
+    public Function<JoinCompetitionRankRequest, Single<Boolean>> createJoinCompetitionRankFunc() {
+        return (request) -> businessService.joinCompetitionRank(request).map(BaseFetchUtil::scheduleResponse);
     }
 
-    public Function<CompetitionRankDetailRequest, CompetitionRankDetailData> createGetCompetitionRankDetailFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(businessService.getCompetitionRankDetail(request));
+    public Function<CompetitionRankDetailRequest, Single<CompetitionRankDetailData>> createGetCompetitionRankDetailFunc() {
+        return (request) -> businessService.getCompetitionRankDetail(request).map(BaseFetchUtil::scheduleResponse);
     }
 
-    public Function<Long, BasePageData<CompetitionData>> createGetCompetitionPagesAllFunc(CompetitionPageRequest request) {
+    public Function<Long, Single<BasePageData<CompetitionData>>> createGetCompetitionPagesAllFunc(CompetitionPageRequest request) {
         return (page) -> {
             CompetitionPageRequest pageReq = CompetitionPageRequest.builder()
                     .current(page)
@@ -82,15 +83,15 @@ public final class BusinessFetchHelper {
                     .accountId(request.getAccountId())
                     .sortField(request.getSortField())
                     .build();
-            return BaseFetchUtil.scheduleResponse(businessService.getCompetitionPage(pageReq));
+            return businessService.getCompetitionPage(pageReq).map(BaseFetchUtil::scheduleResponse);
         };
     }
 
-    public Function<CompetitionPageRequest, BasePageData<CompetitionData>> createGetCompetitionPageFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(businessService.getCompetitionPage(request));
+    public Function<CompetitionPageRequest, Single<BasePageData<CompetitionData>>> createGetCompetitionPageFunc() {
+        return (request) -> businessService.getCompetitionPage(request).map(BaseFetchUtil::scheduleResponse);
     }
 
-    public Function<Long, BasePageData<SportMeetData>> createGetSportMeetPagesAllFunc(SportMeetPageRequest request) {
+    public Function<Long, Single<BasePageData<SportMeetData>>> createGetSportMeetPagesAllFunc(SportMeetPageRequest request) {
         return (page) -> {
             SportMeetPageRequest pageReq = SportMeetPageRequest.builder()
                     .current(page)
@@ -106,31 +107,31 @@ public final class BusinessFetchHelper {
                     .orderByField(request.getOrderByField())
                     .lastUpdateTime(request.getLastUpdateTime())
                     .build();
-            return BaseFetchUtil.scheduleResponse(businessService.getSportMeetPage(pageReq));
+            return businessService.getSportMeetPage(pageReq).map(BaseFetchUtil::scheduleResponse);
         };
     }
 
-    public Function<SportMeetPageRequest, BasePageData<SportMeetData>> createGetSportMeetPageFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(businessService.getSportMeetPage(request));
+    public Function<SportMeetPageRequest, Single<BasePageData<SportMeetData>>> createGetSportMeetPageFunc() {
+        return (request) -> businessService.getSportMeetPage(request).map(BaseFetchUtil::scheduleResponse);
     }
 
-    public Function<DownloadGroupTeamPageRequest, List<GroupTeamData>> createDownloadGroupTeamPageFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(businessService.downloadGroupTeamPage(request));
+    public Function<DownloadGroupTeamPageRequest, Single<List<GroupTeamData>>> createDownloadGroupTeamPageFunc() {
+        return (request) -> businessService.downloadGroupTeamPage(request).map(BaseFetchUtil::scheduleResponse);
     }
 
-    public Function<DownloadGroupTeamDetailPageRequest, List<GroupTeamDetailData>> createDownloadGroupTeamDetailPageFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(businessService.downloadGroupTeamDetailPage(request));
+    public Function<DownloadGroupTeamDetailPageRequest, Single<List<GroupTeamDetailData>>> createDownloadGroupTeamDetailPageFunc() {
+        return (request) -> businessService.downloadGroupTeamDetailPage(request).map(BaseFetchUtil::scheduleResponse);
     }
 
-    public Function<ResTypeListRequest, List<ResTypeData>> createGetResTypeListFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(businessService.getResTypeList(request));
+    public Function<ResTypeListRequest, Single<List<ResTypeData>>> createGetResTypeListFunc() {
+        return (request) -> businessService.getResTypeList(request).map(BaseFetchUtil::scheduleResponse);
     }
 
-    public Function<ResPageRequest, BasePageData<ResData>> createGetResPageFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(businessService.getResPage(request));
+    public Function<ResPageRequest, Single<BasePageData<ResData>>> createGetResPageFunc() {
+        return (request) -> businessService.getResPage(request).map(BaseFetchUtil::scheduleResponse);
     }
 
-    public Function<ResInfoRequest, ResData> createGetResInfoFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(businessService.getResInfo(request));
+    public Function<ResInfoRequest, Single<ResData>> createGetResInfoFunc() {
+        return (request) -> businessService.getResInfo(request).map(BaseFetchUtil::scheduleResponse);
     }
 }

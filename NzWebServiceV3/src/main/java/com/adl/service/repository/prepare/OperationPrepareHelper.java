@@ -11,6 +11,7 @@ import com.adl.service.http.request.SportSkuPageRequest;
 import java.util.List;
 
 import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.functions.Function;
 
 public final class OperationPrepareHelper {
@@ -18,23 +19,23 @@ public final class OperationPrepareHelper {
     public OperationPrepareHelper() {
     }
 
-    public Function<SceneListRequest, List<SceneData>> createGetSceneListPrepareFunc() {
+    public Function<SceneListRequest, Single<List<SceneData>>> createGetSceneListPrepareFunc() {
         return (request) -> {
             if (request == null) {
                 throw new NzCommonException("request is null when getStudentPagesAll");
             }
             if (request.getForceUpdate()) {
                 // TODO 强制更新
-                return null;
+                return Single.just(null);
             }
-            return null;
+            return Single.just(null);
         };
     }
 
-    public static Function<SportSkuPageRequest, Void> createGetSportSkuPagesAllFunc() {
+    public static Function<SportSkuPageRequest, Single<Void>> createGetSportSkuPagesAllFunc() {
         return (requestu) -> {
             DaoManagerProxy.getInstance().getSceneSportDao().clearAll();
-            return null;
+            return Single.just(null);
         };
     }
 }

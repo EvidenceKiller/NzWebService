@@ -16,6 +16,7 @@ import com.adl.service.http.request.SportSkuPageRequest;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.functions.Function;
 
 public final class OperationPersistHelper {
@@ -23,7 +24,7 @@ public final class OperationPersistHelper {
     public OperationPersistHelper() {
     }
 
-    public Function<List<SceneData>, List<SceneData>> createPersistSceneListFunc(SceneListRequest request) {
+    public Function<List<SceneData>, Single<List<SceneData>>> createPersistSceneListFunc(SceneListRequest request) {
         return (dataList) -> {
             if (dataList == null || dataList.isEmpty()) {
                 throw new NzEmptyDataException("scene list is empty");
@@ -37,11 +38,11 @@ public final class OperationPersistHelper {
                     .map(data -> SceneEntity.convertToEntity(data, request.getAppCode()))
                     .collect(Collectors.toList());
             DaoManagerProxy.getInstance().getSceneDao().insertAll(entityList);
-            return dataList;
+            return Single.just(dataList);
         };
     }
 
-    public Function<BasePageData<SportSkuData>, BasePageData<SportSkuData>> createPersistSportSkuPageFunc(SportSkuPageRequest request) {
+    public Function<BasePageData<SportSkuData>, Single<BasePageData<SportSkuData>>> createPersistSportSkuPageFunc(SportSkuPageRequest request) {
         return (pageData) -> {
             if (pageData == null || pageData.getRecords() == null || pageData.getRecords().isEmpty()) {
                 throw new NzCommonException("sport sku page data is empty");
@@ -50,7 +51,7 @@ public final class OperationPersistHelper {
                     .map(data -> SportSkuEntity.convertToEntity(data, request.getAppCode(), request.getSceneId()))
                     .collect(Collectors.toList());
             DaoManagerProxy.getInstance().getSceneSportDao().insertAll(entityList);
-            return pageData;
+            return Single.just(pageData);
         };
     }
 }

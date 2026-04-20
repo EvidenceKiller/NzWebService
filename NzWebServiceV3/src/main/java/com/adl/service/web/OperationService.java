@@ -18,6 +18,7 @@ import com.adl.service.data.SportSkuData;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Single;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
 
@@ -29,41 +30,41 @@ public interface OperationService {
      * 获取Banner详情列表
      */
     @POST("tis/device/oper/banner/getDetailList")
-    BaseResponse<List<BannerDetailData>> getBannerDetailList(@Body BannerDetailListRequest request);
+    Single<BaseResponse<List<BannerDetailData>>> getBannerDetailList(@Body BannerDetailListRequest request);
 
     /**
      * 获取项目库列表
      */
     @POST("tis/device/oper/sku/getSportSkuList")
-    BaseResponse<BasePageData<SportSkuData>> getSportSkuPage(@Body SportSkuPageRequest request);
+    Single<BaseResponse<BasePageData<SportSkuData>>> getSportSkuPage(@Body SportSkuPageRequest request);
 
     /**
      * 获取项目详情
      */
     @POST("tis/device/oper/sku/getSportSkuDetail")
-    BaseResponse<SportSkuDetailData> getSportSkuDetail(@Body SportSkuDetailRequest request);
+    Single<BaseResponse<SportSkuDetailData>> getSportSkuDetail(@Body SportSkuDetailRequest request);
 
     /**
      * 获取模板内容
      */
     @POST("tis/device/oper/sku/getDictMap")
-    BaseResponse<List<DictMapData>> getDictMap(@Body DictMapRequest request);
+    Single<BaseResponse<List<DictMapData>>> getDictMap(@Body DictMapRequest request);
 
     /**
      * 获取场景列表
      */
     @POST("tis/device/oper/scene/getSceneList")
-    BaseResponse<List<SceneData>> getSceneList(@Body SceneListRequest request);
+    Single<BaseResponse<List<SceneData>>> getSceneList(@Body SceneListRequest request);
 
     /**
      * 修改设备名称
      */
     @POST("tis/device/oper/device/upload/deviceName")
-    BaseResponse<Boolean> uploadDeviceName(@Body UploadDeviceNameRequest request);
+    Single<BaseResponse<Boolean>> uploadDeviceName(@Body UploadDeviceNameRequest request);
 
     /**
      * 获取设备专注信息列表
      */
     @POST("tis/device/oper/device/getDeviceFocusList")
-    BaseResponse<List<DeviceFocusData>> getDeviceFocusList(@Body DeviceFocusListRequest request);
+    Single<BaseResponse<List<DeviceFocusData>>> getDeviceFocusList(@Body DeviceFocusListRequest request);
 }

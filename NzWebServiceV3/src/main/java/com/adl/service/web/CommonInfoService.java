@@ -20,6 +20,7 @@ import com.adl.service.data.TeacherData;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Single;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
 
@@ -31,59 +32,59 @@ public interface CommonInfoService {
      * 获取机构年级树
      */
     @POST("tis/device/base/org/grade/getGradeTree")
-    BaseResponse<List<GradeTreeData>> getGradeTree();
+    Single<BaseResponse<List<GradeTreeData>>> getGradeTree();
 
     /**
      * 获取年级列表
      */
     @POST("tis/device/base/org/grade/getGradeChineseNameList")
-    BaseResponse<List<GradeChineseNameData>> getGradeChineseNameList();
+    Single<BaseResponse<List<GradeChineseNameData>>> getGradeChineseNameList();
 
     /**
      * 获取班级列表
      */
     @POST("tis/device/base/org/class/getClassList")
-    BaseResponse<List<ClassData>> getClassList(@Body ClassListRequest request);
+    Single<BaseResponse<List<ClassData>>> getClassList(@Body ClassListRequest request);
 
     /**
      * 获取班级信息
      */
     @POST("tis/device/base/org/class/getClassInfo")
-    BaseResponse<ClassInfoData> getClassInfo(@Body ClassInfoRequest request);
+    Single<BaseResponse<ClassInfoData>> getClassInfo(@Body ClassInfoRequest request);
 
     /**
      * 获取登录用户信息
      */
     @POST("tis/device/base/org/account/getLoginInfo")
-    BaseResponse<LoginInfoData> getLoginInfo();
+    Single<BaseResponse<LoginInfoData>> getLoginInfo();
 
     /**
      * 获取学年学期列表
      */
     @POST("tis/device/base/org/acayear/getAcayearList")
-    BaseResponse<List<AcayearData>> getAcayearList();
+    Single<BaseResponse<List<AcayearData>>> getAcayearList();
 
     /**
      * 获取教师用户列表（全量）
      */
     @POST("tis/device/base/account/getTeacherList")
-    BaseResponse<List<TeacherData>> getTeacherList(@Body TeacherListRequest request);
+    Single<BaseResponse<List<TeacherData>>> getTeacherList(@Body TeacherListRequest request);
 
     /**
      * 获取学生增量数据
      */
     @POST("tis/device/base/account/getStudentList")
-    BaseResponse<BasePageData<StudentData>> getStudentPage(@Body StudentPageRequest request);
+    Single<BaseResponse<BasePageData<StudentData>>> getStudentPage(@Body StudentPageRequest request);
 
     /**
      * 获取系统字典
      */
     @POST("tis/device/base/sys/dict/getDicts")
-    BaseResponse<List<DictData>> getDictList(@Body DictRequest request);
+    Single<BaseResponse<List<DictData>>> getDictList(@Body DictRequest request);
 
     /**
      * 设备激活
      */
     @POST("tis/device/base/sys/device/active")
-    BaseResponse<Boolean> deviceActive(@Body DeviceActiveRequest request);
+    Single<BaseResponse<Boolean>> deviceActive(@Body DeviceActiveRequest request);
 }
