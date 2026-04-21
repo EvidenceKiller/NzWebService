@@ -8,6 +8,7 @@ import android.widget.GridLayout;
 import android.widget.TextView;
 
 import com.adl.service.AdlService;
+import com.adl.service.callback.GetPageResult;
 import com.adl.service.callback.RequestCallback;
 import com.adl.service.http.request.BaseDirection;
 import com.adl.service.http.request.BaseSort;
@@ -84,6 +85,25 @@ public class V3CommonInfoCallerTestActivity extends AppCompatActivity {
 
         createButton("deviceActiveAsync").setOnClickListener(v -> deviceActiveAsync());
         createButton("deviceActiveSync").setOnClickListener(v -> deviceActiveSync());
+
+        createButton("queryAllStudentSync").setOnClickListener(v -> queryAllStudentSync());
+        createButton("queryAllStudentWithFaceDataSync").setOnClickListener(v -> queryAllStudentWithFaceDataSync());
+        createButton("queryAllStudentCountSync").setOnClickListener(v -> queryAllStudentCountSync());
+        createButton("queryStudentByAccountIdSync").setOnClickListener(v -> queryStudentByAccountIdSync());
+        createButton("queryStudentByAccountIdsSync").setOnClickListener(v -> queryStudentByAccountIdsSync());
+        createButton("queryStudentByClassIdsSync").setOnClickListener(v -> queryStudentByClassIdsSync());
+        createButton("queryStudentByCarNumSync").setOnClickListener(v -> queryStudentByCarNumSync());
+
+        createButton("queryAllTeacherListSync").setOnClickListener(v -> queryAllTeacherListSync());
+        createButton("queryAllTeacherListWithFaceDataSync").setOnClickListener(v -> queryAllTeacherListWithFaceDataSync());
+        createButton("queryTeacherByAccountIdSync").setOnClickListener(v -> queryTeacherByAccountIdSync());
+        createButton("queryTeacherListByAccountIdsSync").setOnClickListener(v -> queryTeacherListByAccountIdsSync());
+
+        createButton("getTeacherListsAllAsync").setOnClickListener(v -> getTeacherListsAllAsync());
+        createButton("getTeacherListsAllSync").setOnClickListener(v -> getTeacherListsAllSync());
+
+        createButton("getStudentPagesAllAsync").setOnClickListener(v -> getStudentPagesAllAsync());
+        createButton("getStudentPagesAllSync").setOnClickListener(v -> getStudentPagesAllSync());
     }
 
     private void getGradeTreeAsync() {
@@ -650,6 +670,443 @@ public class V3CommonInfoCallerTestActivity extends AppCompatActivity {
             @Override
             public void onError(String error) {
                 Log.d(TAG, "CommonInfoCallerTestActivity::deviceActiveSync::onError : error : " + error);
+                resultView.setText(error);
+            }
+        });
+    }
+
+    private void queryAllStudentSync() {
+        AdlService.getService().executeSyncOnIo(RequestScope.of(this), () -> {
+            return AdlService.getService().getCommonInfoCaller().queryAllStudentSync();
+        }, new RequestCallback<List<StudentData>>() {
+            @Override
+            public void onSuccess(List<StudentData> data) {
+                if (data != null) {
+                    Log.d(TAG, "CommonInfoCallerTestActivity::queryAllStudentSync::onSuccess : data size : " + data.size());
+                    Log.d(TAG, "CommonInfoCallerTestActivity::queryAllStudentSync::onSuccess : data : " + data);
+                    resultView.setText(data.toString());
+                } else {
+                    Log.d(TAG, "CommonInfoCallerTestActivity::queryAllStudentSync::onSuccess : data is null");
+                }
+            }
+
+            @Override
+            public void onFail(int code, String msg) {
+                Log.d(TAG, "CommonInfoCallerTestActivity::queryAllStudentSync::onFail : code : " + code + ", msg : " + msg);
+                resultView.setText(msg);
+            }
+
+            @Override
+            public void onError(String error) {
+                Log.d(TAG, "CommonInfoCallerTestActivity::queryAllStudentSync::onError : error : " + error);
+                resultView.setText(error);
+            }
+        });
+    }
+
+    private void queryAllStudentWithFaceDataSync() {
+        AdlService.getService().executeSyncOnIo(RequestScope.of(this), () -> {
+            return AdlService.getService().getCommonInfoCaller().queryAllStudentWithFaceDataSync();
+        }, new RequestCallback<List<StudentData>>() {
+            @Override
+            public void onSuccess(List<StudentData> data) {
+                if (data != null) {
+                    Log.d(TAG, "CommonInfoCallerTestActivity::queryAllStudentWithFaceDataSync::onSuccess : data size : " + data.size());
+                    Log.d(TAG, "CommonInfoCallerTestActivity::queryAllStudentWithFaceDataSync::onSuccess : data : " + data);
+                    resultView.setText(data.toString());
+                } else {
+                    Log.d(TAG, "CommonInfoCallerTestActivity::queryAllStudentWithFaceDataSync::onSuccess : data is null");
+                }
+            }
+
+            @Override
+            public void onFail(int code, String msg) {
+                Log.d(TAG, "CommonInfoCallerTestActivity::queryAllStudentWithFaceDataSync::onFail : code : " + code + ", msg : " + msg);
+                resultView.setText(msg);
+            }
+
+            @Override
+            public void onError(String error) {
+                Log.d(TAG, "CommonInfoCallerTestActivity::queryAllStudentWithFaceDataSync::onError : error : " + error);
+                resultView.setText(error);
+            }
+        });
+    }
+
+    private void queryAllStudentCountSync() {
+        AdlService.getService().executeSyncOnIo(RequestScope.of(this), () -> {
+            return AdlService.getService().getCommonInfoCaller().queryAllStudentCountSync();
+        }, new RequestCallback<Integer>() {
+            @Override
+            public void onSuccess(Integer data) {
+                if (data != null) {
+                    Log.d(TAG, "CommonInfoCallerTestActivity::queryAllStudentCountSync::onSuccess : count : " + data);
+                    resultView.setText(String.valueOf(data));
+                } else {
+                    Log.d(TAG, "CommonInfoCallerTestActivity::queryAllStudentCountSync::onSuccess : data is null");
+                }
+            }
+
+            @Override
+            public void onFail(int code, String msg) {
+                Log.d(TAG, "CommonInfoCallerTestActivity::queryAllStudentCountSync::onFail : code : " + code + ", msg : " + msg);
+                resultView.setText(msg);
+            }
+
+            @Override
+            public void onError(String error) {
+                Log.d(TAG, "CommonInfoCallerTestActivity::queryAllStudentCountSync::onError : error : " + error);
+                resultView.setText(error);
+            }
+        });
+    }
+
+    private void queryStudentByAccountIdSync() {
+        AdlService.getService().executeSyncOnIo(RequestScope.of(this), () -> {
+            return AdlService.getService().getCommonInfoCaller().queryStudentByAccountIdSync("test_account_id");
+        }, new RequestCallback<StudentData>() {
+            @Override
+            public void onSuccess(StudentData data) {
+                if (data != null) {
+                    Log.d(TAG, "CommonInfoCallerTestActivity::queryStudentByAccountIdSync::onSuccess : data : " + data);
+                    resultView.setText(data.toString());
+                } else {
+                    Log.d(TAG, "CommonInfoCallerTestActivity::queryStudentByAccountIdSync::onSuccess : data is null");
+                }
+            }
+
+            @Override
+            public void onFail(int code, String msg) {
+                Log.d(TAG, "CommonInfoCallerTestActivity::queryStudentByAccountIdSync::onFail : code : " + code + ", msg : " + msg);
+                resultView.setText(msg);
+            }
+
+            @Override
+            public void onError(String error) {
+                Log.d(TAG, "CommonInfoCallerTestActivity::queryStudentByAccountIdSync::onError : error : " + error);
+                resultView.setText(error);
+            }
+        });
+    }
+
+    private void queryStudentByAccountIdsSync() {
+        AdlService.getService().executeSyncOnIo(RequestScope.of(this), () -> {
+            List<String> accountIds = new ArrayList<>();
+            accountIds.add("test_account_id_1");
+            accountIds.add("test_account_id_2");
+            return AdlService.getService().getCommonInfoCaller().queryStudentByAccountIdsSync(accountIds);
+        }, new RequestCallback<List<StudentData>>() {
+            @Override
+            public void onSuccess(List<StudentData> data) {
+                if (data != null) {
+                    Log.d(TAG, "CommonInfoCallerTestActivity::queryStudentByAccountIdsSync::onSuccess : data size : " + data.size());
+                    Log.d(TAG, "CommonInfoCallerTestActivity::queryStudentByAccountIdsSync::onSuccess : data : " + data);
+                    resultView.setText(data.toString());
+                } else {
+                    Log.d(TAG, "CommonInfoCallerTestActivity::queryStudentByAccountIdsSync::onSuccess : data is null");
+                }
+            }
+
+            @Override
+            public void onFail(int code, String msg) {
+                Log.d(TAG, "CommonInfoCallerTestActivity::queryStudentByAccountIdsSync::onFail : code : " + code + ", msg : " + msg);
+                resultView.setText(msg);
+            }
+
+            @Override
+            public void onError(String error) {
+                Log.d(TAG, "CommonInfoCallerTestActivity::queryStudentByAccountIdsSync::onError : error : " + error);
+                resultView.setText(error);
+            }
+        });
+    }
+
+    private void queryStudentByClassIdsSync() {
+        AdlService.getService().executeSyncOnIo(RequestScope.of(this), () -> {
+            List<String> classIds = new ArrayList<>();
+            classIds.add("test_class_id_1");
+            classIds.add("test_class_id_2");
+            return AdlService.getService().getCommonInfoCaller().queryStudentByClassIdsSync(classIds);
+        }, new RequestCallback<List<StudentData>>() {
+            @Override
+            public void onSuccess(List<StudentData> data) {
+                if (data != null) {
+                    Log.d(TAG, "CommonInfoCallerTestActivity::queryStudentByClassIdsSync::onSuccess : data size : " + data.size());
+                    Log.d(TAG, "CommonInfoCallerTestActivity::queryStudentByClassIdsSync::onSuccess : data : " + data);
+                    resultView.setText(data.toString());
+                } else {
+                    Log.d(TAG, "CommonInfoCallerTestActivity::queryStudentByClassIdsSync::onSuccess : data is null");
+                }
+            }
+
+            @Override
+            public void onFail(int code, String msg) {
+                Log.d(TAG, "CommonInfoCallerTestActivity::queryStudentByClassIdsSync::onFail : code : " + code + ", msg : " + msg);
+                resultView.setText(msg);
+            }
+
+            @Override
+            public void onError(String error) {
+                Log.d(TAG, "CommonInfoCallerTestActivity::queryStudentByClassIdsSync::onError : error : " + error);
+                resultView.setText(error);
+            }
+        });
+    }
+
+    private void queryStudentByCarNumSync() {
+        AdlService.getService().executeSyncOnIo(RequestScope.of(this), () -> {
+            return AdlService.getService().getCommonInfoCaller().queryStudentByCarNumSync("1234567890");
+        }, new RequestCallback<List<StudentData>>() {
+            @Override
+            public void onSuccess(List<StudentData> data) {
+                if (data != null) {
+                    Log.d(TAG, "CommonInfoCallerTestActivity::queryStudentByCarNumSync::onSuccess : data size : " + data.size());
+                    Log.d(TAG, "CommonInfoCallerTestActivity::queryStudentByCarNumSync::onSuccess : data : " + data);
+                    resultView.setText(data.toString());
+                } else {
+                    Log.d(TAG, "CommonInfoCallerTestActivity::queryStudentByCarNumSync::onSuccess : data is null");
+                }
+            }
+
+            @Override
+            public void onFail(int code, String msg) {
+                Log.d(TAG, "CommonInfoCallerTestActivity::queryStudentByCarNumSync::onFail : code : " + code + ", msg : " + msg);
+                resultView.setText(msg);
+            }
+
+            @Override
+            public void onError(String error) {
+                Log.d(TAG, "CommonInfoCallerTestActivity::queryStudentByCarNumSync::onError : error : " + error);
+                resultView.setText(error);
+            }
+        });
+    }
+
+    private void queryAllTeacherListSync() {
+        AdlService.getService().executeSyncOnIo(RequestScope.of(this), () -> {
+            return AdlService.getService().getCommonInfoCaller().queryAllTeacherListSync();
+        }, new RequestCallback<List<TeacherData>>() {
+            @Override
+            public void onSuccess(List<TeacherData> data) {
+                if (data != null) {
+                    Log.d(TAG, "CommonInfoCallerTestActivity::queryAllTeacherListSync::onSuccess : data size : " + data.size());
+                    Log.d(TAG, "CommonInfoCallerTestActivity::queryAllTeacherListSync::onSuccess : data : " + data);
+                    resultView.setText(data.toString());
+                } else {
+                    Log.d(TAG, "CommonInfoCallerTestActivity::queryAllTeacherListSync::onSuccess : data is null");
+                }
+            }
+
+            @Override
+            public void onFail(int code, String msg) {
+                Log.d(TAG, "CommonInfoCallerTestActivity::queryAllTeacherListSync::onFail : code : " + code + ", msg : " + msg);
+                resultView.setText(msg);
+            }
+
+            @Override
+            public void onError(String error) {
+                Log.d(TAG, "CommonInfoCallerTestActivity::queryAllTeacherListSync::onError : error : " + error);
+                resultView.setText(error);
+            }
+        });
+    }
+
+    private void queryAllTeacherListWithFaceDataSync() {
+        AdlService.getService().executeSyncOnIo(RequestScope.of(this), () -> {
+            return AdlService.getService().getCommonInfoCaller().queryAllTeacherListWithFaceDataSync();
+        }, new RequestCallback<List<TeacherData>>() {
+            @Override
+            public void onSuccess(List<TeacherData> data) {
+                if (data != null) {
+                    Log.d(TAG, "CommonInfoCallerTestActivity::queryAllTeacherListWithFaceDataSync::onSuccess : data size : " + data.size());
+                    Log.d(TAG, "CommonInfoCallerTestActivity::queryAllTeacherListWithFaceDataSync::onSuccess : data : " + data);
+                    resultView.setText(data.toString());
+                } else {
+                    Log.d(TAG, "CommonInfoCallerTestActivity::queryAllTeacherListWithFaceDataSync::onSuccess : data is null");
+                }
+            }
+
+            @Override
+            public void onFail(int code, String msg) {
+                Log.d(TAG, "CommonInfoCallerTestActivity::queryAllTeacherListWithFaceDataSync::onFail : code : " + code + ", msg : " + msg);
+                resultView.setText(msg);
+            }
+
+            @Override
+            public void onError(String error) {
+                Log.d(TAG, "CommonInfoCallerTestActivity::queryAllTeacherListWithFaceDataSync::onError : error : " + error);
+                resultView.setText(error);
+            }
+        });
+    }
+
+    private void queryTeacherByAccountIdSync() {
+        AdlService.getService().executeSyncOnIo(RequestScope.of(this), () -> {
+            return AdlService.getService().getCommonInfoCaller().queryTeacherByAccountIdSync("test_teacher_account_id");
+        }, new RequestCallback<TeacherData>() {
+            @Override
+            public void onSuccess(TeacherData data) {
+                if (data != null) {
+                    Log.d(TAG, "CommonInfoCallerTestActivity::queryTeacherByAccountIdSync::onSuccess : data : " + data);
+                    resultView.setText(data.toString());
+                } else {
+                    Log.d(TAG, "CommonInfoCallerTestActivity::queryTeacherByAccountIdSync::onSuccess : data is null");
+                }
+            }
+
+            @Override
+            public void onFail(int code, String msg) {
+                Log.d(TAG, "CommonInfoCallerTestActivity::queryTeacherByAccountIdSync::onFail : code : " + code + ", msg : " + msg);
+                resultView.setText(msg);
+            }
+
+            @Override
+            public void onError(String error) {
+                Log.d(TAG, "CommonInfoCallerTestActivity::queryTeacherByAccountIdSync::onError : error : " + error);
+                resultView.setText(error);
+            }
+        });
+    }
+
+    private void queryTeacherListByAccountIdsSync() {
+        AdlService.getService().executeSyncOnIo(RequestScope.of(this), () -> {
+            List<String> accountIds = new ArrayList<>();
+            accountIds.add("test_teacher_account_id_1");
+            accountIds.add("test_teacher_account_id_2");
+            return AdlService.getService().getCommonInfoCaller().queryTeacherListByAccountIdsSync(accountIds);
+        }, new RequestCallback<List<TeacherData>>() {
+            @Override
+            public void onSuccess(List<TeacherData> data) {
+                if (data != null) {
+                    Log.d(TAG, "CommonInfoCallerTestActivity::queryTeacherListByAccountIdsSync::onSuccess : data size : " + data.size());
+                    Log.d(TAG, "CommonInfoCallerTestActivity::queryTeacherListByAccountIdsSync::onSuccess : data : " + data);
+                    resultView.setText(data.toString());
+                } else {
+                    Log.d(TAG, "CommonInfoCallerTestActivity::queryTeacherListByAccountIdsSync::onSuccess : data is null");
+                }
+            }
+
+            @Override
+            public void onFail(int code, String msg) {
+                Log.d(TAG, "CommonInfoCallerTestActivity::queryTeacherListByAccountIdsSync::onFail : code : " + code + ", msg : " + msg);
+                resultView.setText(msg);
+            }
+
+            @Override
+            public void onError(String error) {
+                Log.d(TAG, "CommonInfoCallerTestActivity::queryTeacherListByAccountIdsSync::onError : error : " + error);
+                resultView.setText(error);
+            }
+        });
+    }
+
+    private void getTeacherListsAllAsync() {
+        TeacherListRequest request = TeacherListRequest.builder().build();
+        AdlService.getService().getCommonInfoCaller().getTeacherListsAllAsync(RequestScope.of(this), request, new RequestCallback<GetPageResult>() {
+            @Override
+            public void onSuccess(GetPageResult data) {
+                if (data != null) {
+                    Log.d(TAG, "CommonInfoCallerTestActivity::getTeacherListsAllAsync::onSuccess : data : " + data);
+                    resultView.setText(data.toString());
+                } else {
+                    Log.d(TAG, "CommonInfoCallerTestActivity::getTeacherListsAllAsync::onSuccess : data is null");
+                }
+            }
+
+            @Override
+            public void onFail(int code, String msg) {
+                Log.d(TAG, "CommonInfoCallerTestActivity::getTeacherListsAllAsync::onFail : code : " + code + ", msg : " + msg);
+                resultView.setText(msg);
+            }
+
+            @Override
+            public void onError(String error) {
+                Log.d(TAG, "CommonInfoCallerTestActivity::getTeacherListsAllAsync::onError : error : " + error);
+                resultView.setText(error);
+            }
+        });
+    }
+
+    private void getTeacherListsAllSync() {
+        AdlService.getService().executeSyncOnIo(RequestScope.of(this), () -> {
+            TeacherListRequest request = TeacherListRequest.builder().build();
+            return AdlService.getService().getCommonInfoCaller().getTeacherListsAllSync(request);
+        }, new RequestCallback<GetPageResult>() {
+            @Override
+            public void onSuccess(GetPageResult data) {
+                if (data != null) {
+                    Log.d(TAG, "CommonInfoCallerTestActivity::getTeacherListsAllSync::onSuccess : data : " + data);
+                    resultView.setText(data.toString());
+                } else {
+                    Log.d(TAG, "CommonInfoCallerTestActivity::getTeacherListsAllSync::onSuccess : data is null");
+                }
+            }
+
+            @Override
+            public void onFail(int code, String msg) {
+                Log.d(TAG, "CommonInfoCallerTestActivity::getTeacherListsAllSync::onFail : code : " + code + ", msg : " + msg);
+                resultView.setText(msg);
+            }
+
+            @Override
+            public void onError(String error) {
+                Log.d(TAG, "CommonInfoCallerTestActivity::getTeacherListsAllSync::onError : error : " + error);
+                resultView.setText(error);
+            }
+        });
+    }
+
+    private void getStudentPagesAllAsync() {
+        StudentPageRequest request = StudentPageRequest.builder().faceType(2).build();
+        AdlService.getService().getCommonInfoCaller().getStudentPagesAllAsync(RequestScope.of(this), request, new RequestCallback<GetPageResult>() {
+            @Override
+            public void onSuccess(GetPageResult data) {
+                if (data != null) {
+                    Log.d(TAG, "CommonInfoCallerTestActivity::getStudentPagesAllAsync::onSuccess : data : " + data);
+                    resultView.setText(data.toString());
+                } else {
+                    Log.d(TAG, "CommonInfoCallerTestActivity::getStudentPagesAllAsync::onSuccess : data is null");
+                }
+            }
+
+            @Override
+            public void onFail(int code, String msg) {
+                Log.d(TAG, "CommonInfoCallerTestActivity::getStudentPagesAllAsync::onFail : code : " + code + ", msg : " + msg);
+                resultView.setText(msg);
+            }
+
+            @Override
+            public void onError(String error) {
+                Log.d(TAG, "CommonInfoCallerTestActivity::getStudentPagesAllAsync::onError : error : " + error);
+                resultView.setText(error);
+            }
+        });
+    }
+
+    private void getStudentPagesAllSync() {
+        AdlService.getService().executeSyncOnIo(RequestScope.of(this), () -> {
+            StudentPageRequest request = StudentPageRequest.builder().faceType(2).build();
+            return AdlService.getService().getCommonInfoCaller().getStudentPagesAllSync(request);
+        }, new RequestCallback<GetPageResult>() {
+            @Override
+            public void onSuccess(GetPageResult data) {
+                if (data != null) {
+                    Log.d(TAG, "CommonInfoCallerTestActivity::getStudentPagesAllSync::onSuccess : data : " + data);
+                    resultView.setText(data.toString());
+                } else {
+                    Log.d(TAG, "CommonInfoCallerTestActivity::getStudentPagesAllSync::onSuccess : data is null");
+                }
+            }
+
+            @Override
+            public void onFail(int code, String msg) {
+                Log.d(TAG, "CommonInfoCallerTestActivity::getStudentPagesAllSync::onFail : code : " + code + ", msg : " + msg);
+                resultView.setText(msg);
+            }
+
+            @Override
+            public void onError(String error) {
+                Log.d(TAG, "CommonInfoCallerTestActivity::getStudentPagesAllSync::onError : error : " + error);
                 resultView.setText(error);
             }
         });

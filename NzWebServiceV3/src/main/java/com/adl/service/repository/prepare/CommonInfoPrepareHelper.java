@@ -68,7 +68,7 @@ public final class CommonInfoPrepareHelper {
         };
     }
 
-    public Function<TeacherListRequest, Single<Void>> createPrepareTeacherListsAllFunc() {
+    public Function<TeacherListRequest, Single<List<TeacherData>>> createPrepareTeacherListsAllFunc() {
         return (request) -> {
             if (request == null) {
                 throw new NzCommonException("request is null when getStudentPagesAll");
@@ -78,7 +78,7 @@ public final class CommonInfoPrepareHelper {
                 return null;
             }
             DaoManagerProxy.getInstance().getTeacherDao().clearAll();
-            return Single.just((Void) null);
+            return null;
         };
     }
 
@@ -120,17 +120,17 @@ public final class CommonInfoPrepareHelper {
                     .collect(Collectors.toList()));
     }
 
-    public Function<StudentPageRequest, Single<Void>> createPrepareStudentPagesAllFunc() {
+    public Function<StudentPageRequest, Single<List<StudentData>>> createPrepareStudentPagesAllFunc() {
         return (request) -> {
             if (request == null) {
                 throw new NzCommonException("request is null when getStudentPagesAll");
             }
             if (request.getForceUpdate()) {
                 // TODO 强制更新
-                return Single.just((Void) null);
+                return null;
             }
             DaoManagerProxy.getInstance().getStudentDao().clearAll();
-            return Single.just((Void) null);
+            return null;
         };
     }
 

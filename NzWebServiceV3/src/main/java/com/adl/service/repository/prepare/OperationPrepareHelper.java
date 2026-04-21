@@ -3,6 +3,7 @@ package com.adl.service.repository.prepare;
 import android.text.TextUtils;
 
 import com.adl.service.data.SceneData;
+import com.adl.service.data.SportSkuData;
 import com.adl.service.db.DaoManagerProxy;
 import com.adl.service.exception.NzCommonException;
 import com.adl.service.http.request.SceneListRequest;
@@ -26,16 +27,16 @@ public final class OperationPrepareHelper {
             }
             if (request.getForceUpdate()) {
                 // TODO 强制更新
-                return Single.just(null);
+                return null;
             }
-            return Single.just(null);
+            return null;
         };
     }
 
-    public static Function<SportSkuPageRequest, Single<Void>> createGetSportSkuPagesAllFunc() {
+    public static Function<SportSkuPageRequest, Single<List<SportSkuData>>> createGetSportSkuPagesAllFunc() {
         return (requestu) -> {
             DaoManagerProxy.getInstance().getSceneSportDao().clearAll();
-            return Single.just(null);
+            return null;
         };
     }
 }
