@@ -2,7 +2,6 @@ package com.adl.service.caller;
 
 import com.adl.service.callback.RequestCallback;
 import com.adl.service.data.AccountRecordData;
-import com.adl.service.data.BasePageData;
 import com.adl.service.data.OrgRecordData;
 import com.adl.service.exception.NzBaseException;
 import com.adl.service.http.request.AccountRecordPageRequest;
@@ -13,6 +12,8 @@ import com.adl.service.http.request.ReportStudentPlanRequest;
 import com.adl.service.http.request.ReportStudentSportRequest;
 import com.adl.service.http.request.ReportTeacherSportRequest;
 import com.adl.service.http.request.RequestScope;
+
+import java.util.List;
 
 /**
  * SportInfoCaller。
@@ -119,23 +120,23 @@ public interface SportInfoCaller {
      * 获取机构/年级运动记录分页
      * <p>异步调用。</p>
      */
-    long getOrgRecordPageAsync(RequestScope scope, OrgRecordPageRequest request, RequestCallback<BasePageData<OrgRecordData>> callback);
+    long getOrgRecordPageAsync(RequestScope scope, OrgRecordPageRequest request, RequestCallback<List<OrgRecordData>> callback);
 
     /**
      * 获取机构/年级运动记录分页
      * <p>同步调用。</p>
      */
-    BasePageData<OrgRecordData> getOrgRecordPageSync(OrgRecordPageRequest request) throws NzBaseException;
+    List<OrgRecordData> getOrgRecordPageSync(OrgRecordPageRequest request) throws NzBaseException;
 
     /**
      * 获取班级/个人运动记录分页
      * <p>异步调用。</p>
      */
-    long getAccountRecordPageAsync(RequestScope scope, AccountRecordPageRequest request, RequestCallback<BasePageData<AccountRecordData>> callback);
+    long getAccountRecordPageAsync(RequestScope scope, AccountRecordPageRequest request, RequestCallback<List<AccountRecordData>> callback);
 
     /**
      * 获取班级/个人运动记录分页
      * <p>同步调用。</p>
      */
-    BasePageData<AccountRecordData> getAccountRecordPageSync(AccountRecordPageRequest request) throws NzBaseException;
+    List<AccountRecordData> getAccountRecordPageSync(AccountRecordPageRequest request) throws NzBaseException;
 }

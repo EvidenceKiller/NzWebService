@@ -48,18 +48,18 @@ public final class CommonInfoPrepareHelper {
         return (v) -> Single.just(DaoManagerProxy.getInstance().getStudentDao().countSize());
     }
 
-    public Function<String, Single<TeacherData>> createPrepareTeacherByAccountIdFunc() {
-        return (accountId) -> {
-            if (accountId == null) {
-                throw new NzCommonException("accountIds is null when queryTeacher");
+    public Function<Void, Single<TeacherData>> createPrepareTeacherByAccountIdFunc(String accountId) {
+        return (v) -> {
+            if (TextUtils.isEmpty(accountId)) {
+                throw new NzCommonException("accountId is empty when queryTeacher");
             }
             return Single.just(TeacherEntity.convertToData(DaoManagerProxy.getInstance().getTeacherDao().queryTeacherByAccountId(accountId)));
         };
     }
 
-    public Function<List<String>, Single<List<TeacherData>>> createPrepareTeacherListByAccountIdsFunc() {
-        return (accountIds) -> {
-            if (accountIds == null) {
+    public Function<Void, Single<List<TeacherData>>> createPrepareTeacherListByAccountIdsFunc(List<String> accountIds) {
+        return (v) -> {
+            if (accountIds == null || accountIds.isEmpty()) {
                 throw new NzCommonException("accountIds is null when queryTeacherList");
             }
             return Single.just(DaoManagerProxy.getInstance().getTeacherDao().queryTeacherByAccountIds(accountIds).stream()
@@ -68,15 +68,8 @@ public final class CommonInfoPrepareHelper {
         };
     }
 
-    public Function<TeacherListRequest, Single<List<TeacherData>>> createPrepareTeacherListsAllFunc() {
+    public Function<TeacherListRequest, Single<List<TeacherData>>> createPrepareTeacherPagesAllFunc() {
         return (request) -> {
-            if (request == null) {
-                throw new NzCommonException("request is null when getStudentPagesAll");
-            }
-            if (request.getForceUpdate()) {
-                // TODO 强制更新
-                return null;
-            }
             DaoManagerProxy.getInstance().getTeacherDao().clearAll();
             return null;
         };
@@ -98,37 +91,30 @@ public final class CommonInfoPrepareHelper {
         return (v) -> Single.just(DaoManagerProxy.getInstance().getStudentDao().countSize());
     }
 
-    public Function<String, Single<StudentData>> createPrepareStudentByAccountIdFunc() {
-        return (accountId) -> Single.just(StudentEntity.convertToData(DaoManagerProxy.getInstance().getStudentDao().queryStudentByAccountId(accountId)));
+    public Function<Void, Single<StudentData>> createPrepareStudentByAccountIdFunc(String accountId) {
+        return (v) -> Single.just(StudentEntity.convertToData(DaoManagerProxy.getInstance().getStudentDao().queryStudentByAccountId(accountId)));
     }
 
-    public Function<List<String>, Single<List<StudentData>>> createPrepareStudentByAccountIdsFunc() {
-        return (accountIds) -> Single.just(DaoManagerProxy.getInstance().getStudentDao().queryStudentByAccountIds(accountIds).stream()
+    public Function<Void, Single<List<StudentData>>> createPrepareStudentByAccountIdsFunc(List<String> accountIds) {
+        return (v) -> Single.just(DaoManagerProxy.getInstance().getStudentDao().queryStudentByAccountIds(accountIds).stream()
                     .map(data -> StudentEntity.convertToData(data))
                     .collect(Collectors.toList()));
     }
 
-    public Function<List<String>, Single<List<StudentData>>> createPrepareStudentByClassIdsFunc() {
-        return (classIds) -> Single.just(DaoManagerProxy.getInstance().getStudentDao().queryStudentByClassIds(classIds).stream()
+    public Function<Void, Single<List<StudentData>>> createPrepareStudentByClassIdsFunc(List<String> classIds) {
+        return (v) -> Single.just(DaoManagerProxy.getInstance().getStudentDao().queryStudentByClassIds(classIds).stream()
                     .map(data -> StudentEntity.convertToData(data))
                     .collect(Collectors.toList()));
     }
 
-    public Function<String, Single<List<StudentData>>> createPrepareStudentByCardNumFunc() {
-        return (cardNum) -> Single.just(DaoManagerProxy.getInstance().getStudentDao().queryStudentWithCardNum(cardNum).stream()
+    public Function<Void, Single<List<StudentData>>> createPrepareStudentByCardNumFunc(String cardNum) {
+        return (v) -> Single.just(DaoManagerProxy.getInstance().getStudentDao().queryStudentWithCardNum(cardNum).stream()
                     .map(data -> StudentEntity.convertToData(data))
                     .collect(Collectors.toList()));
     }
 
     public Function<StudentPageRequest, Single<List<StudentData>>> createPrepareStudentPagesAllFunc() {
         return (request) -> {
-            if (request == null) {
-                throw new NzCommonException("request is null when getStudentPagesAll");
-            }
-            if (request.getForceUpdate()) {
-                // TODO 强制更新
-                return null;
-            }
             DaoManagerProxy.getInstance().getStudentDao().clearAll();
             return null;
         };
@@ -137,17 +123,10 @@ public final class CommonInfoPrepareHelper {
 
     public Function<DictRequest, Single<List<DictData>>> createPrepareDictListFunc() {
         return (request) -> {
-            if (request == null) {
-                throw new NzCommonException("request is null when getDictList");
-            }
-            if (request.getForceUpdate()) {
-                // TODO 强制更新
-                return Single.just(null);
-            }
             if (TextUtils.isEmpty(request.getDictId())) {
                 // 服务器逻辑dictId为空，返回空列表，缓存逻辑与服务器保持一致
                 // TODO 这里返回空列表会触发网络请求，这里需要重新考虑
-                return Single.just(null);
+                return null;
             }
             List<DictData> data = (List<DictData>) MemoryCacheManager.getInstance().get(CacheTag.CACHE_TAG_DICT_LIST + InnerUtil.toJson(request));
             if (data != null) {
@@ -157,7 +136,7 @@ public final class CommonInfoPrepareHelper {
             if (entities == null || entities.isEmpty()) {
                 return null;
             }
-            if (entities.get(0).getRecordTime() + DictEntity.EXPIRED_TIME < System.currentTimeMillis()) {
+            if (entities.get(0).getExpiredTime() < System.currentTimeMillis()) {
                 return null;
             }
 

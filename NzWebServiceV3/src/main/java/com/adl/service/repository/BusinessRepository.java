@@ -1,7 +1,6 @@
 package com.adl.service.repository;
 
 import com.adl.service.callback.GetPageResult;
-import com.adl.service.data.BasePageData;
 import com.adl.service.data.CompetitionData;
 import com.adl.service.data.CompetitionRankDetailData;
 import com.adl.service.data.GroupData;
@@ -53,7 +52,7 @@ public final class BusinessRepository {
         return BaseRepositoryUtil.repositoryAsSingle(request, fetchHelper.createGetTrainPlanOneDayProjectListFunc());
     }
 
-    public Single<BasePageData<TrainPlanInfoData>> getTrainPlanInfoPage(TrainPlanInfoPageRequest request) {
+    public Single<List<TrainPlanInfoData>> getTrainPlanInfoPage(TrainPlanInfoPageRequest request) {
         return BaseRepositoryUtil.repositoryAsSingle(request, fetchHelper.createGetTrainPlanInfoPageFunc());
     }
 
@@ -66,26 +65,26 @@ public final class BusinessRepository {
     }
 
     public Single<GetPageResult> getCompetitionPagesAll(CompetitionPageRequest request) {
-        return BaseRepositoryUtil.repositoryPagesAsSingle(request,
+        return BaseRepositoryUtil.repositoryListsAsSingle(request,
                 prepareHelper.createPrepareCompetitionPageFunc(),
                 fetchHelper.createGetCompetitionPagesAllFunc(request),
                 persistHelper.createPersistCompetitionPageFunc());
     }
 
-    public Single<BasePageData<CompetitionData>> getCompetitionPage(CompetitionPageRequest request) {
+    public Single<List<CompetitionData>> getCompetitionPage(CompetitionPageRequest request) {
         return BaseRepositoryUtil.repositoryAsSingle(request,
                 fetchHelper.createGetCompetitionPageFunc(),
                 persistHelper.createPersistCompetitionPageFunc());
     }
 
     public Single<GetPageResult> getSportMeetPagesAll(SportMeetPageRequest request) {
-        return BaseRepositoryUtil.repositoryPagesAsSingle(request,
+        return BaseRepositoryUtil.repositoryListsAsSingle(request,
                 prepareHelper.createPrepareSportMeetPageFunc(),
                 fetchHelper.createGetSportMeetPagesAllFunc(request),
                 persistHelper.createPersistSportMeetPageFunc(request));
     }
 
-    public Single<BasePageData<SportMeetData>> getSportMeetPage(SportMeetPageRequest request) {
+    public Single<List<SportMeetData>> getSportMeetPage(SportMeetPageRequest request) {
         return BaseRepositoryUtil.repositoryAsSingle(request,
                 fetchHelper.createGetSportMeetPageFunc(),
                 persistHelper.createPersistSportMeetPageFunc(request));
@@ -103,7 +102,7 @@ public final class BusinessRepository {
         return BaseRepositoryUtil.repositoryAsSingle(request, fetchHelper.createGetResTypeListFunc());
     }
 
-    public Single<BasePageData<ResData>> getResPage(ResPageRequest request) {
+    public Single<List<ResData>> getResPage(ResPageRequest request) {
         return BaseRepositoryUtil.repositoryAsSingle(request, fetchHelper.createGetResPageFunc());
     }
 

@@ -2,7 +2,6 @@ package com.adl.service.caller;
 
 import com.adl.service.callback.GetPageResult;
 import com.adl.service.callback.RequestCallback;
-import com.adl.service.data.BasePageData;
 import com.adl.service.data.PlanClassData;
 import com.adl.service.data.PlanData;
 import com.adl.service.data.PlanInfoData;
@@ -54,13 +53,13 @@ public interface OrgTestCaller {
      * 获取计划下学生
      * <p>异步调用。</p>
      */
-    long getPlanStudentPageAsync(RequestScope scope, PlanStudentPageRequest request, RequestCallback<BasePageData<PlanStudentData>> callback);
+    long getPlanStudentPageAsync(RequestScope scope, PlanStudentPageRequest request, RequestCallback<List<PlanStudentData>> callback);
 
     /**
      * 获取计划下学生
      * <p>同步调用。</p>
      */
-    BasePageData<PlanStudentData> getPlanStudentPageSync(PlanStudentPageRequest request) throws NzBaseException;
+    List<PlanStudentData> getPlanStudentPageSync(PlanStudentPageRequest request) throws NzBaseException;
 
     void clearPlanDataSync() throws NzBaseException;
 
@@ -90,13 +89,13 @@ public interface OrgTestCaller {
      * 获取计划列表
      * <p>异步调用。</p>
      */
-    long getPlanPageAsync(RequestScope scope, PlanPageRequest request, RequestCallback<BasePageData<PlanData>> callback);
+    long getPlanPageAsync(RequestScope scope, PlanPageRequest request, RequestCallback<List<PlanData>> callback);
 
     /**
      * 获取计划列表
      * <p>同步调用。</p>
      */
-    BasePageData<PlanData> getPlanPageSync(PlanPageRequest request) throws NzBaseException;
+    List<PlanData> getPlanPageSync(PlanPageRequest request) throws NzBaseException;
 
     /**
      * 获取组织测试计划详情

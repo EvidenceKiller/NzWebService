@@ -3,7 +3,6 @@ package com.adl.service.caller;
 import com.adl.service.callback.GetPageResult;
 import com.adl.service.callback.RequestCallback;
 import com.adl.service.data.BannerDetailData;
-import com.adl.service.data.BasePageData;
 import com.adl.service.data.DeviceFocusData;
 import com.adl.service.data.DictMapData;
 import com.adl.service.data.SceneData;
@@ -49,13 +48,13 @@ public interface OperationCaller {
      * 获取项目库列表
      * <p>异步调用。</p>
      */
-    long getSportSkuPageAsync(RequestScope scope, SportSkuPageRequest request, RequestCallback<BasePageData<SportSkuData>> callback);
+    long getSportSkuPageAsync(RequestScope scope, SportSkuPageRequest request, RequestCallback<List<SportSkuData>> callback);
 
     /**
      * 获取项目库列表
      * <p>同步调用。</p>
      */
-    BasePageData<SportSkuData> getSportSkuPageSync(SportSkuPageRequest request) throws NzBaseException;
+    List<SportSkuData> getSportSkuPageSync(SportSkuPageRequest request) throws NzBaseException;
 
     /**
      * 获取项目详情

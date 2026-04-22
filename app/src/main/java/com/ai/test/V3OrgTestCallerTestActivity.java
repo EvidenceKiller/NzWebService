@@ -16,7 +16,6 @@ import com.adl.service.http.request.PlanPageRequest;
 import com.adl.service.http.request.PlanStudentPageRequest;
 import com.adl.service.http.request.RequestScope;
 import com.adl.service.http.request.StandardConfigPageRequest;
-import com.adl.service.data.BasePageData;
 import com.adl.service.data.PlanClassData;
 import com.adl.service.data.PlanInfoData;
 import com.adl.service.data.PlanData;
@@ -154,9 +153,9 @@ public class V3OrgTestCallerTestActivity extends AppCompatActivity {
 
     private void getPlanStudentPageAsync() {
         PlanStudentPageRequest request = buildPlanStudentPageRequest();
-        AdlService.getService().getOrgTestCaller().getPlanStudentPageAsync(RequestScope.of(this), request, new RequestCallback<BasePageData<PlanStudentData>>() {
+        AdlService.getService().getOrgTestCaller().getPlanStudentPageAsync(RequestScope.of(this), request, new RequestCallback<List<PlanStudentData>>() {
             @Override
-            public void onSuccess(BasePageData<PlanStudentData> data) {
+            public void onSuccess(List<PlanStudentData> data) {
                 if (data != null) {
                     Log.d(TAG, "OrgTestCallerTestActivity::getPlanStudentPageAsync::onSuccess : data : " + data);
                     resultView.setText(data.toString());
@@ -183,9 +182,9 @@ public class V3OrgTestCallerTestActivity extends AppCompatActivity {
         AdlService.getService().executeSyncOnIo(RequestScope.of(this), () -> {
             PlanStudentPageRequest request = buildPlanStudentPageRequest();
             return AdlService.getService().getOrgTestCaller().getPlanStudentPageSync(request);
-        }, new RequestCallback<BasePageData<PlanStudentData>>() {
+        }, new RequestCallback<List<PlanStudentData>>() {
             @Override
-            public void onSuccess(BasePageData<PlanStudentData> data) {
+            public void onSuccess(List<PlanStudentData> data) {
                 if (data != null) {
                     Log.d(TAG, "OrgTestCallerTestActivity::getPlanStudentPageSync::onSuccess : data : " + data);
                     resultView.setText(data.toString());
@@ -210,9 +209,9 @@ public class V3OrgTestCallerTestActivity extends AppCompatActivity {
 
     private void getPlanPageAsync() {
         PlanPageRequest request = buildPlanPageRequest();
-        AdlService.getService().getOrgTestCaller().getPlanPageAsync(RequestScope.of(this), request, new RequestCallback<BasePageData<PlanData>>() {
+        AdlService.getService().getOrgTestCaller().getPlanPageAsync(RequestScope.of(this), request, new RequestCallback<List<PlanData>>() {
             @Override
-            public void onSuccess(BasePageData<PlanData> data) {
+            public void onSuccess(List<PlanData> data) {
                 if (data != null) {
                     Log.d(TAG, "OrgTestCallerTestActivity::getPlanPageAsync::onSuccess : data : " + data);
                     resultView.setText(data.toString());
@@ -239,9 +238,9 @@ public class V3OrgTestCallerTestActivity extends AppCompatActivity {
         AdlService.getService().executeSyncOnIo(RequestScope.of(this), () -> {
             PlanPageRequest request = buildPlanPageRequest();
             return AdlService.getService().getOrgTestCaller().getPlanPageSync(request);
-        }, new RequestCallback<BasePageData<PlanData>>() {
+        }, new RequestCallback<List<PlanData>>() {
             @Override
-            public void onSuccess(BasePageData<PlanData> data) {
+            public void onSuccess(List<PlanData> data) {
                 if (data != null) {
                     Log.d(TAG, "OrgTestCallerTestActivity::getPlanPageSync::onSuccess : data : " + data);
                     resultView.setText(data.toString());

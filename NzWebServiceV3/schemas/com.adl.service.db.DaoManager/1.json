@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "d61f3f245803e846015e7148b8dbb69a",
+    "identityHash": "927bb58f97fad927aaeaeb2bf14405ba",
     "entities": [
       {
         "tableName": "_student",
@@ -1864,7 +1864,7 @@
       },
       {
         "tableName": "_dict",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`_enable_sort` INTEGER, `_module_str` TEXT, `_id` TEXT NOT NULL, `_dict_code` TEXT, `_dict_value` TEXT, `_dict_label` TEXT, `_sort_num` INTEGER, `_default_flag` TEXT, `_ext_data` TEXT, `_remark` TEXT, `_lang` TEXT, `_create_time` TEXT, `_update_time` TEXT, `_data_type` INTEGER, `_record_time` INTEGER DEFAULT (strftime('%s', 'now') * 1000), PRIMARY KEY(`_id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`_enable_sort` INTEGER, `_module_str` TEXT, `_id` TEXT NOT NULL, `_dict_code` TEXT, `_dict_value` TEXT, `_dict_label` TEXT, `_sort_num` INTEGER, `_default_flag` TEXT, `_ext_data` TEXT, `_remark` TEXT, `_lang` TEXT, `_create_time` TEXT, `_update_time` TEXT, `_data_type` INTEGER, `_expired_time` INTEGER, PRIMARY KEY(`_id`))",
         "fields": [
           {
             "fieldPath": "enableSort",
@@ -1951,11 +1951,10 @@
             "notNull": false
           },
           {
-            "fieldPath": "recordTime",
-            "columnName": "_record_time",
+            "fieldPath": "expiredTime",
+            "columnName": "_expired_time",
             "affinity": "INTEGER",
-            "notNull": false,
-            "defaultValue": "(strftime('%s', 'now') * 1000)"
+            "notNull": false
           }
         ],
         "primaryKey": {
@@ -2112,12 +2111,68 @@
         },
         "indices": [],
         "foreignKeys": []
+      },
+      {
+        "tableName": "_dict_map",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`lid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `_sport_sku_id` TEXT, `_dict` TEXT, `_right_key` TEXT, `_wrong_key` TEXT, `_type` TEXT, `_expired_time` INTEGER)",
+        "fields": [
+          {
+            "fieldPath": "lid",
+            "columnName": "lid",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "sportSkuId",
+            "columnName": "_sport_sku_id",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "dict",
+            "columnName": "_dict",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "rightKey",
+            "columnName": "_right_key",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "wrongKey",
+            "columnName": "_wrong_key",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "type",
+            "columnName": "_type",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "expiredTime",
+            "columnName": "_expired_time",
+            "affinity": "INTEGER",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "lid"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'd61f3f245803e846015e7148b8dbb69a')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '927bb58f97fad927aaeaeb2bf14405ba')"
     ]
   }
 }

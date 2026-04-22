@@ -1,7 +1,6 @@
 package com.adl.service.caller;
 
 import com.adl.service.callback.RequestCallback;
-import com.adl.service.data.BasePageData;
 import com.adl.service.data.ClassroomCompetitionRecordData;
 import com.adl.service.data.SunshineRunningSportDetailData;
 import com.adl.service.data.TeachCourseDetailData;
@@ -72,24 +71,24 @@ public interface BigScreenH5Caller {
      * 历史记录
      * <p>异步调用。</p>
      */
-    long getSunshineRunningSportDetailPageAsync(RequestScope scope, SunshineRunningSportDetailPageRequest request, RequestCallback<BasePageData<SunshineRunningSportDetailData>> callback);
+    long getSunshineRunningSportDetailPageAsync(RequestScope scope, SunshineRunningSportDetailPageRequest request, RequestCallback<List<SunshineRunningSportDetailData>> callback);
 
     /**
      * 历史记录
      * <p>同步调用。</p>
      */
-    BasePageData<SunshineRunningSportDetailData> getSunshineRunningSportDetailPageSync(SunshineRunningSportDetailPageRequest request) throws NzBaseException;
+    List<SunshineRunningSportDetailData> getSunshineRunningSportDetailPageSync(SunshineRunningSportDetailPageRequest request) throws NzBaseException;
 
     /**
      * 历史记录
      * <p>异步调用。</p>
      */
-    long getSunshineRunningCompetitionRecordPageAsync(RequestScope scope, SunshineRunningCompetitionRecordPageRequest request, RequestCallback<BasePageData<ClassroomCompetitionRecordData>> callback);
+    long getSunshineRunningCompetitionRecordPageAsync(RequestScope scope, SunshineRunningCompetitionRecordPageRequest request, RequestCallback<List<ClassroomCompetitionRecordData>> callback);
 
     /**
      * 历史记录
      * <p>同步调用。</p>
      */
-    BasePageData<ClassroomCompetitionRecordData> getSunshineRunningCompetitionRecordPageSync(SunshineRunningCompetitionRecordPageRequest request) throws NzBaseException;
+    List<ClassroomCompetitionRecordData> getSunshineRunningCompetitionRecordPageSync(SunshineRunningCompetitionRecordPageRequest request) throws NzBaseException;
 
 }

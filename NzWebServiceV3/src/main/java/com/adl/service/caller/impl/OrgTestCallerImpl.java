@@ -8,7 +8,6 @@ import com.adl.service.callback.GetPageResult;
 import com.adl.service.callback.RequestCallback;
 import com.adl.service.caller.OrgTestCaller;
 import com.adl.service.common.IDefine;
-import com.adl.service.data.BasePageData;
 import com.adl.service.data.PlanClassData;
 import com.adl.service.data.PlanData;
 import com.adl.service.data.PlanInfoData;
@@ -170,7 +169,7 @@ public final class OrgTestCallerImpl implements OrgTestCaller {
     }
 
     @Override
-    public long getPlanStudentPageAsync(RequestScope scope, PlanStudentPageRequest request, RequestCallback<BasePageData<PlanStudentData>> callback) {
+    public long getPlanStudentPageAsync(RequestScope scope, PlanStudentPageRequest request, RequestCallback<List<PlanStudentData>> callback) {
         CallerUtil.assertScope(scope);
         Disposable disposable = RxCallbackScheduler.schedule(orgTestRepository.getPlanStudentPage(request), callback);
         SubscriptionManager.getInstance().add(scope.owner(), disposable);
@@ -178,7 +177,7 @@ public final class OrgTestCallerImpl implements OrgTestCaller {
     }
 
     @Override
-    public BasePageData<PlanStudentData> getPlanStudentPageSync(PlanStudentPageRequest request) throws NzBaseException {
+    public List<PlanStudentData> getPlanStudentPageSync(PlanStudentPageRequest request) throws NzBaseException {
         return RxCallbackScheduler.blockingGet(orgTestRepository.getPlanStudentPage(request));
     }
 
@@ -203,7 +202,7 @@ public final class OrgTestCallerImpl implements OrgTestCaller {
     }
 
     @Override
-    public long getPlanPageAsync(RequestScope scope, PlanPageRequest request, RequestCallback<BasePageData<PlanData>> callback) {
+    public long getPlanPageAsync(RequestScope scope, PlanPageRequest request, RequestCallback<List<PlanData>> callback) {
         CallerUtil.assertScope(scope);
         Disposable disposable = RxCallbackScheduler.schedule(orgTestRepository.getPlanPage(request), callback);
         SubscriptionManager.getInstance().add(scope.owner(), disposable);
@@ -211,7 +210,7 @@ public final class OrgTestCallerImpl implements OrgTestCaller {
     }
 
     @Override
-    public BasePageData<PlanData> getPlanPageSync(PlanPageRequest request) throws NzBaseException {
+    public List<PlanData> getPlanPageSync(PlanPageRequest request) throws NzBaseException {
         return RxCallbackScheduler.blockingGet(orgTestRepository.getPlanPage(request));
     }
 

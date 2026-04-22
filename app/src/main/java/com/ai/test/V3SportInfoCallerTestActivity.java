@@ -18,9 +18,10 @@ import com.adl.service.http.request.ReportStudentSportRequest;
 import com.adl.service.http.request.ReportTeacherSportRequest;
 import com.adl.service.http.request.RequestScope;
 import com.adl.service.data.AccountRecordData;
-import com.adl.service.data.BasePageData;
 import com.adl.service.data.OrgRecordData;
 import com.adl.ts.general.R;
+
+import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -215,9 +216,9 @@ public class V3SportInfoCallerTestActivity extends AppCompatActivity {
 
     private void getOrgRecordPageAsync() {
         AdlService.getService().getSportInfoCaller().getOrgRecordPageAsync(
-                RequestScope.of(this), OrgRecordPageRequest.builder().build(), new RequestCallback<BasePageData<OrgRecordData>>() {
+                RequestScope.of(this), OrgRecordPageRequest.builder().build(), new RequestCallback<List<OrgRecordData>>() {
                     @Override
-                    public void onSuccess(BasePageData<OrgRecordData> data) {
+                    public void onSuccess(List<OrgRecordData> data) {
                         Log.d(TAG, "SportInfoCallerTestActivity::getOrgRecordPageAsync::onSuccess : data : " + data);
                         resultView.setText(String.valueOf(data));
                     }
@@ -239,9 +240,9 @@ public class V3SportInfoCallerTestActivity extends AppCompatActivity {
     private void getOrgRecordPageSync() {
         AdlService.getService().executeSyncOnIo(RequestScope.of(this),
                 () -> AdlService.getService().getSportInfoCaller().getOrgRecordPageSync(OrgRecordPageRequest.builder().build()),
-                new RequestCallback<BasePageData<OrgRecordData>>() {
+                new RequestCallback<List<OrgRecordData>>() {
                     @Override
-                    public void onSuccess(BasePageData<OrgRecordData> data) {
+                    public void onSuccess(List<OrgRecordData> data) {
                         Log.d(TAG, "SportInfoCallerTestActivity::getOrgRecordPageSync::onSuccess : data : " + data);
                         resultView.setText(String.valueOf(data));
                     }
@@ -262,9 +263,9 @@ public class V3SportInfoCallerTestActivity extends AppCompatActivity {
 
     private void getAccountRecordPageAsync() {
         AdlService.getService().getSportInfoCaller().getAccountRecordPageAsync(
-                RequestScope.of(this), buildAccountRecordPageRequest(), new RequestCallback<BasePageData<AccountRecordData>>() {
+                RequestScope.of(this), buildAccountRecordPageRequest(), new RequestCallback<List<AccountRecordData>>() {
                     @Override
-                    public void onSuccess(BasePageData<AccountRecordData> data) {
+                    public void onSuccess(List<AccountRecordData> data) {
                         Log.d(TAG, "SportInfoCallerTestActivity::getAccountRecordPageAsync::onSuccess : data : " + data);
                         resultView.setText(String.valueOf(data));
                     }
@@ -286,9 +287,9 @@ public class V3SportInfoCallerTestActivity extends AppCompatActivity {
     private void getAccountRecordPageSync() {
         AdlService.getService().executeSyncOnIo(RequestScope.of(this),
                 () -> AdlService.getService().getSportInfoCaller().getAccountRecordPageSync(buildAccountRecordPageRequest()),
-                new RequestCallback<BasePageData<AccountRecordData>>() {
+                new RequestCallback<List<AccountRecordData>>() {
                     @Override
-                    public void onSuccess(BasePageData<AccountRecordData> data) {
+                    public void onSuccess(List<AccountRecordData> data) {
                         Log.d(TAG, "SportInfoCallerTestActivity::getAccountRecordPageSync::onSuccess : data : " + data);
                         resultView.setText(String.valueOf(data));
                     }

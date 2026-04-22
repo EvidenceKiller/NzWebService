@@ -5,7 +5,6 @@ import com.adl.service.callback.GetPageResult;
 import com.adl.service.callback.RequestCallback;
 import com.adl.service.caller.OperationCaller;
 import com.adl.service.data.BannerDetailData;
-import com.adl.service.data.BasePageData;
 import com.adl.service.data.DeviceFocusData;
 import com.adl.service.data.DictMapData;
 import com.adl.service.data.SceneData;
@@ -74,7 +73,7 @@ public final class OperationCallerImpl implements OperationCaller {
     }
 
     @Override
-    public long getSportSkuPageAsync(RequestScope scope, SportSkuPageRequest request, RequestCallback<BasePageData<SportSkuData>> callback) {
+    public long getSportSkuPageAsync(RequestScope scope, SportSkuPageRequest request, RequestCallback<List<SportSkuData>> callback) {
         CallerUtil.assertScope(scope);
         Disposable disposable = RxCallbackScheduler.schedule(operationRepository.getSportSkuPage(request), callback);
         SubscriptionManager.getInstance().add(scope.owner(), disposable);
@@ -82,7 +81,7 @@ public final class OperationCallerImpl implements OperationCaller {
     }
 
     @Override
-    public BasePageData<SportSkuData> getSportSkuPageSync(SportSkuPageRequest request) throws NzBaseException {
+    public List<SportSkuData> getSportSkuPageSync(SportSkuPageRequest request) throws NzBaseException {
         return RxCallbackScheduler.blockingGet(operationRepository.getSportSkuPage(request));
     }
 

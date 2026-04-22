@@ -7,14 +7,19 @@ import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
 import android.os.Build;
 
+import com.adl.service.exception.NzCommonException;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+
+import io.reactivex.rxjava3.core.Single;
 
 public class CommonUtil {
 
@@ -85,5 +90,22 @@ public class CommonUtil {
 
         //  默认简体中文
         return acceptLanguages.get(0);
+    }
+
+    public static <T> Single<T> createEmptySingle(Class<T> clazz) {
+        if (clazz == null) {
+            return Single.error(new NzCommonException("data is null and clazz is null"));
+        }
+        if (List.class.isAssignableFrom(clazz)) {
+            @SuppressWarnings("unchecked")
+            T emptyList = (T) Collections.emptyList();
+            return Single.just(emptyList);
+        }
+        try {
+            T defaultData = clazz.getDeclaredConstructor().newInstance();
+            return Single.just(defaultData);
+        } catch (Throwable e) {
+            return Single.error(new NzCommonException("data is null and cannot instantiate " + clazz.getName(), e));
+        }
     }
 }

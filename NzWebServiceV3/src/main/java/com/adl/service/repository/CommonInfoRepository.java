@@ -7,7 +7,6 @@ import com.adl.service.common.FileDownManager;
 import com.adl.service.common.IDefine;
 import com.adl.service.common.InnerPreferences;
 import com.adl.service.data.AcayearData;
-import com.adl.service.data.BasePageData;
 import com.adl.service.data.ClassData;
 import com.adl.service.data.ClassInfoData;
 import com.adl.service.data.DictData;
@@ -153,26 +152,24 @@ public final class CommonInfoRepository {
     }
 
     public Single<TeacherData> queryTeacherByAccountId(String accountId) {
-        return BaseRepositoryUtil.repositoryAsSingle(accountId,
-                prepareHelper.createPrepareTeacherByAccountIdFunc());
+        return BaseRepositoryUtil.repositoryAsSingle(prepareHelper.createPrepareTeacherByAccountIdFunc(accountId));
     }
 
     public Single<List<TeacherData>> queryTeacherListByAccountIds(List<String> accountIds) {
-        return BaseRepositoryUtil.repositoryAsSingle(accountIds,
-                prepareHelper.createPrepareTeacherListByAccountIdsFunc());
+        return BaseRepositoryUtil.repositoryAsSingle(prepareHelper.createPrepareTeacherListByAccountIdsFunc(accountIds));
     }
 
     public Single<GetPageResult> getTeacherListsAll(TeacherListRequest request) {
         return BaseRepositoryUtil.repositoryListsAsSingle(request,
-                prepareHelper.createPrepareTeacherListsAllFunc(),
-                fetchHelper.createGetTeacherListsAllFunc(request),
-                persistHelper.createPersistTeacherList());
+                prepareHelper.createPrepareTeacherPagesAllFunc(),
+                fetchHelper.createGetTeacherPagesAllFunc(request),
+                persistHelper.createPersistTeacherPageFunc());
     }
 
     public Single<List<TeacherData>> getTeacherList(TeacherListRequest request) {
         return BaseRepositoryUtil.repositoryAsSingle(request,
-                fetchHelper.createGetTeacherListFunc(),
-                persistHelper.createPersistTeacherList());
+                fetchHelper.createGetTeacherPageFunc(),
+                persistHelper.createPersistTeacherPageFunc());
     }
 
     public Single<List<StudentData>> queryAllStudent() {
@@ -188,30 +185,30 @@ public final class CommonInfoRepository {
     }
 
     public Single<StudentData> queryStudentByAccountId(String accountId) {
-        return BaseRepositoryUtil.repositoryAsSingle(accountId, prepareHelper.createPrepareStudentByAccountIdFunc());
+        return BaseRepositoryUtil.repositoryAsSingle(prepareHelper.createPrepareStudentByAccountIdFunc(accountId));
     }
 
     public Single<List<StudentData>> queryStudentByAccountIds(List<String> accountIds) {
-        return BaseRepositoryUtil.repositoryAsSingle(accountIds, prepareHelper.createPrepareStudentByAccountIdsFunc());
+        return BaseRepositoryUtil.repositoryAsSingle(prepareHelper.createPrepareStudentByAccountIdsFunc(accountIds));
     }
 
     public Single<List<StudentData>> queryStudentByClassIds(List<String> classIds) {
-        return BaseRepositoryUtil.repositoryAsSingle(classIds, prepareHelper.createPrepareStudentByClassIdsFunc());
+        return BaseRepositoryUtil.repositoryAsSingle(prepareHelper.createPrepareStudentByClassIdsFunc(classIds));
     }
 
     public Single<List<StudentData>> queryStudentByCardNum(String cardNum) {
-        return BaseRepositoryUtil.repositoryAsSingle(cardNum, prepareHelper.createPrepareStudentByCardNumFunc());
+        return BaseRepositoryUtil.repositoryAsSingle(prepareHelper.createPrepareStudentByCardNumFunc(cardNum));
     }
 
     public Single<GetPageResult> getStudentPagesAll(StudentPageRequest request) {
-        return BaseRepositoryUtil.repositoryPagesAsSingle(request,
+        return BaseRepositoryUtil.repositoryListsAsSingle(request,
                 prepareHelper.createPrepareStudentPagesAllFunc(),
                 fetchHelper.createGetStudentPagesAllFunc(request),
                 persistHelper.createPersistStudentPageFunc()
         );
     }
 
-    public Single<BasePageData<StudentData>> getStudentPage(StudentPageRequest request) {
+    public Single<List<StudentData>> getStudentPage(StudentPageRequest request) {
         return BaseRepositoryUtil.repositoryAsSingle(request,
                 fetchHelper.createGetStudentPageFunc(),
                 persistHelper.createPersistStudentPageFunc());

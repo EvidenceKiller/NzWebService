@@ -15,7 +15,6 @@ import com.adl.service.http.request.SunshineRunningSportDetailPageRequest;
 import com.adl.service.http.request.TeachCourseButtonClickCountRequest;
 import com.adl.service.http.request.TeachCourseDataDatesRequest;
 import com.adl.service.http.request.TeachCourseRequest;
-import com.adl.service.data.BasePageData;
 import com.adl.service.data.ClassroomCompetitionRecordData;
 import com.adl.service.data.SunshineRunningSportDetailData;
 import com.adl.service.data.TeachCourseDetailData;
@@ -308,9 +307,9 @@ public class V3BigScreenH5CallerTestActivity extends AppCompatActivity {
 
     private void getSunshineRunningSportDetailPageAsync() {
         SunshineRunningSportDetailPageRequest request = buildSunshineRunningSportDetailPageRequest();
-        AdlService.getService().getBigScreenH5Caller().getSunshineRunningSportDetailPageAsync(RequestScope.of(this), request, new RequestCallback<BasePageData<SunshineRunningSportDetailData>>() {
+        AdlService.getService().getBigScreenH5Caller().getSunshineRunningSportDetailPageAsync(RequestScope.of(this), request, new RequestCallback<List<SunshineRunningSportDetailData>>() {
             @Override
-            public void onSuccess(BasePageData<SunshineRunningSportDetailData> data) {
+            public void onSuccess(List<SunshineRunningSportDetailData> data) {
                 if (data != null) {
                     Log.d(TAG, "BigScreenH5CallerTestActivity::getSunshineRunningSportDetailPageAsync::onSuccess : data : " + data);
                     resultView.setText(data.toString());
@@ -336,9 +335,9 @@ public class V3BigScreenH5CallerTestActivity extends AppCompatActivity {
     private void getSunshineRunningSportDetailPageSync() {
         AdlService.getService().executeSyncOnIo(RequestScope.of(this),
                 () -> AdlService.getService().getBigScreenH5Caller().getSunshineRunningSportDetailPageSync(buildSunshineRunningSportDetailPageRequest()),
-                new RequestCallback<BasePageData<SunshineRunningSportDetailData>>() {
+                new RequestCallback<List<SunshineRunningSportDetailData>>() {
                     @Override
-                    public void onSuccess(BasePageData<SunshineRunningSportDetailData> data) {
+                    public void onSuccess(List<SunshineRunningSportDetailData> data) {
                         if (data != null) {
                             Log.d(TAG, "BigScreenH5CallerTestActivity::getSunshineRunningSportDetailPageSync::onSuccess : data : " + data);
                             resultView.setText(data.toString());
@@ -363,9 +362,9 @@ public class V3BigScreenH5CallerTestActivity extends AppCompatActivity {
 
     private void getSunshineRunningCompetitionRecordPageAsync() {
         SunshineRunningCompetitionRecordPageRequest request = buildSunshineRunningCompetitionRecordPageRequest();
-        AdlService.getService().getBigScreenH5Caller().getSunshineRunningCompetitionRecordPageAsync(RequestScope.of(this), request, new RequestCallback<BasePageData<ClassroomCompetitionRecordData>>() {
+        AdlService.getService().getBigScreenH5Caller().getSunshineRunningCompetitionRecordPageAsync(RequestScope.of(this), request, new RequestCallback<List<ClassroomCompetitionRecordData>>() {
             @Override
-            public void onSuccess(BasePageData<ClassroomCompetitionRecordData> data) {
+            public void onSuccess(List<ClassroomCompetitionRecordData> data) {
                 if (data != null) {
                     Log.d(TAG, "BigScreenH5CallerTestActivity::getSunshineRunningCompetitionRecordPageAsync::onSuccess : data : " + data);
                     resultView.setText(data.toString());
@@ -391,9 +390,9 @@ public class V3BigScreenH5CallerTestActivity extends AppCompatActivity {
     private void getSunshineRunningCompetitionRecordPageSync() {
         AdlService.getService().executeSyncOnIo(RequestScope.of(this),
                 () -> AdlService.getService().getBigScreenH5Caller().getSunshineRunningCompetitionRecordPageSync(buildSunshineRunningCompetitionRecordPageRequest()),
-                new RequestCallback<BasePageData<ClassroomCompetitionRecordData>>() {
+                new RequestCallback<List<ClassroomCompetitionRecordData>>() {
                     @Override
-                    public void onSuccess(BasePageData<ClassroomCompetitionRecordData> data) {
+                    public void onSuccess(List<ClassroomCompetitionRecordData> data) {
                         if (data != null) {
                             Log.d(TAG, "BigScreenH5CallerTestActivity::getSunshineRunningCompetitionRecordPageSync::onSuccess : data : " + data);
                             resultView.setText(data.toString());

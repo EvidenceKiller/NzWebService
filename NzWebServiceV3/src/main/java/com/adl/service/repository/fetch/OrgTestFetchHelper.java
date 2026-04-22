@@ -1,6 +1,5 @@
 package com.adl.service.repository.fetch;
 
-import com.adl.service.data.BasePageData;
 import com.adl.service.data.PlanClassData;
 import com.adl.service.data.PlanInfoData;
 import com.adl.service.data.PlanData;
@@ -28,6 +27,7 @@ public final class OrgTestFetchHelper {
         this.orgTestService = RetrofitManager.getInstance().create(OrgTestService.class);
     }
 
+    @SuppressWarnings("unchecked")
     public Function<Long, Single<List<StandardConfigData>>> createGetStandardConfigPagesAllFunc(StandardConfigPageRequest request) {
         return (page) -> {
             StandardConfigPageRequest pageReq = StandardConfigPageRequest.builder(request.getStandardType())
@@ -36,15 +36,17 @@ public final class OrgTestFetchHelper {
                     .standardId(request.getStandardId())
                     .sportProjectCode(request.getSportProjectCode())
                     .build();
-            return orgTestService.getStandardConfigPage(pageReq).map(BaseFetchUtil::scheduleResponse);
+            return BaseFetchUtil.scheduleResponse(orgTestService.getStandardConfigPage(pageReq), (Class<List<StandardConfigData>>) (Class<?>) List.class);
         };
     }
 
+    @SuppressWarnings("unchecked")
     public Function<StandardConfigPageRequest, Single<List<StandardConfigData>>> createGetStandardConfigPageFunc() {
-        return (request) -> orgTestService.getStandardConfigPage(request).map(BaseFetchUtil::scheduleResponse);
+        return (request) -> BaseFetchUtil.scheduleResponse(orgTestService.getStandardConfigPage(request), (Class<List<StandardConfigData>>) (Class<?>) List.class);
     }
 
-    public Function<Long, Single<BasePageData<PlanStudentData>>> createGetPlanStudentPagesAllFunc(PlanStudentPageRequest request) {
+    @SuppressWarnings("unchecked")
+    public Function<Long, Single<List<PlanStudentData>>> createGetPlanStudentPagesAllFunc(PlanStudentPageRequest request) {
         return (page) -> {
             PlanStudentPageRequest pageReq = PlanStudentPageRequest.builder(request.getPlanId())
                     .current(page)
@@ -53,15 +55,17 @@ public final class OrgTestFetchHelper {
                     .classId(request.getClassId())
                     .keyword(request.getKeyword())
                     .build();
-            return orgTestService.getPlanStudentPage(pageReq).map(BaseFetchUtil::scheduleResponse);
+            return BaseFetchUtil.schedulePageResponse(orgTestService.getPlanStudentPage(pageReq), (Class<List<PlanStudentData>>) (Class<?>) List.class);
         };
     }
 
-    public Function<PlanStudentPageRequest, Single<BasePageData<PlanStudentData>>> createGetPlanStudentPageFunc() {
-        return (request) -> orgTestService.getPlanStudentPage(request).map(BaseFetchUtil::scheduleResponse);
+    @SuppressWarnings("unchecked")
+    public Function<PlanStudentPageRequest, Single<List<PlanStudentData>>> createGetPlanStudentPageFunc() {
+        return (request) -> BaseFetchUtil.schedulePageResponse(orgTestService.getPlanStudentPage(request), (Class<List<PlanStudentData>>) (Class<?>) List.class);
     }
 
-    public Function<Long, Single<BasePageData<PlanData>>> createGetPlanPagesAllFunc(PlanPageRequest request) {
+    @SuppressWarnings("unchecked")
+    public Function<Long, Single<List<PlanData>>> createGetPlanPagesAllFunc(PlanPageRequest request) {
         return (page) -> {
             PlanPageRequest pageReq = PlanPageRequest.builder()
                     .current(page)
@@ -73,23 +77,25 @@ public final class OrgTestFetchHelper {
                     .showStatistic(request.getShowStatistic())
                     .planId(request.getPlanId())
                     .build();
-            return orgTestService.getPlanPage(pageReq).map(BaseFetchUtil::scheduleResponse);
+            return BaseFetchUtil.schedulePageResponse(orgTestService.getPlanPage(pageReq), (Class<List<PlanData>>) (Class<?>) List.class);
         };
     }
 
-    public Function<PlanPageRequest, Single<BasePageData<PlanData>>> createGetPlanPageFunc() {
-        return (request) -> orgTestService.getPlanPage(request).map(BaseFetchUtil::scheduleResponse);
+    @SuppressWarnings("unchecked")
+    public Function<PlanPageRequest, Single<List<PlanData>>> createGetPlanPageFunc() {
+        return (request) -> BaseFetchUtil.schedulePageResponse(orgTestService.getPlanPage(request), (Class<List<PlanData>>) (Class<?>) List.class);
     }
 
     public Function<PlanInfoRequest, Single<PlanInfoData>> createGetPlanInfoFunc() {
-        return (request) -> orgTestService.getPlanInfo(request).map(BaseFetchUtil::scheduleResponse);
+        return (request) -> BaseFetchUtil.scheduleResponse(orgTestService.getPlanInfo(request), PlanInfoData.class);
     }
 
+    @SuppressWarnings("unchecked")
     public Function<PlanClassListRequest, Single<List<PlanClassData>>> createGetPlanClassListFunc() {
-        return (request) -> orgTestService.getPlanClassList(request).map(BaseFetchUtil::scheduleResponse);
+        return (request) -> BaseFetchUtil.scheduleResponse(orgTestService.getPlanClassList(request), (Class<List<PlanClassData>>) (Class<?>) List.class);
     }
 
     public Function<CheckStudentInPlanRequest, Single<Boolean>> createCheckStudentInPlanFunc() {
-        return (request) -> orgTestService.checkStudentInPlan(request).map(BaseFetchUtil::scheduleResponse);
+        return (request) -> BaseFetchUtil.scheduleResponse(orgTestService.checkStudentInPlan(request), Boolean.class);
     }
 }

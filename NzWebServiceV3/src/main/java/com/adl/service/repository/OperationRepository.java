@@ -2,7 +2,6 @@ package com.adl.service.repository;
 
 import com.adl.service.callback.GetPageResult;
 import com.adl.service.data.BannerDetailData;
-import com.adl.service.data.BasePageData;
 import com.adl.service.data.DeviceFocusData;
 import com.adl.service.data.DictMapData;
 import com.adl.service.data.SceneData;
@@ -14,7 +13,6 @@ import com.adl.service.http.request.BannerDetailListRequest;
 import com.adl.service.http.request.DeviceFocusListRequest;
 import com.adl.service.http.request.DictMapRequest;
 import com.adl.service.http.request.SceneListRequest;
-import com.adl.service.http.request.SportMeetPageRequest;
 import com.adl.service.http.request.SportSkuDetailRequest;
 import com.adl.service.http.request.SportSkuPageRequest;
 import com.adl.service.http.request.UploadDeviceNameRequest;
@@ -74,13 +72,13 @@ public final class OperationRepository {
     }
 
     public Single<GetPageResult> getSportSkuPagesAll(SportSkuPageRequest request) {
-        return BaseRepositoryUtil.repositoryPagesAsSingle(request,
+        return BaseRepositoryUtil.repositoryListsAsSingle(request,
                 prepareHelper.createGetSportSkuPagesAllFunc(),
                 fetchHelper.createGetSportSkuPagesAllFunc(request),
                 persistHelper.createPersistSportSkuPageFunc(request));
     }
 
-    public Single<BasePageData<SportSkuData>> getSportSkuPage(SportSkuPageRequest request) {
+    public Single<List<SportSkuData>> getSportSkuPage(SportSkuPageRequest request) {
         return BaseRepositoryUtil.repositoryAsSingle(request,
                 fetchHelper.createGetSportSkuPageFunc(),
                 persistHelper.createPersistSportSkuPageFunc(request));
@@ -91,7 +89,10 @@ public final class OperationRepository {
     }
 
     public Single<List<DictMapData>> getDictMap(DictMapRequest request) {
-        return BaseRepositoryUtil.repositoryAsSingle(request, fetchHelper.createGetDictMapFunc());
+        return BaseRepositoryUtil.repositoryAsSingle(request,
+                prepareHelper.createPrepareDictMapListFunc(),
+                fetchHelper.createGetDictMapFunc(),
+                persistHelper.createPersistDictMapListFunc(request));
     }
 
     public Single<List<SceneData>> getSceneList(SceneListRequest request) {

@@ -4,7 +4,6 @@ import com.adl.service.AdlService;
 import com.adl.service.callback.GetPageResult;
 import com.adl.service.callback.RequestCallback;
 import com.adl.service.caller.BusinessCaller;
-import com.adl.service.data.BasePageData;
 import com.adl.service.data.CompetitionData;
 import com.adl.service.data.CompetitionRankDetailData;
 import com.adl.service.data.GroupData;
@@ -89,7 +88,7 @@ public final class BusinessCallerImpl implements BusinessCaller {
     }
 
     @Override
-    public long getTrainPlanInfoPageAsync(RequestScope scope, TrainPlanInfoPageRequest request, RequestCallback<BasePageData<TrainPlanInfoData>> callback) {
+    public long getTrainPlanInfoPageAsync(RequestScope scope, TrainPlanInfoPageRequest request, RequestCallback<List<TrainPlanInfoData>> callback) {
         CallerUtil.assertScope(scope);
         Disposable disposable = RxCallbackScheduler.schedule(businessRepository.getTrainPlanInfoPage(request), callback);
         SubscriptionManager.getInstance().add(scope.owner(), disposable);
@@ -97,7 +96,7 @@ public final class BusinessCallerImpl implements BusinessCaller {
     }
 
     @Override
-    public BasePageData<TrainPlanInfoData> getTrainPlanInfoPageSync(TrainPlanInfoPageRequest request) throws NzBaseException {
+    public List<TrainPlanInfoData> getTrainPlanInfoPageSync(TrainPlanInfoPageRequest request) throws NzBaseException {
         return RxCallbackScheduler.blockingGet(businessRepository.getTrainPlanInfoPage(request));
     }
 
@@ -142,7 +141,7 @@ public final class BusinessCallerImpl implements BusinessCaller {
     }
 
     @Override
-    public long getCompetitionPageAsync(RequestScope scope, CompetitionPageRequest request, RequestCallback<BasePageData<CompetitionData>> callback) {
+    public long getCompetitionPageAsync(RequestScope scope, CompetitionPageRequest request, RequestCallback<List<CompetitionData>> callback) {
         CallerUtil.assertScope(scope);
         Disposable disposable = RxCallbackScheduler.schedule(businessRepository.getCompetitionPage(request), callback);
         SubscriptionManager.getInstance().add(scope.owner(), disposable);
@@ -150,7 +149,7 @@ public final class BusinessCallerImpl implements BusinessCaller {
     }
 
     @Override
-    public BasePageData<CompetitionData> getCompetitionPageSync(CompetitionPageRequest request) throws NzBaseException {
+    public List<CompetitionData> getCompetitionPageSync(CompetitionPageRequest request) throws NzBaseException {
         return RxCallbackScheduler.blockingGet(businessRepository.getCompetitionPage(request));
     }
 
@@ -170,7 +169,7 @@ public final class BusinessCallerImpl implements BusinessCaller {
     }
 
     @Override
-    public long getSportMeetPageAsync(RequestScope scope, SportMeetPageRequest request, RequestCallback<BasePageData<SportMeetData>> callback) {
+    public long getSportMeetPageAsync(RequestScope scope, SportMeetPageRequest request, RequestCallback<List<SportMeetData>> callback) {
         CallerUtil.assertScope(scope);
         Disposable disposable = RxCallbackScheduler.schedule(businessRepository.getSportMeetPage(request), callback);
         SubscriptionManager.getInstance().add(scope.owner(), disposable);
@@ -178,7 +177,7 @@ public final class BusinessCallerImpl implements BusinessCaller {
     }
 
     @Override
-    public BasePageData<SportMeetData> getSportMeetPageSync(SportMeetPageRequest request) throws NzBaseException {
+    public List<SportMeetData> getSportMeetPageSync(SportMeetPageRequest request) throws NzBaseException {
         return RxCallbackScheduler.blockingGet(businessRepository.getSportMeetPage(request));
     }
 
@@ -222,7 +221,7 @@ public final class BusinessCallerImpl implements BusinessCaller {
     }
 
     @Override
-    public long getResPageAsync(RequestScope scope, ResPageRequest request, RequestCallback<BasePageData<ResData>> callback) {
+    public long getResPageAsync(RequestScope scope, ResPageRequest request, RequestCallback<List<ResData>> callback) {
         CallerUtil.assertScope(scope);
         Disposable disposable = RxCallbackScheduler.schedule(businessRepository.getResPage(request), callback);
         SubscriptionManager.getInstance().add(scope.owner(), disposable);
@@ -230,7 +229,7 @@ public final class BusinessCallerImpl implements BusinessCaller {
     }
 
     @Override
-    public BasePageData<ResData> getResPageSync(ResPageRequest request) throws NzBaseException {
+    public List<ResData> getResPageSync(ResPageRequest request) throws NzBaseException {
         return RxCallbackScheduler.blockingGet(businessRepository.getResPage(request));
     }
 

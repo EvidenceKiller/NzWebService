@@ -5,7 +5,6 @@ import android.util.Pair;
 
 import com.adl.service.callback.GetPageResult;
 import com.adl.service.common.IDefine;
-import com.adl.service.data.BasePageData;
 import com.adl.service.data.PlanClassData;
 import com.adl.service.data.PlanInfoData;
 import com.adl.service.data.PlanData;
@@ -129,13 +128,13 @@ public final class OrgTestRepository {
     }
 
     public Single<GetPageResult> getPlanStudentPagesAll(PlanStudentPageRequest request) {
-        return BaseRepositoryUtil.repositoryPagesAsSingle(request,
+        return BaseRepositoryUtil.repositoryListsAsSingle(request,
                 prepareHelper.createPreparePlanStudentPagesAllFunc(),
                 fetchHelper.createGetPlanStudentPagesAllFunc(request),
                 persistHelper.createPersistPlanStudentPageFunc(request));
     }
 
-    public Single<BasePageData<PlanStudentData>> getPlanStudentPage(PlanStudentPageRequest request) {
+    public Single<List<PlanStudentData>> getPlanStudentPage(PlanStudentPageRequest request) {
         return BaseRepositoryUtil.repositoryAsSingle(request,
                 fetchHelper.createGetPlanStudentPageFunc(),
                 persistHelper.createPersistPlanStudentPageFunc(request));
@@ -146,12 +145,12 @@ public final class OrgTestRepository {
     }
 
     public Single<GetPageResult> getPlanPagesAll(PlanPageRequest request) {
-        return BaseRepositoryUtil.repositoryPagesAsSingle(request,
+        return BaseRepositoryUtil.repositoryListsAsSingle(request,
                 fetchHelper.createGetPlanPagesAllFunc(request),
                 persistHelper.createPersistPlanPageFunc(request));
     }
 
-    public Single<BasePageData<PlanData>> getPlanPage(PlanPageRequest request) {
+    public Single<List<PlanData>> getPlanPage(PlanPageRequest request) {
         return BaseRepositoryUtil.repositoryAsSingle(request,
                 fetchHelper.createGetPlanPageFunc(),
                 persistHelper.createPersistPlanPageFunc(request));

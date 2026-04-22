@@ -5,7 +5,6 @@ import com.adl.service.callback.GetPageResult;
 import com.adl.service.callback.RequestCallback;
 import com.adl.service.caller.CommonInfoCaller;
 import com.adl.service.data.AcayearData;
-import com.adl.service.data.BasePageData;
 import com.adl.service.data.ClassData;
 import com.adl.service.data.ClassInfoData;
 import com.adl.service.data.DictData;
@@ -234,7 +233,7 @@ public final class CommonInfoCallerImpl implements CommonInfoCaller {
     }
 
     @Override
-    public long getStudentPageAsync(RequestScope scope, StudentPageRequest request, RequestCallback<BasePageData<StudentData>> callback) {
+    public long getStudentPageAsync(RequestScope scope, StudentPageRequest request, RequestCallback<List<StudentData>> callback) {
         CallerUtil.assertScope(scope);
         Disposable disposable = RxCallbackScheduler.schedule(commonInfoRepository.getStudentPage(request), callback);
         SubscriptionManager.getInstance().add(scope.owner(), disposable);
@@ -242,7 +241,7 @@ public final class CommonInfoCallerImpl implements CommonInfoCaller {
     }
 
     @Override
-    public BasePageData<StudentData> getStudentPageSync(StudentPageRequest request) throws NzBaseException {
+    public List<StudentData> getStudentPageSync(StudentPageRequest request) throws NzBaseException {
         return RxCallbackScheduler.blockingGet(commonInfoRepository.getStudentPage(request));
     }
 

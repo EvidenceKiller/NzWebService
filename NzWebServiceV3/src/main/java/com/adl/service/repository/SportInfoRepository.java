@@ -1,7 +1,6 @@
 package com.adl.service.repository;
 
 import com.adl.service.data.AccountRecordData;
-import com.adl.service.data.BasePageData;
 import com.adl.service.data.OrgRecordData;
 import com.adl.service.http.request.AccountRecordPageRequest;
 import com.adl.service.http.request.OrgRecordPageRequest;
@@ -13,6 +12,8 @@ import com.adl.service.http.request.ReportTeacherSportRequest;
 import com.adl.service.repository.fetch.SportInfoFetchHelper;
 import com.adl.service.repository.persist.SportInfoPersistHelper;
 import com.adl.service.repository.prepare.SportInfoPrepareHelper;
+
+import java.util.List;
 
 import io.reactivex.rxjava3.core.Single;
 
@@ -56,11 +57,11 @@ public final class SportInfoRepository {
         return BaseRepositoryUtil.repositoryAsSingle(request, fetchHelper.createReportStudentAllSportFunc());
     }
 
-    public Single<BasePageData<OrgRecordData>> getOrgRecordPage(OrgRecordPageRequest request) {
+    public Single<List<OrgRecordData>> getOrgRecordPage(OrgRecordPageRequest request) {
         return BaseRepositoryUtil.repositoryAsSingle(request, fetchHelper.createGetOrgRecordPageFunc());
     }
 
-    public Single<BasePageData<AccountRecordData>> getAccountRecordPage(AccountRecordPageRequest request) {
+    public Single<List<AccountRecordData>> getAccountRecordPage(AccountRecordPageRequest request) {
         return BaseRepositoryUtil.repositoryAsSingle(request, fetchHelper.createGetAccountRecordPageFunc());
     }
 }

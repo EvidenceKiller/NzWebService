@@ -1,7 +1,6 @@
 package com.adl.service.repository.fetch;
 
 import com.adl.service.data.AcayearData;
-import com.adl.service.data.BasePageData;
 import com.adl.service.data.ClassData;
 import com.adl.service.data.ClassInfoData;
 import com.adl.service.data.DictData;
@@ -33,31 +32,36 @@ public final class CommonInfoFetchHelper {
         this.commonInfoService = RetrofitManager.getInstance().create(CommonInfoService.class);
     }
 
+    @SuppressWarnings("unchecked")
     public Function<EmptyRequest, Single<List<GradeTreeData>>> createGetGradeTreeFunc() {
-        return (request) -> commonInfoService.getGradeTree().map(BaseFetchUtil::scheduleResponse);
+        return (request) -> BaseFetchUtil.scheduleResponse(commonInfoService.getGradeTree(), (Class<List<GradeTreeData>>) (Class<?>) List.class);
     }
 
+    @SuppressWarnings("unchecked")
     public Function<EmptyRequest, Single<List<GradeChineseNameData>>> createGetGradeChineseNameListFunc() {
-        return (request) -> commonInfoService.getGradeChineseNameList().map(BaseFetchUtil::scheduleResponse);
+        return (request) -> BaseFetchUtil.scheduleResponse(commonInfoService.getGradeChineseNameList(), (Class<List<GradeChineseNameData>>) (Class<?>) List.class);
     }
 
+    @SuppressWarnings("unchecked")
     public Function<ClassListRequest, Single<List<ClassData>>> createGetClassListFunc() {
-        return (request) -> commonInfoService.getClassList(request).map(BaseFetchUtil::scheduleResponse);
+        return (request) -> BaseFetchUtil.scheduleResponse(commonInfoService.getClassList(request), (Class<List<ClassData>>) (Class<?>) List.class);
     }
 
     public Function<ClassInfoRequest, Single<ClassInfoData>> createGetClassInfoFunc() {
-        return (request) -> commonInfoService.getClassInfo(request).map(BaseFetchUtil::scheduleResponse);
+        return (request) -> BaseFetchUtil.scheduleResponse(commonInfoService.getClassInfo(request), ClassInfoData.class);
     }
 
     public Function<EmptyRequest, Single<LoginInfoData>> createGetLoginInfoFunc() {
-        return (request) -> commonInfoService.getLoginInfo().map(BaseFetchUtil::scheduleResponse);
+        return (request) -> BaseFetchUtil.scheduleResponse(commonInfoService.getLoginInfo(), LoginInfoData.class);
     }
 
+    @SuppressWarnings("unchecked")
     public Function<EmptyRequest, Single<List<AcayearData>>> createGetAcayearListFunc() {
-        return (request) -> commonInfoService.getAcayearList().map(BaseFetchUtil::scheduleResponse);
+        return (request) -> BaseFetchUtil.scheduleResponse(commonInfoService.getAcayearList(), (Class<List<AcayearData>>) (Class<?>) List.class);
     }
 
-    public Function<Long, Single<List<TeacherData>>> createGetTeacherListsAllFunc(TeacherListRequest request) {
+    @SuppressWarnings("unchecked")
+    public Function<Long, Single<List<TeacherData>>> createGetTeacherPagesAllFunc(TeacherListRequest request) {
         return (page) -> {
             TeacherListRequest pageReq = TeacherListRequest.builder()
                     .current(page)
@@ -70,15 +74,17 @@ public final class CommonInfoFetchHelper {
                     .faceType(request.getFaceType())
                     .delFlag(request.getDelFlag())
                     .build();
-            return commonInfoService.getTeacherList(pageReq).map(BaseFetchUtil::scheduleResponse);
+            return BaseFetchUtil.scheduleResponse(commonInfoService.getTeacherList(pageReq), (Class<List<TeacherData>>) (Class<?>) List.class);
         };
     }
 
-    public Function<TeacherListRequest, Single<List<TeacherData>>> createGetTeacherListFunc() {
-        return (request) -> commonInfoService.getTeacherList(request).map(BaseFetchUtil::scheduleResponse);
+    @SuppressWarnings("unchecked")
+    public Function<TeacherListRequest, Single<List<TeacherData>>> createGetTeacherPageFunc() {
+        return (request) -> BaseFetchUtil.scheduleResponse(commonInfoService.getTeacherList(request), (Class<List<TeacherData>>) (Class<?>) List.class);
     }
 
-    public Function<Long, Single<BasePageData<StudentData>>> createGetStudentPagesAllFunc(StudentPageRequest request) {
+    @SuppressWarnings("unchecked")
+    public Function<Long, Single<List<StudentData>>> createGetStudentPagesAllFunc(StudentPageRequest request) {
         return (page) -> {
             StudentPageRequest pageReq = StudentPageRequest.builder()
                     .current(page)
@@ -91,19 +97,21 @@ public final class CommonInfoFetchHelper {
                     .faceType(request.getFaceType())
                     .delFlag(request.getDelFlag())
                     .build();
-            return commonInfoService.getStudentPage(pageReq).map(BaseFetchUtil::scheduleResponse);
+            return BaseFetchUtil.schedulePageResponse(commonInfoService.getStudentPage(pageReq), (Class<List<StudentData>>) (Class<?>) List.class);
         };
     }
 
-    public Function<StudentPageRequest, Single<BasePageData<StudentData>>> createGetStudentPageFunc() {
-        return (request) -> commonInfoService.getStudentPage(request).map(BaseFetchUtil::scheduleResponse);
+    @SuppressWarnings("unchecked")
+    public Function<StudentPageRequest, Single<List<StudentData>>> createGetStudentPageFunc() {
+        return (request) -> BaseFetchUtil.schedulePageResponse(commonInfoService.getStudentPage(request), (Class<List<StudentData>>) (Class<?>) List.class);
     }
 
+    @SuppressWarnings("unchecked")
     public Function<DictRequest, Single<List<DictData>>> createGetDictListFunc() {
-        return (request) -> commonInfoService.getDictList(request).map(BaseFetchUtil::scheduleResponse);
+        return (request) -> BaseFetchUtil.scheduleResponse(commonInfoService.getDictList(request), (Class<List<DictData>>) (Class<?>) List.class);
     }
 
     public Function<DeviceActiveRequest, Single<Boolean>> createGetDeviceActiveFunc() {
-        return (request) -> commonInfoService.deviceActive(request).map(BaseFetchUtil::scheduleResponse);
+        return (request) -> BaseFetchUtil.scheduleResponse(commonInfoService.deviceActive(request), Boolean.class);
     }
 }

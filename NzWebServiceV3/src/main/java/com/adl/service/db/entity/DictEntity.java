@@ -96,8 +96,8 @@ public final class DictEntity {
     @ColumnInfo(name = "_data_type")
     private Integer dataType;
 
-    @ColumnInfo(name = "_record_time", defaultValue = "(strftime('%s', 'now') * 1000)")
-    private Long recordTime;
+    @ColumnInfo(name = "_expired_time")
+    private Long expiredTime;
 
     public static DictEntity convertToEntity(DictData dictData) {
         if (dictData == null) {
@@ -118,6 +118,7 @@ public final class DictEntity {
         entity.setDataType(dictData.getDataType());
         entity.setEnableSort(dictData.getEnableSort());
         entity.setModuleStr(dictData.getModuleStr());
+        entity.setExpiredTime(System.currentTimeMillis() + EXPIRED_TIME);
         return entity;
     }
 

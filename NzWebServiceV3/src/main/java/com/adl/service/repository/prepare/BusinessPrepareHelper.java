@@ -28,9 +28,6 @@ public final class BusinessPrepareHelper {
 
     public Function<SportMeetPageRequest, Single<List<SportMeetData>>> createPrepareSportMeetPageFunc() {
         return (request) -> {
-            if (request == null) {
-                throw new NzCommonException("request is null when getSportMeetPage");
-            }
             if (TextUtils.isEmpty(request.getAppCode())) {
                 DaoManagerProxy.getInstance().getSportMeetDao().clearAll();
                 DaoManagerProxy.getInstance().getSportMeetGroupTeamDao().clearAll();

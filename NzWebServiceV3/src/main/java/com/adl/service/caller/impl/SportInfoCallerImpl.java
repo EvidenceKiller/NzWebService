@@ -4,7 +4,6 @@ import com.adl.service.AdlService;
 import com.adl.service.callback.RequestCallback;
 import com.adl.service.caller.SportInfoCaller;
 import com.adl.service.data.AccountRecordData;
-import com.adl.service.data.BasePageData;
 import com.adl.service.data.OrgRecordData;
 import com.adl.service.exception.NzBaseException;
 import com.adl.service.http.request.AccountRecordPageRequest;
@@ -18,6 +17,8 @@ import com.adl.service.http.request.RequestScope;
 import com.adl.service.internal.RxCallbackScheduler;
 import com.adl.service.internal.SubscriptionManager;
 import com.adl.service.repository.SportInfoRepository;
+
+import java.util.List;
 
 import io.reactivex.rxjava3.disposables.Disposable;
 
@@ -137,7 +138,7 @@ public final class SportInfoCallerImpl implements SportInfoCaller {
     }
 
     @Override
-    public long getOrgRecordPageAsync(RequestScope scope, OrgRecordPageRequest request, RequestCallback<BasePageData<OrgRecordData>> callback) {
+    public long getOrgRecordPageAsync(RequestScope scope, OrgRecordPageRequest request, RequestCallback<List<OrgRecordData>> callback) {
         CallerUtil.assertScope(scope);
         Disposable disposable = RxCallbackScheduler.schedule(sportInfoRepository.getOrgRecordPage(request), callback);
         SubscriptionManager.getInstance().add(scope.owner(), disposable);
@@ -145,12 +146,12 @@ public final class SportInfoCallerImpl implements SportInfoCaller {
     }
 
     @Override
-    public BasePageData<OrgRecordData> getOrgRecordPageSync(OrgRecordPageRequest request) throws NzBaseException {
+    public List<OrgRecordData> getOrgRecordPageSync(OrgRecordPageRequest request) throws NzBaseException {
         return RxCallbackScheduler.blockingGet(sportInfoRepository.getOrgRecordPage(request));
     }
 
     @Override
-    public long getAccountRecordPageAsync(RequestScope scope, AccountRecordPageRequest request, RequestCallback<BasePageData<AccountRecordData>> callback) {
+    public long getAccountRecordPageAsync(RequestScope scope, AccountRecordPageRequest request, RequestCallback<List<AccountRecordData>> callback) {
         CallerUtil.assertScope(scope);
         Disposable disposable = RxCallbackScheduler.schedule(sportInfoRepository.getAccountRecordPage(request), callback);
         SubscriptionManager.getInstance().add(scope.owner(), disposable);
@@ -158,7 +159,7 @@ public final class SportInfoCallerImpl implements SportInfoCaller {
     }
 
     @Override
-    public BasePageData<AccountRecordData> getAccountRecordPageSync(AccountRecordPageRequest request) throws NzBaseException {
+    public List<AccountRecordData> getAccountRecordPageSync(AccountRecordPageRequest request) throws NzBaseException {
         return RxCallbackScheduler.blockingGet(sportInfoRepository.getAccountRecordPage(request));
     }
 }

@@ -3,7 +3,6 @@ package com.adl.service.caller;
 import com.adl.service.callback.GetPageResult;
 import com.adl.service.callback.RequestCallback;
 import com.adl.service.data.AcayearData;
-import com.adl.service.data.BasePageData;
 import com.adl.service.data.ClassData;
 import com.adl.service.data.ClassInfoData;
 import com.adl.service.data.DictData;
@@ -153,13 +152,13 @@ public interface CommonInfoCaller {
      * 获取学生增量数据
      * <p>异步调用。</p>
      */
-    long getStudentPageAsync(RequestScope scope, StudentPageRequest request, RequestCallback<BasePageData<StudentData>> callback);
+    long getStudentPageAsync(RequestScope scope, StudentPageRequest request, RequestCallback<List<StudentData>> callback);
 
     /**
      * 获取学生增量数据
      * <p>同步调用。</p>
      */
-    BasePageData<StudentData> getStudentPageSync(StudentPageRequest request) throws NzBaseException;
+    List<StudentData> getStudentPageSync(StudentPageRequest request) throws NzBaseException;
 
     /**
      * 获取系统字典

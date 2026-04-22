@@ -1,6 +1,5 @@
 package com.adl.service.repository.persist;
 
-import com.adl.service.data.BasePageData;
 import com.adl.service.data.PlanData;
 import com.adl.service.data.PlanStudentData;
 import com.adl.service.data.StandardConfigData;
@@ -8,7 +7,6 @@ import com.adl.service.db.DaoManagerProxy;
 import com.adl.service.db.entity.PlanEntity;
 import com.adl.service.db.entity.PlanStudentEntity;
 import com.adl.service.db.entity.StandardConfigEntity;
-import com.adl.service.exception.NzCommonException;
 import com.adl.service.http.request.PlanPageRequest;
 import com.adl.service.http.request.PlanStudentPageRequest;
 
@@ -23,12 +21,12 @@ public final class OrgTestPersistHelper {
     public OrgTestPersistHelper() {
     }
 
-    public Function<BasePageData<PlanStudentData>, Single<BasePageData<PlanStudentData>>> createPersistPlanStudentPageFunc(PlanStudentPageRequest request) {
+    public Function<List<PlanStudentData>, Single<List<PlanStudentData>>> createPersistPlanStudentPageFunc(PlanStudentPageRequest request) {
         return (pageData) -> {
-            if (pageData == null || pageData.getRecords() == null || pageData.getRecords().isEmpty()) {
-                throw new NzCommonException("plan student page data is empty");
+            if (pageData == null || pageData.isEmpty()) {
+                return Single.just(pageData);
             }
-            List<PlanStudentEntity> entityList = pageData.getRecords().stream()
+            List<PlanStudentEntity> entityList = pageData.stream()
                     .map(data -> PlanStudentEntity.convertToEntity(data))
                     .collect(Collectors.toList());
             entityList.forEach(plan -> plan.setPlanId(request.getPlanId()));
@@ -37,13 +35,13 @@ public final class OrgTestPersistHelper {
         };
     }
 
-    public Function<BasePageData<PlanData>, Single<BasePageData<PlanData>>> createPersistPlanPageFunc(PlanPageRequest request) {
+    public Function<List<PlanData>, Single<List<PlanData>>> createPersistPlanPageFunc(PlanPageRequest request) {
         return (pageData) -> {
-            if (pageData == null || pageData.getRecords() == null || pageData.getRecords().isEmpty()) {
-                throw new NzCommonException("plan page data is empty");
+            if (pageData == null || pageData.isEmpty()) {
+                return Single.just(pageData);
             }
             // 将 PlanData 转换为 PlanEntity
-            List<PlanEntity> entityList = pageData.getRecords().stream()
+            List<PlanEntity> entityList = pageData.stream()
                     .map(data -> PlanEntity.convertToEntity(data))
                     .collect(Collectors.toList());
 

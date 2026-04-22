@@ -1,6 +1,5 @@
 package com.adl.service.repository.persist;
 
-import com.adl.service.data.BasePageData;
 import com.adl.service.data.CompetitionData;
 import com.adl.service.data.SportMeetData;
 import com.adl.service.db.DaoManagerProxy;
@@ -8,7 +7,6 @@ import com.adl.service.db.entity.CompetitionEntity;
 import com.adl.service.db.entity.SportMeetEntity;
 import com.adl.service.db.entity.SportMeetGroupDetailEntity;
 import com.adl.service.db.entity.SportMeetGroupTeamEntity;
-import com.adl.service.exception.NzCommonException;
 import com.adl.service.http.request.SportMeetPageRequest;
 import com.adl.service.utils.CommonUtil;
 
@@ -25,12 +23,12 @@ public final class BusinessPersistHelper {
     public BusinessPersistHelper() {
     }
 
-    public Function<BasePageData<CompetitionData>, Single<BasePageData<CompetitionData>>> createPersistCompetitionPageFunc() {
+    public Function<List<CompetitionData>, Single<List<CompetitionData>>> createPersistCompetitionPageFunc() {
         return (pageData) -> {
-            if (pageData == null || pageData.getRecords() == null || pageData.getRecords().isEmpty()) {
-                throw new NzCommonException("competition page data is empty");
+            if (pageData == null || pageData.isEmpty()) {
+                return Single.just(pageData);
             }
-            List<CompetitionEntity> entityList = pageData.getRecords().stream()
+            List<CompetitionEntity> entityList = pageData.stream()
                     .map(data -> CompetitionEntity.convertToEntity(data))
                     .collect(Collectors.toList());
             DaoManagerProxy.getInstance().getCompetitionDao().insertCompetitionList(entityList);
@@ -38,14 +36,13 @@ public final class BusinessPersistHelper {
         };
     }
 
-    public Function<BasePageData<SportMeetData>, Single<BasePageData<SportMeetData>>> createPersistSportMeetPageFunc(SportMeetPageRequest request) {
+    public Function<List<SportMeetData>, Single<List<SportMeetData>>> createPersistSportMeetPageFunc(SportMeetPageRequest request) {
         return (pageData) -> {
-            if (pageData == null || pageData.getRecords() == null || pageData.getRecords().isEmpty()) {
-                throw new NzCommonException("sport meet page data is empty");
+            if (pageData == null || pageData.isEmpty()) {
+                return Single.just(pageData);
             }
-            List<SportMeetData> dataList = pageData.getRecords();
             List<SportMeetEntity> persistList = new LinkedList<>();
-            Iterator<SportMeetData> iterator = dataList.iterator();
+            Iterator<SportMeetData> iterator = pageData.iterator();
             while (iterator.hasNext()) {
                 SportMeetData data = iterator.next();
 

@@ -22,7 +22,6 @@ import com.adl.service.http.request.WikiDetailRequest;
 import com.adl.service.http.request.WikiPageRequest;
 import com.adl.service.http.request.WikiTypePageRequest;
 import com.adl.service.data.BannerDetailData;
-import com.adl.service.data.BasePageData;
 import com.adl.service.data.DeviceFocusData;
 import com.adl.service.data.DictMapData;
 import com.adl.service.data.SceneData;
@@ -232,9 +231,9 @@ public class V3OperationCallerTestActivity extends AppCompatActivity {
 
     private void getSportSkuPageAsync() {
         SportSkuPageRequest request = buildSportSkuPageRequest();
-        AdlService.getService().getOperationCaller().getSportSkuPageAsync(RequestScope.of(this), request, new RequestCallback<BasePageData<SportSkuData>>() {
+        AdlService.getService().getOperationCaller().getSportSkuPageAsync(RequestScope.of(this), request, new RequestCallback<List<SportSkuData>>() {
             @Override
-            public void onSuccess(BasePageData<SportSkuData> data) {
+            public void onSuccess(List<SportSkuData> data) {
                 if (data != null) {
                     Log.d(TAG, "OperationCallerTestActivity::getSportSkuPageAsync::onSuccess : data : " + data);
                     resultView.setText(data.toString());
@@ -261,9 +260,9 @@ public class V3OperationCallerTestActivity extends AppCompatActivity {
         AdlService.getService().executeSyncOnIo(RequestScope.of(this), () -> {
             SportSkuPageRequest request = buildSportSkuPageRequest();
             return AdlService.getService().getOperationCaller().getSportSkuPageSync(request);
-        }, new RequestCallback<BasePageData<SportSkuData>>() {
+        }, new RequestCallback<List<SportSkuData>>() {
             @Override
-            public void onSuccess(BasePageData<SportSkuData> data) {
+            public void onSuccess(List<SportSkuData> data) {
                 if (data != null) {
                     Log.d(TAG, "OperationCallerTestActivity::getSportSkuPageSync::onSuccess : data : " + data);
                     resultView.setText(data.toString());
@@ -372,7 +371,7 @@ public class V3OperationCallerTestActivity extends AppCompatActivity {
 
     private void getDictMapSync() {
         AdlService.getService().executeSyncOnIo(RequestScope.of(this), () -> {
-            DictMapRequest request = buildDictMapRequest();
+            DictMapRequest request = DictMapRequest.builder("9901060001").forceUpdate(true).build();
             return AdlService.getService().getOperationCaller().getDictMapSync(request);
         }, new RequestCallback<List<DictMapData>>() {
             @Override

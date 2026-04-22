@@ -25,7 +25,6 @@ import com.adl.service.http.request.SaveGroupRequest;
 import com.adl.service.http.request.SportMeetPageRequest;
 import com.adl.service.http.request.TrainPlanInfoPageRequest;
 import com.adl.service.http.request.TrainPlanOneDayProjectListRequest;
-import com.adl.service.data.BasePageData;
 import com.adl.service.data.CompetitionData;
 import com.adl.service.data.CompetitionRankDetailData;
 import com.adl.service.data.GroupData;
@@ -309,9 +308,9 @@ public class V3BusinessCallerTestActivity extends AppCompatActivity {
 
     private void getTrainPlanInfoPageAsync() {
         TrainPlanInfoPageRequest request = buildTrainPlanInfoPageRequest();
-        AdlService.getService().getBusinessCaller().getTrainPlanInfoPageAsync(RequestScope.of(this), request, new RequestCallback<BasePageData<TrainPlanInfoData>>() {
+        AdlService.getService().getBusinessCaller().getTrainPlanInfoPageAsync(RequestScope.of(this), request, new RequestCallback<List<TrainPlanInfoData>>() {
             @Override
-            public void onSuccess(BasePageData<TrainPlanInfoData> data) {
+            public void onSuccess(List<TrainPlanInfoData> data) {
                 if (data != null) {
                     Log.d(TAG, "BusinessCallerTestActivity::getTrainPlanInfoPageAsync::onSuccess : data : " + data);
                     resultView.setText(data.toString());
@@ -335,9 +334,9 @@ public class V3BusinessCallerTestActivity extends AppCompatActivity {
     private void getTrainPlanInfoPageSync() {
         AdlService.getService().executeSyncOnIo(RequestScope.of(this),
                 () -> AdlService.getService().getBusinessCaller().getTrainPlanInfoPageSync(buildTrainPlanInfoPageRequest()),
-                new RequestCallback<BasePageData<TrainPlanInfoData>>() {
+                new RequestCallback<List<TrainPlanInfoData>>() {
                     @Override
-                    public void onSuccess(BasePageData<TrainPlanInfoData> data) {
+                    public void onSuccess(List<TrainPlanInfoData> data) {
                         if (data != null) {
                             Log.d(TAG, "BusinessCallerTestActivity::getTrainPlanInfoPageSync::onSuccess : data : " + data);
                             resultView.setText(data.toString());
@@ -454,9 +453,9 @@ public class V3BusinessCallerTestActivity extends AppCompatActivity {
 
     private void getCompetitionPageAsync() {
         CompetitionPageRequest request = buildCompetitionPageRequest();
-        AdlService.getService().getBusinessCaller().getCompetitionPageAsync(RequestScope.of(this), request, new RequestCallback<BasePageData<CompetitionData>>() {
+        AdlService.getService().getBusinessCaller().getCompetitionPageAsync(RequestScope.of(this), request, new RequestCallback<List<CompetitionData>>() {
             @Override
-            public void onSuccess(BasePageData<CompetitionData> data) {
+            public void onSuccess(List<CompetitionData> data) {
                 if (data != null) {
                     Log.d(TAG, "BusinessCallerTestActivity::getCompetitionPageAsync::onSuccess : data : " + data);
                     resultView.setText(data.toString());
@@ -480,9 +479,9 @@ public class V3BusinessCallerTestActivity extends AppCompatActivity {
     private void getCompetitionPageSync() {
         AdlService.getService().executeSyncOnIo(RequestScope.of(this),
                 () -> AdlService.getService().getBusinessCaller().getCompetitionPageSync(buildCompetitionPageRequest()),
-                new RequestCallback<BasePageData<CompetitionData>>() {
+                new RequestCallback<List<CompetitionData>>() {
                     @Override
-                    public void onSuccess(BasePageData<CompetitionData> data) {
+                    public void onSuccess(List<CompetitionData> data) {
                         if (data != null) {
                             Log.d(TAG, "BusinessCallerTestActivity::getCompetitionPageSync::onSuccess : data : " + data);
                             resultView.setText(data.toString());
@@ -505,9 +504,9 @@ public class V3BusinessCallerTestActivity extends AppCompatActivity {
 
     private void getSportMeetPageAsync() {
         SportMeetPageRequest request = buildSportMeetPageRequest();
-        AdlService.getService().getBusinessCaller().getSportMeetPageAsync(RequestScope.of(this), request, new RequestCallback<BasePageData<SportMeetData>>() {
+        AdlService.getService().getBusinessCaller().getSportMeetPageAsync(RequestScope.of(this), request, new RequestCallback<List<SportMeetData>>() {
             @Override
-            public void onSuccess(BasePageData<SportMeetData> data) {
+            public void onSuccess(List<SportMeetData> data) {
                 if (data != null) {
                     Log.d(TAG, "BusinessCallerTestActivity::getSportMeetPageAsync::onSuccess : data : " + data);
                     resultView.setText(data.toString());
@@ -531,9 +530,9 @@ public class V3BusinessCallerTestActivity extends AppCompatActivity {
     private void getSportMeetPageSync() {
         AdlService.getService().executeSyncOnIo(RequestScope.of(this),
                 () -> AdlService.getService().getBusinessCaller().getSportMeetPageSync(buildSportMeetPageRequest()),
-                new RequestCallback<BasePageData<SportMeetData>>() {
+                new RequestCallback<List<SportMeetData>>() {
                     @Override
-                    public void onSuccess(BasePageData<SportMeetData> data) {
+                    public void onSuccess(List<SportMeetData> data) {
                         if (data != null) {
                             Log.d(TAG, "BusinessCallerTestActivity::getSportMeetPageSync::onSuccess : data : " + data);
                             resultView.setText(data.toString());
@@ -715,9 +714,9 @@ public class V3BusinessCallerTestActivity extends AppCompatActivity {
 
     private void getResPageAsync() {
         ResPageRequest request = buildResPageRequest();
-        AdlService.getService().getBusinessCaller().getResPageAsync(RequestScope.of(this), request, new RequestCallback<BasePageData<ResData>>() {
+        AdlService.getService().getBusinessCaller().getResPageAsync(RequestScope.of(this), request, new RequestCallback<List<ResData>>() {
             @Override
-            public void onSuccess(BasePageData<ResData> data) {
+            public void onSuccess(List<ResData> data) {
                 if (data != null) {
                     Log.d(TAG, "BusinessCallerTestActivity::getResPageAsync::onSuccess : data : " + data);
                     resultView.setText(data.toString());
@@ -741,9 +740,9 @@ public class V3BusinessCallerTestActivity extends AppCompatActivity {
     private void getResPageSync() {
         AdlService.getService().executeSyncOnIo(RequestScope.of(this),
                 () -> AdlService.getService().getBusinessCaller().getResPageSync(buildResPageRequest()),
-                new RequestCallback<BasePageData<ResData>>() {
+                new RequestCallback<List<ResData>>() {
                     @Override
-                    public void onSuccess(BasePageData<ResData> data) {
+                    public void onSuccess(List<ResData> data) {
                         if (data != null) {
                             Log.d(TAG, "BusinessCallerTestActivity::getResPageSync::onSuccess : data : " + data);
                             resultView.setText(data.toString());

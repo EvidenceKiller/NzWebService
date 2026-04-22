@@ -5,6 +5,7 @@ import com.adl.service.db.converter.ListIntegerConverter;
 import com.adl.service.db.converter.ListStringConverter;
 import com.adl.service.db.entity.CompetitionEntity;
 import com.adl.service.db.entity.DictEntity;
+import com.adl.service.db.entity.DictMapEntity;
 import com.adl.service.db.entity.FileDownInfoEntity;
 import com.adl.service.db.entity.FileUploadInfoEntity;
 import com.adl.service.db.entity.LoginInfoEntity;
@@ -34,8 +35,8 @@ import androidx.room.TypeConverters;
         PlanEntity.class, PlanStudentEntity.class, StandardConfigEntity.class,
         SceneEntity.class, SportSkuEntity.class,
         SportMeetEntity.class, SportMeetGroupTeamEntity.class, SportMeetGroupDetailEntity.class,
-        CompetitionEntity.class,
-        DictEntity.class, LoginInfoEntity.class
+        CompetitionEntity.class, DictEntity.class, LoginInfoEntity.class,
+        DictMapEntity.class
 },
         version = 1,
         autoMigrations = {}
@@ -64,6 +65,8 @@ public abstract class DaoManager extends RoomDatabase {
     public abstract SceneSportDao getSceneSportDao();
 
     public abstract DictDao getDictDao();
+
+    public abstract DictMapDao getDictMapDao();
 
     public abstract SportMeetDao getSportMeetDao();
 

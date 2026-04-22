@@ -41,11 +41,11 @@ public final class BigScreenH5Repository {
         return BaseRepositoryUtil.repositoryAsSingle(request, fetchHelper.createGetTeachCourseButtonClickableFunc());
     }
 
-    public Single<BasePageData<SunshineRunningSportDetailData>> getSunshineRunningSportDetailPage(SunshineRunningSportDetailPageRequest request) {
+    public Single<List<SunshineRunningSportDetailData>> getSunshineRunningSportDetailPage(SunshineRunningSportDetailPageRequest request) {
         return BaseRepositoryUtil.repositoryAsSingle(request, fetchHelper.createGetSunshineRunningSportDetailPageFunc());
     }
 
-    public Single<BasePageData<ClassroomCompetitionRecordData>> getSunshineRunningCompetitionRecordPage(SunshineRunningCompetitionRecordPageRequest request) {
+    public Single<List<ClassroomCompetitionRecordData>> getSunshineRunningCompetitionRecordPage(SunshineRunningCompetitionRecordPageRequest request) {
         return BaseRepositoryUtil.repositoryAsSingle(request, fetchHelper.createGetSunshineRunningCompetitionRecordPageFunc());
     }
 }

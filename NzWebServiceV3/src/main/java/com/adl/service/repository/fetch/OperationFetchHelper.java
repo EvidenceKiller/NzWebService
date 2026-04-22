@@ -1,7 +1,6 @@
 package com.adl.service.repository.fetch;
 
 import com.adl.service.data.BannerDetailData;
-import com.adl.service.data.BasePageData;
 import com.adl.service.data.DeviceFocusData;
 import com.adl.service.data.DictMapData;
 import com.adl.service.data.SceneData;
@@ -30,11 +29,13 @@ public final class OperationFetchHelper {
         this.operationService = RetrofitManager.getInstance().create(OperationService.class);
     }
 
+    @SuppressWarnings("unchecked")
     public Function<BannerDetailListRequest, Single<List<BannerDetailData>>> createGetBannerDetailListFunc() {
-        return (request) -> operationService.getBannerDetailList(request).map(BaseFetchUtil::scheduleResponse);
+        return (request) -> BaseFetchUtil.scheduleResponse(operationService.getBannerDetailList(request), (Class<List<BannerDetailData>>) (Class<?>) List.class);
     }
 
-    public Function<Long, Single<BasePageData<SportSkuData>>> createGetSportSkuPagesAllFunc(SportSkuPageRequest request) {
+    @SuppressWarnings("unchecked")
+    public Function<Long, Single<List<SportSkuData>>> createGetSportSkuPagesAllFunc(SportSkuPageRequest request) {
         return (page) -> {
             SportSkuPageRequest pageReq = SportSkuPageRequest.builder()
                     .current(page)
@@ -50,31 +51,35 @@ public final class OperationFetchHelper {
                     .delFlag(request.getDelFlag())
                     .enabled(request.getEnabled())
                     .build();
-            return operationService.getSportSkuPage(pageReq).map(BaseFetchUtil::scheduleResponse);
+            return BaseFetchUtil.schedulePageResponse(operationService.getSportSkuPage(pageReq), (Class<List<SportSkuData>>) (Class<?>) List.class);
         };
     }
 
-    public Function<SportSkuPageRequest, Single<BasePageData<SportSkuData>>> createGetSportSkuPageFunc() {
-        return (request) -> operationService.getSportSkuPage(request).map(BaseFetchUtil::scheduleResponse);
+    @SuppressWarnings("unchecked")
+    public Function<SportSkuPageRequest, Single<List<SportSkuData>>> createGetSportSkuPageFunc() {
+        return (request) -> BaseFetchUtil.schedulePageResponse(operationService.getSportSkuPage(request), (Class<List<SportSkuData>>) (Class<?>) List.class);
     }
 
     public Function<SportSkuDetailRequest, Single<SportSkuDetailData>> createGetSportSkuDetailFunc() {
-        return (request) -> operationService.getSportSkuDetail(request).map(BaseFetchUtil::scheduleResponse);
+        return (request) -> BaseFetchUtil.scheduleResponse(operationService.getSportSkuDetail(request), SportSkuDetailData.class);
     }
 
+    @SuppressWarnings("unchecked")
     public Function<DictMapRequest, Single<List<DictMapData>>> createGetDictMapFunc() {
-        return (request) -> operationService.getDictMap(request).map(BaseFetchUtil::scheduleResponse);
+        return (request) -> BaseFetchUtil.scheduleResponse(operationService.getDictMap(request), (Class<List<DictMapData>>) (Class<?>) List.class);
     }
 
+    @SuppressWarnings("unchecked")
     public Function<SceneListRequest, Single<List<SceneData>>> createGetSceneListFunc() {
-        return (request) -> operationService.getSceneList(request).map(BaseFetchUtil::scheduleResponse);
+        return (request) -> BaseFetchUtil.scheduleResponse(operationService.getSceneList(request), (Class<List<SceneData>>) (Class<?>) List.class);
     }
 
     public Function<UploadDeviceNameRequest, Single<Boolean>> createUploadDeviceNameFunc() {
-        return (request) -> operationService.uploadDeviceName(request).map(BaseFetchUtil::scheduleResponse);
+        return (request) -> BaseFetchUtil.scheduleResponse(operationService.uploadDeviceName(request), Boolean.class);
     }
 
+    @SuppressWarnings("unchecked")
     public Function<DeviceFocusListRequest, Single<List<DeviceFocusData>>> createGetDeviceFocusListFunc() {
-        return (request) -> operationService.getDeviceFocusList(request).map(BaseFetchUtil::scheduleResponse);
+        return (request) -> BaseFetchUtil.scheduleResponse(operationService.getDeviceFocusList(request), (Class<List<DeviceFocusData>>) (Class<?>) List.class);
     }
 }

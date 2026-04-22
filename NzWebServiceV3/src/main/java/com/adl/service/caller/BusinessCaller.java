@@ -2,7 +2,6 @@ package com.adl.service.caller;
 
 import com.adl.service.callback.GetPageResult;
 import com.adl.service.callback.RequestCallback;
-import com.adl.service.data.BasePageData;
 import com.adl.service.data.CompetitionData;
 import com.adl.service.data.CompetitionRankDetailData;
 import com.adl.service.data.GroupData;
@@ -76,13 +75,13 @@ public interface BusinessCaller {
      * 训练计划列表
      * <p>异步调用。</p>
      */
-    long getTrainPlanInfoPageAsync(RequestScope scope, TrainPlanInfoPageRequest request, RequestCallback<BasePageData<TrainPlanInfoData>> callback);
+    long getTrainPlanInfoPageAsync(RequestScope scope, TrainPlanInfoPageRequest request, RequestCallback<List<TrainPlanInfoData>> callback);
 
     /**
      * 训练计划列表
      * <p>同步调用。</p>
      */
-    BasePageData<TrainPlanInfoData> getTrainPlanInfoPageSync(TrainPlanInfoPageRequest request) throws NzBaseException;
+    List<TrainPlanInfoData> getTrainPlanInfoPageSync(TrainPlanInfoPageRequest request) throws NzBaseException;
 
     /**
      * 参与竞技排名赛事
@@ -116,13 +115,13 @@ public interface BusinessCaller {
      * 赛事列表
      * <p>异步调用。</p>
      */
-    long getCompetitionPageAsync(RequestScope scope, CompetitionPageRequest request, RequestCallback<BasePageData<CompetitionData>> callback);
+    long getCompetitionPageAsync(RequestScope scope, CompetitionPageRequest request, RequestCallback<List<CompetitionData>> callback);
 
     /**
      * 赛事列表
      * <p>同步调用。</p>
      */
-    BasePageData<CompetitionData> getCompetitionPageSync(CompetitionPageRequest request) throws NzBaseException;
+    List<CompetitionData> getCompetitionPageSync(CompetitionPageRequest request) throws NzBaseException;
 
     long getSportMeetPagesAllAsync(RequestScope scope, SportMeetPageRequest request, RequestCallback<GetPageResult> callback);
 
@@ -136,13 +135,13 @@ public interface BusinessCaller {
      * 分页获取运动会列表
      * <p>异步调用。</p>
      */
-    long getSportMeetPageAsync(RequestScope scope, SportMeetPageRequest request, RequestCallback<BasePageData<SportMeetData>> callback);
+    long getSportMeetPageAsync(RequestScope scope, SportMeetPageRequest request, RequestCallback<List<SportMeetData>> callback);
 
     /**
      * 分页获取运动会列表
      * <p>同步调用。</p>
      */
-    BasePageData<SportMeetData> getSportMeetPageSync(SportMeetPageRequest request) throws NzBaseException;
+    List<SportMeetData> getSportMeetPageSync(SportMeetPageRequest request) throws NzBaseException;
 
     /**
      * 拉取编排数据
@@ -184,13 +183,13 @@ public interface BusinessCaller {
      * 获取资源列表
      * <p>异步调用。</p>
      */
-    long getResPageAsync(RequestScope scope, ResPageRequest request, RequestCallback<BasePageData<ResData>> callback);
+    long getResPageAsync(RequestScope scope, ResPageRequest request, RequestCallback<List<ResData>> callback);
 
     /**
      * 获取资源列表
      * <p>同步调用。</p>
      */
-    BasePageData<ResData> getResPageSync(ResPageRequest request) throws NzBaseException;
+    List<ResData> getResPageSync(ResPageRequest request) throws NzBaseException;
 
     /**
      * 获取资源详情

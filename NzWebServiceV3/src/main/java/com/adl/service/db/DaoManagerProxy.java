@@ -129,6 +129,10 @@ public final class DaoManagerProxy {
         return mDaoManager.getDictDao();
     }
 
+    public DictMapDao getDictMapDao() {
+        return mDaoManager.getDictMapDao();
+    }
+
     public SportMeetDao getSportMeetDao() {
         return mDaoManager.getSportMeetDao();
     }

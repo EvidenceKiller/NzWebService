@@ -18,10 +18,10 @@ public final class LoginAuthFetchHelper {
     }
 
     public Function<LoginRequest, Single<LoginData>> createLoginFunc() {
-        return (request) -> loginAuthService.login(request).map(BaseFetchUtil::scheduleResponse);
+        return (request) -> BaseFetchUtil.scheduleResponse(loginAuthService.login(request), LoginData.class);
     }
 
     public Function<LogoutRequest, Single<String>> createLogoutFunc() {
-        return (request) -> loginAuthService.logout(request).map(BaseFetchUtil::scheduleResponse);
+        return (request) -> BaseFetchUtil.scheduleResponse(loginAuthService.logout(request), String.class);
     }
 }

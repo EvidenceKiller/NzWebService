@@ -6,7 +6,6 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 @Getter
-@EqualsAndHashCode
 public final class DictRequest extends BaseRequest {
 
     @SerializedName("dictId")

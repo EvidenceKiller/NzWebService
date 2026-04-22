@@ -21,7 +21,6 @@ import com.adl.service.http.request.RequestScope;
 import com.adl.service.http.request.StudentPageRequest;
 import com.adl.service.http.request.TeacherListRequest;
 import com.adl.service.data.AcayearData;
-import com.adl.service.data.BasePageData;
 import com.adl.service.data.ClassInfoData;
 import com.adl.service.data.ClassData;
 import com.adl.service.data.DictData;
@@ -514,9 +513,9 @@ public class V3CommonInfoCallerTestActivity extends AppCompatActivity {
         StudentPageRequest request = StudentPageRequest.builder()
                 .faceType(2)
                 .build();
-        AdlService.getService().getCommonInfoCaller().getStudentPageAsync(RequestScope.of(this), request, new RequestCallback<BasePageData<StudentData>>() {
+        AdlService.getService().getCommonInfoCaller().getStudentPageAsync(RequestScope.of(this), request, new RequestCallback<List<StudentData>>() {
             @Override
-            public void onSuccess(BasePageData<StudentData> data) {
+            public void onSuccess(List<StudentData> data) {
                 if (data != null) {
                     Log.d(TAG, "CommonInfoCallerTestActivity::getStudentPageAsync::onSuccess : data : " + data);
                     resultView.setText(data.toString());
@@ -544,9 +543,9 @@ public class V3CommonInfoCallerTestActivity extends AppCompatActivity {
             StudentPageRequest request = StudentPageRequest.builder()
                     .build();
             return AdlService.getService().getCommonInfoCaller().getStudentPageSync(request);
-        }, new RequestCallback<BasePageData<StudentData>>() {
+        }, new RequestCallback<List<StudentData>>() {
             @Override
-            public void onSuccess(BasePageData<StudentData> data) {
+            public void onSuccess(List<StudentData> data) {
                 if (data != null) {
                     Log.d(TAG, "CommonInfoCallerTestActivity::getStudentPageSync::onSuccess : data : " + data);
                     resultView.setText(data.toString());
