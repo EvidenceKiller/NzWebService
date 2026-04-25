@@ -13,13 +13,13 @@ import com.adl.service.data.StudentData;
 import com.adl.service.data.TeacherData;
 import com.adl.service.exception.NzBaseException;
 import com.adl.service.http.request.ClassInfoRequest;
-import com.adl.service.http.request.ClassListRequest;
+import com.adl.service.http.request.ClassPageRequest;
 import com.adl.service.http.request.DeviceActiveRequest;
 import com.adl.service.http.request.DictRequest;
 import com.adl.service.http.request.EmptyRequest;
 import com.adl.service.http.request.RequestScope;
 import com.adl.service.http.request.StudentPageRequest;
-import com.adl.service.http.request.TeacherListRequest;
+import com.adl.service.http.request.TeacherPageRequest;
 
 import java.util.List;
 
@@ -82,13 +82,13 @@ public interface CommonInfoCaller {
      * 获取班级列表
      * <p>异步调用。</p>
      */
-    long getClassListAsync(RequestScope scope, ClassListRequest request, RequestCallback<List<ClassData>> callback);
+    long getClassPageAsync(RequestScope scope, ClassPageRequest request, RequestCallback<List<ClassData>> callback);
 
     /**
      * 获取班级列表
      * <p>同步调用。</p>
      */
-    List<ClassData> getClassListSync(ClassListRequest request) throws NzBaseException;
+    List<ClassData> getClassPageSync(ClassPageRequest request) throws NzBaseException;
 
     /**
      * 获取班级信息
@@ -128,21 +128,21 @@ public interface CommonInfoCaller {
      */
     List<AcayearData> getAcayearListSync(EmptyRequest request) throws NzBaseException;
 
-    long getTeacherListsAllAsync(RequestScope scope, TeacherListRequest request, RequestCallback<GetPageResult> callback);
+    long getTeacherPagesAllAsync(RequestScope scope, TeacherPageRequest request, RequestCallback<GetPageResult> callback);
 
-    GetPageResult getTeacherListsAllSync(TeacherListRequest request) throws NzBaseException;
+    GetPageResult getTeacherPagesAllSync(TeacherPageRequest request) throws NzBaseException;
 
     /**
      * 获取教师用户列表（全量）
      * <p>异步调用。</p>
      */
-    long getTeacherListAsync(RequestScope scope, TeacherListRequest request, RequestCallback<List<TeacherData>> callback);
+    long getTeacherPageAsync(RequestScope scope, TeacherPageRequest request, RequestCallback<List<TeacherData>> callback);
 
     /**
      * 获取教师用户列表（全量）
      * <p>同步调用。</p>
      */
-    List<TeacherData> getTeacherListSync(TeacherListRequest request) throws NzBaseException;
+    List<TeacherData> getTeacherPageSync(TeacherPageRequest request) throws NzBaseException;
 
     long getStudentPagesAllAsync(RequestScope scope, StudentPageRequest request, RequestCallback<GetPageResult> callback);
 

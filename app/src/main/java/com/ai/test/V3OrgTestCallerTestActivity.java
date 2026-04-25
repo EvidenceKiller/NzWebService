@@ -10,7 +10,7 @@ import android.widget.TextView;
 import com.adl.service.AdlService;
 import com.adl.service.callback.RequestCallback;
 import com.adl.service.http.request.CheckStudentInPlanRequest;
-import com.adl.service.http.request.PlanClassListRequest;
+import com.adl.service.http.request.PlanClassPageRequest;
 import com.adl.service.http.request.PlanInfoRequest;
 import com.adl.service.http.request.PlanPageRequest;
 import com.adl.service.http.request.PlanStudentPageRequest;
@@ -83,8 +83,8 @@ public class V3OrgTestCallerTestActivity extends AppCompatActivity {
                 .build();
     }
 
-    private PlanClassListRequest buildPlanClassListRequest() {
-        return PlanClassListRequest.builder("fc7a820389f744b5a094c775ba3037db")
+    private PlanClassPageRequest buildPlanClassListRequest() {
+        return PlanClassPageRequest.builder("fc7a820389f744b5a094c775ba3037db")
                 .build();
     }
 
@@ -376,8 +376,8 @@ public class V3OrgTestCallerTestActivity extends AppCompatActivity {
     }
 
     private void getPlanClassListAsync() {
-        PlanClassListRequest request = buildPlanClassListRequest();
-        AdlService.getService().getOrgTestCaller().getPlanClassListAsync(RequestScope.of(this), request, new RequestCallback<List<PlanClassData>>() {
+        PlanClassPageRequest request = buildPlanClassListRequest();
+        AdlService.getService().getOrgTestCaller().getPlanClassPageAsync(RequestScope.of(this), request, new RequestCallback<List<PlanClassData>>() {
             @Override
             public void onSuccess(List<PlanClassData> data) {
                 if (data != null) {
@@ -405,8 +405,8 @@ public class V3OrgTestCallerTestActivity extends AppCompatActivity {
 
     private void getPlanClassListSync() {
         AdlService.getService().executeSyncOnIo(RequestScope.of(this), () -> {
-            PlanClassListRequest request = buildPlanClassListRequest();
-            return AdlService.getService().getOrgTestCaller().getPlanClassListSync(request);
+            PlanClassPageRequest request = buildPlanClassListRequest();
+            return AdlService.getService().getOrgTestCaller().getPlanClassPageSync(request);
         }, new RequestCallback<List<PlanClassData>>() {
             @Override
             public void onSuccess(List<PlanClassData> data) {

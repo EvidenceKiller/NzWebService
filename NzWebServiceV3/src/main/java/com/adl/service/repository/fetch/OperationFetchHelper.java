@@ -1,6 +1,7 @@
 package com.adl.service.repository.fetch;
 
 import com.adl.service.data.BannerDetailData;
+import com.adl.service.data.BasePageData;
 import com.adl.service.data.DeviceFocusData;
 import com.adl.service.data.DictMapData;
 import com.adl.service.data.SceneData;
@@ -23,10 +24,23 @@ import io.reactivex.rxjava3.functions.Function;
 
 public final class OperationFetchHelper {
 
+    private static volatile OperationFetchHelper instance;
+
     private final OperationService operationService;
 
-    public OperationFetchHelper() {
+    private OperationFetchHelper() {
         this.operationService = RetrofitManager.getInstance().create(OperationService.class);
+    }
+
+    public static OperationFetchHelper getInstance() {
+        if (instance == null) {
+            synchronized (OperationFetchHelper.class) {
+                if (instance == null) {
+                    instance = new OperationFetchHelper();
+                }
+            }
+        }
+        return instance;
     }
 
     @SuppressWarnings("unchecked")
@@ -35,7 +49,7 @@ public final class OperationFetchHelper {
     }
 
     @SuppressWarnings("unchecked")
-    public Function<Long, Single<List<SportSkuData>>> createGetSportSkuPagesAllFunc(SportSkuPageRequest request) {
+    public Function<Long, Single<BasePageData<SportSkuData>>> createGetSportSkuPagesAllFunc(SportSkuPageRequest request) {
         return (page) -> {
             SportSkuPageRequest pageReq = SportSkuPageRequest.builder()
                     .current(page)
@@ -51,13 +65,13 @@ public final class OperationFetchHelper {
                     .delFlag(request.getDelFlag())
                     .enabled(request.getEnabled())
                     .build();
-            return BaseFetchUtil.schedulePageResponse(operationService.getSportSkuPage(pageReq), (Class<List<SportSkuData>>) (Class<?>) List.class);
+            return BaseFetchUtil.scheduleResponse(operationService.getSportSkuPage(pageReq), (Class<BasePageData<SportSkuData>>) (Class<?>) BasePageData.class);
         };
     }
 
     @SuppressWarnings("unchecked")
-    public Function<SportSkuPageRequest, Single<List<SportSkuData>>> createGetSportSkuPageFunc() {
-        return (request) -> BaseFetchUtil.schedulePageResponse(operationService.getSportSkuPage(request), (Class<List<SportSkuData>>) (Class<?>) List.class);
+    public Function<SportSkuPageRequest, Single<BasePageData<SportSkuData>>> createGetSportSkuPageFunc() {
+        return (request) -> BaseFetchUtil.scheduleResponse(operationService.getSportSkuPage(request), (Class<BasePageData<SportSkuData>>) (Class<?>) BasePageData.class);
     }
 
     public Function<SportSkuDetailRequest, Single<SportSkuDetailData>> createGetSportSkuDetailFunc() {

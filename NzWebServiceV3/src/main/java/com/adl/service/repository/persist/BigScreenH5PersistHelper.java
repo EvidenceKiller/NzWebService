@@ -25,7 +25,20 @@ import io.reactivex.rxjava3.functions.Function;
 
 public final class BigScreenH5PersistHelper {
 
-    public BigScreenH5PersistHelper() {
+    private static volatile BigScreenH5PersistHelper instance;
+
+    private BigScreenH5PersistHelper() {
+    }
+
+    public static BigScreenH5PersistHelper getInstance() {
+        if (instance == null) {
+            synchronized (BigScreenH5PersistHelper.class) {
+                if (instance == null) {
+                    instance = new BigScreenH5PersistHelper();
+                }
+            }
+        }
+        return instance;
     }
 
 }

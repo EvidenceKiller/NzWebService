@@ -18,9 +18,9 @@ import java.util.List;
 import io.reactivex.rxjava3.core.Single;
 
 public final class BigScreenH5Repository {
-    private final BigScreenH5PrepareHelper prepareHelper = new BigScreenH5PrepareHelper();
-    private final BigScreenH5FetchHelper fetchHelper = new BigScreenH5FetchHelper();
-    private final BigScreenH5PersistHelper persistHelper = new BigScreenH5PersistHelper();
+    private final BigScreenH5PrepareHelper prepareHelper = BigScreenH5PrepareHelper.getInstance();
+    private final BigScreenH5FetchHelper fetchHelper = BigScreenH5FetchHelper.getInstance();
+    private final BigScreenH5PersistHelper persistHelper = BigScreenH5PersistHelper.getInstance();
 
     public BigScreenH5Repository() {
     }
@@ -42,10 +42,10 @@ public final class BigScreenH5Repository {
     }
 
     public Single<List<SunshineRunningSportDetailData>> getSunshineRunningSportDetailPage(SunshineRunningSportDetailPageRequest request) {
-        return BaseRepositoryUtil.repositoryAsSingle(request, fetchHelper.createGetSunshineRunningSportDetailPageFunc());
+        return BaseRepositoryUtil.repositoryPageAsSingle(request, fetchHelper.createGetSunshineRunningSportDetailPageFunc());
     }
 
     public Single<List<ClassroomCompetitionRecordData>> getSunshineRunningCompetitionRecordPage(SunshineRunningCompetitionRecordPageRequest request) {
-        return BaseRepositoryUtil.repositoryAsSingle(request, fetchHelper.createGetSunshineRunningCompetitionRecordPageFunc());
+        return BaseRepositoryUtil.repositoryPageAsSingle(request, fetchHelper.createGetSunshineRunningCompetitionRecordPageFunc());
     }
 }

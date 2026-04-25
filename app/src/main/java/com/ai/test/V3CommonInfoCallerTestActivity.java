@@ -13,13 +13,13 @@ import com.adl.service.callback.RequestCallback;
 import com.adl.service.http.request.BaseDirection;
 import com.adl.service.http.request.BaseSort;
 import com.adl.service.http.request.ClassInfoRequest;
-import com.adl.service.http.request.ClassListRequest;
+import com.adl.service.http.request.ClassPageRequest;
 import com.adl.service.http.request.DeviceActiveRequest;
 import com.adl.service.http.request.DictRequest;
 import com.adl.service.http.request.EmptyRequest;
 import com.adl.service.http.request.RequestScope;
 import com.adl.service.http.request.StudentPageRequest;
-import com.adl.service.http.request.TeacherListRequest;
+import com.adl.service.http.request.TeacherPageRequest;
 import com.adl.service.data.AcayearData;
 import com.adl.service.data.ClassInfoData;
 import com.adl.service.data.ClassData;
@@ -218,8 +218,8 @@ public class V3CommonInfoCallerTestActivity extends AppCompatActivity {
     }
 
     private void getClassListAsync() {
-        ClassListRequest request = ClassListRequest.builder().build();
-        AdlService.getService().getCommonInfoCaller().getClassListAsync(RequestScope.of(this), request, new RequestCallback<List<ClassData>>() {
+        ClassPageRequest request = ClassPageRequest.builder().build();
+        AdlService.getService().getCommonInfoCaller().getClassPageAsync(RequestScope.of(this), request, new RequestCallback<List<ClassData>>() {
             @Override
             public void onSuccess(List<ClassData> data) {
                 if (data != null) {
@@ -247,8 +247,8 @@ public class V3CommonInfoCallerTestActivity extends AppCompatActivity {
 
     private void getClassListSync() {
         AdlService.getService().executeSyncOnIo(RequestScope.of(this), () -> {
-            ClassListRequest request = ClassListRequest.builder().build();
-            return AdlService.getService().getCommonInfoCaller().getClassListSync(request);
+            ClassPageRequest request = ClassPageRequest.builder().build();
+            return AdlService.getService().getCommonInfoCaller().getClassPageSync(request);
         }, new RequestCallback<List<ClassData>>() {
             @Override
             public void onSuccess(List<ClassData> data) {
@@ -450,9 +450,9 @@ public class V3CommonInfoCallerTestActivity extends AppCompatActivity {
     }
 
     private void getTeacherListAsync() {
-        TeacherListRequest request = TeacherListRequest.builder()
+        TeacherPageRequest request = TeacherPageRequest.builder()
                 .build();
-        AdlService.getService().getCommonInfoCaller().getTeacherListAsync(RequestScope.of(this), request, new RequestCallback<List<TeacherData>>() {
+        AdlService.getService().getCommonInfoCaller().getTeacherPageAsync(RequestScope.of(this), request, new RequestCallback<List<TeacherData>>() {
             @Override
             public void onSuccess(List<TeacherData> data) {
                 if (data != null) {
@@ -480,9 +480,9 @@ public class V3CommonInfoCallerTestActivity extends AppCompatActivity {
 
     private void getTeacherListSync() {
         AdlService.getService().executeSyncOnIo(RequestScope.of(this), () -> {
-            TeacherListRequest request = TeacherListRequest.builder()
+            TeacherPageRequest request = TeacherPageRequest.builder()
                     .build();
-            return AdlService.getService().getCommonInfoCaller().getTeacherListSync(request);
+            return AdlService.getService().getCommonInfoCaller().getTeacherPageSync(request);
         }, new RequestCallback<List<TeacherData>>() {
             @Override
             public void onSuccess(List<TeacherData> data) {
@@ -1000,8 +1000,8 @@ public class V3CommonInfoCallerTestActivity extends AppCompatActivity {
     }
 
     private void getTeacherListsAllAsync() {
-        TeacherListRequest request = TeacherListRequest.builder().build();
-        AdlService.getService().getCommonInfoCaller().getTeacherListsAllAsync(RequestScope.of(this), request, new RequestCallback<GetPageResult>() {
+        TeacherPageRequest request = TeacherPageRequest.builder().build();
+        AdlService.getService().getCommonInfoCaller().getTeacherPagesAllAsync(RequestScope.of(this), request, new RequestCallback<GetPageResult>() {
             @Override
             public void onSuccess(GetPageResult data) {
                 if (data != null) {
@@ -1028,8 +1028,8 @@ public class V3CommonInfoCallerTestActivity extends AppCompatActivity {
 
     private void getTeacherListsAllSync() {
         AdlService.getService().executeSyncOnIo(RequestScope.of(this), () -> {
-            TeacherListRequest request = TeacherListRequest.builder().build();
-            return AdlService.getService().getCommonInfoCaller().getTeacherListsAllSync(request);
+            TeacherPageRequest request = TeacherPageRequest.builder().build();
+            return AdlService.getService().getCommonInfoCaller().getTeacherPagesAllSync(request);
         }, new RequestCallback<GetPageResult>() {
             @Override
             public void onSuccess(GetPageResult data) {
@@ -1056,7 +1056,7 @@ public class V3CommonInfoCallerTestActivity extends AppCompatActivity {
     }
 
     private void getStudentPagesAllAsync() {
-        StudentPageRequest request = StudentPageRequest.builder().faceType(2).build();
+        StudentPageRequest request = StudentPageRequest.builder().current(1L).pageSize(100L).faceType(2).build();
         AdlService.getService().getCommonInfoCaller().getStudentPagesAllAsync(RequestScope.of(this), request, new RequestCallback<GetPageResult>() {
             @Override
             public void onSuccess(GetPageResult data) {

@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 import lombok.Getter;
 
 @Getter
-public final class TeacherListRequest extends BasePageRequest {
+public final class TeacherPageRequest extends BasePageRequest {
 
     /**
      * 机构id
@@ -46,7 +46,7 @@ public final class TeacherListRequest extends BasePageRequest {
     @SerializedName("delFlag")
     private Boolean delFlag;
 
-    private TeacherListRequest(Builder builder) {
+    private TeacherPageRequest(Builder builder) {
         super(builder);
         this.orgId = builder.orgId;
         this.accountType = builder.accountType;
@@ -110,8 +110,8 @@ public final class TeacherListRequest extends BasePageRequest {
             return this;
         }
 
-        public TeacherListRequest build() {
-            return new TeacherListRequest(this);
+        public TeacherPageRequest build() {
+            return new TeacherPageRequest(this);
         }
     }
 }

@@ -11,7 +11,20 @@ import io.reactivex.rxjava3.functions.Function;
 
 public final class OrgTestPrepareHelper {
 
-    public OrgTestPrepareHelper() {
+    private static volatile OrgTestPrepareHelper instance;
+
+    private OrgTestPrepareHelper() {
+    }
+
+    public static OrgTestPrepareHelper getInstance() {
+        if (instance == null) {
+            synchronized (OrgTestPrepareHelper.class) {
+                if (instance == null) {
+                    instance = new OrgTestPrepareHelper();
+                }
+            }
+        }
+        return instance;
     }
 
     public Function<Void, Single<Void>> createPrepareStandardConfigDataFunc() {
@@ -28,7 +41,6 @@ public final class OrgTestPrepareHelper {
         };
     }
 
-
     public Function<PlanStudentPageRequest, Single<List<PlanStudentData>>> createPreparePlanStudentPagesAllFunc() {
         return (request) -> {
             DaoManagerProxy.getInstance().getPlanStudentDao().clearByPlanId(request.getPlanId());
@@ -38,7 +50,7 @@ public final class OrgTestPrepareHelper {
 
     public Function<Void, Single<Void>> createClearPlanPagesAllFunc() {
         return (v) -> {
-            DaoManagerProxy.getInstance().getPlanStudentDao().clearAll();
+            DaoManagerProxy.getInstance().getPlanDao().clearAll();
             return null;
         };
     }

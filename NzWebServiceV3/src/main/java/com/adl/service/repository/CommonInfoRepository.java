@@ -15,16 +15,17 @@ import com.adl.service.data.GradeTreeData;
 import com.adl.service.data.LoginInfoData;
 import com.adl.service.data.StudentData;
 import com.adl.service.data.TeacherData;
+import com.adl.service.data.TimeStamp;
 import com.adl.service.db.DaoManagerProxy;
 import com.adl.service.db.StudentDao;
 import com.adl.service.exception.NzBaseException;
 import com.adl.service.http.request.ClassInfoRequest;
-import com.adl.service.http.request.ClassListRequest;
+import com.adl.service.http.request.ClassPageRequest;
 import com.adl.service.http.request.DeviceActiveRequest;
 import com.adl.service.http.request.DictRequest;
 import com.adl.service.http.request.EmptyRequest;
 import com.adl.service.http.request.StudentPageRequest;
-import com.adl.service.http.request.TeacherListRequest;
+import com.adl.service.http.request.TeacherPageRequest;
 import com.adl.service.log.NzLog;
 import com.adl.service.repository.fetch.CommonInfoFetchHelper;
 import com.adl.service.repository.persist.CommonInfoPersistHelper;
@@ -36,9 +37,9 @@ import java.util.List;
 import io.reactivex.rxjava3.core.Single;
 
 public final class CommonInfoRepository {
-    private final CommonInfoPrepareHelper prepareHelper = new CommonInfoPrepareHelper();
-    private final CommonInfoFetchHelper fetchHelper = new CommonInfoFetchHelper();
-    private final CommonInfoPersistHelper persistHelper = new CommonInfoPersistHelper();
+    private final CommonInfoPrepareHelper prepareHelper = CommonInfoPrepareHelper.getInstance();
+    private final CommonInfoFetchHelper fetchHelper = CommonInfoFetchHelper.getInstance();
+    private final CommonInfoPersistHelper persistHelper = CommonInfoPersistHelper.getInstance();
 
     public CommonInfoRepository() {
     }
@@ -99,12 +100,12 @@ public final class CommonInfoRepository {
 
         // 数据会空，或者时间间隔2分钟
         if (size == 0 || forceUpdate || serverTime - lastTime > IDefine.UpdateIntervalTime) {
-            TeacherListRequest teacherListRequest = TeacherListRequest.builder()
+            TeacherPageRequest teacherPageRequest = TeacherPageRequest.builder()
                     .current(1L)
                     .pageSize(pageSize)
                     .lastUpdateTime(forceUpdate ? null : InnerUtil.formatByTimeCode(lastTime))
                     .build();
-            getTeacherListsAll(teacherListRequest).blockingGet();
+            getTeacherPagesAll(teacherPageRequest).blockingGet();
             pf.putLong(IDefine.LAST_TEACHER_UPDATE_TIME, serverTime);
         }
     }
@@ -117,8 +118,8 @@ public final class CommonInfoRepository {
         return BaseRepositoryUtil.repositoryAsSingle(request, fetchHelper.createGetGradeChineseNameListFunc());
     }
 
-    public Single<List<ClassData>> getClassList(ClassListRequest request) {
-        return BaseRepositoryUtil.repositoryAsSingle(request, fetchHelper.createGetClassListFunc());
+    public Single<List<ClassData>> getClassPage(ClassPageRequest request) {
+        return BaseRepositoryUtil.repositoryAsSingle(request, fetchHelper.createGetClassPageFunc());
     }
 
     public Single<ClassInfoData> getClassInfo(ClassInfoRequest request) {
@@ -159,14 +160,14 @@ public final class CommonInfoRepository {
         return BaseRepositoryUtil.repositoryAsSingle(prepareHelper.createPrepareTeacherListByAccountIdsFunc(accountIds));
     }
 
-    public Single<GetPageResult> getTeacherListsAll(TeacherListRequest request) {
+    public Single<GetPageResult> getTeacherPagesAll(TeacherPageRequest request) {
         return BaseRepositoryUtil.repositoryListsAsSingle(request,
                 prepareHelper.createPrepareTeacherPagesAllFunc(),
                 fetchHelper.createGetTeacherPagesAllFunc(request),
                 persistHelper.createPersistTeacherPageFunc());
     }
 
-    public Single<List<TeacherData>> getTeacherList(TeacherListRequest request) {
+    public Single<List<TeacherData>> getTeacherPage(TeacherPageRequest request) {
         return BaseRepositoryUtil.repositoryAsSingle(request,
                 fetchHelper.createGetTeacherPageFunc(),
                 persistHelper.createPersistTeacherPageFunc());
@@ -201,7 +202,7 @@ public final class CommonInfoRepository {
     }
 
     public Single<GetPageResult> getStudentPagesAll(StudentPageRequest request) {
-        return BaseRepositoryUtil.repositoryListsAsSingle(request,
+        return BaseRepositoryUtil.repositoryPagesAsSingle(request,
                 prepareHelper.createPrepareStudentPagesAllFunc(),
                 fetchHelper.createGetStudentPagesAllFunc(request),
                 persistHelper.createPersistStudentPageFunc()
@@ -209,7 +210,7 @@ public final class CommonInfoRepository {
     }
 
     public Single<List<StudentData>> getStudentPage(StudentPageRequest request) {
-        return BaseRepositoryUtil.repositoryAsSingle(request,
+        return BaseRepositoryUtil.repositoryPageAsSingle(request,
                 fetchHelper.createGetStudentPageFunc(),
                 persistHelper.createPersistStudentPageFunc());
     }

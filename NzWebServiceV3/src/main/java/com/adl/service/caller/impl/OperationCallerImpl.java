@@ -46,10 +46,7 @@ public final class OperationCallerImpl implements OperationCaller {
 
     @Override
     public long getBannerDetailListAsync(RequestScope scope, BannerDetailListRequest request, RequestCallback<List<BannerDetailData>> callback) {
-        CallerUtil.assertScope(scope);
-        Disposable disposable = RxCallbackScheduler.schedule(operationRepository.getBannerDetailList(request), callback);
-        SubscriptionManager.getInstance().add(scope.owner(), disposable);
-        return disposable.hashCode();
+        return RxCallbackScheduler.schedule(scope, operationRepository.getBannerDetailList(request), callback);
     }
 
     @Override
@@ -59,25 +56,17 @@ public final class OperationCallerImpl implements OperationCaller {
 
     @Override
     public long getSportSkuPagesAllAsync(RequestScope scope, SportSkuPageRequest request, RequestCallback<GetPageResult> callback) {
-        CallerUtil.assertCurrent(request);
-        CallerUtil.assertScope(scope);
-        Disposable disposable = RxCallbackScheduler.schedule(operationRepository.getSportSkuPagesAll(request), callback);
-        SubscriptionManager.getInstance().add(scope.owner(), disposable);
-        return disposable.hashCode();
+        return RxCallbackScheduler.schedule(scope, operationRepository.getSportSkuPagesAll(request), callback);
     }
 
     @Override
     public GetPageResult getSportSkuPagesAllSync(SportSkuPageRequest request) throws NzBaseException {
-        CallerUtil.assertCurrent(request);
         return RxCallbackScheduler.blockingGet(operationRepository.getSportSkuPagesAll(request));
     }
 
     @Override
     public long getSportSkuPageAsync(RequestScope scope, SportSkuPageRequest request, RequestCallback<List<SportSkuData>> callback) {
-        CallerUtil.assertScope(scope);
-        Disposable disposable = RxCallbackScheduler.schedule(operationRepository.getSportSkuPage(request), callback);
-        SubscriptionManager.getInstance().add(scope.owner(), disposable);
-        return disposable.hashCode();
+        return RxCallbackScheduler.schedule(scope, operationRepository.getSportSkuPage(request), callback);
     }
 
     @Override
@@ -87,10 +76,7 @@ public final class OperationCallerImpl implements OperationCaller {
 
     @Override
     public long getSportSkuDetailAsync(RequestScope scope, SportSkuDetailRequest request, RequestCallback<SportSkuDetailData> callback) {
-        CallerUtil.assertScope(scope);
-        Disposable disposable = RxCallbackScheduler.schedule(operationRepository.getSportSkuDetail(request), callback);
-        SubscriptionManager.getInstance().add(scope.owner(), disposable);
-        return disposable.hashCode();
+        return RxCallbackScheduler.schedule(scope, operationRepository.getSportSkuDetail(request), callback);
     }
 
     @Override
@@ -100,10 +86,7 @@ public final class OperationCallerImpl implements OperationCaller {
 
     @Override
     public long getDictMapAsync(RequestScope scope, DictMapRequest request, RequestCallback<List<DictMapData>> callback) {
-        CallerUtil.assertScope(scope);
-        Disposable disposable = RxCallbackScheduler.schedule(operationRepository.getDictMap(request), callback);
-        SubscriptionManager.getInstance().add(scope.owner(), disposable);
-        return disposable.hashCode();
+        return RxCallbackScheduler.schedule(scope, operationRepository.getDictMap(request), callback);
     }
 
     @Override
@@ -113,10 +96,7 @@ public final class OperationCallerImpl implements OperationCaller {
 
     @Override
     public long getSceneListAsync(RequestScope scope, SceneListRequest request, RequestCallback<List<SceneData>> callback) {
-        CallerUtil.assertScope(scope);
-        Disposable disposable = RxCallbackScheduler.schedule(operationRepository.getSceneList(request), callback);
-        SubscriptionManager.getInstance().add(scope.owner(), disposable);
-        return disposable.hashCode();
+        return RxCallbackScheduler.schedule(scope, operationRepository.getSceneList(request), callback);
     }
 
     @Override
@@ -126,10 +106,7 @@ public final class OperationCallerImpl implements OperationCaller {
 
     @Override
     public long uploadDeviceNameAsync(RequestScope scope, UploadDeviceNameRequest request, RequestCallback<Boolean> callback) {
-        CallerUtil.assertScope(scope);
-        Disposable disposable = RxCallbackScheduler.schedule(operationRepository.uploadDeviceName(request), callback);
-        SubscriptionManager.getInstance().add(scope.owner(), disposable);
-        return disposable.hashCode();
+        return RxCallbackScheduler.schedule(scope, operationRepository.uploadDeviceName(request), callback);
     }
 
     @Override
@@ -139,10 +116,7 @@ public final class OperationCallerImpl implements OperationCaller {
 
     @Override
     public long getDeviceFocusListAsync(RequestScope scope, DeviceFocusListRequest request, RequestCallback<List<DeviceFocusData>> callback) {
-        CallerUtil.assertScope(scope);
-        Disposable disposable = RxCallbackScheduler.schedule(operationRepository.getDeviceFocusList(request), callback);
-        SubscriptionManager.getInstance().add(scope.owner(), disposable);
-        return disposable.hashCode();
+        return RxCallbackScheduler.schedule(scope, operationRepository.getDeviceFocusList(request), callback);
     }
 
     @Override

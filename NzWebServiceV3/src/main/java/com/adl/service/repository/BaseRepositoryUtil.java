@@ -7,12 +7,14 @@ import com.adl.service.data.BasePageData;
 import com.adl.service.exception.NzCommonException;
 import com.adl.service.exception.NzGetPageException;
 import com.adl.service.exception.NzNetworkException;
+import com.adl.service.http.request.BasePageRequest;
 import com.adl.service.http.request.BaseRequest;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
-import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.functions.Function;
 
@@ -58,15 +60,7 @@ class BaseRepositoryUtil {
      * @return 异步结果的 Single 包装
      */
     public static <Q extends BaseRequest, R> Single<R> repositoryAsSingle(Q request, Function<Q, Single<R>> func) {
-        Log.i("ZXN_TEST", "BaseRepository : repositoryAsSingle");
-        if (request == null) {
-            return Single.error(new NzCommonException("request is null"));
-        }
-        Single<R> funcData = applyFunc(func, request);
-        if (funcData == null) {
-            return Single.error(new NzCommonException("funcData is null"));
-        }
-        return funcData;
+        return repositoryAsSingle(request, null, func, null);
     }
 
     /**
@@ -92,16 +86,7 @@ class BaseRepositoryUtil {
                                                                           Function<Q, Single<R>> netFunc,
                                                                           Function<R, Single<R>> persistFunc) {
         Log.i("ZXN_TEST", "BaseRepository : repositoryAsSingle");
-        if (request == null) {
-            return Single.error(new NzCommonException("request is null"));
-        }
-        return applyFunc(netFunc, request)
-                .flatMap(networkData -> {
-                    if (networkData == null) {
-                        return Single.error(new NzNetworkException(-1, "network data is null"));
-                    }
-                    return applyFunc(persistFunc, networkData);
-                });
+        return repositoryAsSingle(request, null, netFunc, persistFunc);
     }
 
     /**
@@ -134,18 +119,63 @@ class BaseRepositoryUtil {
         if (request == null) {
             return Single.error(new NzCommonException("request is null"));
         }
-        Single<R> prepareData = applyFunc(prepareFunc, request);
-        if (request.getForceUpdate() || prepareData == null) {
-            return applyFunc(fetchFunc, request)
-                    .flatMap(networkData -> {
-                        if (networkData == null) {
-                            return Single.error(new NzNetworkException(-1, "network data is null"));
-                        }
-                        return applyFunc(persistFunc, networkData);
-                    });
-        } else {
-            return prepareData;
+        if (prepareFunc != null) {
+            Single<R> prepareData = applyFunc(prepareFunc, request);
+            if (prepareData != null && !request.getForceUpdate()) {
+                return prepareData;
+            }
         }
+        return applyFunc(fetchFunc, request)
+                .flatMap(networkData -> {
+                    if (networkData == null) {
+                        return Single.error(new NzNetworkException(-1, "network data is null"));
+                    }
+                    if (persistFunc == null) {
+                        return Single.just(networkData);
+                    }
+                    return applyFunc(persistFunc, networkData);
+                });
+    }
+
+    public static <Q extends BasePageRequest, R> Single<List<R>> repositoryPageAsSingle(Q request,
+                                                                                        Function<Q, Single<BasePageData<R>>> fetchFunc) {
+        return repositoryPageAsSingle(request, null, fetchFunc, null);
+    }
+
+    public static <Q extends BasePageRequest, R> Single<List<R>> repositoryPageAsSingle(Q request,
+                                                                                        Function<Q, Single<BasePageData<R>>> fetchFunc,
+                                                                                        Function<List<R>, Single<List<R>>> persistFunc) {
+        return repositoryPageAsSingle(request, null, fetchFunc, persistFunc);
+    }
+
+    public static <Q extends BasePageRequest, R> Single<List<R>> repositoryPageAsSingle(Q request,
+                                                                                        Function<Q, Single<List<R>>> prepareFunc,
+                                                                                        Function<Q, Single<BasePageData<R>>> fetchFunc,
+                                                                                        Function<List<R>, Single<List<R>>> persistFunc) {
+        Log.i("ZXN_TEST", "BaseRepository : repositoryPagesAsSingle");
+        if (request == null) {
+            return Single.error(new NzCommonException("request is null"));
+        }
+        if (request.getCurrent() == null) {
+            return Single.error(new NzCommonException("must set page request current"));
+        }
+        if (prepareFunc != null) {
+            Single<List<R>> prepareData = applyFunc(prepareFunc, request);
+            if (prepareData != null && !request.getForceUpdate()) {
+                return prepareData;
+            }
+        }
+        return applyFunc(fetchFunc, request)
+                .flatMap(pageData -> {
+                    if (pageData == null || pageData.getRecords() == null || pageData.getRecords().isEmpty()) {
+                        return Single.just(Collections.emptyList());
+                    }
+                    List<R> pageList = pageData.getRecords();
+                    if (persistFunc == null) {
+                        return Single.just(pageList);
+                    }
+                    return applyFunc(persistFunc, pageList);
+                });
     }
 
     /**
@@ -161,9 +191,9 @@ class BaseRepositoryUtil {
      * @param <R>         列表元素类型
      * @return 分页结果的统计信息（总页数、成功页数、拉取数量、持久化数量等）
      */
-    public static <Q extends BaseRequest, R> Single<GetPageResult> repositoryListsAsSingle(Q request,
-                                                                                           Function<Long, Single<List<R>>> fetchFunc,
-                                                                                           Function<List<R>, Single<List<R>>> persistFunc) {
+    public static <Q extends BasePageRequest, R> Single<GetPageResult> repositoryListsAsSingle(Q request,
+                                                                                               Function<Long, Single<List<R>>> fetchFunc,
+                                                                                               Function<List<R>, Single<List<R>>> persistFunc) {
         return repositoryListsAsSingle(request, null, fetchFunc, persistFunc);
     }
 
@@ -192,32 +222,39 @@ class BaseRepositoryUtil {
      * @param <R>         列表元素类型
      * @return 分页结果的统计信息（uuId、总页数、成功页数、拉取数量、持久化数量等）
      */
-    public static <Q extends BaseRequest, R> Single<GetPageResult> repositoryListsAsSingle(Q request,
-                                                                                           Function<Q, Single<List<R>>> prepareFunc,
-                                                                                           Function<Long, Single<List<R>>> fetchFunc,
-                                                                                           Function<List<R>, Single<List<R>>> persistFunc) {
+    public static <Q extends BasePageRequest, R> Single<GetPageResult> repositoryListsAsSingle(Q request,
+                                                                                               Function<Q, Single<List<R>>> prepareFunc,
+                                                                                               Function<Long, Single<List<R>>> fetchFunc,
+                                                                                               Function<List<R>, Single<List<R>>> persistFunc) {
         Log.i("ZXN_TEST", "BasePagePersistence : repositoryListsAsSingle");
         if (request == null) {
             return Single.error(new NzCommonException("request is null"));
+        }
+        if (request.getCurrent() != null && request.getCurrent() != 1) {
+            return Single.error(new NzCommonException("get all pages must set current is 1"));
         }
         if (prepareFunc != null) {
             applyFunc(prepareFunc, request);
         }
         final String uuId = UUID.randomUUID().toString();
-        return Observable.<Long, Long>generate(() -> 1L, (current, emitter) -> {
+        return Flowable.<Long, Long>generate(() -> 1L, (current, emitter) -> {
+                    Log.i("ZXN_TEST", "BasePagePersistence : repositoryListsAsSingle : generate : currentPage : " + current);
                     emitter.onNext(current);
                     return current + 1L;
                 })
                 .concatMapSingle(currentPage -> applyFunc(fetchFunc, currentPage)
                         .flatMap(pageList -> {
+                            Log.i("ZXN_TEST", "BasePagePersistence : repositoryListsAsSingle : execute : currentPage : " + currentPage);
                             GetPageResult pageResult = new GetPageResult();
                             pageResult.setUuId(uuId);
                             pageResult.setTotalPages(currentPage);
                             if (pageList == null || pageList.isEmpty()) {
                                 return Single.just(createCurrentPageResult(pageResult, 0L, 0L));
                             }
+                            Log.i("ZXN_TEST", "BasePagePersistence : repositoryListsAsSingle : concatMap : page size : " + pageList.size());
                             return applyFunc(persistFunc, pageList)
                                     .flatMap(persistedList -> {
+                                        Log.i("ZXN_TEST", "BasePagePersistence : repositoryListsAsSingle : persisted : persisted size : " + persistedList.size());
                                         long fetchedCount = pageList == null ? 0 : pageList.size();
                                         long persistedCount = persistedList == null ? 0 : persistedList.size();
                                         return Single.just(createCurrentPageResult(pageResult, fetchedCount, persistedCount));
@@ -227,140 +264,148 @@ class BaseRepositoryUtil {
                 .collect(GetPageResult::new, (lastResult, currentResult) -> accumulatePageResult(uuId, lastResult, currentResult));
     }
 
-//    /**
-//     * 分页拉取分页对象数据并批量持久化（不带准备阶段）
-//     * <p>
-//     * 与 repositoryListsAsSingle 的区别：
-//     * <ul>
-//     *   <li>fetchFunc 返回的是 BasePageData<R>（包含总数、总页数等分页元数据）</li>
-//     *   <li>先拉取第一页获取总页数，然后并发拉取剩余页</li>
-//     *   <li>会验证分页一致性（当前页码、总页数、总数是否与第一页一致）</li>
-//     * </ul>
-//     * </p>
-//     *
-//     * @param request     请求参数
-//     * @param fetchFunc   分页获取函数，接收页码（从1开始），返回 Single<BasePageData<R>>
-//     * @param persistFunc 持久化函数，接收一页的分页对象，返回持久化后的 Single<BasePageData<R>>
-//     * @param <Q>         请求参数类型
-//     * @param <R>         列表元素类型
-//     * @return 分页结果的统计信息
-//     */
-//    public static <Q extends BaseRequest, R> Single<GetPageResult> repositoryPagesAsSingle(Q request,
-//                                                                                           Function<Long, Single<BasePageData<R>>> fetchFunc,
-//                                                                                           Function<BasePageData<R>, Single<BasePageData<R>>> persistFunc) {
-//        return repositoryPagesAsSingle(request, null, fetchFunc, persistFunc);
-//    }
-//
-//    /**
-//     * 分页拉取分页对象数据并批量持久化（带准备阶段）
-//     * <p>
-//     * 完整流程：
-//     * <ol>
-//     *   <li>执行准备函数 prepareFunc（如清理旧数据）</li>
-//     *   <li>拉取第一页数据，获取总页数和总数等元数据</li>
-//     *   <li>验证第一页数据有效性（不能为空）</li>
-//     *   <li>持久化第一页数据</li>
-//     *   <li>构建第一页的统计结果（uuId、总页数、成功页数=1等）</li>
-//     *   <li>如果总页数 <= 1，直接返回第一页结果</li>
-//     *   <li>否则顺序拉取并持久化剩余页（从第2页到最后一页）</li>
-//     *   <li>对每一页验证分页一致性（当前页码、总页数、总数必须与第一页一致）</li>
-//     *   <li>累积所有页的统计信息并返回</li>
-//     * </ol>
-//     * </p>
-//     * <p>
-//     * 注意：
-//     * <ul>
-//     *   <li>整个请求过程共享一个 uuId，用于追踪和错误定位</li>
-//     *   <li>任何一页失败都会导致整个请求失败</li>
-//     * </ul>
-//     * </p>
-//     *
-//     * @param request     请求参数
-//     * @param prepareFunc 准备函数，通常用于清理旧数据，返回 Single<Void>
-//     * @param fetchFunc   分页获取函数，接收页码（从1开始），返回 Single<BasePageData<R>>
-//     * @param persistFunc 持久化函数，接收一页的分页对象，返回持久化后的 Single<BasePageData<R>>
-//     * @param <Q>         请求参数类型
-//     * @param <R>         列表元素类型
-//     * @return 分页结果的统计信息（uuId、总页数、成功页数、拉取数量、持久化数量等）
-//     */
-//    public static <Q extends BaseRequest, R> Single<GetPageResult> repositoryPagesAsSingle(Q request,
-//                                                                                           Function<Q, Single<List<R>>> prepareFunc,
-//                                                                                           Function<Long, Single<BasePageData<R>>> fetchFunc,
-//                                                                                           Function<BasePageData<R>, Single<BasePageData<R>>> persistFunc) {
-//        Log.i("ZXN_TEST", "BaseRepository : repositoryPagesAsSingle");
-//        if (request == null) {
-//            return Single.error(new NzCommonException("request is null"));
-//        }
-//        if (prepareFunc != null) {
-//            applyFunc(prepareFunc, request);
-//        }
-//        final String uuId = UUID.randomUUID().toString();
-//        return applyFunc(fetchFunc, 1L)
-//                .flatMap(firstPageData -> {
-//                    if (firstPageData == null || firstPageData.getRecords() == null || firstPageData.getRecords().isEmpty()) {
-//                        return Single.error(new NzGetPageException(createFailedPageResult(uuId, "request page 1 is empty")));
-//                    }
-//                    return applyFunc(persistFunc, firstPageData)
-//                            .flatMap(firstPersistedPageData -> {
-//                                GetPageResult firstResult = new GetPageResult();
-//                                firstResult.setUuId(uuId);
-//                                firstResult.setSuccess(true);
-//                                firstResult.setMessage("success");
-//                                firstResult.setServerCount(firstPageData.getTotal() == null ? 0L : firstPageData.getTotal());
-//                                firstResult.setTotalPages(firstPageData.getPages() == null ? 0L : firstPageData.getPages());
-//                                firstResult.setSuccessedPages(1L);
-//                                firstResult.setFetchedCount(firstPageData.getRecords() == null ? 0 : firstPageData.getRecords().size());
-//                                firstResult.setPersistedCount(firstPersistedPageData.getRecords() == null ? 0 : firstPersistedPageData.getRecords().size());
-//
-//                                if (firstResult.getTotalPages() <= 1L) {
-//                                    return Single.just(firstResult);
-//                                }
-//                                return persistAndAccumulateRemainingPages(fetchFunc, persistFunc, firstResult, 2L, firstResult.getTotalPages() - 1L);
-//                            });
-//
-//                });
-//    }
-//
-//    /**
-//     * 持久化并累积剩余页的数据
-//     * <p>
-//     * 内部方法，用于处理第一页之后的所有页
-//     * </p>
-//     *
-//     * @param fetchFunc   分页获取函数
-//     * @param persistFunc 持久化函数
-//     * @param firstResult 第一页的统计结果（作为累积的初始值）
-//     * @param startPage   起始页码（通常为2）
-//     * @param pageCount   剩余页数
-//     * @param <R>         列表元素类型
-//     * @return 累积所有页后的最终统计结果
-//     */
-//    private static <R> Single<GetPageResult> persistAndAccumulateRemainingPages(
-//            Function<Long, Single<BasePageData<R>>> fetchFunc,
-//            Function<BasePageData<R>, Single<BasePageData<R>>> persistFunc,
-//            GetPageResult firstResult,
-//            Long startPage,
-//            Long pageCount) {
-//        return Observable.rangeLong(startPage, pageCount)
-//                .concatMapSingle(currentPage -> applyFunc(fetchFunc, currentPage)
-//                        .flatMap(pageData -> {
-//                            // 检查数据有效性
-//                            if (pageData == null || pageData.getRecords() == null || pageData.getRecords().isEmpty()) {
-//                                throw new NzGetPageException(createFailedPageResult(firstResult.getUuId(), "request page " + currentPage + " is empty"));
-//                            }
-//                            // 检查分页一致性
-//                            if (pageData.getCurrent() != currentPage || pageData.getPages() != firstResult.getTotalPages() || pageData.getTotal() != firstResult.getServerCount()) {
-//                                throw new NzGetPageException(createFailedPageResult(firstResult.getUuId(), "request current page " + currentPage + " does not match the pagination data on the server side "));
-//                            }
-//                            return applyFunc(persistFunc, pageData)
-//                                    .flatMap(persistedPageData -> {
-//                                        long fetchedCount = pageData.getRecords() == null ? 0 : pageData.getRecords().size();
-//                                        long persistedCount = persistedPageData.getRecords() == null ? 0 : persistedPageData.getRecords().size();
-//                                        return Single.just(createCurrentPageResult(firstResult, fetchedCount, persistedCount));
-//                                    });
-//                        }))
-//                .reduce(firstResult, (lastResult, currentResult) -> accumulatePageResult(firstResult.getUuId(), lastResult, currentResult));
-//    }
+    /**
+     * 分页拉取分页对象数据并批量持久化（不带准备阶段）
+     * <p>
+     * 与 repositoryListsAsSingle 的区别：
+     * <ul>
+     *   <li>fetchFunc 返回的是 BasePageData<R>（包含总数、总页数等分页元数据）</li>
+     *   <li>先拉取第一页获取总页数，然后并发拉取剩余页</li>
+     *   <li>会验证分页一致性（当前页码、总页数、总数是否与第一页一致）</li>
+     * </ul>
+     * </p>
+     *
+     * @param request     请求参数
+     * @param fetchFunc   分页获取函数，接收页码（从1开始），返回 Single<BasePageData<R>>
+     * @param persistFunc 持久化函数，接收一页的分页对象，返回持久化后的 Single<BasePageData<R>>
+     * @param <Q>         请求参数类型
+     * @param <R>         列表元素类型
+     * @return 分页结果的统计信息
+     */
+    public static <Q extends BasePageRequest, R> Single<GetPageResult> repositoryPagesAsSingle(Q request,
+                                                                                               Function<Long, Single<BasePageData<R>>> fetchFunc,
+                                                                                               Function<List<R>, Single<List<R>>> persistFunc) {
+        return repositoryPagesAsSingle(request, null, fetchFunc, persistFunc);
+    }
+
+    /**
+     * 分页拉取分页对象数据并批量持久化（带准备阶段）
+     * <p>
+     * 完整流程：
+     * <ol>
+     *   <li>执行准备函数 prepareFunc（如清理旧数据）</li>
+     *   <li>拉取第一页数据，获取总页数和总数等元数据</li>
+     *   <li>验证第一页数据有效性（不能为空）</li>
+     *   <li>持久化第一页数据</li>
+     *   <li>构建第一页的统计结果（uuId、总页数、成功页数=1等）</li>
+     *   <li>如果总页数 <= 1，直接返回第一页结果</li>
+     *   <li>否则顺序拉取并持久化剩余页（从第2页到最后一页）</li>
+     *   <li>对每一页验证分页一致性（当前页码、总页数、总数必须与第一页一致）</li>
+     *   <li>累积所有页的统计信息并返回</li>
+     * </ol>
+     * </p>
+     * <p>
+     * 注意：
+     * <ul>
+     *   <li>整个请求过程共享一个 uuId，用于追踪和错误定位</li>
+     *   <li>任何一页失败都会导致整个请求失败</li>
+     * </ul>
+     * </p>
+     *
+     * @param request     请求参数
+     * @param prepareFunc 准备函数，通常用于清理旧数据，返回 Single<Void>
+     * @param fetchFunc   分页获取函数，接收页码（从1开始），返回 Single<BasePageData<R>>
+     * @param persistFunc 持久化函数，接收一页的分页对象，返回持久化后的 Single<BasePageData<R>>
+     * @param <Q>         请求参数类型
+     * @param <R>         列表元素类型
+     * @return 分页结果的统计信息（uuId、总页数、成功页数、拉取数量、持久化数量等）
+     */
+    public static <Q extends BasePageRequest, R> Single<GetPageResult> repositoryPagesAsSingle(Q request,
+                                                                                               Function<Q, Single<List<R>>> prepareFunc,
+                                                                                               Function<Long, Single<BasePageData<R>>> fetchFunc,
+                                                                                               Function<List<R>, Single<List<R>>> persistFunc) {
+        Log.i("ZXN_TEST", "BaseRepository : repositoryPagesAsSingle");
+        if (request == null) {
+            return Single.error(new NzCommonException("request is null"));
+        }
+        if (request.getCurrent() != null && request.getCurrent() != 1) {
+            return Single.error(new NzCommonException("get all pages must set current is 1"));
+        }
+        if (prepareFunc != null) {
+            applyFunc(prepareFunc, request);
+        }
+        final String uuId = UUID.randomUUID().toString();
+        return applyFunc(fetchFunc, 1L)
+                .flatMap(firstPageData -> {
+                    if (firstPageData == null || firstPageData.getRecords() == null || firstPageData.getRecords().isEmpty()) {
+                        return Single.error(new NzGetPageException(createFailedPageResult(uuId, "request page 1 is empty")));
+                    }
+
+                    List<R> firstPageList = firstPageData.getRecords();
+                    Log.i("ZXN_TEST", "BasePagePersistence : repositoryPagesAsSingle : first page : page size : " + firstPageList.size());
+
+                    GetPageResult firstResult = new GetPageResult();
+                    firstResult.setUuId(uuId);
+                    firstResult.setSuccess(true);
+                    firstResult.setMessage("success");
+                    firstResult.setServerCount(firstPageData.getTotal() == null ? 0L : firstPageData.getTotal());
+                    firstResult.setTotalPages(firstPageData.getPages() == null ? 0L : firstPageData.getPages());
+                    firstResult.setSuccessedPages(1L);
+                    firstResult.setFetchedCount(firstPageData.getRecords() == null ? 0 : firstPageData.getRecords().size());
+
+                    return applyFunc(persistFunc, firstPageList)
+                            .flatMap(firstPersistedPageList -> {
+                                firstResult.setPersistedCount(firstPersistedPageList == null ? 0 : firstPersistedPageList.size());
+
+                                if (firstResult.getTotalPages() <= 1L) {
+                                    return Single.just(firstResult);
+                                }
+                                return persistAndAccumulateRemainingPages(fetchFunc, persistFunc, firstResult, 2L, firstResult.getTotalPages() - 1L);
+                            });
+
+                });
+    }
+
+    /**
+     * 持久化并累积剩余页的数据
+     * <p>
+     * 内部方法，用于处理第一页之后的所有页
+     * </p>
+     *
+     * @param fetchFunc   分页获取函数
+     * @param persistFunc 持久化函数
+     * @param firstResult 第一页的统计结果（作为累积的初始值）
+     * @param startPage   起始页码（通常为2）
+     * @param pageCount   剩余页数
+     * @param <R>         列表元素类型
+     * @return 累积所有页后的最终统计结果
+     */
+    private static <R> Single<GetPageResult> persistAndAccumulateRemainingPages(
+            Function<Long, Single<BasePageData<R>>> fetchFunc,
+            Function<List<R>, Single<List<R>>> persistFunc,
+            GetPageResult firstResult,
+            Long startPage,
+            Long pageCount) {
+        return Flowable.rangeLong(startPage, pageCount)
+                .concatMapSingle(currentPage -> applyFunc(fetchFunc, currentPage)
+                        .flatMap(pageData -> {
+                            // 检查数据有效性
+                            if (pageData == null || pageData.getRecords() == null || pageData.getRecords().isEmpty()) {
+                                throw new NzGetPageException(createFailedPageResult(firstResult.getUuId(), "request page " + currentPage + " is empty"));
+                            }
+                            // 检查分页一致性
+                            if (pageData.getCurrent() != currentPage || pageData.getPages() != firstResult.getTotalPages() || pageData.getTotal() != firstResult.getServerCount()) {
+                                throw new NzGetPageException(createFailedPageResult(firstResult.getUuId(), "request current page " + currentPage + " does not match the pagination data on the server side "));
+                            }
+                            return applyFunc(persistFunc, pageData.getRecords())
+                                    .flatMap(persistedPageList -> {
+                                        long fetchedCount = pageData.getRecords() == null ? 0 : pageData.getRecords().size();
+                                        long persistedCount = persistedPageList == null ? 0 : persistedPageList.size();
+                                        return Single.just(createCurrentPageResult(firstResult, fetchedCount, persistedCount));
+                                    });
+                        }))
+                .reduce(firstResult, (lastResult, currentResult) -> accumulatePageResult(firstResult.getUuId(), lastResult, currentResult));
+    }
 
     /**
      * 创建单页的统计结果
@@ -409,6 +454,7 @@ class BaseRepositoryUtil {
      * @throws NzGetPageException 如果当前页失败则抛出异常
      */
     private static GetPageResult accumulatePageResult(String uuId, GetPageResult lastResult, GetPageResult currentResult) throws NzGetPageException {
+        Log.i("ZXN_TEST", "BasePagePersistence : accumulatePageResult : lastResult : " + lastResult.getFetchedCount() + ", currentResult : " + currentResult.getFetchedCount());
         if (!currentResult.isSuccess()) {
             throw new NzGetPageException(createFailedPageResult(currentResult.getUuId(), "accumulate page meet some error"));
         }

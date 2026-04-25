@@ -2,16 +2,14 @@ package com.adl.service.internal;
 
 
 import com.adl.service.callback.RequestCallback;
+import com.adl.service.data.BaseResponse;
 import com.adl.service.exception.NzBaseException;
-import com.adl.service.exception.NzCommonException;
 import com.adl.service.exception.NzEmptyDataException;
 import com.adl.service.exception.NzEmptyResponseException;
 import com.adl.service.exception.NzExceptionMapper;
 import com.adl.service.exception.NzNetworkException;
 import com.adl.service.exception.NzUnknownException;
-import com.adl.service.data.BaseResponse;
-
-import java.util.List;
+import com.adl.service.http.request.RequestScope;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Single;
@@ -39,11 +37,12 @@ public final class RxCallbackScheduler {
      * </ul>
      * </p>
      */
-    public static <T> Disposable scheduleBaseResponse(
-            Single<BaseResponse<T>> single,
-            RequestCallback<T> callback
+    public static <T> long scheduleBaseResponse(RequestScope scope,
+                                                Single<BaseResponse<T>> single,
+                                                RequestCallback<T> callback
     ) {
-        return single
+        assertScope(scope);
+        Disposable disposable = single
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
@@ -65,6 +64,8 @@ public final class RxCallbackScheduler {
                             }
                         }
                 );
+        SubscriptionManager.getInstance().add(scope.owner(), disposable);
+        return disposable.hashCode();
     }
 
     /**
@@ -74,11 +75,12 @@ public final class RxCallbackScheduler {
      * @param callback 业务回调接口
      * @return Disposable 订阅对象（可用于取消）
      */
-    public static <T> Disposable schedule(
-            Single<T> single,
-            RequestCallback<T> callback
+    public static <T> long schedule(RequestScope scope,
+                                    Single<T> single,
+                                    RequestCallback<T> callback
     ) {
-        return single
+        assertScope(scope);
+        Disposable disposable = single
                 .subscribeOn(Schedulers.io())           // 在 IO 线程执行网络请求
                 .observeOn(AndroidSchedulers.mainThread()) // 在主线程回调
                 .subscribe(
@@ -107,6 +109,9 @@ public final class RxCallbackScheduler {
                             }
                         }
                 );
+
+        SubscriptionManager.getInstance().add(scope.owner(), disposable);
+        return disposable.hashCode();
     }
 
     /**
@@ -136,16 +141,6 @@ public final class RxCallbackScheduler {
     /**
      * 对已有 {@link BaseResponse} 做成功与 data 校验，成功则返回 data。
      */
-    private static <T> List<T> requireSuccess(List<T> list) throws NzBaseException {
-        if (list == null || list.isEmpty()) {
-            throw new NzCommonException("list is null");
-        }
-        return list;
-    }
-
-    /**
-     * 对已有 {@link BaseResponse} 做成功与 data 校验，成功则返回 data。
-     */
     private static <T> T assertSuccessData(BaseResponse<T> response) throws NzBaseException {
         if (response == null) {
             throw new NzEmptyResponseException("Response is null");
@@ -158,5 +153,11 @@ public final class RxCallbackScheduler {
             throw new NzEmptyDataException("Response data is null");
         }
         return data;
+    }
+
+    private static void assertScope(RequestScope scope) {
+        if (scope == null) {
+            throw new IllegalArgumentException("scope must not be null (use RequestScope.of(activity|fragment))");
+        }
     }
 }

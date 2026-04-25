@@ -10,9 +10,9 @@ import com.adl.service.repository.prepare.LoginAuthPrepareHelper;
 import io.reactivex.rxjava3.core.Single;
 
 public final class LoginAuthRepository {
-    private final LoginAuthPrepareHelper prepareHelper = new LoginAuthPrepareHelper();
-    private final LoginAuthFetchHelper fetchHelper = new LoginAuthFetchHelper();
-    private final LoginAuthPersistHelper persistHelper = new LoginAuthPersistHelper();
+    private final LoginAuthPrepareHelper prepareHelper = LoginAuthPrepareHelper.getInstance();
+    private final LoginAuthFetchHelper fetchHelper = LoginAuthFetchHelper.getInstance();
+    private final LoginAuthPersistHelper persistHelper = LoginAuthPersistHelper.getInstance();
 
     public LoginAuthRepository() {
     }

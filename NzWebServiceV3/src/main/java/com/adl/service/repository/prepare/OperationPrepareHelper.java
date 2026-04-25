@@ -23,7 +23,20 @@ import io.reactivex.rxjava3.functions.Function;
 
 public final class OperationPrepareHelper {
 
-    public OperationPrepareHelper() {
+    private static volatile OperationPrepareHelper instance;
+
+    private OperationPrepareHelper() {
+    }
+
+    public static OperationPrepareHelper getInstance() {
+        if (instance == null) {
+            synchronized (OperationPrepareHelper.class) {
+                if (instance == null) {
+                    instance = new OperationPrepareHelper();
+                }
+            }
+        }
+        return instance;
     }
 
     public Function<SceneListRequest, Single<List<SceneData>>> createGetSceneListPrepareFunc() {

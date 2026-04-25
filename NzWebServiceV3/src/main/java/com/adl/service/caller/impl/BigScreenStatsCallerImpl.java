@@ -25,12 +25,9 @@ import com.adl.service.http.request.SportRankRequest;
 import com.adl.service.http.request.SumScoreRankRequest;
 import com.adl.service.http.request.WarRecordRankRequest;
 import com.adl.service.internal.RxCallbackScheduler;
-import com.adl.service.internal.SubscriptionManager;
 import com.adl.service.repository.BigScreenStatsRepository;
 
 import java.util.List;
-
-import io.reactivex.rxjava3.disposables.Disposable;
 
 /**
  * BigScreenStatsCaller 实现（SDK 内部使用，通过 {@link AdlService} 暴露）。
@@ -45,10 +42,7 @@ public final class BigScreenStatsCallerImpl implements BigScreenStatsCaller {
 
     @Override
     public long getWarRecordRankAsync(RequestScope scope, WarRecordRankRequest request, RequestCallback<List<WarRecordRankData>> callback) {
-        CallerUtil.assertScope(scope);
-        Disposable disposable = RxCallbackScheduler.schedule(bigScreenStatsRepository.getWarRecordRank(request), callback);
-        SubscriptionManager.getInstance().add(scope.owner(), disposable);
-        return disposable.hashCode();
+        return RxCallbackScheduler.schedule(scope, bigScreenStatsRepository.getWarRecordRank(request), callback);
     }
 
     @Override
@@ -58,10 +52,7 @@ public final class BigScreenStatsCallerImpl implements BigScreenStatsCaller {
 
     @Override
     public long getPersonRankAsync(RequestScope scope, PersonRankRequest request, RequestCallback<PersonRankData> callback) {
-        CallerUtil.assertScope(scope);
-        Disposable disposable = RxCallbackScheduler.schedule(bigScreenStatsRepository.getPersonRank(request), callback);
-        SubscriptionManager.getInstance().add(scope.owner(), disposable);
-        return disposable.hashCode();
+        return RxCallbackScheduler.schedule(scope, bigScreenStatsRepository.getPersonRank(request), callback);
     }
 
     @Override
@@ -71,10 +62,7 @@ public final class BigScreenStatsCallerImpl implements BigScreenStatsCaller {
 
     @Override
     public long getMorePeopleVictoryRankAsync(RequestScope scope, MorePeopleVictoryRankRequest request, RequestCallback<List<MorePeopleVictoryRankData>> callback) {
-        CallerUtil.assertScope(scope);
-        Disposable disposable = RxCallbackScheduler.schedule(bigScreenStatsRepository.getMorePeopleVictoryRank(request), callback);
-        SubscriptionManager.getInstance().add(scope.owner(), disposable);
-        return disposable.hashCode();
+        return RxCallbackScheduler.schedule(scope, bigScreenStatsRepository.getMorePeopleVictoryRank(request), callback);
     }
 
     @Override
@@ -84,10 +72,7 @@ public final class BigScreenStatsCallerImpl implements BigScreenStatsCaller {
 
     @Override
     public long getMorePeopleRecordRankAsync(RequestScope scope, MorePeopleRecordRankRequest request, RequestCallback<List<MorePeopleRecordRankData>> callback) {
-        CallerUtil.assertScope(scope);
-        Disposable disposable = RxCallbackScheduler.schedule(bigScreenStatsRepository.getMorePeopleRecordRank(request), callback);
-        SubscriptionManager.getInstance().add(scope.owner(), disposable);
-        return disposable.hashCode();
+        return RxCallbackScheduler.schedule(scope, bigScreenStatsRepository.getMorePeopleRecordRank(request), callback);
     }
 
     @Override
@@ -97,10 +82,7 @@ public final class BigScreenStatsCallerImpl implements BigScreenStatsCaller {
 
     @Override
     public long getOverviewAsync(RequestScope scope, OverviewRequest request, RequestCallback<OverviewData> callback) {
-        CallerUtil.assertScope(scope);
-        Disposable disposable = RxCallbackScheduler.schedule(bigScreenStatsRepository.getOverview(request), callback);
-        SubscriptionManager.getInstance().add(scope.owner(), disposable);
-        return disposable.hashCode();
+        return RxCallbackScheduler.schedule(scope, bigScreenStatsRepository.getOverview(request), callback);
     }
 
     @Override
@@ -110,10 +92,7 @@ public final class BigScreenStatsCallerImpl implements BigScreenStatsCaller {
 
     @Override
     public long getCompetitionRankAsync(RequestScope scope, CompetitionRankRequest request, RequestCallback<CompetitionRankData> callback) {
-        CallerUtil.assertScope(scope);
-        Disposable disposable = RxCallbackScheduler.schedule(bigScreenStatsRepository.getCompetitionRank(request), callback);
-        SubscriptionManager.getInstance().add(scope.owner(), disposable);
-        return disposable.hashCode();
+        return RxCallbackScheduler.schedule(scope, bigScreenStatsRepository.getCompetitionRank(request), callback);
     }
 
     @Override
@@ -123,10 +102,7 @@ public final class BigScreenStatsCallerImpl implements BigScreenStatsCaller {
 
     @Override
     public long sumScoreRankAsync(RequestScope scope, SumScoreRankRequest request, RequestCallback<List<SumScoreRankData>> callback) {
-        CallerUtil.assertScope(scope);
-        Disposable disposable = RxCallbackScheduler.schedule(bigScreenStatsRepository.sumScoreRank(request), callback);
-        SubscriptionManager.getInstance().add(scope.owner(), disposable);
-        return disposable.hashCode();
+        return RxCallbackScheduler.schedule(scope, bigScreenStatsRepository.sumScoreRank(request), callback);
     }
 
     @Override
@@ -136,10 +112,7 @@ public final class BigScreenStatsCallerImpl implements BigScreenStatsCaller {
 
     @Override
     public long getSportSkuRankAsync(RequestScope scope, SportRankRequest request, RequestCallback<List<SportSkuRankData>> callback) {
-        CallerUtil.assertScope(scope);
-        Disposable disposable = RxCallbackScheduler.schedule(bigScreenStatsRepository.getSportSkuRank(request), callback);
-        SubscriptionManager.getInstance().add(scope.owner(), disposable);
-        return disposable.hashCode();
+        return RxCallbackScheduler.schedule(scope, bigScreenStatsRepository.getSportSkuRank(request), callback);
     }
 
     @Override
@@ -149,10 +122,7 @@ public final class BigScreenStatsCallerImpl implements BigScreenStatsCaller {
 
     @Override
     public long getSportRankKingAsync(RequestScope scope, SportRankRequest request, RequestCallback<List<SportRankKingData>> callback) {
-        CallerUtil.assertScope(scope);
-        Disposable disposable = RxCallbackScheduler.schedule(bigScreenStatsRepository.getSportRankKing(request), callback);
-        SubscriptionManager.getInstance().add(scope.owner(), disposable);
-        return disposable.hashCode();
+        return RxCallbackScheduler.schedule(scope, bigScreenStatsRepository.getSportRankKing(request), callback);
     }
 
     @Override
@@ -162,10 +132,7 @@ public final class BigScreenStatsCallerImpl implements BigScreenStatsCaller {
 
     @Override
     public long getPhysicalTrainingRankAsync(RequestScope scope, SportRankRequest request, RequestCallback<List<SportRankKingData>> callback) {
-        CallerUtil.assertScope(scope);
-        Disposable disposable = RxCallbackScheduler.schedule(bigScreenStatsRepository.getPhysicalTrainingRank(request), callback);
-        SubscriptionManager.getInstance().add(scope.owner(), disposable);
-        return disposable.hashCode();
+        return RxCallbackScheduler.schedule(scope, bigScreenStatsRepository.getPhysicalTrainingRank(request), callback);
     }
 
     @Override
@@ -175,10 +142,7 @@ public final class BigScreenStatsCallerImpl implements BigScreenStatsCaller {
 
     @Override
     public long getExerciseSumTimeRankAsync(RequestScope scope, SportRankRequest request, RequestCallback<List<SportRankKingData>> callback) {
-        CallerUtil.assertScope(scope);
-        Disposable disposable = RxCallbackScheduler.schedule(bigScreenStatsRepository.getExerciseSumTimeRank(request), callback);
-        SubscriptionManager.getInstance().add(scope.owner(), disposable);
-        return disposable.hashCode();
+        return RxCallbackScheduler.schedule(scope, bigScreenStatsRepository.getExerciseSumTimeRank(request), callback);
     }
 
     @Override
@@ -188,10 +152,7 @@ public final class BigScreenStatsCallerImpl implements BigScreenStatsCaller {
 
     @Override
     public long getBestRankTopAsync(RequestScope scope, BestRankTopRequest request, RequestCallback<List<BestRankTopData>> callback) {
-        CallerUtil.assertScope(scope);
-        Disposable disposable = RxCallbackScheduler.schedule(bigScreenStatsRepository.getBestRankTop(request), callback);
-        SubscriptionManager.getInstance().add(scope.owner(), disposable);
-        return disposable.hashCode();
+        return RxCallbackScheduler.schedule(scope, bigScreenStatsRepository.getBestRankTop(request), callback);
     }
 
     @Override

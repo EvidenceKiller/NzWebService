@@ -1,6 +1,7 @@
 package com.adl.service.repository.fetch;
 
 import com.adl.service.data.AccountRecordData;
+import com.adl.service.data.BasePageData;
 import com.adl.service.data.OrgRecordData;
 import com.adl.service.http.request.AccountRecordPageRequest;
 import com.adl.service.http.request.OrgRecordPageRequest;
@@ -19,10 +20,23 @@ import io.reactivex.rxjava3.functions.Function;
 
 public final class SportInfoFetchHelper {
 
+    private static volatile SportInfoFetchHelper instance;
+
     private final SportInfoService sportInfoService;
 
-    public SportInfoFetchHelper() {
+    private SportInfoFetchHelper() {
         this.sportInfoService = RetrofitManager.getInstance().create(SportInfoService.class);
+    }
+
+    public static SportInfoFetchHelper getInstance() {
+        if (instance == null) {
+            synchronized (SportInfoFetchHelper.class) {
+                if (instance == null) {
+                    instance = new SportInfoFetchHelper();
+                }
+            }
+        }
+        return instance;
     }
 
     public Function<ReportStudentSportRequest, Single<Boolean>> createUpdateStudentSportFunc() {
@@ -58,12 +72,12 @@ public final class SportInfoFetchHelper {
     }
 
     @SuppressWarnings("unchecked")
-    public Function<OrgRecordPageRequest, Single<List<OrgRecordData>>> createGetOrgRecordPageFunc() {
-        return (request) -> BaseFetchUtil.schedulePageResponse(sportInfoService.getOrgRecordPage(request), (Class<List<OrgRecordData>>) (Class<?>) List.class);
+    public Function<OrgRecordPageRequest, Single<BasePageData<OrgRecordData>>> createGetOrgRecordPageFunc() {
+        return (request) -> BaseFetchUtil.scheduleResponse(sportInfoService.getOrgRecordPage(request), (Class<BasePageData<OrgRecordData>>) (Class<?>) BasePageData.class);
     }
 
     @SuppressWarnings("unchecked")
-    public Function<AccountRecordPageRequest, Single<List<AccountRecordData>>> createGetAccountRecordPageFunc() {
-        return (request) -> BaseFetchUtil.schedulePageResponse(sportInfoService.getAccountRecordPage(request), (Class<List<AccountRecordData>>) (Class<?>) List.class);
+    public Function<AccountRecordPageRequest, Single<BasePageData<AccountRecordData>>> createGetAccountRecordPageFunc() {
+        return (request) -> BaseFetchUtil.scheduleResponse(sportInfoService.getAccountRecordPage(request), (Class<BasePageData<AccountRecordData>>) (Class<?>) BasePageData.class);
     }
 }

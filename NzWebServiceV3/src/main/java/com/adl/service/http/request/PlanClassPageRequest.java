@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 import lombok.Getter;
 
 @Getter
-public final class PlanClassListRequest extends BasePageRequest {
+public final class PlanClassPageRequest extends BasePageRequest {
 
     /**
      * 计划ID
@@ -43,7 +43,7 @@ public final class PlanClassListRequest extends BasePageRequest {
     @SerializedName("showStatistic")
     private Boolean showStatistic;
 
-    private PlanClassListRequest(Builder builder) {
+    private PlanClassPageRequest(Builder builder) {
         super(builder);
         this.planId = builder.planId;
         this.orgId = builder.orgId;
@@ -99,8 +99,8 @@ public final class PlanClassListRequest extends BasePageRequest {
             return this;
         }
 
-        public PlanClassListRequest build() {
-            return new PlanClassListRequest(this);
+        public PlanClassPageRequest build() {
+            return new PlanClassPageRequest(this);
         }
     }
 }

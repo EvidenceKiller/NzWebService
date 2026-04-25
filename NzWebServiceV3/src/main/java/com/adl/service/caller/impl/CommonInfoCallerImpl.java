@@ -13,15 +13,16 @@ import com.adl.service.data.GradeTreeData;
 import com.adl.service.data.LoginInfoData;
 import com.adl.service.data.StudentData;
 import com.adl.service.data.TeacherData;
+import com.adl.service.data.TimeStamp;
 import com.adl.service.exception.NzBaseException;
 import com.adl.service.http.request.ClassInfoRequest;
-import com.adl.service.http.request.ClassListRequest;
+import com.adl.service.http.request.ClassPageRequest;
 import com.adl.service.http.request.DeviceActiveRequest;
 import com.adl.service.http.request.DictRequest;
 import com.adl.service.http.request.EmptyRequest;
 import com.adl.service.http.request.RequestScope;
 import com.adl.service.http.request.StudentPageRequest;
-import com.adl.service.http.request.TeacherListRequest;
+import com.adl.service.http.request.TeacherPageRequest;
 import com.adl.service.internal.RxCallbackScheduler;
 import com.adl.service.internal.SubscriptionManager;
 import com.adl.service.repository.CommonInfoRepository;
@@ -109,10 +110,7 @@ public final class CommonInfoCallerImpl implements CommonInfoCaller {
 
     @Override
     public long getGradeTreeAsync(RequestScope scope, EmptyRequest request, RequestCallback<List<GradeTreeData>> callback) {
-        CallerUtil.assertScope(scope);
-        Disposable disposable = RxCallbackScheduler.schedule(commonInfoRepository.getGradeTree(request), callback);
-        SubscriptionManager.getInstance().add(scope.owner(), disposable);
-        return disposable.hashCode();
+        return RxCallbackScheduler.schedule(scope, commonInfoRepository.getGradeTree(request), callback);
     }
 
     @Override
@@ -122,10 +120,7 @@ public final class CommonInfoCallerImpl implements CommonInfoCaller {
 
     @Override
     public long getGradeChineseNameListAsync(RequestScope scope, EmptyRequest request, RequestCallback<List<GradeChineseNameData>> callback) {
-        CallerUtil.assertScope(scope);
-        Disposable disposable = RxCallbackScheduler.schedule(commonInfoRepository.getGradeChineseNameList(request), callback);
-        SubscriptionManager.getInstance().add(scope.owner(), disposable);
-        return disposable.hashCode();
+        return RxCallbackScheduler.schedule(scope, commonInfoRepository.getGradeChineseNameList(request), callback);
     }
 
     @Override
@@ -134,24 +129,18 @@ public final class CommonInfoCallerImpl implements CommonInfoCaller {
     }
 
     @Override
-    public long getClassListAsync(RequestScope scope, ClassListRequest request, RequestCallback<List<ClassData>> callback) {
-        CallerUtil.assertScope(scope);
-        Disposable disposable = RxCallbackScheduler.schedule(commonInfoRepository.getClassList(request), callback);
-        SubscriptionManager.getInstance().add(scope.owner(), disposable);
-        return disposable.hashCode();
+    public long getClassPageAsync(RequestScope scope, ClassPageRequest request, RequestCallback<List<ClassData>> callback) {
+        return RxCallbackScheduler.schedule(scope, commonInfoRepository.getClassPage(request), callback);
     }
 
     @Override
-    public List<ClassData> getClassListSync(ClassListRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGet(commonInfoRepository.getClassList(request));
+    public List<ClassData> getClassPageSync(ClassPageRequest request) throws NzBaseException {
+        return RxCallbackScheduler.blockingGet(commonInfoRepository.getClassPage(request));
     }
 
     @Override
     public long getClassInfoAsync(RequestScope scope, ClassInfoRequest request, RequestCallback<ClassInfoData> callback) {
-        CallerUtil.assertScope(scope);
-        Disposable disposable = RxCallbackScheduler.schedule(commonInfoRepository.getClassInfo(request), callback);
-        SubscriptionManager.getInstance().add(scope.owner(), disposable);
-        return disposable.hashCode();
+        return RxCallbackScheduler.schedule(scope, commonInfoRepository.getClassInfo(request), callback);
     }
 
     @Override
@@ -165,10 +154,7 @@ public final class CommonInfoCallerImpl implements CommonInfoCaller {
 
     @Override
     public long getLoginInfoAsync(RequestScope scope, EmptyRequest request, RequestCallback<LoginInfoData> callback) {
-        CallerUtil.assertScope(scope);
-        Disposable disposable = RxCallbackScheduler.schedule(commonInfoRepository.getLoginInfo(request), callback);
-        SubscriptionManager.getInstance().add(scope.owner(), disposable);
-        return disposable.hashCode();
+        return RxCallbackScheduler.schedule(scope, commonInfoRepository.getLoginInfo(request), callback);
     }
 
     @Override
@@ -178,10 +164,7 @@ public final class CommonInfoCallerImpl implements CommonInfoCaller {
 
     @Override
     public long getAcayearListAsync(RequestScope scope, EmptyRequest request, RequestCallback<List<AcayearData>> callback) {
-        CallerUtil.assertScope(scope);
-        Disposable disposable = RxCallbackScheduler.schedule(commonInfoRepository.getAcayearList(request), callback);
-        SubscriptionManager.getInstance().add(scope.owner(), disposable);
-        return disposable.hashCode();
+        return RxCallbackScheduler.schedule(scope, commonInfoRepository.getAcayearList(request), callback);
     }
 
     @Override
@@ -190,54 +173,38 @@ public final class CommonInfoCallerImpl implements CommonInfoCaller {
     }
 
     @Override
-    public long getTeacherListsAllAsync(RequestScope scope, TeacherListRequest request, RequestCallback<GetPageResult> callback) {
-        CallerUtil.assertCurrent(request);
-        CallerUtil.assertScope(scope);
-        Disposable disposable = RxCallbackScheduler.schedule(commonInfoRepository.getTeacherListsAll(request), callback);
-        SubscriptionManager.getInstance().add(scope.owner(), disposable);
-        return disposable.hashCode();
+    public long getTeacherPagesAllAsync(RequestScope scope, TeacherPageRequest request, RequestCallback<GetPageResult> callback) {
+        return RxCallbackScheduler.schedule(scope, commonInfoRepository.getTeacherPagesAll(request), callback);
     }
 
     @Override
-    public GetPageResult getTeacherListsAllSync(TeacherListRequest request) throws NzBaseException {
-        CallerUtil.assertCurrent(request);
-        return RxCallbackScheduler.blockingGet(commonInfoRepository.getTeacherListsAll(request));
+    public GetPageResult getTeacherPagesAllSync(TeacherPageRequest request) throws NzBaseException {
+        return RxCallbackScheduler.blockingGet(commonInfoRepository.getTeacherPagesAll(request));
     }
 
     @Override
-    public long getTeacherListAsync(RequestScope scope, TeacherListRequest request, RequestCallback<List<TeacherData>> callback) {
-        CallerUtil.assertScope(scope);
-        Disposable disposable = RxCallbackScheduler.schedule(commonInfoRepository.getTeacherList(request), callback);
-        SubscriptionManager.getInstance().add(scope.owner(), disposable);
-        return disposable.hashCode();
+    public long getTeacherPageAsync(RequestScope scope, TeacherPageRequest request, RequestCallback<List<TeacherData>> callback) {
+        return RxCallbackScheduler.schedule(scope, commonInfoRepository.getTeacherPage(request), callback);
     }
 
     @Override
-    public List<TeacherData> getTeacherListSync(TeacherListRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGet(commonInfoRepository.getTeacherList(request));
+    public List<TeacherData> getTeacherPageSync(TeacherPageRequest request) throws NzBaseException {
+        return RxCallbackScheduler.blockingGet(commonInfoRepository.getTeacherPage(request));
     }
 
     @Override
     public long getStudentPagesAllAsync(RequestScope scope, StudentPageRequest request, RequestCallback<GetPageResult> callback) {
-        CallerUtil.assertCurrent(request);
-        CallerUtil.assertScope(scope);
-        Disposable disposable = RxCallbackScheduler.schedule(commonInfoRepository.getStudentPagesAll(request), callback);
-        SubscriptionManager.getInstance().add(scope.owner(), disposable);
-        return disposable.hashCode();
+        return RxCallbackScheduler.schedule(scope, commonInfoRepository.getStudentPagesAll(request), callback);
     }
 
     @Override
     public GetPageResult getStudentPagesAllSync(StudentPageRequest request) throws NzBaseException {
-        CallerUtil.assertCurrent(request);
         return RxCallbackScheduler.blockingGet(commonInfoRepository.getStudentPagesAll(request));
     }
 
     @Override
     public long getStudentPageAsync(RequestScope scope, StudentPageRequest request, RequestCallback<List<StudentData>> callback) {
-        CallerUtil.assertScope(scope);
-        Disposable disposable = RxCallbackScheduler.schedule(commonInfoRepository.getStudentPage(request), callback);
-        SubscriptionManager.getInstance().add(scope.owner(), disposable);
-        return disposable.hashCode();
+        return RxCallbackScheduler.schedule(scope, commonInfoRepository.getStudentPage(request), callback);
     }
 
     @Override
@@ -247,10 +214,7 @@ public final class CommonInfoCallerImpl implements CommonInfoCaller {
 
     @Override
     public long getDictListAsync(RequestScope scope, DictRequest request, RequestCallback<List<DictData>> callback) {
-        CallerUtil.assertScope(scope);
-        Disposable disposable = RxCallbackScheduler.schedule(commonInfoRepository.getDictList(request), callback);
-        SubscriptionManager.getInstance().add(scope.owner(), disposable);
-        return disposable.hashCode();
+        return RxCallbackScheduler.schedule(scope, commonInfoRepository.getDictList(request), callback);
     }
 
     @Override
@@ -260,10 +224,7 @@ public final class CommonInfoCallerImpl implements CommonInfoCaller {
 
     @Override
     public long deviceActiveAsync(RequestScope scope, DeviceActiveRequest request, RequestCallback<Boolean> callback) {
-        CallerUtil.assertScope(scope);
-        Disposable disposable = RxCallbackScheduler.schedule(commonInfoRepository.deviceActive(request), callback);
-        SubscriptionManager.getInstance().add(scope.owner(), disposable);
-        return disposable.hashCode();
+        return RxCallbackScheduler.schedule(scope, commonInfoRepository.deviceActive(request), callback);
     }
 
     @Override

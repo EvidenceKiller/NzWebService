@@ -14,7 +14,7 @@ import com.adl.service.db.entity.TeacherEntity;
 import com.adl.service.exception.NzCommonException;
 import com.adl.service.http.request.DictRequest;
 import com.adl.service.http.request.StudentPageRequest;
-import com.adl.service.http.request.TeacherListRequest;
+import com.adl.service.http.request.TeacherPageRequest;
 import com.adl.service.utils.InnerUtil;
 
 import java.util.List;
@@ -25,7 +25,20 @@ import io.reactivex.rxjava3.functions.Function;
 
 public final class CommonInfoPrepareHelper {
 
-    public CommonInfoPrepareHelper() {
+    private static volatile CommonInfoPrepareHelper instance;
+
+    private CommonInfoPrepareHelper() {
+    }
+
+    public static CommonInfoPrepareHelper getInstance() {
+        if (instance == null) {
+            synchronized (CommonInfoPrepareHelper.class) {
+                if (instance == null) {
+                    instance = new CommonInfoPrepareHelper();
+                }
+            }
+        }
+        return instance;
     }
 
     public Function<Void, Single<LoginInfoData>> createPrepareLoginInfoFunc() {
@@ -68,7 +81,7 @@ public final class CommonInfoPrepareHelper {
         };
     }
 
-    public Function<TeacherListRequest, Single<List<TeacherData>>> createPrepareTeacherPagesAllFunc() {
+    public Function<TeacherPageRequest, Single<List<TeacherData>>> createPrepareTeacherPagesAllFunc() {
         return (request) -> {
             DaoManagerProxy.getInstance().getTeacherDao().clearAll();
             return null;

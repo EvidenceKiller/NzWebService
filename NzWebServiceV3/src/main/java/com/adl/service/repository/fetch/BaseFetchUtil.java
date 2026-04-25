@@ -12,6 +12,18 @@ import io.reactivex.rxjava3.core.Single;
 
 class BaseFetchUtil {
 
+    public static <T> Single<T> schedule(Single<T> response, Class<T> clazz) {
+        if (response == null) {
+            return Single.error(new NzEmptyResponseException("response single is null"));
+        }
+        return response.flatMap(baseResponse -> {
+            if (baseResponse == null) {
+                return CommonUtil.createEmptySingle(clazz);
+            }
+            return Single.just(baseResponse);
+        });
+    }
+
     public static <T> Single<T> scheduleResponse(Single<BaseResponse<T>> response, Class<T> clazz) {
         if (response == null) {
             return Single.error(new NzEmptyResponseException("response single is null"));

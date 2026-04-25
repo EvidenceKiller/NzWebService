@@ -27,7 +27,20 @@ import io.reactivex.rxjava3.functions.Function;
 
 public final class OperationPersistHelper {
 
-    public OperationPersistHelper() {
+    private static volatile OperationPersistHelper instance;
+
+    private OperationPersistHelper() {
+    }
+
+    public static OperationPersistHelper getInstance() {
+        if (instance == null) {
+            synchronized (OperationPersistHelper.class) {
+                if (instance == null) {
+                    instance = new OperationPersistHelper();
+                }
+            }
+        }
+        return instance;
     }
 
     public Function<List<SceneData>, Single<List<SceneData>>> createPersistSceneListFunc(SceneListRequest request) {

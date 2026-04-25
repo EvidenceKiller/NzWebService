@@ -28,9 +28,9 @@ import java.util.List;
 import io.reactivex.rxjava3.core.Single;
 
 public final class BigScreenStatsRepository {
-    private final BigScreenStatsPrepareHelper prepareHelper = new BigScreenStatsPrepareHelper();
-    private final BigScreenStatsFetchHelper fetchHelper = new BigScreenStatsFetchHelper();
-    private final BigScreenStatsPersistHelper persistHelper = new BigScreenStatsPersistHelper();
+    private final BigScreenStatsPrepareHelper prepareHelper = BigScreenStatsPrepareHelper.getInstance();
+    private final BigScreenStatsFetchHelper fetchHelper = BigScreenStatsFetchHelper.getInstance();
+    private final BigScreenStatsPersistHelper persistHelper = BigScreenStatsPersistHelper.getInstance();
 
     public BigScreenStatsRepository() {
     }

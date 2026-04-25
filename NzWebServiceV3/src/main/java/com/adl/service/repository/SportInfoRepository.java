@@ -18,9 +18,9 @@ import java.util.List;
 import io.reactivex.rxjava3.core.Single;
 
 public final class SportInfoRepository {
-    private final SportInfoPrepareHelper prepareHelper = new SportInfoPrepareHelper();
-    private final SportInfoFetchHelper fetchHelper = new SportInfoFetchHelper();
-    private final SportInfoPersistHelper persistHelper = new SportInfoPersistHelper();
+    private final SportInfoPrepareHelper prepareHelper = SportInfoPrepareHelper.getInstance();
+    private final SportInfoFetchHelper fetchHelper = SportInfoFetchHelper.getInstance();
+    private final SportInfoPersistHelper persistHelper = SportInfoPersistHelper.getInstance();
 
     public SportInfoRepository() {
     }
@@ -58,10 +58,10 @@ public final class SportInfoRepository {
     }
 
     public Single<List<OrgRecordData>> getOrgRecordPage(OrgRecordPageRequest request) {
-        return BaseRepositoryUtil.repositoryAsSingle(request, fetchHelper.createGetOrgRecordPageFunc());
+        return BaseRepositoryUtil.repositoryPageAsSingle(request, fetchHelper.createGetOrgRecordPageFunc());
     }
 
     public Single<List<AccountRecordData>> getAccountRecordPage(AccountRecordPageRequest request) {
-        return BaseRepositoryUtil.repositoryAsSingle(request, fetchHelper.createGetAccountRecordPageFunc());
+        return BaseRepositoryUtil.repositoryPageAsSingle(request, fetchHelper.createGetAccountRecordPageFunc());
     }
 }

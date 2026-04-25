@@ -11,10 +11,23 @@ import io.reactivex.rxjava3.functions.Function;
 
 public final class LoginAuthFetchHelper {
 
+    private static volatile LoginAuthFetchHelper instance;
+
     private final LoginAuthService loginAuthService;
 
-    public LoginAuthFetchHelper() {
+    private LoginAuthFetchHelper() {
         this.loginAuthService = RetrofitManager.getInstance().create(LoginAuthService.class);
+    }
+
+    public static LoginAuthFetchHelper getInstance() {
+        if (instance == null) {
+            synchronized (LoginAuthFetchHelper.class) {
+                if (instance == null) {
+                    instance = new LoginAuthFetchHelper();
+                }
+            }
+        }
+        return instance;
     }
 
     public Function<LoginRequest, Single<LoginData>> createLoginFunc() {

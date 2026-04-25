@@ -1,5 +1,6 @@
 package com.adl.service.repository.fetch;
 
+import com.adl.service.data.BasePageData;
 import com.adl.service.data.ClassroomCompetitionRecordData;
 import com.adl.service.data.SunshineRunningSportDetailData;
 import com.adl.service.data.TeachCourseDetailData;
@@ -18,10 +19,23 @@ import io.reactivex.rxjava3.functions.Function;
 
 public final class BigScreenH5FetchHelper {
 
+    private static volatile BigScreenH5FetchHelper instance;
+
     private final BigScreenH5Service bigScreenH5Service;
 
-    public BigScreenH5FetchHelper() {
+    private BigScreenH5FetchHelper() {
         this.bigScreenH5Service = RetrofitManager.getInstance().create(BigScreenH5Service.class);
+    }
+
+    public static BigScreenH5FetchHelper getInstance() {
+        if (instance == null) {
+            synchronized (BigScreenH5FetchHelper.class) {
+                if (instance == null) {
+                    instance = new BigScreenH5FetchHelper();
+                }
+            }
+        }
+        return instance;
     }
 
     @SuppressWarnings("unchecked")
@@ -49,18 +63,18 @@ public final class BigScreenH5FetchHelper {
     }
 
     @SuppressWarnings("unchecked")
-    public Function<SunshineRunningSportDetailPageRequest, Single<List<SunshineRunningSportDetailData>>> createGetSunshineRunningSportDetailPageFunc() {
-        return (request) -> BaseFetchUtil.schedulePageResponse(
+    public Function<SunshineRunningSportDetailPageRequest, Single<BasePageData<SunshineRunningSportDetailData>>> createGetSunshineRunningSportDetailPageFunc() {
+        return (request) -> BaseFetchUtil.scheduleResponse(
                 bigScreenH5Service.getSunshineRunningSportDetailPage(request),
-                (Class<List<SunshineRunningSportDetailData>>) (Class<?>) List.class
+                (Class<BasePageData<SunshineRunningSportDetailData>>) (Class<?>) BasePageData.class
         );
     }
 
     @SuppressWarnings("unchecked")
-    public Function<SunshineRunningCompetitionRecordPageRequest, Single<List<ClassroomCompetitionRecordData>>> createGetSunshineRunningCompetitionRecordPageFunc() {
-        return (request) -> BaseFetchUtil.schedulePageResponse(
+    public Function<SunshineRunningCompetitionRecordPageRequest, Single<BasePageData<ClassroomCompetitionRecordData>>> createGetSunshineRunningCompetitionRecordPageFunc() {
+        return (request) -> BaseFetchUtil.scheduleResponse(
                 bigScreenH5Service.getSunshineRunningCompetitionRecordPage(request),
-                (Class<List<ClassroomCompetitionRecordData>>) (Class<?>) List.class
+                (Class<BasePageData<ClassroomCompetitionRecordData>>) (Class<?>) BasePageData.class
         );
     }
 }

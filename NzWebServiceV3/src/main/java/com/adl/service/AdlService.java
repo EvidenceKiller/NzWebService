@@ -256,12 +256,7 @@ public final class AdlService {
     public <T> long executeSyncOnIo(RequestScope scope,
                                     Callable<T> callable,
                                     RequestCallback<T> callback) {
-        if (scope == null) {
-            throw new IllegalArgumentException("scope must not be null (use RequestScope.of(activity|fragment))");
-        }
-        Disposable disposable = RxCallbackScheduler.schedule(Single.fromCallable(callable), callback);
-        SubscriptionManager.getInstance().add(scope.owner(), disposable);
-        return disposable.hashCode();
+        return RxCallbackScheduler.schedule(scope, Single.fromCallable(callable), callback);
     }
 
     public void build() {

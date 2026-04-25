@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 import lombok.Getter;
 
 @Getter
-public final class ClassListRequest extends BasePageRequest {
+public final class ClassPageRequest extends BasePageRequest {
 
     /**
      * 机构标识码
@@ -49,7 +49,7 @@ public final class ClassListRequest extends BasePageRequest {
     @SerializedName("majorId")
     private String majorId;
 
-    private ClassListRequest(Builder builder) {
+    private ClassPageRequest(Builder builder) {
         super(builder);
         this.orgId = builder.orgId;
         this.gradeCode = builder.gradeCode;
@@ -112,8 +112,8 @@ public final class ClassListRequest extends BasePageRequest {
             return this;
         }
 
-        public ClassListRequest build() {
-            return new ClassListRequest(this);
+        public ClassPageRequest build() {
+            return new ClassPageRequest(this);
         }
     }
 }

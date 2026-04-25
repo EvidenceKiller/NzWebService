@@ -16,7 +16,20 @@ import io.reactivex.rxjava3.functions.Function;
 
 public final class BusinessPrepareHelper {
 
-    public BusinessPrepareHelper() {
+    private static volatile BusinessPrepareHelper instance;
+
+    private BusinessPrepareHelper() {
+    }
+
+    public static BusinessPrepareHelper getInstance() {
+        if (instance == null) {
+            synchronized (BusinessPrepareHelper.class) {
+                if (instance == null) {
+                    instance = new BusinessPrepareHelper();
+                }
+            }
+        }
+        return instance;
     }
 
     public Function<CompetitionPageRequest, Single<List<CompetitionData>>> createPrepareCompetitionPageFunc() {

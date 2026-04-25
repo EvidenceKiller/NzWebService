@@ -9,7 +9,7 @@ import com.adl.service.data.PlanStudentData;
 import com.adl.service.data.StandardConfigData;
 import com.adl.service.exception.NzBaseException;
 import com.adl.service.http.request.CheckStudentInPlanRequest;
-import com.adl.service.http.request.PlanClassListRequest;
+import com.adl.service.http.request.PlanClassPageRequest;
 import com.adl.service.http.request.PlanInfoRequest;
 import com.adl.service.http.request.PlanPageRequest;
 import com.adl.service.http.request.PlanStudentPageRequest;
@@ -45,7 +45,7 @@ public interface OrgTestCaller {
 
     void clearPlanStudentDataSync() throws NzBaseException;
 
-    long getPlanStudentPagesAllASync(RequestScope scope, PlanStudentPageRequest request, RequestCallback<GetPageResult> callback);
+    long getPlanStudentPagesAllAsync(RequestScope scope, PlanStudentPageRequest request, RequestCallback<GetPageResult> callback);
 
     GetPageResult getPlanStudentPagesAllSync(PlanStudentPageRequest request) throws NzBaseException;
 
@@ -113,13 +113,13 @@ public interface OrgTestCaller {
      * 获取计划班级列表
      * <p>异步调用。</p>
      */
-    long getPlanClassListAsync(RequestScope scope, PlanClassListRequest request, RequestCallback<List<PlanClassData>> callback);
+    long getPlanClassPageAsync(RequestScope scope, PlanClassPageRequest request, RequestCallback<List<PlanClassData>> callback);
 
     /**
      * 获取计划班级列表
      * <p>同步调用。</p>
      */
-    List<PlanClassData> getPlanClassListSync(PlanClassListRequest request) throws NzBaseException;
+    List<PlanClassData> getPlanClassPageSync(PlanClassPageRequest request) throws NzBaseException;
 
     /**
      * 查询学生是否在计划下

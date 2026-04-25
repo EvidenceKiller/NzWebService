@@ -33,9 +33,9 @@ import java.util.List;
 import io.reactivex.rxjava3.core.Single;
 
 public final class BusinessRepository {
-    private final BusinessPrepareHelper prepareHelper = new BusinessPrepareHelper();
-    private final BusinessFetchHelper fetchHelper = new BusinessFetchHelper();
-    private final BusinessPersistHelper persistHelper = new BusinessPersistHelper();
+    private final BusinessPrepareHelper prepareHelper = BusinessPrepareHelper.getInstance();
+    private final BusinessFetchHelper fetchHelper = BusinessFetchHelper.getInstance();
+    private final BusinessPersistHelper persistHelper = BusinessPersistHelper.getInstance();
 
     public BusinessRepository() {
     }
@@ -53,7 +53,7 @@ public final class BusinessRepository {
     }
 
     public Single<List<TrainPlanInfoData>> getTrainPlanInfoPage(TrainPlanInfoPageRequest request) {
-        return BaseRepositoryUtil.repositoryAsSingle(request, fetchHelper.createGetTrainPlanInfoPageFunc());
+        return BaseRepositoryUtil.repositoryPageAsSingle(request, fetchHelper.createGetTrainPlanInfoPageFunc());
     }
 
     public Single<Boolean> joinCompetitionRank(JoinCompetitionRankRequest request) {
@@ -65,27 +65,27 @@ public final class BusinessRepository {
     }
 
     public Single<GetPageResult> getCompetitionPagesAll(CompetitionPageRequest request) {
-        return BaseRepositoryUtil.repositoryListsAsSingle(request,
+        return BaseRepositoryUtil.repositoryPagesAsSingle(request,
                 prepareHelper.createPrepareCompetitionPageFunc(),
                 fetchHelper.createGetCompetitionPagesAllFunc(request),
                 persistHelper.createPersistCompetitionPageFunc());
     }
 
     public Single<List<CompetitionData>> getCompetitionPage(CompetitionPageRequest request) {
-        return BaseRepositoryUtil.repositoryAsSingle(request,
+        return BaseRepositoryUtil.repositoryPageAsSingle(request,
                 fetchHelper.createGetCompetitionPageFunc(),
                 persistHelper.createPersistCompetitionPageFunc());
     }
 
     public Single<GetPageResult> getSportMeetPagesAll(SportMeetPageRequest request) {
-        return BaseRepositoryUtil.repositoryListsAsSingle(request,
+        return BaseRepositoryUtil.repositoryPagesAsSingle(request,
                 prepareHelper.createPrepareSportMeetPageFunc(),
                 fetchHelper.createGetSportMeetPagesAllFunc(request),
                 persistHelper.createPersistSportMeetPageFunc(request));
     }
 
     public Single<List<SportMeetData>> getSportMeetPage(SportMeetPageRequest request) {
-        return BaseRepositoryUtil.repositoryAsSingle(request,
+        return BaseRepositoryUtil.repositoryPageAsSingle(request,
                 fetchHelper.createGetSportMeetPageFunc(),
                 persistHelper.createPersistSportMeetPageFunc(request));
     }
@@ -103,7 +103,7 @@ public final class BusinessRepository {
     }
 
     public Single<List<ResData>> getResPage(ResPageRequest request) {
-        return BaseRepositoryUtil.repositoryAsSingle(request, fetchHelper.createGetResPageFunc());
+        return BaseRepositoryUtil.repositoryPageAsSingle(request, fetchHelper.createGetResPageFunc());
     }
 
     public Single<ResData> getResInfo(ResInfoRequest request) {

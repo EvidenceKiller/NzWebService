@@ -29,10 +29,23 @@ import io.reactivex.rxjava3.functions.Function;
 
 public final class BigScreenStatsFetchHelper {
 
+    private static volatile BigScreenStatsFetchHelper instance;
+
     private final BigScreenStatsService bigScreenStatsService;
 
-    public BigScreenStatsFetchHelper() {
+    private BigScreenStatsFetchHelper() {
         this.bigScreenStatsService = RetrofitManager.getInstance().create(BigScreenStatsService.class);
+    }
+
+    public static BigScreenStatsFetchHelper getInstance() {
+        if (instance == null) {
+            synchronized (BigScreenStatsFetchHelper.class) {
+                if (instance == null) {
+                    instance = new BigScreenStatsFetchHelper();
+                }
+            }
+        }
+        return instance;
     }
 
     @SuppressWarnings("unchecked")

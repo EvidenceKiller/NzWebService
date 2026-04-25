@@ -50,10 +50,7 @@ public final class BusinessCallerImpl implements BusinessCaller {
 
     @Override
     public long saveGroupAsync(RequestScope scope, SaveGroupRequest request, RequestCallback<Boolean> callback) {
-        CallerUtil.assertScope(scope);
-        Disposable disposable = RxCallbackScheduler.schedule(businessRepository.saveGroup(request), callback);
-        SubscriptionManager.getInstance().add(scope.owner(), disposable);
-        return disposable.hashCode();
+        return RxCallbackScheduler.schedule(scope, businessRepository.saveGroup(request), callback);
     }
 
     @Override
@@ -63,10 +60,7 @@ public final class BusinessCallerImpl implements BusinessCaller {
 
     @Override
     public long getGroupAsync(RequestScope scope, GetGroupRequest request, RequestCallback<GroupData> callback) {
-        CallerUtil.assertScope(scope);
-        Disposable disposable = RxCallbackScheduler.schedule(businessRepository.getGroup(request), callback);
-        SubscriptionManager.getInstance().add(scope.owner(), disposable);
-        return disposable.hashCode();
+        return RxCallbackScheduler.schedule(scope, businessRepository.getGroup(request), callback);
     }
 
     @Override
@@ -76,10 +70,7 @@ public final class BusinessCallerImpl implements BusinessCaller {
 
     @Override
     public long getTrainPlanOneDayProjectListAsync(RequestScope scope, TrainPlanOneDayProjectListRequest request, RequestCallback<List<TrainPlanOneDayProjectData>> callback) {
-        CallerUtil.assertScope(scope);
-        Disposable disposable = RxCallbackScheduler.schedule(businessRepository.getTrainPlanOneDayProjectList(request), callback);
-        SubscriptionManager.getInstance().add(scope.owner(), disposable);
-        return disposable.hashCode();
+        return RxCallbackScheduler.schedule(scope, businessRepository.getTrainPlanOneDayProjectList(request), callback);
     }
 
     @Override
@@ -89,10 +80,7 @@ public final class BusinessCallerImpl implements BusinessCaller {
 
     @Override
     public long getTrainPlanInfoPageAsync(RequestScope scope, TrainPlanInfoPageRequest request, RequestCallback<List<TrainPlanInfoData>> callback) {
-        CallerUtil.assertScope(scope);
-        Disposable disposable = RxCallbackScheduler.schedule(businessRepository.getTrainPlanInfoPage(request), callback);
-        SubscriptionManager.getInstance().add(scope.owner(), disposable);
-        return disposable.hashCode();
+        return RxCallbackScheduler.schedule(scope, businessRepository.getTrainPlanInfoPage(request), callback);
     }
 
     @Override
@@ -102,10 +90,7 @@ public final class BusinessCallerImpl implements BusinessCaller {
 
     @Override
     public long joinCompetitionRankAsync(RequestScope scope, JoinCompetitionRankRequest request, RequestCallback<Boolean> callback) {
-        CallerUtil.assertScope(scope);
-        Disposable disposable = RxCallbackScheduler.schedule(businessRepository.joinCompetitionRank(request), callback);
-        SubscriptionManager.getInstance().add(scope.owner(), disposable);
-        return disposable.hashCode();
+        return RxCallbackScheduler.schedule(scope, businessRepository.joinCompetitionRank(request), callback);
     }
 
     @Override
@@ -115,10 +100,7 @@ public final class BusinessCallerImpl implements BusinessCaller {
 
     @Override
     public long getCompetitionRankDetailAsync(RequestScope scope, CompetitionRankDetailRequest request, RequestCallback<CompetitionRankDetailData> callback) {
-        CallerUtil.assertScope(scope);
-        Disposable disposable = RxCallbackScheduler.schedule(businessRepository.getCompetitionRankDetail(request), callback);
-        SubscriptionManager.getInstance().add(scope.owner(), disposable);
-        return disposable.hashCode();
+        return RxCallbackScheduler.schedule(scope, businessRepository.getCompetitionRankDetail(request), callback);
     }
 
     @Override
@@ -128,11 +110,7 @@ public final class BusinessCallerImpl implements BusinessCaller {
 
     @Override
     public long getCompetitionPagesAllAsync(RequestScope scope, CompetitionPageRequest request, RequestCallback<GetPageResult> callback) {
-        CallerUtil.assertCurrent(request);
-        CallerUtil.assertScope(scope);
-        Disposable disposable = RxCallbackScheduler.schedule(businessRepository.getCompetitionPagesAll(request), callback);
-        SubscriptionManager.getInstance().add(scope.owner(), disposable);
-        return disposable.hashCode();
+        return RxCallbackScheduler.schedule(scope, businessRepository.getCompetitionPagesAll(request), callback);
     }
 
     @Override
@@ -142,10 +120,7 @@ public final class BusinessCallerImpl implements BusinessCaller {
 
     @Override
     public long getCompetitionPageAsync(RequestScope scope, CompetitionPageRequest request, RequestCallback<List<CompetitionData>> callback) {
-        CallerUtil.assertScope(scope);
-        Disposable disposable = RxCallbackScheduler.schedule(businessRepository.getCompetitionPage(request), callback);
-        SubscriptionManager.getInstance().add(scope.owner(), disposable);
-        return disposable.hashCode();
+        return RxCallbackScheduler.schedule(scope, businessRepository.getCompetitionPage(request), callback);
     }
 
     @Override
@@ -155,25 +130,17 @@ public final class BusinessCallerImpl implements BusinessCaller {
 
     @Override
     public long getSportMeetPagesAllAsync(RequestScope scope, SportMeetPageRequest request, RequestCallback<GetPageResult> callback) {
-        CallerUtil.assertCurrent(request);
-        CallerUtil.assertScope(scope);
-        Disposable disposable = RxCallbackScheduler.schedule(businessRepository.getSportMeetPagesAll(request), callback);
-        SubscriptionManager.getInstance().add(scope.owner(), disposable);
-        return disposable.hashCode();
+        return RxCallbackScheduler.schedule(scope, businessRepository.getSportMeetPagesAll(request), callback);
     }
 
     @Override
     public GetPageResult getSportMeetPagesAllSync(SportMeetPageRequest request) throws NzBaseException {
-        CallerUtil.assertCurrent(request);
         return RxCallbackScheduler.blockingGet(businessRepository.getSportMeetPagesAll(request));
     }
 
     @Override
     public long getSportMeetPageAsync(RequestScope scope, SportMeetPageRequest request, RequestCallback<List<SportMeetData>> callback) {
-        CallerUtil.assertScope(scope);
-        Disposable disposable = RxCallbackScheduler.schedule(businessRepository.getSportMeetPage(request), callback);
-        SubscriptionManager.getInstance().add(scope.owner(), disposable);
-        return disposable.hashCode();
+        return RxCallbackScheduler.schedule(scope, businessRepository.getSportMeetPage(request), callback);
     }
 
     @Override
@@ -183,10 +150,7 @@ public final class BusinessCallerImpl implements BusinessCaller {
 
     @Override
     public long downloadGroupTeamPageAsync(RequestScope scope, DownloadGroupTeamPageRequest request, RequestCallback<List<GroupTeamData>> callback) {
-        CallerUtil.assertScope(scope);
-        Disposable disposable = RxCallbackScheduler.schedule(businessRepository.downloadGroupTeamPage(request), callback);
-        SubscriptionManager.getInstance().add(scope.owner(), disposable);
-        return disposable.hashCode();
+        return RxCallbackScheduler.schedule(scope, businessRepository.downloadGroupTeamPage(request), callback);
     }
 
     @Override
@@ -196,10 +160,7 @@ public final class BusinessCallerImpl implements BusinessCaller {
 
     @Override
     public long downloadGroupTeamDetailPageAsync(RequestScope scope, DownloadGroupTeamDetailPageRequest request, RequestCallback<List<GroupTeamDetailData>> callback) {
-        CallerUtil.assertScope(scope);
-        Disposable disposable = RxCallbackScheduler.schedule(businessRepository.downloadGroupTeamDetailPage(request), callback);
-        SubscriptionManager.getInstance().add(scope.owner(), disposable);
-        return disposable.hashCode();
+        return RxCallbackScheduler.schedule(scope, businessRepository.downloadGroupTeamDetailPage(request), callback);
     }
 
     @Override
@@ -209,10 +170,7 @@ public final class BusinessCallerImpl implements BusinessCaller {
 
     @Override
     public long getResTypeListAsync(RequestScope scope, ResTypeListRequest request, RequestCallback<List<ResTypeData>> callback) {
-        CallerUtil.assertScope(scope);
-        Disposable disposable = RxCallbackScheduler.schedule(businessRepository.getResTypeList(request), callback);
-        SubscriptionManager.getInstance().add(scope.owner(), disposable);
-        return disposable.hashCode();
+        return RxCallbackScheduler.schedule(scope, businessRepository.getResTypeList(request), callback);
     }
 
     @Override
@@ -222,10 +180,7 @@ public final class BusinessCallerImpl implements BusinessCaller {
 
     @Override
     public long getResPageAsync(RequestScope scope, ResPageRequest request, RequestCallback<List<ResData>> callback) {
-        CallerUtil.assertScope(scope);
-        Disposable disposable = RxCallbackScheduler.schedule(businessRepository.getResPage(request), callback);
-        SubscriptionManager.getInstance().add(scope.owner(), disposable);
-        return disposable.hashCode();
+        return RxCallbackScheduler.schedule(scope, businessRepository.getResPage(request), callback);
     }
 
     @Override
@@ -235,10 +190,7 @@ public final class BusinessCallerImpl implements BusinessCaller {
 
     @Override
     public long getResInfoAsync(RequestScope scope, ResInfoRequest request, RequestCallback<ResData> callback) {
-        CallerUtil.assertScope(scope);
-        Disposable disposable = RxCallbackScheduler.schedule(businessRepository.getResInfo(request), callback);
-        SubscriptionManager.getInstance().add(scope.owner(), disposable);
-        return disposable.hashCode();
+        return RxCallbackScheduler.schedule(scope, businessRepository.getResInfo(request), callback);
     }
 
     @Override
