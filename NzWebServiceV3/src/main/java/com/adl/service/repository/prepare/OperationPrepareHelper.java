@@ -11,6 +11,8 @@ import com.adl.service.db.entity.DictMapEntity;
 import com.adl.service.http.request.DictMapRequest;
 import com.adl.service.http.request.SceneListRequest;
 import com.adl.service.http.request.SportSkuPageRequest;
+import com.adl.service.repository.cache.CacheTag;
+import com.adl.service.repository.cache.MemoryCacheManager;
 import com.adl.service.utils.InnerUtil;
 
 import java.util.Collections;

@@ -16,6 +16,8 @@ import com.adl.service.exception.NzCommonException;
 import com.adl.service.http.request.DictRequest;
 import com.adl.service.http.request.StudentPageRequest;
 import com.adl.service.http.request.TeacherPageRequest;
+import com.adl.service.repository.cache.CacheTag;
+import com.adl.service.repository.cache.MemoryCacheManager;
 import com.adl.service.utils.InnerUtil;
 
 import java.util.List;

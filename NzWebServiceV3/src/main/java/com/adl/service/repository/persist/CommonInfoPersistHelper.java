@@ -11,8 +11,8 @@ import com.adl.service.db.entity.LoginInfoEntity;
 import com.adl.service.db.entity.StudentEntity;
 import com.adl.service.db.entity.TeacherEntity;
 import com.adl.service.http.request.DictRequest;
-import com.adl.service.repository.prepare.CacheTag;
-import com.adl.service.repository.prepare.MemoryCacheManager;
+import com.adl.service.repository.cache.CacheTag;
+import com.adl.service.repository.cache.MemoryCacheManager;
 import com.adl.service.utils.InnerUtil;
 
 import java.util.List;

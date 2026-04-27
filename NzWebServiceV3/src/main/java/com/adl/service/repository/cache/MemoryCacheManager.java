@@ -1,7 +1,8 @@
-package com.adl.service.repository.prepare;
+package com.adl.service.repository.cache;
 
+import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 简单 key-value 内存缓存：支持 TTL 过期判断。
@@ -11,12 +12,19 @@ import java.util.concurrent.ConcurrentHashMap;
 public final class MemoryCacheManager<K, V> {
 
     public static final long NEVER_EXPIRE = 0;
+    private static final int DEFAULT_MAX_SIZE = 256;
 
     private static volatile MemoryCacheManager<?, ?> sInstance;
 
-    private final Map<K, CacheItem<V>> cache = new ConcurrentHashMap<>();
+    private final Map<K, CacheItem<V>> cache;
 
     private MemoryCacheManager() {
+        this.cache = Collections.synchronizedMap(new LinkedHashMap<K, CacheItem<V>>(16, 0.75f, true) {
+            @Override
+            protected boolean removeEldestEntry(Map.Entry<K, CacheItem<V>> eldest) {
+                return size() > DEFAULT_MAX_SIZE;
+            }
+        });
     }
 
     @SuppressWarnings("unchecked")
@@ -40,7 +48,7 @@ public final class MemoryCacheManager<K, V> {
         }
         long now = System.currentTimeMillis();
         long expireTime = ttlMillis <= 0 ? Long.MAX_VALUE : now + ttlMillis;
-        cache.put(key, new CacheItem<>(value, now, expireTime));
+        cache.put(key, new CacheItem<>(value, expireTime));
     }
 
     /**
@@ -50,16 +58,18 @@ public final class MemoryCacheManager<K, V> {
         if (key == null) {
             return null;
         }
-        CacheItem<V> item = cache.get(key);
-        if (item == null) {
-            return null;
+        synchronized (cache) {
+            CacheItem<V> item = cache.get(key);
+            if (item == null) {
+                return null;
+            }
+            long now = System.currentTimeMillis();
+            if (item.isExpired(now)) {
+                cache.remove(key);
+                return null;
+            }
+            return item.value;
         }
-        long now = System.currentTimeMillis();
-        if (item.isExpired(now)) {
-            cache.remove(key);
-            return null;
-        }
-        return item.value;
     }
 
     /**
@@ -69,11 +79,17 @@ public final class MemoryCacheManager<K, V> {
         if (key == null) {
             return false;
         }
-        CacheItem<V> item = cache.get(key);
-        if (item == null) {
+        synchronized (cache) {
+            CacheItem<V> item = cache.get(key);
+            if (item == null) {
+                return false;
+            }
+            if (item.isExpired(System.currentTimeMillis())) {
+                cache.remove(key);
+                return true;
+            }
             return false;
         }
-        return item.isExpired(System.currentTimeMillis());
     }
 
     public void remove(K key) {
@@ -89,12 +105,10 @@ public final class MemoryCacheManager<K, V> {
 
     private static final class CacheItem<V> {
         private final V value;
-        private final long timestampMillis;
         private final long expireTimeMillis;
 
-        private CacheItem(V value, long timestampMillis, long expireTimeMillis) {
+        private CacheItem(V value, long expireTimeMillis) {
             this.value = value;
-            this.timestampMillis = timestampMillis;
             this.expireTimeMillis = expireTimeMillis;
         }
 
