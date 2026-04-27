@@ -38,19 +38,8 @@ public final class BusinessFetchHelper {
 
     private final BusinessService businessService;
 
-    private BusinessFetchHelper() {
+    public BusinessFetchHelper() {
         this.businessService = RetrofitManager.getInstance().create(BusinessService.class);
-    }
-
-    public static BusinessFetchHelper getInstance() {
-        if (instance == null) {
-            synchronized (BusinessFetchHelper.class) {
-                if (instance == null) {
-                    instance = new BusinessFetchHelper();
-                }
-            }
-        }
-        return instance;
     }
 
     public Function<SaveGroupRequest, Single<Boolean>> createSaveGroupFunc() {

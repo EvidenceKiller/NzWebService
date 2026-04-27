@@ -13,8 +13,6 @@ import com.adl.service.http.request.ReportTeacherSportRequest;
 import com.adl.service.internal.RetrofitManager;
 import com.adl.service.web.SportInfoService;
 
-import java.util.List;
-
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.functions.Function;
 
@@ -24,19 +22,8 @@ public final class SportInfoFetchHelper {
 
     private final SportInfoService sportInfoService;
 
-    private SportInfoFetchHelper() {
+    public SportInfoFetchHelper() {
         this.sportInfoService = RetrofitManager.getInstance().create(SportInfoService.class);
-    }
-
-    public static SportInfoFetchHelper getInstance() {
-        if (instance == null) {
-            synchronized (SportInfoFetchHelper.class) {
-                if (instance == null) {
-                    instance = new SportInfoFetchHelper();
-                }
-            }
-        }
-        return instance;
     }
 
     public Function<ReportStudentSportRequest, Single<Boolean>> createUpdateStudentSportFunc() {

@@ -27,6 +27,7 @@ import com.adl.service.http.request.StandardConfigPageRequest;
 import com.adl.service.internal.RxCallbackScheduler;
 import com.adl.service.internal.SubscriptionManager;
 import com.adl.service.log.NzLog;
+import com.adl.service.repository.CommonInfoRepository;
 import com.adl.service.repository.OrgTestRepository;
 import com.adl.service.utils.InnerUtil;
 
@@ -44,12 +45,12 @@ public final class OrgTestCallerImpl implements OrgTestCaller {
     private final OrgTestRepository orgTestRepository;
 
     public OrgTestCallerImpl() {
-        this.orgTestRepository = new OrgTestRepository();
+        this.orgTestRepository = OrgTestRepository.getInstance();
     }
 
     @Override
     public void reLoadAllOrgTestDataSync(boolean syncStandard) throws NzBaseException {
-        long serverTime = InnerUtil.getServerTime();
+        long serverTime = RxCallbackScheduler.blockingGet(CommonInfoRepository.getInstance().getServerTime());
         NzLog.d("服务器时间: " + InnerUtil.formatByTimeCode(serverTime));
         List<Integer> statusList = Arrays.asList(IDefine.SportPlanStatusNew, IDefine.SportPlanStatusDoing);
 

@@ -37,7 +37,7 @@ public final class BigScreenStatsCallerImpl implements BigScreenStatsCaller {
     private final BigScreenStatsRepository bigScreenStatsRepository;
 
     public BigScreenStatsCallerImpl() {
-        this.bigScreenStatsRepository = new BigScreenStatsRepository();
+        this.bigScreenStatsRepository = BigScreenStatsRepository.getInstance();
     }
 
     @Override

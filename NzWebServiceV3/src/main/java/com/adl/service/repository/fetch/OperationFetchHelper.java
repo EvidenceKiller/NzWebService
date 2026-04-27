@@ -28,19 +28,8 @@ public final class OperationFetchHelper {
 
     private final OperationService operationService;
 
-    private OperationFetchHelper() {
+    public OperationFetchHelper() {
         this.operationService = RetrofitManager.getInstance().create(OperationService.class);
-    }
-
-    public static OperationFetchHelper getInstance() {
-        if (instance == null) {
-            synchronized (OperationFetchHelper.class) {
-                if (instance == null) {
-                    instance = new OperationFetchHelper();
-                }
-            }
-        }
-        return instance;
     }
 
     @SuppressWarnings("unchecked")

@@ -24,20 +24,7 @@ import io.reactivex.rxjava3.functions.Function;
 
 public final class CommonInfoPersistHelper {
 
-    private static volatile CommonInfoPersistHelper instance;
-
-    private CommonInfoPersistHelper() {
-    }
-
-    public static CommonInfoPersistHelper getInstance() {
-        if (instance == null) {
-            synchronized (CommonInfoPersistHelper.class) {
-                if (instance == null) {
-                    instance = new CommonInfoPersistHelper();
-                }
-            }
-        }
-        return instance;
+    public CommonInfoPersistHelper() {
     }
 
     public static Function<LoginInfoData, Single<LoginInfoData>> createPersistLoginInfoFunc() {

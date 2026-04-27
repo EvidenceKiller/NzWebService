@@ -2,8 +2,8 @@ package com.adl.service.repository.fetch;
 
 import com.adl.service.data.BasePageData;
 import com.adl.service.data.PlanClassData;
-import com.adl.service.data.PlanInfoData;
 import com.adl.service.data.PlanData;
+import com.adl.service.data.PlanInfoData;
 import com.adl.service.data.PlanStudentData;
 import com.adl.service.data.StandardConfigData;
 import com.adl.service.http.request.CheckStudentInPlanRequest;
@@ -26,19 +26,8 @@ public final class OrgTestFetchHelper {
 
     private final OrgTestService orgTestService;
 
-    private OrgTestFetchHelper() {
+    public OrgTestFetchHelper() {
         this.orgTestService = RetrofitManager.getInstance().create(OrgTestService.class);
-    }
-
-    public static OrgTestFetchHelper getInstance() {
-        if (instance == null) {
-            synchronized (OrgTestFetchHelper.class) {
-                if (instance == null) {
-                    instance = new OrgTestFetchHelper();
-                }
-            }
-        }
-        return instance;
     }
 
     @SuppressWarnings("unchecked")

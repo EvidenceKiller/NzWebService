@@ -15,19 +15,8 @@ public final class LoginAuthFetchHelper {
 
     private final LoginAuthService loginAuthService;
 
-    private LoginAuthFetchHelper() {
+    public LoginAuthFetchHelper() {
         this.loginAuthService = RetrofitManager.getInstance().create(LoginAuthService.class);
-    }
-
-    public static LoginAuthFetchHelper getInstance() {
-        if (instance == null) {
-            synchronized (LoginAuthFetchHelper.class) {
-                if (instance == null) {
-                    instance = new LoginAuthFetchHelper();
-                }
-            }
-        }
-        return instance;
     }
 
     public Function<LoginRequest, Single<LoginData>> createLoginFunc() {

@@ -32,19 +32,8 @@ public final class CommonInfoFetchHelper {
 
     private final CommonInfoService commonInfoService;
 
-    private CommonInfoFetchHelper() {
+    public CommonInfoFetchHelper() {
         this.commonInfoService = RetrofitManager.getInstance().create(CommonInfoService.class);
-    }
-
-    public static CommonInfoFetchHelper getInstance() {
-        if (instance == null) {
-            synchronized (CommonInfoFetchHelper.class) {
-                if (instance == null) {
-                    instance = new CommonInfoFetchHelper();
-                }
-            }
-        }
-        return instance;
     }
 
     @SuppressWarnings("unchecked")
@@ -130,7 +119,10 @@ public final class CommonInfoFetchHelper {
         return (request) -> BaseFetchUtil.scheduleResponse(commonInfoService.deviceActive(request), Boolean.class);
     }
 
-    public Function<Void, Single<TimeStamp>> createGetServerTimeFunc() {
-        return (request) -> BaseFetchUtil.schedule(commonInfoService.getServerTime(), TimeStamp.class);
+    public Function<Void, Single<Long>> createGetServerTimeFunc() {
+        return (request) -> {
+            Single<TimeStamp> timeStamp = BaseFetchUtil.schedule(commonInfoService.getServerTime(), TimeStamp.class);
+            return timeStamp.flatMap((stamp) -> Single.just(stamp.getTimestamp() * 1000L));
+        };
     }
 }

@@ -11,20 +11,7 @@ import io.reactivex.rxjava3.functions.Function;
 
 public final class OrgTestPrepareHelper {
 
-    private static volatile OrgTestPrepareHelper instance;
-
-    private OrgTestPrepareHelper() {
-    }
-
-    public static OrgTestPrepareHelper getInstance() {
-        if (instance == null) {
-            synchronized (OrgTestPrepareHelper.class) {
-                if (instance == null) {
-                    instance = new OrgTestPrepareHelper();
-                }
-            }
-        }
-        return instance;
+    public OrgTestPrepareHelper() {
     }
 
     public Function<Void, Single<Void>> createPrepareStandardConfigDataFunc() {

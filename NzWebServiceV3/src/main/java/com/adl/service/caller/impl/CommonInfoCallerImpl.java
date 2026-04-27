@@ -1,9 +1,14 @@
 package com.adl.service.caller.impl;
 
+import android.text.TextUtils;
+
 import com.adl.service.AdlService;
 import com.adl.service.callback.GetPageResult;
 import com.adl.service.callback.RequestCallback;
 import com.adl.service.caller.CommonInfoCaller;
+import com.adl.service.common.FileDownManager;
+import com.adl.service.common.IDefine;
+import com.adl.service.common.InnerPreferences;
 import com.adl.service.data.AcayearData;
 import com.adl.service.data.ClassData;
 import com.adl.service.data.ClassInfoData;
@@ -13,7 +18,7 @@ import com.adl.service.data.GradeTreeData;
 import com.adl.service.data.LoginInfoData;
 import com.adl.service.data.StudentData;
 import com.adl.service.data.TeacherData;
-import com.adl.service.data.TimeStamp;
+import com.adl.service.db.DaoManagerProxy;
 import com.adl.service.exception.NzBaseException;
 import com.adl.service.http.request.ClassInfoRequest;
 import com.adl.service.http.request.ClassPageRequest;
@@ -24,12 +29,11 @@ import com.adl.service.http.request.RequestScope;
 import com.adl.service.http.request.StudentPageRequest;
 import com.adl.service.http.request.TeacherPageRequest;
 import com.adl.service.internal.RxCallbackScheduler;
-import com.adl.service.internal.SubscriptionManager;
+import com.adl.service.log.NzLog;
 import com.adl.service.repository.CommonInfoRepository;
+import com.adl.service.utils.InnerUtil;
 
 import java.util.List;
-
-import io.reactivex.rxjava3.disposables.Disposable;
 
 /**
  * CommonInfoCaller 实现（SDK 内部使用，通过 {@link AdlService} 暴露）。
@@ -39,13 +43,62 @@ public final class CommonInfoCallerImpl implements CommonInfoCaller {
     private final CommonInfoRepository commonInfoRepository;
 
     public CommonInfoCallerImpl() {
-        this.commonInfoRepository = new CommonInfoRepository();
+        this.commonInfoRepository = CommonInfoRepository.getInstance();
     }
 
     @Override
-    public void reloadCommonInfoData(boolean forceUpdate, int faceType, long pageSize) throws NzBaseException {
-        // TODO
-        commonInfoRepository.reloadCommonInfoData(forceUpdate, faceType, pageSize);
+    public void reloadCommonInfoSync(boolean forceUpdate, int faceType, long pageSize) throws NzBaseException {
+        InnerPreferences pf = InnerPreferences.instance();
+
+        ////////////// 1.同步机构信息 ////////////
+        NzLog.i("同步机构信息");
+        //启动时，请求一次机构信息，如果机构变更，清除数据标识
+        LoginInfoData loginInfo = queryLoginInfoSync();
+        LoginInfoData newLoginInfo = getLoginInfoSync(EmptyRequest.builder().forceUpdate(true).build());
+        if (newLoginInfo != null && !TextUtils.isEmpty(newLoginInfo.getOrgId()) && !newLoginInfo.getOrgId().equals(loginInfo.getOrgId())) {
+            DaoManagerProxy.getInstance().getStudentDao().clearAll();
+            DaoManagerProxy.getInstance().getTeacherDao().clearAll();
+            FileDownManager.instance().clearAllFace();
+            pf.putLong(IDefine.LAST_STUDENT_UPDATE_TIME, IDefine.INVALID_TIME);
+            pf.putLong(IDefine.LAST_TEACHER_UPDATE_TIME, IDefine.INVALID_TIME);
+            pf.putLong(IDefine.LAST_CITIZEN_UPDATE_TIME, IDefine.INVALID_TIME);
+        }
+
+
+        ////////////// 2.同步学生基本信息 ////////////
+        long serverTime = getServerTimeSync();
+        int size = queryAllStudentCountSync();
+        long lastTime = pf.readLong(IDefine.LAST_STUDENT_UPDATE_TIME);
+        NzLog.d("本机时间:size: " + size + ";forceUpdate:" + forceUpdate + ";serverTime:" + serverTime + ";lastTime:" + lastTime + ";UpdateIntervalTime:" + IDefine.UpdateIntervalTime);
+
+        // 是否强制更新数据
+        long recentUpdateTime = queryStudentRecentUpdateTimeSync();
+        NzLog.d("本机时间:recentUpdateTime: " + recentUpdateTime);
+
+        StudentPageRequest studentPageRequest = StudentPageRequest.builder()
+                .current(1L)
+                .pageSize(pageSize)
+                .faceType(faceType)
+                .lastUpdateTime(forceUpdate ? null : lastTime != IDefine.INVALID_TIME ? InnerUtil.formatByTimeCode(recentUpdateTime) : null)
+                .build();
+
+        getStudentPagesAllSync(studentPageRequest);
+        pf.putLong(IDefine.LAST_STUDENT_UPDATE_TIME, serverTime);
+
+        ////////////// 3.同步老师基本信息 ////////////
+        size = DaoManagerProxy.getInstance().getTeacherDao().countSize();
+        lastTime = pf.readLong(IDefine.LAST_TEACHER_UPDATE_TIME);
+
+        // 数据会空，或者时间间隔2分钟
+        if (size == 0 || forceUpdate || serverTime - lastTime > IDefine.UpdateIntervalTime) {
+            TeacherPageRequest teacherPageRequest = TeacherPageRequest.builder()
+                    .current(1L)
+                    .pageSize(pageSize)
+                    .lastUpdateTime(forceUpdate ? null : InnerUtil.formatByTimeCode(lastTime))
+                    .build();
+            getTeacherPagesAllSync(teacherPageRequest);
+            pf.putLong(IDefine.LAST_TEACHER_UPDATE_TIME, serverTime);
+        }
     }
 
     @Override
@@ -76,6 +129,11 @@ public final class CommonInfoCallerImpl implements CommonInfoCaller {
     @Override
     public List<StudentData> queryStudentByClassIdsSync(List<String> classIds) throws NzBaseException {
         return RxCallbackScheduler.blockingGet(commonInfoRepository.queryStudentByClassIds(classIds));
+    }
+
+    @Override
+    public long queryStudentRecentUpdateTimeSync() throws NzBaseException {
+        return RxCallbackScheduler.blockingGet(commonInfoRepository.queryStudentRecentUpdateTime());
     }
 
     @Override
@@ -230,5 +288,10 @@ public final class CommonInfoCallerImpl implements CommonInfoCaller {
     @Override
     public Boolean deviceActiveSync(DeviceActiveRequest request) throws NzBaseException {
         return RxCallbackScheduler.blockingGet(commonInfoRepository.deviceActive(request));
+    }
+
+    @Override
+    public Long getServerTimeSync() throws NzBaseException {
+        return RxCallbackScheduler.blockingGet(commonInfoRepository.getServerTime());
     }
 }

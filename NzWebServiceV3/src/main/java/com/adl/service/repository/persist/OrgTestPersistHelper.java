@@ -18,20 +18,7 @@ import io.reactivex.rxjava3.functions.Function;
 
 public final class OrgTestPersistHelper {
 
-    private static volatile OrgTestPersistHelper instance;
-
-    private OrgTestPersistHelper() {
-    }
-
-    public static OrgTestPersistHelper getInstance() {
-        if (instance == null) {
-            synchronized (OrgTestPersistHelper.class) {
-                if (instance == null) {
-                    instance = new OrgTestPersistHelper();
-                }
-            }
-        }
-        return instance;
+    public OrgTestPersistHelper() {
     }
 
     public Function<List<PlanStudentData>, Single<List<PlanStudentData>>> createPersistPlanStudentPageFunc(PlanStudentPageRequest request) {

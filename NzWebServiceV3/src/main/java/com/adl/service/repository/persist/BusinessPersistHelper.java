@@ -20,20 +20,7 @@ import io.reactivex.rxjava3.functions.Function;
 
 public final class BusinessPersistHelper {
 
-    private static volatile BusinessPersistHelper instance;
-
-    private BusinessPersistHelper() {
-    }
-
-    public static BusinessPersistHelper getInstance() {
-        if (instance == null) {
-            synchronized (BusinessPersistHelper.class) {
-                if (instance == null) {
-                    instance = new BusinessPersistHelper();
-                }
-            }
-        }
-        return instance;
+    public BusinessPersistHelper() {
     }
 
     public Function<List<CompetitionData>, Single<List<CompetitionData>>> createPersistCompetitionPageFunc() {

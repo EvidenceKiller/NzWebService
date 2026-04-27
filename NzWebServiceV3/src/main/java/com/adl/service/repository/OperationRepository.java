@@ -7,9 +7,6 @@ import com.adl.service.data.DictMapData;
 import com.adl.service.data.SceneData;
 import com.adl.service.data.SportSkuData;
 import com.adl.service.data.SportSkuDetailData;
-import com.adl.service.data.TimeStamp;
-import com.adl.service.db.DaoManagerProxy;
-import com.adl.service.exception.NzBaseException;
 import com.adl.service.http.request.BannerDetailListRequest;
 import com.adl.service.http.request.DeviceFocusListRequest;
 import com.adl.service.http.request.DictMapRequest;
@@ -17,56 +14,33 @@ import com.adl.service.http.request.SceneListRequest;
 import com.adl.service.http.request.SportSkuDetailRequest;
 import com.adl.service.http.request.SportSkuPageRequest;
 import com.adl.service.http.request.UploadDeviceNameRequest;
-import com.adl.service.log.NzLog;
-import com.adl.service.repository.fetch.CommonInfoFetchHelper;
 import com.adl.service.repository.fetch.OperationFetchHelper;
 import com.adl.service.repository.persist.OperationPersistHelper;
 import com.adl.service.repository.prepare.OperationPrepareHelper;
-import com.adl.service.utils.InnerUtil;
 
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 import io.reactivex.rxjava3.core.Single;
 
 public final class OperationRepository {
-    private final OperationPrepareHelper prepareHelper = OperationPrepareHelper.getInstance();
-    private final OperationFetchHelper fetchHelper = OperationFetchHelper.getInstance();
-    private final OperationPersistHelper persistHelper = OperationPersistHelper.getInstance();
+    private final OperationPrepareHelper prepareHelper = new OperationPrepareHelper();
+    private final OperationFetchHelper fetchHelper = new OperationFetchHelper();
+    private final OperationPersistHelper persistHelper = new OperationPersistHelper();
 
-    public OperationRepository() {
+    private static volatile OperationRepository instance;
+
+    private OperationRepository() {
     }
 
-    public Single<Void> reLoadAllSceneData(Map<String, List<String>> map) {
-        TimeStamp serverTime = BaseRepositoryUtil.repositoryAsSingle(CommonInfoFetchHelper.getInstance().createGetServerTimeFunc()).blockingGet();
-        NzLog.d("服务器时间: " + serverTime.getCurrentTime());
-
-        DaoManagerProxy.getInstance().getSceneDao().clearAll();
-        DaoManagerProxy.getInstance().getSceneSportDao().clearAll();
-
-        for (Map.Entry<String, List<String>> entry : map.entrySet()) {
-            String appCode = entry.getKey();
-            List<String> sceneIds = entry.getValue();
-            ////////////// 1.同步场景列表 ////////////
-            SceneListRequest request = SceneListRequest.builder()
-                    .appCode(appCode)
-                    .build();
-            List<SceneData> sceneList = getSceneList(request).blockingGet()
-                    .stream()
-                    .filter(sceneData -> sceneIds.contains(sceneData.getId()))
-                    .collect(Collectors.toList());
-
-            ////////////// 2.同步场景下运动列表 ////////////
-            for (SceneData sceneData : sceneList) {
-                SportSkuPageRequest req = SportSkuPageRequest.builder()
-                        .appCode(appCode)
-                        .sceneId(sceneData.getId())
-                        .build();
-                getSportSkuPagesAll(req).blockingGet();
+    public static OperationRepository getInstance() {
+        if (instance == null) {
+            synchronized (OperationRepository.class) {
+                if (instance == null) {
+                    instance = new OperationRepository();
+                }
             }
         }
-        return null;
+        return instance;
     }
 
     public Single<List<BannerDetailData>> getBannerDetailList(BannerDetailListRequest request) {

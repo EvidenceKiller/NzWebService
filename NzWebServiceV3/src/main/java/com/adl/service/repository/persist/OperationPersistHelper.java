@@ -2,17 +2,14 @@ package com.adl.service.repository.persist;
 
 import android.text.TextUtils;
 
-import com.adl.service.data.DictData;
 import com.adl.service.data.DictMapData;
 import com.adl.service.data.SceneData;
 import com.adl.service.data.SportSkuData;
 import com.adl.service.db.DaoManagerProxy;
-import com.adl.service.db.entity.DictEntity;
 import com.adl.service.db.entity.DictMapEntity;
 import com.adl.service.db.entity.SceneEntity;
 import com.adl.service.db.entity.SportSkuEntity;
 import com.adl.service.http.request.DictMapRequest;
-import com.adl.service.http.request.DictRequest;
 import com.adl.service.http.request.SceneListRequest;
 import com.adl.service.http.request.SportSkuPageRequest;
 import com.adl.service.repository.prepare.CacheTag;
@@ -27,20 +24,7 @@ import io.reactivex.rxjava3.functions.Function;
 
 public final class OperationPersistHelper {
 
-    private static volatile OperationPersistHelper instance;
-
-    private OperationPersistHelper() {
-    }
-
-    public static OperationPersistHelper getInstance() {
-        if (instance == null) {
-            synchronized (OperationPersistHelper.class) {
-                if (instance == null) {
-                    instance = new OperationPersistHelper();
-                }
-            }
-        }
-        return instance;
+    public OperationPersistHelper() {
     }
 
     public Function<List<SceneData>, Single<List<SceneData>>> createPersistSceneListFunc(SceneListRequest request) {

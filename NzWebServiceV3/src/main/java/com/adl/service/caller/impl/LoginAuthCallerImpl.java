@@ -22,7 +22,7 @@ public final class LoginAuthCallerImpl implements LoginAuthCaller {
     private final LoginAuthRepository loginAuthRepository;
 
     public LoginAuthCallerImpl() {
-        this.loginAuthRepository = new LoginAuthRepository();
+        this.loginAuthRepository = LoginAuthRepository.getInstance();
     }
 
     @Override

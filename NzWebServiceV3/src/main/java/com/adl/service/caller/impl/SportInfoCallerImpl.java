@@ -30,7 +30,7 @@ public final class SportInfoCallerImpl implements SportInfoCaller {
     private final SportInfoRepository sportInfoRepository;
 
     public SportInfoCallerImpl() {
-        this.sportInfoRepository = new SportInfoRepository();
+        this.sportInfoRepository = SportInfoRepository.getInstance();
     }
 
     @Override

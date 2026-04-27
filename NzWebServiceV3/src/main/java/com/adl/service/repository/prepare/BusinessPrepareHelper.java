@@ -5,7 +5,6 @@ import android.text.TextUtils;
 import com.adl.service.data.CompetitionData;
 import com.adl.service.data.SportMeetData;
 import com.adl.service.db.DaoManagerProxy;
-import com.adl.service.exception.NzCommonException;
 import com.adl.service.http.request.CompetitionPageRequest;
 import com.adl.service.http.request.SportMeetPageRequest;
 
@@ -16,20 +15,7 @@ import io.reactivex.rxjava3.functions.Function;
 
 public final class BusinessPrepareHelper {
 
-    private static volatile BusinessPrepareHelper instance;
-
-    private BusinessPrepareHelper() {
-    }
-
-    public static BusinessPrepareHelper getInstance() {
-        if (instance == null) {
-            synchronized (BusinessPrepareHelper.class) {
-                if (instance == null) {
-                    instance = new BusinessPrepareHelper();
-                }
-            }
-        }
-        return instance;
+    public BusinessPrepareHelper() {
     }
 
     public Function<CompetitionPageRequest, Single<List<CompetitionData>>> createPrepareCompetitionPageFunc() {

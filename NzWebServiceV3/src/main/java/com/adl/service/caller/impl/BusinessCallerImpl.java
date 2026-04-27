@@ -45,7 +45,7 @@ public final class BusinessCallerImpl implements BusinessCaller {
     private final BusinessRepository businessRepository;
 
     public BusinessCallerImpl() {
-        this.businessRepository = new BusinessRepository();
+        this.businessRepository = BusinessRepository.getInstance();
     }
 
     @Override

@@ -18,11 +18,24 @@ import java.util.List;
 import io.reactivex.rxjava3.core.Single;
 
 public final class SportInfoRepository {
-    private final SportInfoPrepareHelper prepareHelper = SportInfoPrepareHelper.getInstance();
-    private final SportInfoFetchHelper fetchHelper = SportInfoFetchHelper.getInstance();
-    private final SportInfoPersistHelper persistHelper = SportInfoPersistHelper.getInstance();
+    private final SportInfoPrepareHelper prepareHelper = new SportInfoPrepareHelper();
+    private final SportInfoFetchHelper fetchHelper = new SportInfoFetchHelper();
+    private final SportInfoPersistHelper persistHelper = new SportInfoPersistHelper();
 
-    public SportInfoRepository() {
+    private static volatile SportInfoRepository instance;
+
+    private SportInfoRepository() {
+    }
+
+    public static SportInfoRepository getInstance() {
+        if (instance == null) {
+            synchronized (SportInfoRepository.class) {
+                if (instance == null) {
+                    instance = new SportInfoRepository();
+                }
+            }
+        }
+        return instance;
     }
 
     public Single<Boolean> updateStudentSport(ReportStudentSportRequest request) {

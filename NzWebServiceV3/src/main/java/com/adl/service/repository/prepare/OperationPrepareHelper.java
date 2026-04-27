@@ -7,7 +7,6 @@ import com.adl.service.data.DictMapData;
 import com.adl.service.data.SceneData;
 import com.adl.service.data.SportSkuData;
 import com.adl.service.db.DaoManagerProxy;
-import com.adl.service.db.entity.DictEntity;
 import com.adl.service.db.entity.DictMapEntity;
 import com.adl.service.http.request.DictMapRequest;
 import com.adl.service.http.request.SceneListRequest;
@@ -23,20 +22,7 @@ import io.reactivex.rxjava3.functions.Function;
 
 public final class OperationPrepareHelper {
 
-    private static volatile OperationPrepareHelper instance;
-
-    private OperationPrepareHelper() {
-    }
-
-    public static OperationPrepareHelper getInstance() {
-        if (instance == null) {
-            synchronized (OperationPrepareHelper.class) {
-                if (instance == null) {
-                    instance = new OperationPrepareHelper();
-                }
-            }
-        }
-        return instance;
+    public OperationPrepareHelper() {
     }
 
     public Function<SceneListRequest, Single<List<SceneData>>> createGetSceneListPrepareFunc() {

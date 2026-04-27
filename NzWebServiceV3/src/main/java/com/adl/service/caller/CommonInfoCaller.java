@@ -28,7 +28,7 @@ import java.util.List;
  */
 public interface CommonInfoCaller {
 
-    void reloadCommonInfoData(boolean forceUpdate, int faceType, long pageSize) throws NzBaseException;
+    void reloadCommonInfoSync(boolean forceUpdate, int faceType, long pageSize) throws NzBaseException;
 
     List<StudentData> queryAllStudentSync() throws NzBaseException;
 
@@ -41,6 +41,8 @@ public interface CommonInfoCaller {
     List<StudentData> queryStudentByAccountIdsSync(List<String> accountIds) throws NzBaseException;
 
     List<StudentData> queryStudentByClassIdsSync(List<String> classIds) throws NzBaseException;
+
+    long queryStudentRecentUpdateTimeSync() throws NzBaseException;
 
     List<StudentData> queryStudentByCarNumSync(String cardNum) throws NzBaseException;
 
@@ -183,4 +185,6 @@ public interface CommonInfoCaller {
      * <p>同步调用。</p>
      */
     Boolean deviceActiveSync(DeviceActiveRequest request) throws NzBaseException;
+
+    Long getServerTimeSync() throws NzBaseException;
 }

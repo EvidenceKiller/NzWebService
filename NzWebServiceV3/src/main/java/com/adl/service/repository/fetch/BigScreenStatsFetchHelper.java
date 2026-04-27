@@ -33,19 +33,8 @@ public final class BigScreenStatsFetchHelper {
 
     private final BigScreenStatsService bigScreenStatsService;
 
-    private BigScreenStatsFetchHelper() {
+    public BigScreenStatsFetchHelper() {
         this.bigScreenStatsService = RetrofitManager.getInstance().create(BigScreenStatsService.class);
-    }
-
-    public static BigScreenStatsFetchHelper getInstance() {
-        if (instance == null) {
-            synchronized (BigScreenStatsFetchHelper.class) {
-                if (instance == null) {
-                    instance = new BigScreenStatsFetchHelper();
-                }
-            }
-        }
-        return instance;
     }
 
     @SuppressWarnings("unchecked")

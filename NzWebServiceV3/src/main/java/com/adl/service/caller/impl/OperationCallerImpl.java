@@ -10,6 +10,7 @@ import com.adl.service.data.DictMapData;
 import com.adl.service.data.SceneData;
 import com.adl.service.data.SportSkuData;
 import com.adl.service.data.SportSkuDetailData;
+import com.adl.service.db.DaoManagerProxy;
 import com.adl.service.exception.NzBaseException;
 import com.adl.service.http.request.BannerDetailListRequest;
 import com.adl.service.http.request.DeviceFocusListRequest;
@@ -20,13 +21,14 @@ import com.adl.service.http.request.SportSkuDetailRequest;
 import com.adl.service.http.request.SportSkuPageRequest;
 import com.adl.service.http.request.UploadDeviceNameRequest;
 import com.adl.service.internal.RxCallbackScheduler;
-import com.adl.service.internal.SubscriptionManager;
+import com.adl.service.log.NzLog;
+import com.adl.service.repository.CommonInfoRepository;
 import com.adl.service.repository.OperationRepository;
+import com.adl.service.utils.InnerUtil;
 
 import java.util.List;
 import java.util.Map;
-
-import io.reactivex.rxjava3.disposables.Disposable;
+import java.util.stream.Collectors;
 
 /**
  * OperationCaller 实现（SDK 内部使用，通过 {@link AdlService} 暴露）。
@@ -36,12 +38,38 @@ public final class OperationCallerImpl implements OperationCaller {
     private final OperationRepository operationRepository;
 
     public OperationCallerImpl() {
-        this.operationRepository = new OperationRepository();
+        this.operationRepository = OperationRepository.getInstance();
     }
 
     @Override
     public void reLoadAllSceneDataSync(Map<String, List<String>> map) throws NzBaseException {
-        RxCallbackScheduler.blockingGet(operationRepository.reLoadAllSceneData(map));
+        long serverTime = RxCallbackScheduler.blockingGet(CommonInfoRepository.getInstance().getServerTime());
+        NzLog.d("服务器时间: " + InnerUtil.formatByTimeCode(serverTime));
+
+        DaoManagerProxy.getInstance().getSceneDao().clearAll();
+        DaoManagerProxy.getInstance().getSceneSportDao().clearAll();
+
+        for (Map.Entry<String, List<String>> entry : map.entrySet()) {
+            String appCode = entry.getKey();
+            List<String> sceneIds = entry.getValue();
+            ////////////// 1.同步场景列表 ////////////
+            SceneListRequest request = SceneListRequest.builder()
+                    .appCode(appCode)
+                    .build();
+            List<SceneData> sceneList = getSceneListSync(request)
+                    .stream()
+                    .filter(sceneData -> sceneIds.contains(sceneData.getId()))
+                    .collect(Collectors.toList());
+
+            ////////////// 2.同步场景下运动列表 ////////////
+            for (SceneData sceneData : sceneList) {
+                SportSkuPageRequest req = SportSkuPageRequest.builder()
+                        .appCode(appCode)
+                        .sceneId(sceneData.getId())
+                        .build();
+                getSportSkuPagesAllSync(req);
+            }
+        }
     }
 
     @Override

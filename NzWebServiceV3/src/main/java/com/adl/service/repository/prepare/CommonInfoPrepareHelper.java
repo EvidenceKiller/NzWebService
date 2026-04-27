@@ -2,6 +2,7 @@ package com.adl.service.repository.prepare;
 
 import android.text.TextUtils;
 
+import com.adl.service.common.IDefine;
 import com.adl.service.data.DictData;
 import com.adl.service.data.LoginInfoData;
 import com.adl.service.data.StudentData;
@@ -25,20 +26,7 @@ import io.reactivex.rxjava3.functions.Function;
 
 public final class CommonInfoPrepareHelper {
 
-    private static volatile CommonInfoPrepareHelper instance;
-
-    private CommonInfoPrepareHelper() {
-    }
-
-    public static CommonInfoPrepareHelper getInstance() {
-        if (instance == null) {
-            synchronized (CommonInfoPrepareHelper.class) {
-                if (instance == null) {
-                    instance = new CommonInfoPrepareHelper();
-                }
-            }
-        }
-        return instance;
+    public CommonInfoPrepareHelper() {
     }
 
     public Function<Void, Single<LoginInfoData>> createPrepareLoginInfoFunc() {
@@ -124,6 +112,18 @@ public final class CommonInfoPrepareHelper {
         return (v) -> Single.just(DaoManagerProxy.getInstance().getStudentDao().queryStudentWithCardNum(cardNum).stream()
                     .map(data -> StudentEntity.convertToData(data))
                     .collect(Collectors.toList()));
+    }
+
+    public Function<Void, Single<Long>> createPrepareStudentRecentUpdateTimeFunc() {
+        return (v) -> {
+            long time = IDefine.INVALID_TIME;
+            try {
+                time = Long.parseLong(DaoManagerProxy.getInstance().getStudentDao().getLastStudentUpdateTime());
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+            }
+            return Single.just(time);
+        };
     }
 
     public Function<StudentPageRequest, Single<List<StudentData>>> createPrepareStudentPagesAllFunc() {

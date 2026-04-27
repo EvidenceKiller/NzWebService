@@ -28,11 +28,24 @@ import java.util.List;
 import io.reactivex.rxjava3.core.Single;
 
 public final class BigScreenStatsRepository {
-    private final BigScreenStatsPrepareHelper prepareHelper = BigScreenStatsPrepareHelper.getInstance();
-    private final BigScreenStatsFetchHelper fetchHelper = BigScreenStatsFetchHelper.getInstance();
-    private final BigScreenStatsPersistHelper persistHelper = BigScreenStatsPersistHelper.getInstance();
+    private final BigScreenStatsPrepareHelper prepareHelper = new BigScreenStatsPrepareHelper();
+    private final BigScreenStatsFetchHelper fetchHelper = new BigScreenStatsFetchHelper();
+    private final BigScreenStatsPersistHelper persistHelper = new BigScreenStatsPersistHelper();
 
-    public BigScreenStatsRepository() {
+    private static volatile BigScreenStatsRepository instance;
+
+    private BigScreenStatsRepository() {
+    }
+
+    public static BigScreenStatsRepository getInstance() {
+        if (instance == null) {
+            synchronized (BigScreenStatsRepository.class) {
+                if (instance == null) {
+                    instance = new BigScreenStatsRepository();
+                }
+            }
+        }
+        return instance;
     }
 
     public Single<List<WarRecordRankData>> getWarRecordRank(WarRecordRankRequest request) {

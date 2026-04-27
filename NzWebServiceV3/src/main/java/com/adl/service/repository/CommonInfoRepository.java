@@ -1,11 +1,6 @@
 package com.adl.service.repository;
 
-import android.text.TextUtils;
-
 import com.adl.service.callback.GetPageResult;
-import com.adl.service.common.FileDownManager;
-import com.adl.service.common.IDefine;
-import com.adl.service.common.InnerPreferences;
 import com.adl.service.data.AcayearData;
 import com.adl.service.data.ClassData;
 import com.adl.service.data.ClassInfoData;
@@ -15,10 +10,6 @@ import com.adl.service.data.GradeTreeData;
 import com.adl.service.data.LoginInfoData;
 import com.adl.service.data.StudentData;
 import com.adl.service.data.TeacherData;
-import com.adl.service.data.TimeStamp;
-import com.adl.service.db.DaoManagerProxy;
-import com.adl.service.db.StudentDao;
-import com.adl.service.exception.NzBaseException;
 import com.adl.service.http.request.ClassInfoRequest;
 import com.adl.service.http.request.ClassPageRequest;
 import com.adl.service.http.request.DeviceActiveRequest;
@@ -26,88 +17,33 @@ import com.adl.service.http.request.DictRequest;
 import com.adl.service.http.request.EmptyRequest;
 import com.adl.service.http.request.StudentPageRequest;
 import com.adl.service.http.request.TeacherPageRequest;
-import com.adl.service.log.NzLog;
 import com.adl.service.repository.fetch.CommonInfoFetchHelper;
 import com.adl.service.repository.persist.CommonInfoPersistHelper;
 import com.adl.service.repository.prepare.CommonInfoPrepareHelper;
-import com.adl.service.utils.InnerUtil;
 
 import java.util.List;
 
 import io.reactivex.rxjava3.core.Single;
 
 public final class CommonInfoRepository {
-    private final CommonInfoPrepareHelper prepareHelper = CommonInfoPrepareHelper.getInstance();
-    private final CommonInfoFetchHelper fetchHelper = CommonInfoFetchHelper.getInstance();
-    private final CommonInfoPersistHelper persistHelper = CommonInfoPersistHelper.getInstance();
+    private final CommonInfoPrepareHelper prepareHelper = new CommonInfoPrepareHelper();
+    private final CommonInfoFetchHelper fetchHelper = new CommonInfoFetchHelper();
+    private final CommonInfoPersistHelper persistHelper = new CommonInfoPersistHelper();
 
-    public CommonInfoRepository() {
+    private static volatile CommonInfoRepository instance;
+
+    private CommonInfoRepository() {
     }
 
-    public void reloadCommonInfoData(boolean forceUpdate, int faceType, long pageSize) throws NzBaseException {
-        InnerPreferences pf = InnerPreferences.instance();
-
-        ////////////// 1.同步机构信息 ////////////
-        NzLog.i("同步机构信息");
-        //启动时，请求一次机构信息，如果机构变更，清除数据标识
-        LoginInfoData loginInfo = queryLoginInfo().blockingGet();
-        LoginInfoData newLoginInfo = getLoginInfo(EmptyRequest.builder().forceUpdate(true).build()).blockingGet();
-        if (newLoginInfo != null && !TextUtils.isEmpty(newLoginInfo.getOrgId()) && !newLoginInfo.getOrgId().equals(loginInfo.getOrgId())) {
-            DaoManagerProxy.getInstance().getStudentDao().clearAll();
-            DaoManagerProxy.getInstance().getTeacherDao().clearAll();
-            FileDownManager.instance().clearAllFace();
-            pf.putLong(IDefine.LAST_STUDENT_UPDATE_TIME, IDefine.INVALID_TIME);
-            pf.putLong(IDefine.LAST_TEACHER_UPDATE_TIME, IDefine.INVALID_TIME);
-            pf.putLong(IDefine.LAST_CITIZEN_UPDATE_TIME, IDefine.INVALID_TIME);
+    public static CommonInfoRepository getInstance() {
+        if (instance == null) {
+            synchronized (CommonInfoRepository.class) {
+                if (instance == null) {
+                    instance = new CommonInfoRepository();
+                }
+            }
         }
-
-
-        ////////////// 2.同步学生基本信息 ////////////
-        long serverTime = System.currentTimeMillis();
-        try {
-            serverTime = InnerUtil.getServerTime();
-        } catch (NzBaseException e) {
-            NzLog.e("获取服务器时间失败", e.getMessage());
-        }
-        StudentDao stuDao = DaoManagerProxy.getInstance().getStudentDao();
-        int size = stuDao.countSize();
-        long lastTime = pf.readLong(IDefine.LAST_STUDENT_UPDATE_TIME);
-        NzLog.d("本机时间:size: " + size + ";forceUpdate:" + forceUpdate + ";serverTime:" + serverTime + ";lastTime:" + lastTime + ";UpdateIntervalTime:" + IDefine.UpdateIntervalTime);
-
-        // 是否强制更新数据
-        String recentUpdateTimeStr = stuDao.getLastStudentUpdateTime();
-        long recentUpdateTime = IDefine.INVALID_TIME;
-        try {
-            recentUpdateTime = Long.parseLong(recentUpdateTimeStr);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        NzLog.d("本机时间:recentUpdateTime: " + recentUpdateTime);
-
-        StudentPageRequest studentPageRequest = StudentPageRequest.builder()
-                .current(1L)
-                .pageSize(pageSize)
-                .faceType(faceType)
-                .lastUpdateTime(forceUpdate ? null : lastTime != IDefine.INVALID_TIME ? InnerUtil.formatByTimeCode(recentUpdateTime) : null)
-                .build();
-
-        getStudentPagesAll(studentPageRequest).blockingGet();
-        pf.putLong(IDefine.LAST_STUDENT_UPDATE_TIME, serverTime);
-
-        ////////////// 3.同步老师基本信息 ////////////
-        size = DaoManagerProxy.getInstance().getTeacherDao().countSize();
-        lastTime = pf.readLong(IDefine.LAST_TEACHER_UPDATE_TIME);
-
-        // 数据会空，或者时间间隔2分钟
-        if (size == 0 || forceUpdate || serverTime - lastTime > IDefine.UpdateIntervalTime) {
-            TeacherPageRequest teacherPageRequest = TeacherPageRequest.builder()
-                    .current(1L)
-                    .pageSize(pageSize)
-                    .lastUpdateTime(forceUpdate ? null : InnerUtil.formatByTimeCode(lastTime))
-                    .build();
-            getTeacherPagesAll(teacherPageRequest).blockingGet();
-            pf.putLong(IDefine.LAST_TEACHER_UPDATE_TIME, serverTime);
-        }
+        return instance;
     }
 
     public Single<List<GradeTreeData>> getGradeTree(EmptyRequest request) {
@@ -201,6 +137,10 @@ public final class CommonInfoRepository {
         return BaseRepositoryUtil.repositoryAsSingle(prepareHelper.createPrepareStudentByCardNumFunc(cardNum));
     }
 
+    public Single<Long> queryStudentRecentUpdateTime() {
+        return BaseRepositoryUtil.repositoryAsSingle(prepareHelper.createPrepareStudentRecentUpdateTimeFunc());
+    }
+
     public Single<GetPageResult> getStudentPagesAll(StudentPageRequest request) {
         return BaseRepositoryUtil.repositoryPagesAsSingle(request,
                 prepareHelper.createPrepareStudentPagesAllFunc(),
@@ -224,5 +164,9 @@ public final class CommonInfoRepository {
 
     public Single<Boolean> deviceActive(DeviceActiveRequest request) {
         return BaseRepositoryUtil.repositoryAsSingle(request, fetchHelper.createGetDeviceActiveFunc());
+    }
+
+    public Single<Long> getServerTime() {
+        return BaseRepositoryUtil.repositoryAsSingle(fetchHelper.createGetServerTimeFunc());
     }
 }

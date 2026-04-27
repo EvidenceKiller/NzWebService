@@ -26,7 +26,7 @@ public final class BigScreenH5CallerImpl implements BigScreenH5Caller {
     private final BigScreenH5Repository bigScreenH5Repository;
 
     public BigScreenH5CallerImpl() {
-        this.bigScreenH5Repository = new BigScreenH5Repository();
+        this.bigScreenH5Repository = BigScreenH5Repository.getInstance();
     }
 
     @Override

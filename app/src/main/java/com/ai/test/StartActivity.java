@@ -18,7 +18,7 @@ public class StartActivity extends BaseActivity {
     private String testAuthHost_V2 = "http://172.16.2.102:18005/gateway/api/device/auth";
     private String testBusHost_V2 = "http://172.16.0.206:8082/gateway/api";
     // v3 host
-    private String testBusHost_V3 = "http://172.16.2.102:9082/v3/gateway/api/";
+    private String testBusHost_V3 = "http://172.16.2.102:9082/";
 
 //    private static String testHost = "http://112.19.167.50:18005/gateway/api/device/auth";
 //    private static String testBusHost = "http://112.19.167.50:18082/gateway/api";

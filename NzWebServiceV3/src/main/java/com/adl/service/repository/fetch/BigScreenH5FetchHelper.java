@@ -23,19 +23,8 @@ public final class BigScreenH5FetchHelper {
 
     private final BigScreenH5Service bigScreenH5Service;
 
-    private BigScreenH5FetchHelper() {
+    public BigScreenH5FetchHelper() {
         this.bigScreenH5Service = RetrofitManager.getInstance().create(BigScreenH5Service.class);
-    }
-
-    public static BigScreenH5FetchHelper getInstance() {
-        if (instance == null) {
-            synchronized (BigScreenH5FetchHelper.class) {
-                if (instance == null) {
-                    instance = new BigScreenH5FetchHelper();
-                }
-            }
-        }
-        return instance;
     }
 
     @SuppressWarnings("unchecked")

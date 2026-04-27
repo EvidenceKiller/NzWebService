@@ -10,11 +10,24 @@ import com.adl.service.repository.prepare.LoginAuthPrepareHelper;
 import io.reactivex.rxjava3.core.Single;
 
 public final class LoginAuthRepository {
-    private final LoginAuthPrepareHelper prepareHelper = LoginAuthPrepareHelper.getInstance();
-    private final LoginAuthFetchHelper fetchHelper = LoginAuthFetchHelper.getInstance();
-    private final LoginAuthPersistHelper persistHelper = LoginAuthPersistHelper.getInstance();
+    private final LoginAuthPrepareHelper prepareHelper = new LoginAuthPrepareHelper();
+    private final LoginAuthFetchHelper fetchHelper = new LoginAuthFetchHelper();
+    private final LoginAuthPersistHelper persistHelper = new LoginAuthPersistHelper();
 
-    public LoginAuthRepository() {
+    private static volatile LoginAuthRepository instance;
+
+    private LoginAuthRepository() {
+    }
+
+    public static LoginAuthRepository getInstance() {
+        if (instance == null) {
+            synchronized (LoginAuthRepository.class) {
+                if (instance == null) {
+                    instance = new LoginAuthRepository();
+                }
+            }
+        }
+        return instance;
     }
 
     public Single<LoginData> login(LoginRequest request) {

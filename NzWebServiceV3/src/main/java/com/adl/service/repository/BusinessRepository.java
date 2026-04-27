@@ -33,11 +33,24 @@ import java.util.List;
 import io.reactivex.rxjava3.core.Single;
 
 public final class BusinessRepository {
-    private final BusinessPrepareHelper prepareHelper = BusinessPrepareHelper.getInstance();
-    private final BusinessFetchHelper fetchHelper = BusinessFetchHelper.getInstance();
-    private final BusinessPersistHelper persistHelper = BusinessPersistHelper.getInstance();
+    private final BusinessPrepareHelper prepareHelper = new BusinessPrepareHelper();
+    private final BusinessFetchHelper fetchHelper = new BusinessFetchHelper();
+    private final BusinessPersistHelper persistHelper = new BusinessPersistHelper();
 
-    public BusinessRepository() {
+    private static volatile BusinessRepository instance;
+
+    private BusinessRepository() {
+    }
+
+    public static BusinessRepository getInstance() {
+        if (instance == null) {
+            synchronized (BusinessRepository.class) {
+                if (instance == null) {
+                    instance = new BusinessRepository();
+                }
+            }
+        }
+        return instance;
     }
 
     public Single<Boolean> saveGroup(SaveGroupRequest request) {
