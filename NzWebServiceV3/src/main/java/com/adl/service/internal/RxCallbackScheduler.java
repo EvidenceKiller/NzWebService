@@ -4,11 +4,8 @@ package com.adl.service.internal;
 import com.adl.service.callback.RequestCallback;
 import com.adl.service.data.BaseResponse;
 import com.adl.service.exception.NzBaseException;
-import com.adl.service.exception.NzEmptyDataException;
-import com.adl.service.exception.NzEmptyResponseException;
 import com.adl.service.exception.NzExceptionMapper;
-import com.adl.service.exception.NzNetworkException;
-import com.adl.service.exception.NzUnknownException;
+import com.adl.service.exception.NzHttpException;
 import com.adl.service.http.request.RequestScope;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
@@ -19,53 +16,12 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 /**
  * RxJava 调度与 {@link BaseResponse} 处理封装（SDK 内部使用，不对外暴露）。
  * <p>
- * 包含：异步回调调度（{@link #schedule} / {@link #scheduleBaseResponse}），以及同步阻塞解包（{@link #blockingGetFromResponse} / {@link #assertSuccessData}）。
+ * 包含：异步回调调度（{@link #schedule}），以及同步阻塞解包（{@link #blockingGet}）。
  * </p>
  */
 public final class RxCallbackScheduler {
 
     private RxCallbackScheduler() {
-    }
-
-    /**
-     * 将 {@code Single<BaseResponse<T>>} 转换为 {@code RequestCallback<T>}。
-     * <p>
-     * 规则：
-     * <ul>
-     *   <li>{@code base.isSuccess()==true} => {@code onSuccess(base.getData())}</li>
-     *   <li>{@code base.isSuccess()==false} => {@code onFail(base.getCode())}</li>
-     * </ul>
-     * </p>
-     */
-    public static <T> long scheduleBaseResponse(RequestScope scope,
-                                                Single<BaseResponse<T>> single,
-                                                RequestCallback<T> callback
-    ) {
-        assertScope(scope);
-        Disposable disposable = single
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                        response -> {
-                            if (callback == null) {
-                                return;
-                            }
-                            if (response != null && response.getSucceed().booleanValue()) {
-                                callback.onSuccess(response.getData());
-                            } else if (response != null) {
-                                callback.onFail(response.getCode(), response.getMsg());
-                            } else {
-                                callback.onError("Response is null");
-                            }
-                        },
-                        error -> {
-                            if (callback != null) {
-                                callback.onError(NzExceptionMapper.toMessage(error));
-                            }
-                        }
-                );
-        SubscriptionManager.getInstance().add(scope.owner(), disposable);
-        return disposable.hashCode();
     }
 
     /**
@@ -81,31 +37,27 @@ public final class RxCallbackScheduler {
     ) {
         assertScope(scope);
         Disposable disposable = single
-                .subscribeOn(Schedulers.io())           // 在 IO 线程执行网络请求
+                .subscribeOn(Schedulers.io())           // 在 IO 线程执行
                 .observeOn(AndroidSchedulers.mainThread()) // 在主线程回调
                 .subscribe(
                         data -> {
                             if (callback != null) {
-                                // 统一约定：如果响应是 BaseResponse 且业务失败，则走 onFail。
+                                // data为空通常不会走到
                                 if (data == null) {
-                                    callback.onError("Response data is null");
+                                    callback.onError("data is null");
                                 } else {
-                                    if (data instanceof BaseResponse) {
-                                        BaseResponse<?> response = (BaseResponse<?>) data;
-                                        if (!response.getSucceed().booleanValue()) {
-                                            callback.onFail(response.getCode(), response.getMsg());
-                                            return;
-                                        }
-                                    }
                                     callback.onSuccess(data);
                                 }
-
                             }
                         },
                         error -> {
                             if (callback != null) {
-                                // 统一异常映射，避免业务层到处散落 error.getMessage()。
-                                callback.onError(NzExceptionMapper.toMessage(error));
+                                if (error instanceof NzHttpException) {
+                                    callback.onFail(((NzHttpException) error).getHttpCode(), error.getMessage());
+                                } else {
+                                    // 统一异常映射，避免业务层到处散落 error.getMessage()。
+                                    callback.onError(NzExceptionMapper.toMessage(error));
+                                }
                             }
                         }
                 );
@@ -115,7 +67,7 @@ public final class RxCallbackScheduler {
     }
 
     /**
-     * 阻塞获取 Single，校验响应成功且 data 非空后返回 data；否则抛出 {@link NzNetworkException} 或 {@link NzUnknownException}；
+     * 阻塞获取 Single，校验响应成功且 data 非空后返回 data；否则抛出 {@link NzBaseException}；
      * 其它异常经 {@link NzExceptionMapper} 映射。
      */
     public static <T> T blockingGet(Single<T> single) throws NzBaseException {
@@ -124,35 +76,6 @@ public final class RxCallbackScheduler {
         } catch (Throwable t) {
             throw NzExceptionMapper.map(t);
         }
-    }
-
-    /**
-     * 阻塞获取 Single，校验响应成功且 data 非空后返回 data；否则抛出 {@link NzNetworkException} 或 {@link NzUnknownException}；
-     * 其它异常经 {@link NzExceptionMapper} 映射。
-     */
-    public static <T> T blockingGetFromResponse(Single<BaseResponse<T>> single) throws NzBaseException {
-        try {
-            return assertSuccessData(single.blockingGet());
-        } catch (Throwable t) {
-            throw NzExceptionMapper.map(t);
-        }
-    }
-
-    /**
-     * 对已有 {@link BaseResponse} 做成功与 data 校验，成功则返回 data。
-     */
-    private static <T> T assertSuccessData(BaseResponse<T> response) throws NzBaseException {
-        if (response == null) {
-            throw new NzEmptyResponseException("Response is null");
-        }
-        if (response.getCode() != 200 || !response.getSucceed().booleanValue()) {
-            throw new NzNetworkException(response.getCode(), response.getMsg());
-        }
-        T data = response.getData();
-        if (data == null) {
-            throw new NzEmptyDataException("Response data is null");
-        }
-        return data;
     }
 
     private static void assertScope(RequestScope scope) {

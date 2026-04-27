@@ -6,8 +6,7 @@ import com.adl.service.ConfigService;
 import com.adl.service.common.BaseService;
 import com.adl.service.common.IDefine;
 import com.adl.service.exception.NzBaseException;
-import com.adl.service.exception.NzNetworkException;
-import com.adl.service.exception.NzUnknownException;
+import com.adl.service.exception.NzCommonException;
 import com.adl.service.log.NzLog;
 import com.qiniu.android.common.FixedZone;
 import com.qiniu.android.http.ResponseInfo;
@@ -53,12 +52,12 @@ public class FileUploadSyncService extends BaseService {
     public String syncUploadFile(File file, String remoteFileName) throws NzBaseException {
         ConfigService configService = getConfigService();
         if (configService == null || TextUtils.isEmpty(configService.getQiNiuHost())) {
-            throw new NzUnknownException("上传配置错误");
+            throw new NzCommonException("上传配置错误");
         }
 
         if (file != null && file.exists()) {
             if (TextUtils.isEmpty(remoteFileName)) {
-                throw new NzUnknownException("远端文件名为空");
+                throw new NzCommonException("远端文件名为空");
             }
 
             String token = getQiNiuToken(IDefine.QiNiuPublicBucket);
@@ -66,10 +65,10 @@ public class FileUploadSyncService extends BaseService {
             if (url != null) {
                 return url;
             } else {
-                throw new NzUnknownException("上传失败");
+                throw new NzCommonException("上传失败");
             }
         } else {
-            throw new NzUnknownException("文件路径不存在");
+            throw new NzCommonException("文件路径不存在");
         }
     }
 

@@ -1,7 +1,5 @@
 package com.adl.service.exception;
 
-import android.util.Log;
-
 import com.adl.service.log.NzLog;
 
 import java.io.IOException;
@@ -30,21 +28,25 @@ public final class NzExceptionMapper {
             root = root.getCause();
         }
 
+        if (root instanceof NzBaseException) {
+            return (NzBaseException) root;
+        }
+
         if (root instanceof IOException) {
             return new NzIOException(root.getMessage() != null ? root.getMessage() : "io error", root);
         }
         if (root instanceof HttpException) {
             HttpException he = (HttpException) root;
             String msg = he.message() != null ? he.message() : ("http error " + he.code());
-            return new NzNetworkException(he.code(), msg, he);
+            return new NzHttpException(he.code(), msg, he);
         }
 
         String msg = root.getMessage() != null ? root.getMessage() : throwable.getMessage();
-        return new NzUnknownException(msg != null ? msg : "unknown error", throwable);
+        return new NzCommonException(msg != null ? msg : "common error", throwable);
     }
 
     public static String toMessage(Throwable throwable) {
-        NzLog.i("NzExceptionMapper", "exception : " + throwable);
+        NzLog.i("NzExceptionMapper : toMessage : " + throwable);
         NzBaseException ex = map(throwable);
         String msg = ex.getMessage();
         String safeMsg = throwable.getClass().getSimpleName() + ": " + (msg != null ? msg : ex.toString());

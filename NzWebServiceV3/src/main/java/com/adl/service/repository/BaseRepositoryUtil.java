@@ -6,7 +6,7 @@ import com.adl.service.callback.GetPageResult;
 import com.adl.service.data.BasePageData;
 import com.adl.service.exception.NzCommonException;
 import com.adl.service.exception.NzGetPageException;
-import com.adl.service.exception.NzNetworkException;
+import com.adl.service.exception.NzHttpException;
 import com.adl.service.http.request.BasePageRequest;
 import com.adl.service.http.request.BaseRequest;
 
@@ -128,7 +128,7 @@ class BaseRepositoryUtil {
         return applyFunc(fetchFunc, request)
                 .flatMap(networkData -> {
                     if (networkData == null) {
-                        return Single.error(new NzNetworkException(-1, "network data is null"));
+                        return Single.error(new NzHttpException(-1, "network data is null"));
                     }
                     if (persistFunc == null) {
                         return Single.just(networkData);
