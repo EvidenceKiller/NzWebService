@@ -4,24 +4,34 @@ import com.adl.service.callback.GetPageResult;
 import com.adl.service.data.BannerDetailData;
 import com.adl.service.data.DeviceFocusData;
 import com.adl.service.data.DictMapData;
+import com.adl.service.data.PointRuleDetailData;
 import com.adl.service.data.SceneData;
 import com.adl.service.data.SportSkuData;
 import com.adl.service.data.SportSkuDetailData;
+import com.adl.service.data.WikiData;
+import com.adl.service.data.WikiDetailData;
+import com.adl.service.data.WikiTypeData;
 import com.adl.service.http.request.BannerDetailListRequest;
 import com.adl.service.http.request.DeviceFocusListRequest;
 import com.adl.service.http.request.DictMapRequest;
+import com.adl.service.http.request.PointRuleDetailRequest;
 import com.adl.service.http.request.SceneListRequest;
 import com.adl.service.http.request.SportSkuDetailRequest;
 import com.adl.service.http.request.SportSkuPageRequest;
 import com.adl.service.http.request.UploadDeviceNameRequest;
+import com.adl.service.http.request.WikiDetailRequest;
+import com.adl.service.http.request.WikiPageRequest;
+import com.adl.service.http.request.WikiTypePageRequest;
 import com.adl.service.repository.fetch.OperationFetchHelper;
 import com.adl.service.repository.persist.OperationPersistHelper;
 import com.adl.service.repository.prepare.OperationPrepareHelper;
 
 import java.util.List;
 
+import androidx.annotation.RestrictTo;
 import io.reactivex.rxjava3.core.Single;
 
+@RestrictTo(RestrictTo.Scope.LIBRARY)
 public final class OperationRepository {
     private final OperationPrepareHelper prepareHelper = new OperationPrepareHelper();
     private final OperationFetchHelper fetchHelper = new OperationFetchHelper();
@@ -78,11 +88,27 @@ public final class OperationRepository {
                 persistHelper.createPersistSceneListFunc(request));
     }
 
+    public Single<List<WikiTypeData>> getWikiTypePage(WikiTypePageRequest request) {
+        return BaseRepositoryUtil.repositoryPageAsSingle(request, fetchHelper.createGetWikiTypePageFunc());
+    }
+
+    public Single<List<WikiData>> getWikiPage(WikiPageRequest request) {
+        return BaseRepositoryUtil.repositoryPageAsSingle(request, fetchHelper.createGetWikiPageFunc());
+    }
+
+    public Single<WikiDetailData> getWikiDetail(WikiDetailRequest request) {
+        return BaseRepositoryUtil.repositoryAsSingle(request, fetchHelper.createGetWikiDetailFunc());
+    }
+
     public Single<Boolean> uploadDeviceName(UploadDeviceNameRequest request) {
         return BaseRepositoryUtil.repositoryAsSingle(request, fetchHelper.createUploadDeviceNameFunc());
     }
 
     public Single<List<DeviceFocusData>> getDeviceFocusList(DeviceFocusListRequest request) {
         return BaseRepositoryUtil.repositoryAsSingle(request, fetchHelper.createGetDeviceFocusListFunc());
+    }
+
+    public Single<PointRuleDetailData> getPointRuleDetail(PointRuleDetailRequest request) {
+        return BaseRepositoryUtil.repositoryAsSingle(request, fetchHelper.createGetPointRuleDetailFunc());
     }
 }

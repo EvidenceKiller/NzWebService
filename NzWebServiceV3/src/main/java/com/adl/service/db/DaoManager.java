@@ -12,13 +12,18 @@ import com.adl.service.db.entity.LoginInfoEntity;
 import com.adl.service.db.entity.PlanEntity;
 import com.adl.service.db.entity.PlanStudentEntity;
 import com.adl.service.db.entity.SceneEntity;
+import com.adl.service.db.entity.SceneSportEntity;
 import com.adl.service.db.entity.SportMeetEntity;
 import com.adl.service.db.entity.SportMeetGroupDetailEntity;
 import com.adl.service.db.entity.SportMeetGroupTeamEntity;
+import com.adl.service.db.entity.SportRecordEntity;
+import com.adl.service.db.entity.SportRecordLocalEntity;
+import com.adl.service.db.entity.SportRecordResEntity;
 import com.adl.service.db.entity.SportSkuEntity;
 import com.adl.service.db.entity.StandardConfigEntity;
 import com.adl.service.db.entity.StudentEntity;
 import com.adl.service.db.entity.TeacherEntity;
+import com.adl.service.db.entity.TeacherSportLocalEntity;
 
 import androidx.room.Database;
 import androidx.room.RoomDatabase;
@@ -33,10 +38,11 @@ import androidx.room.TypeConverters;
 @Database(entities = {StudentEntity.class, TeacherEntity.class,
         FileDownInfoEntity.class, FileUploadInfoEntity.class,
         PlanEntity.class, PlanStudentEntity.class, StandardConfigEntity.class,
-        SceneEntity.class, SportSkuEntity.class,
+        SceneEntity.class, SceneSportEntity.class, SportSkuEntity.class,
         SportMeetEntity.class, SportMeetGroupTeamEntity.class, SportMeetGroupDetailEntity.class,
         CompetitionEntity.class, DictEntity.class, LoginInfoEntity.class,
-        DictMapEntity.class
+        SportRecordEntity.class, SportRecordLocalEntity.class, SportRecordResEntity.class,
+        DictMapEntity.class, TeacherSportLocalEntity.class
 },
         version = 1,
         autoMigrations = {}
@@ -75,4 +81,12 @@ public abstract class DaoManager extends RoomDatabase {
     public abstract SportMeetGroupDetailDao getSportMeetGroupDetailDao();
 
     public abstract LoginInfoDao getLoginInfoDao();
+
+    public abstract RecordLocalDao getRecordLocalDao();
+
+    public abstract RecordUploadDao getRecordUploadDao();
+
+    public abstract RecordResDao getRecordResDao();
+
+    public abstract TeacherSportDao getTeacherSportDao();
 }

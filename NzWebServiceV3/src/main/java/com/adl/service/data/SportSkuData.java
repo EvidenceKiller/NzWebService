@@ -1,36 +1,32 @@
 package com.adl.service.data;
 
+import java.io.Serializable;
 import com.adl.service.internal.json.StrictJsonDeserializer;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import androidx.room.ColumnInfo;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
 @JsonAdapter(StrictJsonDeserializer.class)
-public final class SportSkuData {
-
-    @SerializedName("enableSort")
-    private Boolean enableSort;
-
-    @SerializedName("moduleStr")
-    private String moduleStr;
-
+public final class SportSkuData implements Serializable {
     /**
      * 精度方式 详见码表
      */
     @SerializedName("accuracyMethod")
-    private Integer accuracyMethod;
+    private Integer accuracyMethod = 0;
 
     /**
      * 精度类型 详见码表
      */
     @SerializedName("accuracyType")
-    private Integer accuracyType;
+    private Integer accuracyType = 0;
 
     /**
      * 动作演示地址
@@ -66,13 +62,13 @@ public final class SportSkuData {
      * 删除标记为
      */
     @SerializedName("delFlag")
-    private Boolean delFlag;
+    private Boolean delFlag = Boolean.FALSE;
 
     /**
      * 启停用 参考字典编码：adl_bms_enabled (1 启用 0 禁用)
      */
     @SerializedName("enabled")
-    private Boolean enabled;
+    private Boolean enabled = Boolean.FALSE;
 
     /**
      * 结束方式为其他时的备注
@@ -84,13 +80,13 @@ public final class SportSkuData {
      * 结束类型 参考字典编码：adl_bms_sport_sku_end_type
      */
     @SerializedName("endType")
-    private Integer endType;
+    private Integer endType = 0;
 
     /**
      * 结束方式 参考字典编码：adl_sport_end_unit
      */
     @SerializedName("endValue")
-    private Integer endValue;
+    private Long endValue = 0L;
 
     /**
      * 默认图标地址
@@ -132,13 +128,13 @@ public final class SportSkuData {
      * 测量范围结束值
      */
     @SerializedName("rangeEndValue")
-    private Double rangeEndValue;
+    private Double rangeEndValue = 0.0;
 
     /**
      * 测量范围起始值
      */
     @SerializedName("rangeStartValue")
-    private Double rangeStartValue;
+    private Double rangeStartValue = 0.0;
 
     /**
      * 备注
@@ -162,7 +158,7 @@ public final class SportSkuData {
      * 场景运动排序
      */
     @SerializedName("sceneSkuSort")
-    private Integer sceneSkuSort;
+    private Integer sceneSkuSort = 0;
 
     /**
      * 运动单项代码 参考字典编码：adl_sport_item
@@ -192,7 +188,7 @@ public final class SportSkuData {
      * 项目高低优 参考字典编码：adl_bms_sport_priority
      */
     @SerializedName("sportPriority")
-    private Integer sportPriority;
+    private Integer sportPriority = 0;
 
     /**
      * sku描述，是个json string
@@ -234,7 +230,7 @@ public final class SportSkuData {
      * 测试人数 空为不限制
      */
     @SerializedName("testCount")
-    private Integer testCount;
+    private Integer testCount = 0;
 
     /**
      * 测试人数
@@ -266,15 +262,53 @@ public final class SportSkuData {
     @SerializedName("videoUrl")
     private String videoUrl;
 
-    /**
-     * 场景SKU分类
-     */
-    @SerializedName("sceneSkuType")
-    private String sceneSkuType;
+    @SerializedName("sceneSportSkuType")
+    private String sceneSportSkuType;
 
-    @SerializedName("createTime")
-    private Long createTime;
-
-    @SerializedName("updateTime")
-    private Long updateTime;
+    public SportSkuDetailData convertToSportSkuDetailData() {
+        SportSkuDetailData sportSkuDetailData = new SportSkuDetailData();
+        sportSkuDetailData.setAccuracyMethod(accuracyMethod);
+        sportSkuDetailData.setAccuracyType(accuracyType);
+        sportSkuDetailData.setActionVideoUrl(actionVideoUrl);
+        sportSkuDetailData.setAppCodes(appCodes == null ? null : new ArrayList<>(appCodes));
+        sportSkuDetailData.setAudioName(audioName);
+        sportSkuDetailData.setAudioUrl(audioUrl);
+        sportSkuDetailData.setCoverUrl(coverUrl);
+        sportSkuDetailData.setDelFlag(delFlag);
+        sportSkuDetailData.setEnabled(enabled);
+        sportSkuDetailData.setEndRemark(endRemark);
+        sportSkuDetailData.setEndType(endType);
+        sportSkuDetailData.setEndValue(endValue);
+        sportSkuDetailData.setIconUrl(iconUrl);
+        sportSkuDetailData.setMeasureMode(measureMode);
+        sportSkuDetailData.setMeasureUnitCode(measureUnitCode);
+        sportSkuDetailData.setQualities(qualities == null ? null : new ArrayList<>(qualities));
+        sportSkuDetailData.setQusTemplateName(qusTemplateName);
+        sportSkuDetailData.setQusTemplateUrl(qusTemplateUrl);
+        sportSkuDetailData.setRangeEndValue(rangeEndValue);
+        sportSkuDetailData.setRangeStartValue(rangeStartValue);
+        sportSkuDetailData.setRemark(remark);
+        sportSkuDetailData.setSceneCode(sceneCode);
+        sportSkuDetailData.setSceneSkuId(sceneSkuId);
+        sportSkuDetailData.setSceneSkuSort(sceneSkuSort);
+        sportSkuDetailData.setSceneSportSkuType(sceneSportSkuType);
+        sportSkuDetailData.setSportItemCode(sportItemCode);
+        sportSkuDetailData.setSportItemName(sportItemName);
+        sportSkuDetailData.setSportNatureCodes(sportNatureCodes);
+        sportSkuDetailData.setSportNatureNames(sportNatureNames);
+        sportSkuDetailData.setSportPriority(sportPriority);
+        sportSkuDetailData.setSportSkuDesc(sportSkuDesc);
+        sportSkuDetailData.setSportSkuDescJson(sportSkuDescJson == null ? null : new ArrayList<>(sportSkuDescJson));
+        sportSkuDetailData.setSportSkuId(sportSkuId);
+        sportSkuDetailData.setSportSkuName(sportSkuName);
+        sportSkuDetailData.setSportTypeCode(sportTypeCode);
+        sportSkuDetailData.setSportTypeName(sportTypeName);
+        sportSkuDetailData.setTestCount(testCount);
+        sportSkuDetailData.setTestTemplateName(testTemplateName);
+        sportSkuDetailData.setTestTemplateUrl(testTemplateUrl);
+        sportSkuDetailData.setTxVid(txVid);
+        sportSkuDetailData.setVideoCoverUrl(videoCoverUrl);
+        sportSkuDetailData.setVideoUrl(videoUrl);
+        return sportSkuDetailData;
+    }
 }

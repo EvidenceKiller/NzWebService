@@ -2,21 +2,25 @@ package com.adl.service.repository;
 
 import com.adl.service.data.AccountRecordData;
 import com.adl.service.data.OrgRecordData;
+import com.adl.service.data.ReportSportStudentAllData;
+import com.adl.service.data.ReportSportStudentCompetitionData;
+import com.adl.service.data.ReportSportStudentData;
+import com.adl.service.data.ReportSportStudentMeetData;
+import com.adl.service.data.ReportSportStudentPlanData;
+import com.adl.service.data.ReportSportStudentTrainData;
+import com.adl.service.data.ReportSportTeacherData;
 import com.adl.service.http.request.AccountRecordPageRequest;
 import com.adl.service.http.request.OrgRecordPageRequest;
-import com.adl.service.http.request.ReportStudentCompetitionRequest;
-import com.adl.service.http.request.ReportStudentMeetRequest;
-import com.adl.service.http.request.ReportStudentPlanRequest;
-import com.adl.service.http.request.ReportStudentSportRequest;
-import com.adl.service.http.request.ReportTeacherSportRequest;
 import com.adl.service.repository.fetch.SportInfoFetchHelper;
 import com.adl.service.repository.persist.SportInfoPersistHelper;
 import com.adl.service.repository.prepare.SportInfoPrepareHelper;
 
 import java.util.List;
 
+import androidx.annotation.RestrictTo;
 import io.reactivex.rxjava3.core.Single;
 
+@RestrictTo(RestrictTo.Scope.LIBRARY)
 public final class SportInfoRepository {
     private final SportInfoPrepareHelper prepareHelper = new SportInfoPrepareHelper();
     private final SportInfoFetchHelper fetchHelper = new SportInfoFetchHelper();
@@ -38,36 +42,36 @@ public final class SportInfoRepository {
         return instance;
     }
 
-    public Single<Boolean> updateStudentSport(ReportStudentSportRequest request) {
-        return BaseRepositoryUtil.repositoryAsSingle(request, fetchHelper.createUpdateStudentSportFunc());
+    public Single<Boolean> updateStudentSport(ReportSportStudentAllData request) {
+        return BaseRepositoryUtil.repositoryCommonAsSingle(request, fetchHelper.createUpdateStudentSportFunc());
     }
 
-    public Single<Boolean> reportTeacherSport(ReportTeacherSportRequest request) {
-        return BaseRepositoryUtil.repositoryAsSingle(request, fetchHelper.createReportTeacherSportFunc());
+    public Single<Boolean> reportTeacherSport(ReportSportTeacherData request) {
+        return BaseRepositoryUtil.repositoryCommonAsSingle(request, fetchHelper.createReportTeacherSportFunc());
     }
 
-    public Single<Boolean> reportStudentTrain(ReportStudentSportRequest request) {
-        return BaseRepositoryUtil.repositoryAsSingle(request, fetchHelper.createReportStudentTrainFunc());
+    public Single<Boolean> reportStudentTrain(ReportSportStudentTrainData request) {
+        return BaseRepositoryUtil.repositoryCommonAsSingle(request, fetchHelper.createReportStudentTrainFunc());
     }
 
-    public Single<Boolean> reportStudentSport(ReportStudentSportRequest request) {
-        return BaseRepositoryUtil.repositoryAsSingle(request, fetchHelper.createReportStudentSportFunc());
+    public Single<Boolean> reportStudentSport(ReportSportStudentData request) {
+        return BaseRepositoryUtil.repositoryCommonAsSingle(request, fetchHelper.createReportStudentSportFunc());
     }
 
-    public Single<Boolean> reportStudentPlan(ReportStudentPlanRequest request) {
-        return BaseRepositoryUtil.repositoryAsSingle(request, fetchHelper.createReportStudentPlanFunc());
+    public Single<Boolean> reportStudentPlan(ReportSportStudentPlanData request) {
+        return BaseRepositoryUtil.repositoryCommonAsSingle(request, fetchHelper.createReportStudentPlanFunc());
     }
 
-    public Single<Boolean> reportStudentMeet(ReportStudentMeetRequest request) {
-        return BaseRepositoryUtil.repositoryAsSingle(request, fetchHelper.createReportStudentMeetFunc());
+    public Single<Boolean> reportStudentMeet(ReportSportStudentMeetData request) {
+        return BaseRepositoryUtil.repositoryCommonAsSingle(request, fetchHelper.createReportStudentMeetFunc());
     }
 
-    public Single<Boolean> reportStudentCompetition(ReportStudentCompetitionRequest request) {
-        return BaseRepositoryUtil.repositoryAsSingle(request, fetchHelper.createReportStudentCompetitionFunc());
+    public Single<Boolean> reportStudentCompetition(ReportSportStudentCompetitionData request) {
+        return BaseRepositoryUtil.repositoryCommonAsSingle(request, fetchHelper.createReportStudentCompetitionFunc());
     }
 
-    public Single<Boolean> reportStudentAllSport(ReportStudentSportRequest request) {
-        return BaseRepositoryUtil.repositoryAsSingle(request, fetchHelper.createReportStudentAllSportFunc());
+    public Single<Boolean> reportStudentAllSport(ReportSportStudentAllData request) {
+        return BaseRepositoryUtil.repositoryCommonAsSingle(request, fetchHelper.createReportStudentAllSportFunc());
     }
 
     public Single<List<OrgRecordData>> getOrgRecordPage(OrgRecordPageRequest request) {

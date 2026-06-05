@@ -1,5 +1,6 @@
 package com.adl.service.data;
 
+import java.io.Serializable;
 import com.adl.service.internal.json.StrictJsonDeserializer;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -10,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @JsonAdapter(StrictJsonDeserializer.class)
-public final class DictMapData {
+public final class DictMapData implements Serializable {
 
     @SerializedName("dict")
     private String dict;

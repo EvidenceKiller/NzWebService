@@ -3,8 +3,10 @@ package com.adl.service.http.request;
 import com.google.gson.annotations.SerializedName;
 
 import lombok.Getter;
+import lombok.ToString;
 
 @Getter
+@ToString(callSuper = true)
 public final class TeachCourseButtonClickCountRequest extends BaseRequest {
     /**
      * 班级Id
@@ -24,8 +26,8 @@ public final class TeachCourseButtonClickCountRequest extends BaseRequest {
         this.date = builder.date;
     }
 
-    public static Builder builder(String classId, String data) {
-        return new Builder(classId, data);
+    public static Builder builder(String classId, String date) {
+        return new Builder(classId, date);
     }
 
     public static class Builder extends BaseRequest.Builder<Builder> {

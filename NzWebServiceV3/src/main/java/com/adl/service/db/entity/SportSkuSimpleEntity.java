@@ -1,11 +1,14 @@
 package com.adl.service.db.entity;
 
+import androidx.annotation.RestrictTo;
+
 import com.adl.service.data.SportSkuSimpleData;
 import com.google.gson.annotations.SerializedName;
 
 import lombok.Data;
 
 @Data
+@RestrictTo(RestrictTo.Scope.LIBRARY)
 public final class SportSkuSimpleEntity {
     @SerializedName("sportSkuId")
     private String sportSkuId;
@@ -14,7 +17,7 @@ public final class SportSkuSimpleEntity {
     private String sportSkuName;
 
     @SerializedName("createTime")
-    private String createTime;
+    private Long createTime = 0L;
 
     @SerializedName("levelType")
     private String levelType;

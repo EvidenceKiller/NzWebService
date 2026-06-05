@@ -1,5 +1,6 @@
 package com.adl.service.data;
 
+import java.io.Serializable;
 import com.adl.service.internal.json.StrictJsonDeserializer;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -12,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @JsonAdapter(StrictJsonDeserializer.class)
-public final class CompetitionData {
+public final class CompetitionData implements Serializable {
     /**
      * 唯一标识符
      */
@@ -47,25 +48,25 @@ public final class CompetitionData {
      * 在线类型
      */
     @SerializedName("onlineType")
-    private Integer onlineType;
+    private Integer onlineType = 0;
 
     /**
      * 机构级别
      */
     @SerializedName("orgLevel")
-    private Integer orgLevel;
+    private Integer orgLevel = 0;
 
     /**
      * 开始时间
      */
     @SerializedName("startTime")
-    private Long startTime;
+    private Long startTime = 0L;
 
     /**
      * 结束时间
      */
     @SerializedName("endTime")
-    private Long endTime;
+    private Long endTime = 0L;
 
     /**
      * 应用代码列表
@@ -83,19 +84,19 @@ public final class CompetitionData {
      * 创建时间
      */
     @SerializedName("createTime")
-    private Long createTime;
+    private Long createTime = 0L;
 
     /**
      * 竞赛启用状态
      */
     @SerializedName("competitionEnabled")
-    private Integer competitionEnabled;
+    private Integer competitionEnabled = 0;
 
     /**
      * 编辑标志
      */
     @SerializedName("editFlag")
-    private Boolean editFlag;
+    private Boolean editFlag = Boolean.FALSE;
 
     /**
      * 机构名称列表
@@ -107,7 +108,7 @@ public final class CompetitionData {
      * 机构类型
      */
     @SerializedName("orgType")
-    private Integer orgType;
+    private Integer orgType = 0;
 
     /**
      * 创建者机构名称
@@ -119,5 +120,5 @@ public final class CompetitionData {
      * 参与人数
      */
     @SerializedName("joinNum")
-    private Integer joinNum;
+    private Integer joinNum = 0;
 }

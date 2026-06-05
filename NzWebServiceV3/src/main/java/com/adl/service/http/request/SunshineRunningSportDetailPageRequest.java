@@ -3,6 +3,7 @@ package com.adl.service.http.request;
 import com.google.gson.annotations.SerializedName;
 
 import lombok.Getter;
+import lombok.ToString;
 
 /**
  * Name : SportDetailListRequest
@@ -11,6 +12,7 @@ import lombok.Getter;
  * Describe : 定义接口请求参数结构
  */
 @Getter
+@ToString(callSuper = true)
 public final class SunshineRunningSportDetailPageRequest extends BasePageRequest {
 
     /**

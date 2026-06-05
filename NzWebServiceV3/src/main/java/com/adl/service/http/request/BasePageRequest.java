@@ -5,11 +5,13 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 import lombok.Getter;
+import lombok.ToString;
 
 /**
  * 分页请求公共字段。
  */
 @Getter
+@ToString(callSuper = true)
 public abstract class BasePageRequest extends BaseRequest {
     @SerializedName("noPaging")
     private Boolean noPaging;

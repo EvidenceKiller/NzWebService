@@ -1,5 +1,7 @@
 package com.adl.service.db.entity;
 
+import androidx.annotation.RestrictTo;
+
 import com.adl.service.db.converter.ListSportMeetGroupDetailEntityConverter;
 import com.adl.service.data.SportMeetGroupTeamData;
 
@@ -18,10 +20,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity(tableName = "_sport_meet_group_team")
 @TypeConverters(value = {ListSportMeetGroupDetailEntityConverter.class})
+@RestrictTo(RestrictTo.Scope.LIBRARY)
 public class SportMeetGroupTeamEntity implements Serializable {
 
     @PrimaryKey(autoGenerate = true)
-    private long lid;
+    private Long lid= 0L;
 
     // 应用编码【手动添加】
     @ColumnInfo(name = "_app_code")
@@ -53,23 +56,23 @@ public class SportMeetGroupTeamEntity implements Serializable {
 
     //  组数
     @ColumnInfo(name = "_team_num")
-    private int teamNum;
+    private Integer teamNum= 0;
 
     //  人数
     @ColumnInfo(name = "_number")
-    private int number;
+    private Integer number= 0;
 
     //  比赛状态 0未完赛 1已完赛
     @ColumnInfo(name = "_competition_status")
-    private int competitionStatus;
+    private Integer competitionStatus= 0;
 
     //  tis_competition_meet_type  1集体 2个人
     @ColumnInfo(name = "_competition_type")
-    private int competitionType;
+    private Integer competitionType= 0;
 
     //  轮次
     @ColumnInfo(name = "_competition_round")
-    private int competitionRound;
+    private Integer competitionRound= 0;
 
     //  人员详情
     @ColumnInfo(name = "_details")

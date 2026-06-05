@@ -4,8 +4,10 @@ import com.google.gson.annotations.SerializedName;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.ToString;
 
 @Getter
+@ToString(callSuper = true)
 public final class DictRequest extends BaseRequest {
 
     @SerializedName("dictId")

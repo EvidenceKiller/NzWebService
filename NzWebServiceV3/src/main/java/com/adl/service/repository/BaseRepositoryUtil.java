@@ -1,7 +1,5 @@
 package com.adl.service.repository;
 
-import android.util.Log;
-
 import com.adl.service.callback.GetPageResult;
 import com.adl.service.data.BasePageData;
 import com.adl.service.exception.NzCommonException;
@@ -9,11 +7,13 @@ import com.adl.service.exception.NzGetPageException;
 import com.adl.service.exception.NzHttpException;
 import com.adl.service.http.request.BasePageRequest;
 import com.adl.service.http.request.BaseRequest;
+import com.adl.service.log.NzLog;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
+import androidx.annotation.RestrictTo;
 import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.functions.Function;
@@ -30,7 +30,27 @@ import io.reactivex.rxjava3.functions.Function;
  * </ul>
  * </p>
  */
+@RestrictTo(RestrictTo.Scope.LIBRARY)
 class BaseRepositoryUtil {
+
+    /**
+     * 执行带参数的异步操作并返回结果
+     * <p>
+     * 适用于简单的数据获取场景，直接执行函数并返回结果
+     * </p>
+     *
+     * @param q 请求参数
+     * @param func    异步函数，接收请求参数，返回 Single<R>
+     * @param <Q>     请求参数类型
+     * @param <R>     返回值类型
+     * @return 异步结果的 Single 包装
+     */
+    public static <Q, R> Single<R> repositoryCommonAsSingle(Q q, Function<Q, Single<R>> func) {
+        if (q == null) {
+            return Single.error(new NzCommonException("request is null"));
+        }
+        return applyFunc(func, q);
+    }
 
     /**
      * 执行无参数的异步操作并返回结果
@@ -43,7 +63,6 @@ class BaseRepositoryUtil {
      * @return 异步结果的 Single 包装
      */
     public static <R> Single<R> repositoryAsSingle(Function<Void, Single<R>> func) {
-        Log.i("ZXN_TEST", "BaseRepository : repositoryAsSingle");
         return applyFunc(func);
     }
 
@@ -85,7 +104,6 @@ class BaseRepositoryUtil {
     public static <Q extends BaseRequest, R> Single<R> repositoryAsSingle(Q request,
                                                                           Function<Q, Single<R>> netFunc,
                                                                           Function<R, Single<R>> persistFunc) {
-        Log.i("ZXN_TEST", "BaseRepository : repositoryAsSingle");
         return repositoryAsSingle(request, null, netFunc, persistFunc);
     }
 
@@ -115,7 +133,6 @@ class BaseRepositoryUtil {
                                                                           Function<Q, Single<R>> prepareFunc,
                                                                           Function<Q, Single<R>> fetchFunc,
                                                                           Function<R, Single<R>> persistFunc) {
-        Log.i("ZXN_TEST", "BaseRepository : repositoryAsSingle");
         if (request == null) {
             return Single.error(new NzCommonException("request is null"));
         }
@@ -152,7 +169,6 @@ class BaseRepositoryUtil {
                                                                                         Function<Q, Single<List<R>>> prepareFunc,
                                                                                         Function<Q, Single<BasePageData<R>>> fetchFunc,
                                                                                         Function<List<R>, Single<List<R>>> persistFunc) {
-        Log.i("ZXN_TEST", "BaseRepository : repositoryPagesAsSingle");
         if (request == null) {
             return Single.error(new NzCommonException("request is null"));
         }
@@ -226,7 +242,7 @@ class BaseRepositoryUtil {
                                                                                                Function<Q, Single<List<R>>> prepareFunc,
                                                                                                Function<Long, Single<List<R>>> fetchFunc,
                                                                                                Function<List<R>, Single<List<R>>> persistFunc) {
-        Log.i("ZXN_TEST", "BasePagePersistence : repositoryListsAsSingle");
+        NzLog.d("BaseRepositoryUtil : repositoryListsAsSingle");
         if (request == null) {
             return Single.error(new NzCommonException("request is null"));
         }
@@ -238,23 +254,23 @@ class BaseRepositoryUtil {
         }
         final String uuId = UUID.randomUUID().toString();
         return Flowable.<Long, Long>generate(() -> 1L, (current, emitter) -> {
-                    Log.i("ZXN_TEST", "BasePagePersistence : repositoryListsAsSingle : generate : currentPage : " + current);
+                    NzLog.d("BaseRepositoryUtil : repositoryListsAsSingle : generate : currentPage : " + current);
                     emitter.onNext(current);
                     return current + 1L;
                 })
                 .concatMapSingle(currentPage -> applyFunc(fetchFunc, currentPage)
                         .flatMap(pageList -> {
-                            Log.i("ZXN_TEST", "BasePagePersistence : repositoryListsAsSingle : execute : currentPage : " + currentPage);
+                            NzLog.d("BaseRepositoryUtil : repositoryListsAsSingle : execute : currentPage : " + currentPage);
                             GetPageResult pageResult = new GetPageResult();
                             pageResult.setUuId(uuId);
                             pageResult.setTotalPages(currentPage);
                             if (pageList == null || pageList.isEmpty()) {
                                 return Single.just(createCurrentPageResult(pageResult, 0L, 0L));
                             }
-                            Log.i("ZXN_TEST", "BasePagePersistence : repositoryListsAsSingle : concatMap : page size : " + pageList.size());
+                            NzLog.d("BaseRepositoryUtil : repositoryListsAsSingle : concatMap : page size : " + pageList.size());
                             return applyFunc(persistFunc, pageList)
                                     .flatMap(persistedList -> {
-                                        Log.i("ZXN_TEST", "BasePagePersistence : repositoryListsAsSingle : persisted : persisted size : " + persistedList.size());
+                                        NzLog.d("BaseRepositoryUtil : repositoryListsAsSingle : persisted : persisted size : " + persistedList.size());
                                         long fetchedCount = pageList == null ? 0 : pageList.size();
                                         long persistedCount = persistedList == null ? 0 : persistedList.size();
                                         return Single.just(createCurrentPageResult(pageResult, fetchedCount, persistedCount));
@@ -324,7 +340,7 @@ class BaseRepositoryUtil {
                                                                                                Function<Q, Single<List<R>>> prepareFunc,
                                                                                                Function<Long, Single<BasePageData<R>>> fetchFunc,
                                                                                                Function<List<R>, Single<List<R>>> persistFunc) {
-        Log.i("ZXN_TEST", "BaseRepository : repositoryPagesAsSingle");
+        NzLog.d("BaseRepositoryUtil : repositoryPagesAsSingle");
         if (request == null) {
             return Single.error(new NzCommonException("request is null"));
         }
@@ -342,7 +358,7 @@ class BaseRepositoryUtil {
                     }
 
                     List<R> firstPageList = firstPageData.getRecords();
-                    Log.i("ZXN_TEST", "BasePagePersistence : repositoryPagesAsSingle : first page : page size : " + firstPageList.size());
+                    NzLog.d("BaseRepositoryUtil : repositoryPagesAsSingle : first page : page size : " + firstPageList.size());
 
                     GetPageResult firstResult = new GetPageResult();
                     firstResult.setUuId(uuId);
@@ -454,7 +470,7 @@ class BaseRepositoryUtil {
      * @throws NzGetPageException 如果当前页失败则抛出异常
      */
     private static GetPageResult accumulatePageResult(String uuId, GetPageResult lastResult, GetPageResult currentResult) throws NzGetPageException {
-        Log.i("ZXN_TEST", "BasePagePersistence : accumulatePageResult : lastResult : " + lastResult.getFetchedCount() + ", currentResult : " + currentResult.getFetchedCount());
+        NzLog.d("BaseRepositoryUtil : accumulatePageResult : lastResult : " + lastResult.getFetchedCount() + ", currentResult : " + currentResult.getFetchedCount());
         if (!currentResult.isSuccess()) {
             throw new NzGetPageException(createFailedPageResult(currentResult.getUuId(), "accumulate page meet some error"));
         }

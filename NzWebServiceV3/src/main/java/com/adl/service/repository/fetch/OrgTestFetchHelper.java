@@ -1,5 +1,7 @@
 package com.adl.service.repository.fetch;
 
+import android.text.TextUtils;
+
 import com.adl.service.data.BasePageData;
 import com.adl.service.data.PlanClassData;
 import com.adl.service.data.PlanData;
@@ -13,6 +15,7 @@ import com.adl.service.http.request.PlanPageRequest;
 import com.adl.service.http.request.PlanStudentPageRequest;
 import com.adl.service.http.request.StandardConfigPageRequest;
 import com.adl.service.internal.RetrofitManager;
+import com.adl.service.web.OpsMaintService;
 import com.adl.service.web.OrgTestService;
 
 import java.util.List;
@@ -22,12 +25,18 @@ import io.reactivex.rxjava3.functions.Function;
 
 public final class OrgTestFetchHelper {
 
-    private static volatile OrgTestFetchHelper instance;
-
-    private final OrgTestService orgTestService;
+    private volatile OrgTestService orgTestService;
+    private volatile String baseUrl;
 
     public OrgTestFetchHelper() {
-        this.orgTestService = RetrofitManager.getInstance().create(OrgTestService.class);
+    }
+
+    private synchronized OrgTestService getService() {
+        if (orgTestService == null || !TextUtils.equals(baseUrl, RetrofitManager.getInstance().getBaseUrl())) {
+            baseUrl = RetrofitManager.getInstance().getBaseUrl();
+            orgTestService = RetrofitManager.getInstance().create(OrgTestService.class);
+        }
+        return orgTestService;
     }
 
     @SuppressWarnings("unchecked")
@@ -39,13 +48,13 @@ public final class OrgTestFetchHelper {
                     .standardId(request.getStandardId())
                     .sportProjectCode(request.getSportProjectCode())
                     .build();
-            return BaseFetchUtil.scheduleResponse(orgTestService.getStandardConfigPage(pageReq), (Class<List<StandardConfigData>>) (Class<?>) List.class);
+            return BaseFetchUtil.scheduleResponse(getService().getStandardConfigPage(pageReq), (Class<List<StandardConfigData>>) (Class<?>) List.class);
         };
     }
 
     @SuppressWarnings("unchecked")
     public Function<StandardConfigPageRequest, Single<List<StandardConfigData>>> createGetStandardConfigPageFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(orgTestService.getStandardConfigPage(request), (Class<List<StandardConfigData>>) (Class<?>) List.class);
+        return (request) -> BaseFetchUtil.scheduleResponse(getService().getStandardConfigPage(request), (Class<List<StandardConfigData>>) (Class<?>) List.class);
     }
 
     @SuppressWarnings("unchecked")
@@ -58,13 +67,13 @@ public final class OrgTestFetchHelper {
                     .classId(request.getClassId())
                     .keyword(request.getKeyword())
                     .build();
-            return BaseFetchUtil.scheduleResponse(orgTestService.getPlanStudentPage(pageReq), (Class<BasePageData<PlanStudentData>>) (Class<?>) BasePageData.class);
+            return BaseFetchUtil.scheduleResponse(getService().getPlanStudentPage(pageReq), (Class<BasePageData<PlanStudentData>>) (Class<?>) BasePageData.class);
         };
     }
 
     @SuppressWarnings("unchecked")
     public Function<PlanStudentPageRequest, Single<BasePageData<PlanStudentData>>> createGetPlanStudentPageFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(orgTestService.getPlanStudentPage(request), (Class<BasePageData<PlanStudentData>>) (Class<?>) BasePageData.class);
+        return (request) -> BaseFetchUtil.scheduleResponse(getService().getPlanStudentPage(request), (Class<BasePageData<PlanStudentData>>) (Class<?>) BasePageData.class);
     }
 
     @SuppressWarnings("unchecked")
@@ -80,25 +89,25 @@ public final class OrgTestFetchHelper {
                     .showStatistic(request.getShowStatistic())
                     .planId(request.getPlanId())
                     .build();
-            return BaseFetchUtil.scheduleResponse(orgTestService.getPlanPage(pageReq), (Class<BasePageData<PlanData>>) (Class<?>) BasePageData.class);
+            return BaseFetchUtil.scheduleResponse(getService().getPlanPage(pageReq), (Class<BasePageData<PlanData>>) (Class<?>) BasePageData.class);
         };
     }
 
     @SuppressWarnings("unchecked")
     public Function<PlanPageRequest, Single<BasePageData<PlanData>>> createGetPlanPageFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(orgTestService.getPlanPage(request), (Class<BasePageData<PlanData>>) (Class<?>) BasePageData.class);
+        return (request) -> BaseFetchUtil.scheduleResponse(getService().getPlanPage(request), (Class<BasePageData<PlanData>>) (Class<?>) BasePageData.class);
     }
 
     public Function<PlanInfoRequest, Single<PlanInfoData>> createGetPlanInfoFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(orgTestService.getPlanInfo(request), PlanInfoData.class);
+        return (request) -> BaseFetchUtil.scheduleResponse(getService().getPlanInfo(request), PlanInfoData.class);
     }
 
     @SuppressWarnings("unchecked")
     public Function<PlanClassPageRequest, Single<List<PlanClassData>>> createGetPlanClassPageFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(orgTestService.getPlanClassPage(request), (Class<List<PlanClassData>>) (Class<?>) List.class);
+        return (request) -> BaseFetchUtil.scheduleResponse(getService().getPlanClassPage(request), (Class<List<PlanClassData>>) (Class<?>) List.class);
     }
 
     public Function<CheckStudentInPlanRequest, Single<Boolean>> createCheckStudentInPlanFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(orgTestService.checkStudentInPlan(request), Boolean.class);
+        return (request) -> BaseFetchUtil.scheduleResponse(getService().checkStudentInPlan(request), Boolean.class);
     }
 }

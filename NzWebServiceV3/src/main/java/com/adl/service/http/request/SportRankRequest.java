@@ -5,8 +5,10 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 import lombok.Getter;
+import lombok.ToString;
 
 @Getter
+@ToString(callSuper = true)
 public final class SportRankRequest extends BaseRequest {
 
     /** 场景code 1001 锻炼 */
@@ -58,8 +60,8 @@ public final class SportRankRequest extends BaseRequest {
         this.appCode = builder.appCode;
     }
 
-    public static Builder builder(String appCode, String sportSceneType) {
-        return new Builder(appCode, sportSceneType);
+    public static Builder builder(String appCode) {
+        return new Builder(appCode);
     }
 
     public static class Builder extends BaseRequest.Builder<Builder> {
@@ -77,13 +79,17 @@ public final class SportRankRequest extends BaseRequest {
         private Long rankNumber;
         private String appCode;
 
-        Builder(String appCode, String sportSceneType) {
+        Builder(String appCode) {
             this.appCode = appCode;
-            this.sportSceneType = sportSceneType;
         }
 
         public Builder sportSceneCodes(List<String> sportSceneCodes) {
             this.sportSceneCodes = sportSceneCodes;
+            return this;
+        }
+
+        public Builder sportSceneType(String sportSceneType) {
+            this.sportSceneType = sportSceneType;
             return this;
         }
 

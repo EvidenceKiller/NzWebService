@@ -1,5 +1,7 @@
 package com.adl.service.db.entity;
 
+import androidx.annotation.RestrictTo;
+
 import com.adl.service.db.converter.ListSportSkuSimpleEntityConverter;
 import com.adl.service.data.StandardConfigData;
 
@@ -17,10 +19,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity(tableName = "_standard_config")
 @TypeConverters(value = {ListSportSkuSimpleEntityConverter.class})
+@RestrictTo(RestrictTo.Scope.LIBRARY)
 public final class StandardConfigEntity {
 
     @PrimaryKey(autoGenerate = true)
-    private long lid;
+    private Long lid= 0L;
 
     /**
      * 标准ID
@@ -68,7 +71,7 @@ public final class StandardConfigEntity {
      * 创建时间
      */
     @ColumnInfo(name = "_create_time")
-    private String createTime;
+    private Long createTime = 0L;
 
     public static StandardConfigEntity convertToEntity(StandardConfigData data) {
         if (data == null) {

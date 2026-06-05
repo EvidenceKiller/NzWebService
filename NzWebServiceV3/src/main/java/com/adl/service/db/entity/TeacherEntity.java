@@ -1,5 +1,7 @@
 package com.adl.service.db.entity;
 
+import androidx.annotation.RestrictTo;
+
 import com.adl.service.db.converter.ListFaceEntityConverter;
 import com.adl.service.data.TeacherData;
 
@@ -18,6 +20,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity(tableName = "_teacher")
 @TypeConverters(value = {ListFaceEntityConverter.class})
+@RestrictTo(RestrictTo.Scope.LIBRARY)
 public final class TeacherEntity {
 
     @ColumnInfo(name = "_user_id")
@@ -38,7 +41,7 @@ public final class TeacherEntity {
     private String accountPhoneNum;
 
     @ColumnInfo(name = "_user_sex")
-    private Integer userSex;
+    private Integer userSex= 0;
 
     @ColumnInfo(name = "_job_num")
     private String jobNum;
@@ -59,19 +62,19 @@ public final class TeacherEntity {
     private String thumbnailUserFaceImgUrl;
 
     @ColumnInfo(name = "_create_time")
-    private String createTime;
+    private Long createTime = 0L;
 
     @ColumnInfo(name = "_update_time")
-    private String updateTime;
+    private Long updateTime = 0L;
 
     @ColumnInfo(name = "_avatar_flag")
-    private Boolean avatarFlag;
+    private Boolean avatarFlag= Boolean.FALSE;
 
     @ColumnInfo(name = "_record_flag")
-    private Boolean recordFlag;
+    private Boolean recordFlag= Boolean.FALSE;
 
     @ColumnInfo(name = "_del_flag")
-    private Boolean delFlag;
+    private Boolean delFlag = Boolean.FALSE;
 
     @ColumnInfo(name = "_face_data_list")
     private List<FaceEntity> faceDataList;

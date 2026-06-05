@@ -25,8 +25,10 @@ import com.adl.service.repository.prepare.BigScreenStatsPrepareHelper;
 
 import java.util.List;
 
+import androidx.annotation.RestrictTo;
 import io.reactivex.rxjava3.core.Single;
 
+@RestrictTo(RestrictTo.Scope.LIBRARY)
 public final class BigScreenStatsRepository {
     private final BigScreenStatsPrepareHelper prepareHelper = new BigScreenStatsPrepareHelper();
     private final BigScreenStatsFetchHelper fetchHelper = new BigScreenStatsFetchHelper();

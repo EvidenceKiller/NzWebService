@@ -1,5 +1,6 @@
 package com.adl.service.data;
 
+import java.io.Serializable;
 import com.adl.service.internal.json.StrictJsonDeserializer;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -10,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @JsonAdapter(StrictJsonDeserializer.class)
-public final class BannerDetailData {
+public final class BannerDetailData implements Serializable {
 
     /**
      * 主键id
@@ -58,17 +59,17 @@ public final class BannerDetailData {
      * 排序
      */
     @SerializedName("bannerSort")
-    private Integer bannerSort;
+    private Integer bannerSort = 0;
 
     @SerializedName("createTime")
-    private String createTime;
+    private Long createTime = 0L;
 
     @SerializedName("updateTime")
-    private String updateTime;
+    private Long updateTime = 0L;
 
     @SerializedName("bannerEnable")
-    private Boolean bannerEnable;
+    private Boolean bannerEnable = Boolean.FALSE;
 
     @SerializedName("currentFlag")
-    private Boolean currentFlag;
+    private Boolean currentFlag = Boolean.FALSE;
 }

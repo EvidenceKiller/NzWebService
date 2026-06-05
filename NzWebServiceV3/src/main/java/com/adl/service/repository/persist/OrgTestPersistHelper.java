@@ -7,6 +7,7 @@ import com.adl.service.db.DaoManagerProxy;
 import com.adl.service.db.entity.PlanEntity;
 import com.adl.service.db.entity.PlanStudentEntity;
 import com.adl.service.db.entity.StandardConfigEntity;
+import com.adl.service.exception.NzCommonException;
 import com.adl.service.http.request.PlanPageRequest;
 import com.adl.service.http.request.PlanStudentPageRequest;
 
@@ -24,7 +25,7 @@ public final class OrgTestPersistHelper {
     public Function<List<PlanStudentData>, Single<List<PlanStudentData>>> createPersistPlanStudentPageFunc(PlanStudentPageRequest request) {
         return (pageData) -> {
             if (pageData == null || pageData.isEmpty()) {
-                return Single.just(pageData);
+                return Single.error(new NzCommonException("plan student data list is null"));
             }
             List<PlanStudentEntity> entityList = pageData.stream()
                     .map(data -> PlanStudentEntity.convertToEntity(data))
@@ -38,7 +39,7 @@ public final class OrgTestPersistHelper {
     public Function<List<PlanData>, Single<List<PlanData>>> createPersistPlanPageFunc(PlanPageRequest request) {
         return (pageData) -> {
             if (pageData == null || pageData.isEmpty()) {
-                return Single.just(pageData);
+                return Single.error(new NzCommonException("plan data list is null"));
             }
             // 将 PlanData 转换为 PlanEntity
             List<PlanEntity> entityList = pageData.stream()
@@ -53,7 +54,7 @@ public final class OrgTestPersistHelper {
     public Function<List<StandardConfigData>, Single<List<StandardConfigData>>> createPersistStandardConfigPageFunc() {
         return (dataList) -> {
             if (dataList == null || dataList.isEmpty()) {
-                return Single.just(dataList);
+                return Single.error(new NzCommonException("student config data list is null"));
             }
             List<StandardConfigEntity> entityList = dataList.stream()
                     .map(data -> StandardConfigEntity.convertToEntity(data))

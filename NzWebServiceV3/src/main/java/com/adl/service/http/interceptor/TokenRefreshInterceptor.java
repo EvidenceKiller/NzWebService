@@ -24,9 +24,6 @@ public class TokenRefreshInterceptor implements Interceptor {
     public Response intercept(Chain chain) throws IOException {
         Request request = chain.request();
         Response response = chain.proceed(request);
-
-        NzLog.d("response.code = " + response.code());
-
         if (isTokenExpired(response)) {
             autoLoginFailNum = 0;
             // 根据和服务端的约定判断token过期
@@ -59,7 +56,7 @@ public class TokenRefreshInterceptor implements Interceptor {
             String accessToken = AdlAuthFactory.create(AdlService.getService().getContext()).getAccessToken();
             AdlService.getService().setDeviceToken(accessToken);
             //更新OSS的Token
-            OssClient.getInstance().updateAuthorization("Bearer " + accessToken);
+            OssClient.getInstance().updateAuthorization(AdlService.getService().getContext(), "Bearer " + accessToken);
             return accessToken;
         } else {
             autoLoginFailNum++;

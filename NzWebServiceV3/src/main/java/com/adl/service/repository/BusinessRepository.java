@@ -7,6 +7,8 @@ import com.adl.service.data.GroupData;
 import com.adl.service.data.GroupTeamData;
 import com.adl.service.data.GroupTeamDetailData;
 import com.adl.service.data.ResData;
+import com.adl.service.data.ResInfoData;
+import com.adl.service.data.ResTabData;
 import com.adl.service.data.ResTypeData;
 import com.adl.service.data.SportMeetData;
 import com.adl.service.data.TrainPlanInfoData;
@@ -15,6 +17,7 @@ import com.adl.service.http.request.CompetitionPageRequest;
 import com.adl.service.http.request.CompetitionRankDetailRequest;
 import com.adl.service.http.request.DownloadGroupTeamDetailPageRequest;
 import com.adl.service.http.request.DownloadGroupTeamPageRequest;
+import com.adl.service.http.request.EmptyRequest;
 import com.adl.service.http.request.GetGroupRequest;
 import com.adl.service.http.request.JoinCompetitionRankRequest;
 import com.adl.service.http.request.ResInfoRequest;
@@ -111,6 +114,10 @@ public final class BusinessRepository {
         return BaseRepositoryUtil.repositoryAsSingle(request, fetchHelper.createDownloadGroupTeamDetailPageFunc());
     }
 
+    public Single<List<ResTabData>> getResTabList(EmptyRequest request) {
+        return BaseRepositoryUtil.repositoryAsSingle(request, fetchHelper.createGetResTabListFunc());
+    }
+
     public Single<List<ResTypeData>> getResTypeList(ResTypeListRequest request) {
         return BaseRepositoryUtil.repositoryAsSingle(request, fetchHelper.createGetResTypeListFunc());
     }
@@ -119,7 +126,7 @@ public final class BusinessRepository {
         return BaseRepositoryUtil.repositoryPageAsSingle(request, fetchHelper.createGetResPageFunc());
     }
 
-    public Single<ResData> getResInfo(ResInfoRequest request) {
+    public Single<ResInfoData> getResInfo(ResInfoRequest request) {
         return BaseRepositoryUtil.repositoryAsSingle(request, fetchHelper.createGetResInfoFunc());
     }
 }

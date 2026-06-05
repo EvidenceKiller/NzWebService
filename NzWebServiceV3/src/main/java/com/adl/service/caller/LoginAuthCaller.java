@@ -22,7 +22,7 @@ public interface LoginAuthCaller {
      * 设备登录
      * <p>同步调用。</p>
      */
-    LoginData loginSync(LoginRequest request) throws NzBaseException;
+    LoginData loginSync(LoginRequest request);
 
     /**
      * 退出登录
@@ -34,6 +34,6 @@ public interface LoginAuthCaller {
      * 退出登录
      * <p>同步调用。</p>
      */
-    String logoutSync(LogoutRequest request) throws NzBaseException;
+    String logoutSync(LogoutRequest request);
 
 }

@@ -1,5 +1,6 @@
 package com.adl.service.data;
 
+import java.io.Serializable;
 import com.adl.service.internal.json.StrictJsonDeserializer;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -17,7 +18,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @JsonAdapter(StrictJsonDeserializer.class)
-public final class SunshineRunningSportDetailData {
+public final class SunshineRunningSportDetailData implements Serializable {
     /**
      * 账号Id
      */
@@ -57,12 +58,12 @@ public final class SunshineRunningSportDetailData {
      * 运动时间
      */
     @SerializedName("sportTime")
-    private Long sportTime;
+    private Long sportTime = 0L;
     /**
      * 运动开始时间
      */
     @SerializedName("sportStartTime")
-    private Long sportStartTime;
+    private Long sportStartTime = 0L;
     /**
      * 班级Id
      */

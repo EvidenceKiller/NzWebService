@@ -40,7 +40,7 @@ public interface BigScreenStatsCaller {
      * 双人对战排行榜
      * <p>同步调用。</p>
      */
-    List<WarRecordRankData> getWarRecordRankSync(WarRecordRankRequest request) throws NzBaseException;
+    List<WarRecordRankData> getWarRecordRankSync(WarRecordRankRequest request);
 
     /**
      * 个人运动排名
@@ -52,7 +52,7 @@ public interface BigScreenStatsCaller {
      * 个人运动排名
      * <p>同步调用。</p>
      */
-    PersonRankData getPersonRankSync(PersonRankRequest request) throws NzBaseException;
+    PersonRankData getPersonRankSync(PersonRankRequest request);
 
     /**
      * 多人对战胜利榜
@@ -64,7 +64,7 @@ public interface BigScreenStatsCaller {
      * 多人对战胜利榜
      * <p>同步调用。</p>
      */
-    List<MorePeopleVictoryRankData> getMorePeopleVictoryRankSync(MorePeopleVictoryRankRequest request) throws NzBaseException;
+    List<MorePeopleVictoryRankData> getMorePeopleVictoryRankSync(MorePeopleVictoryRankRequest request);
 
     /**
      * 多人对战排行榜
@@ -76,7 +76,7 @@ public interface BigScreenStatsCaller {
      * 多人对战排行榜
      * <p>同步调用。</p>
      */
-    List<MorePeopleRecordRankData> getMorePeopleRecordRankSync(MorePeopleRecordRankRequest request) throws NzBaseException;
+    List<MorePeopleRecordRankData> getMorePeopleRecordRankSync(MorePeopleRecordRankRequest request);
 
     /**
      * 总览数据
@@ -88,7 +88,7 @@ public interface BigScreenStatsCaller {
      * 总览数据
      * <p>同步调用。</p>
      */
-    OverviewData getOverviewSync(OverviewRequest request) throws NzBaseException;
+    OverviewData getOverviewSync(OverviewRequest request);
 
     /**
      * 赛事排行榜
@@ -100,7 +100,7 @@ public interface BigScreenStatsCaller {
      * 赛事排行榜
      * <p>同步调用。</p>
      */
-    CompetitionRankData getCompetitionRankSync(CompetitionRankRequest request) throws NzBaseException;
+    CompetitionRankData getCompetitionRankSync(CompetitionRankRequest request);
 
     /**
      * 项目结果求和排名
@@ -112,7 +112,7 @@ public interface BigScreenStatsCaller {
      * 项目结果求和排名
      * <p>同步调用。</p>
      */
-    List<SumScoreRankData> sumScoreRankSync(SumScoreRankRequest request) throws NzBaseException;
+    List<SumScoreRankData> sumScoreRankSync(SumScoreRankRequest request);
 
     /**
      * 项目热度排行
@@ -124,7 +124,7 @@ public interface BigScreenStatsCaller {
      * 项目热度排行
      * <p>同步调用。</p>
      */
-    List<SportSkuRankData> getSportSkuRankSync(SportRankRequest request) throws NzBaseException;
+    List<SportSkuRankData> getSportSkuRankSync(SportRankRequest request);
 
     /**
      * 霸榜之王
@@ -136,7 +136,7 @@ public interface BigScreenStatsCaller {
      * 霸榜之王
      * <p>同步调用。</p>
      */
-    List<SportRankKingData> getSportRankKingSync(SportRankRequest request) throws NzBaseException;
+    List<SportRankKingData> getSportRankKingSync(SportRankRequest request);
 
     /**
      * 锻炼排行榜、历史最佳
@@ -148,7 +148,7 @@ public interface BigScreenStatsCaller {
      * 锻炼排行榜、历史最佳
      * <p>同步调用。</p>
      */
-    List<SportRankKingData> getPhysicalTrainingRankSync(SportRankRequest request) throws NzBaseException;
+    List<SportRankKingData> getPhysicalTrainingRankSync(SportRankRequest request);
 
     /**
      * 锻炼之星
@@ -160,7 +160,7 @@ public interface BigScreenStatsCaller {
      * 锻炼之星
      * <p>同步调用。</p>
      */
-    List<SportRankKingData> getExerciseSumTimeRankSync(SportRankRequest request) throws NzBaseException;
+    List<SportRankKingData> getExerciseSumTimeRankSync(SportRankRequest request);
 
     /**
      * 最佳榜单
@@ -172,6 +172,6 @@ public interface BigScreenStatsCaller {
      * 最佳榜单
      * <p>同步调用。</p>
      */
-    List<BestRankTopData> getBestRankTopSync(BestRankTopRequest request) throws NzBaseException;
+    List<BestRankTopData> getBestRankTopSync(BestRankTopRequest request);
 
 }

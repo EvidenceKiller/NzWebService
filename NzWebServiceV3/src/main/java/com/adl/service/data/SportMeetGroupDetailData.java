@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @JsonAdapter(StrictJsonDeserializer.class)
-public class SportMeetGroupDetailData implements Serializable {
+public final class SportMeetGroupDetailData implements Serializable {
     //  运动会id【手动添加】
     @SerializedName("meetId")
     private String meetId;
@@ -23,7 +23,7 @@ public class SportMeetGroupDetailData implements Serializable {
 
     //  轮次【手动添加】
     @SerializedName("competitionRound")
-    private int competitionRound;
+    private Integer competitionRound = 0;
 
     //  分组code
     @SerializedName("teamUnitCode")
@@ -35,11 +35,11 @@ public class SportMeetGroupDetailData implements Serializable {
 
     //  组号
     @SerializedName("groupNo")
-    private int groupNo;
+    private Integer groupNo = 0;
 
     //  识别类型  参考字典编码：adl_tis_competition_meet_identify_type（0跑道识别 1运动员编码 2序号识别）
     @SerializedName("identifyType")
-    private int identifyType;
+    private Integer identifyType = 0;
 
     //  跑道号
     @SerializedName("runwayCode")

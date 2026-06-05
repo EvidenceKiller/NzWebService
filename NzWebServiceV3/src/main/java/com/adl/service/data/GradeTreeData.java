@@ -1,5 +1,6 @@
 package com.adl.service.data;
 
+import java.io.Serializable;
 import com.adl.service.internal.json.StrictJsonDeserializer;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -12,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @JsonAdapter(StrictJsonDeserializer.class)
-public final class GradeTreeData {
+public final class GradeTreeData implements Serializable {
     /**
      * 年级ID
      */
@@ -23,13 +24,13 @@ public final class GradeTreeData {
      * 入学年份 入学年份 入学时间（2019）
      */
     @SerializedName("enterYear")
-    private Integer enterYear;
+    private Integer enterYear = 0;
 
     /**
      * 毕业年份 毕业年份 毕业时间（2020）
      */
     @SerializedName("graduationYear")
-    private Integer graduationYear;
+    private Integer graduationYear = 0;
 
     /**
      * 年级编码 org_code_enter_year
@@ -53,7 +54,7 @@ public final class GradeTreeData {
      * 是否毕业 参考字典编码：adl_tis_graduation_flag（1 毕业 0 未毕业）
      */
     @SerializedName("graduationFlag")
-    private Integer graduationFlag;
+    private Integer graduationFlag = 0;
 
     @SerializedName("classList")
     private List<GradeClassData> classList;
@@ -62,13 +63,13 @@ public final class GradeTreeData {
      * 年级序号（根据当前学段）
      */
     @SerializedName("gradeNumByStage")
-    private Integer gradeNumByStage;
+    private Integer gradeNumByStage = 0;
 
     /**
      * 年级序号（总年级编号）
      */
     @SerializedName("gradeNum")
-    private Integer gradeNum;
+    private Integer gradeNum = 0;
 
     /**
      * 学段代码

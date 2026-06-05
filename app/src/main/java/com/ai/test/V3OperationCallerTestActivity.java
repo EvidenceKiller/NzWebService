@@ -75,6 +75,12 @@ public class V3OperationCallerTestActivity extends AppCompatActivity {
 
     private SportSkuPageRequest buildSportSkuPageRequest() {
         return SportSkuPageRequest.builder()
+                .appCode("101101")
+                .delFlag(false)
+                .enabled(true)
+                .sceneId("1001")
+                .current(1L)
+                .pageSize(500L)
                 .build();
     }
 

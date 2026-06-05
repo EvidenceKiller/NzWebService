@@ -1,14 +1,22 @@
 package com.adl.service.internal;
 
+import android.content.Context;
+import android.text.TextUtils;
+
+import com.adl.service.AdlService;
 import com.adl.service.http.interceptor.HeaderInterceptor;
+import com.adl.service.http.interceptor.SmartCacheInterceptor;
 import com.adl.service.http.interceptor.TokenRefreshInterceptor;
+import com.adl.service.internal.json.SerializedNameExclusionStrategy;
+import com.adl.service.log.NzLog;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
+import lombok.Getter;
 import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory;
@@ -19,45 +27,61 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 final class RetrofitClient {
 
-    private boolean isInit = false;
+    private static long HTTP_CACHE_TIME = 30 * 24 * 60 * 60; //接口缓存时间
+
     private OkHttpClient okHttpClient;
     private Retrofit retrofit;
+
+    @Getter
+    private String baseUrl;
 
     public RetrofitClient() {
     }
 
-    public synchronized void init(String baseUrl, boolean debug) {
-        if (isInit) {
-            return;
+    public synchronized void init(Context context, String baseUrl) {
+        NzLog.i("RetorfitClient::init : baseUrl : " + baseUrl);
+        if (context == null) {
+            NzLog.e("RetorfitClient::init : context is null!!!");
         }
-        // 1. OkHttpClient
-        okHttpClient = new OkHttpClient.Builder()
-                .connectTimeout(15, TimeUnit.SECONDS)
-                .readTimeout(30, TimeUnit.SECONDS)
-                .writeTimeout(30, TimeUnit.SECONDS)
-                .addInterceptor(new HeaderInterceptor())
-                .addInterceptor(new TokenRefreshInterceptor())
-                .addInterceptor(new HttpLoggingInterceptor().setLevel(debug ? HttpLoggingInterceptor.Level.BODY : HttpLoggingInterceptor.Level.NONE))
-//                .addInterceptor(new SmartCacheInterceptor(AdlService.getService().getContext(), true, HTTP_CACHE_TIME))
-                .build();
+        if (TextUtils.isEmpty(baseUrl)) {
+            NzLog.e("RetorfitClient::init : baseUrl is empty!!!");
+        }
+        if (okHttpClient == null) {
+            // 1. OkHttpClient
+            okHttpClient = new OkHttpClient.Builder()
+                    .connectTimeout(15, TimeUnit.SECONDS)
+                    .readTimeout(30, TimeUnit.SECONDS)
+                    .writeTimeout(30, TimeUnit.SECONDS)
+                    .addInterceptor(new HeaderInterceptor())
+                    .addInterceptor(new TokenRefreshInterceptor())
+                    .addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
+                    .addInterceptor(new SmartCacheInterceptor(context, true, HTTP_CACHE_TIME))
+                    .build();
+        }
 
-        // 2. Retrofit（支持 RxJava3）
-        retrofit = new Retrofit.Builder()
-                .baseUrl(baseUrl)
-                .client(okHttpClient)
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
-                .build();
-        isInit = true;
+        if (!TextUtils.equals(this.baseUrl, baseUrl)) {
+            this.baseUrl = baseUrl;
+
+            Gson gson = new GsonBuilder()
+                    .setExclusionStrategies(new SerializedNameExclusionStrategy())
+                    .create();
+
+            NzLog.i("RetorfitClient::init : setBaseUrl : " + baseUrl);
+            // 2. Retrofit（支持 RxJava3）
+            retrofit = new Retrofit.Builder()
+                    .baseUrl(baseUrl)
+                    .client(okHttpClient)
+                    .addConverterFactory(GsonConverterFactory.create(gson))
+                    .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
+                    .build();
+        }
     }
 
     /**
      * 重置单例（用于切换 baseUrl，如环境切换）
      */
     public synchronized void release() {
-        if (!isInit) {
-            return;
-        }
+        NzLog.i("RetorfitClient::release");
         // 关闭 OkHttpClient
         if (okHttpClient != null) {
             // 关闭连接池
@@ -78,18 +102,13 @@ final class RetrofitClient {
             okHttpClient = null;
         }
         retrofit = null;
-        isInit = false;
+        baseUrl = null;
     }
 
-    public <T> T create(Class<T> service) {
-        if (!isInit) {
+    public synchronized <T> T create(Class<T> service) {
+        if (retrofit == null) {
             throw new IllegalStateException("请先调用 init() 初始化");
         }
         return retrofit.create(service);
-    }
-
-    // TODO 临时开放
-    public Response newCall(Request request) throws IOException {
-        return okHttpClient.newCall(request).execute();
     }
 }

@@ -1,5 +1,7 @@
 package com.adl.service.db.entity;
 
+import androidx.annotation.RestrictTo;
+
 import com.adl.service.data.SportMeetGroupDetailData;
 
 import java.io.Serializable;
@@ -13,10 +15,11 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @Entity(tableName = "_sport_meet_group_detail")
+@RestrictTo(RestrictTo.Scope.LIBRARY)
 public class SportMeetGroupDetailEntity implements Serializable {
 
     @PrimaryKey(autoGenerate = true)
-    private long lid;
+    private Long lid= 0L;
 
     // 应用编码【手动添加】
     @ColumnInfo(name = "_app_code")
@@ -32,7 +35,7 @@ public class SportMeetGroupDetailEntity implements Serializable {
 
     //  轮次【手动添加】
     @ColumnInfo(name = "_competition_round")
-    private int competitionRound;
+    private Integer competitionRound= 0;
 
     //  分组code
     @ColumnInfo(name = "_team_unit_code")
@@ -44,11 +47,11 @@ public class SportMeetGroupDetailEntity implements Serializable {
 
     //  组号
     @ColumnInfo(name = "_group_no")
-    private int groupNo;
+    private Integer groupNo= 0;
 
     //  识别类型  参考字典编码：adl_tis_competition_meet_identify_type（0跑道识别 1运动员编码 2序号识别）
     @ColumnInfo(name = "_identify_type")
-    private int identifyType;
+    private Integer identifyType= 0;
 
     //  跑道号
     @ColumnInfo(name = "_runway_code")
@@ -91,7 +94,7 @@ public class SportMeetGroupDetailEntity implements Serializable {
     private String sportResult;
 
     //  手动数据
-    public void setManualData(String appCode, String meetId, String meetSportSkuId, int competitionRound) {
+    public void setManualData(String appCode, String meetId, String meetSportSkuId, Integer competitionRound) {
         this.appCode = appCode;
         this.meetId = meetId;
         this.meetSportSkuId = meetSportSkuId;

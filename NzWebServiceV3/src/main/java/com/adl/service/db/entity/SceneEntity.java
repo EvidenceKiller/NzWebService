@@ -1,5 +1,7 @@
 package com.adl.service.db.entity;
 
+import androidx.annotation.RestrictTo;
+
 import com.adl.service.data.SceneData;
 
 import java.io.Serializable;
@@ -13,10 +15,11 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @Entity(tableName = "_scene")
+@RestrictTo(RestrictTo.Scope.LIBRARY)
 public final class SceneEntity implements Serializable {
 
     @PrimaryKey(autoGenerate = true)
-    private long lid;
+    private Long lid= 0L;
 
     /**
      * 主键id
@@ -49,7 +52,7 @@ public final class SceneEntity implements Serializable {
      * 序号
      */
     @ColumnInfo(name = "_scene_sort")
-    private Long sceneSort;
+    private Long sceneSort= 0L;
 
     /**
      * 场景类型 场景类型 1 锻炼 测试
@@ -58,7 +61,7 @@ public final class SceneEntity implements Serializable {
     private String sceneType;
 
     @ColumnInfo(name = "_enabled")
-    private Boolean enabled;
+    private Boolean enabled= Boolean.FALSE;
     ;
 
     public static SceneEntity convertToEntity(SceneData data, String appCode) {

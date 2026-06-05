@@ -1,5 +1,7 @@
 package com.adl.service.data;
 
+import com.google.gson.annotations.SerializedName;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -23,20 +25,24 @@ public final class BaseResponse<T> {
     /**
      * 业务状态码
      */
-    private Integer code;
+    @SerializedName("code")
+    private Integer code = 0;
 
     /**
      * 提示信息
      */
+    @SerializedName("msg")
     private String msg;
 
     /**
      * 是否成功标志位
      */
-    private Boolean succeed;
+    @SerializedName("succeed")
+    private Boolean succeed = Boolean.FALSE;
 
     /**
      * 业务数据
      */
+    @SerializedName("data")
     private T data;
 }

@@ -1,5 +1,6 @@
 package com.adl.service.data;
 
+import java.io.Serializable;
 import com.adl.service.internal.json.StrictJsonDeserializer;
 import com.adl.service.http.request.BaseGroup;
 import com.adl.service.http.request.BaseGroupRule;
@@ -14,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @JsonAdapter(StrictJsonDeserializer.class)
-public final class GroupData {
+public final class GroupData implements Serializable {
 
     /**
      * 场景 code
@@ -56,5 +57,5 @@ public final class GroupData {
      * 长跑分组模式 1-号牌 2-人脸 - 邓工要求加的字段
      */
     @SerializedName("longModeType")
-    private Integer longModeType;
+    private Integer longModeType = 0;
 }

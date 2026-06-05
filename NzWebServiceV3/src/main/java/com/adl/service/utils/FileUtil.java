@@ -1,6 +1,7 @@
 package com.adl.service.utils;
 
 import android.os.Environment;
+import android.text.TextUtils;
 
 import com.adl.service.common.IDefine;
 
@@ -53,5 +54,23 @@ public class FileUtil {
     public static File createLog(String fileName) {
         File other = createDirectory(IDefine.DirLog);
         return new File(other, fileName);
+    }
+
+    public static String getFileSuffix(String path) {
+        if (TextUtils.isEmpty(path)) return "";
+
+        int index = path.lastIndexOf(".");
+        return index >= 0 ? path.substring(index) : "";
+    }
+
+    public static void deleteFileDir(File fileDir) {
+        if (!fileDir.exists()) return;
+
+        File[] list = fileDir.listFiles();
+        if (list != null) {
+            for (File f : list) {
+                f.delete();
+            }
+        }
     }
 }

@@ -16,12 +16,12 @@ public interface LoginAuthService {
     /**
      * 设备登录
      */
-    @POST("v3/gateway/api/sso/login")
+    @POST("sso/login")
     Single<BaseResponse<LoginData>> login(@Body LoginRequest request);
 
     /**
      * 退出登录
      */
-    @POST("v3/gateway/api/sso/logout")
+    @POST("sso/logout")
     Single<BaseResponse<String>> logout(@Body LogoutRequest request);
 }

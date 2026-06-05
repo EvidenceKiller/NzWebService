@@ -1,6 +1,9 @@
 package com.adl.service.db.entity;
 
+import androidx.annotation.RestrictTo;
+
 import com.adl.service.data.SportProjectData;
+import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
@@ -9,13 +12,14 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
+@RestrictTo(RestrictTo.Scope.LIBRARY)
 public final class SportProjectEntity implements Serializable {
     /**
      * 精度
      * 参考字典编码:adl_tis_physical_test_plan_decimal_precision
      * (0 整数 1 小数后一位 2 小数后两位 3 小数后三位)
      */
-    private Integer decimalPrecision;
+    private Integer decimalPrecision= 0;
 
     /**
      * 项目分计算方程式
@@ -27,7 +31,7 @@ public final class SportProjectEntity implements Serializable {
      * 参考字典编码:adl_tis_physical_test_plan_round
      * (0 向上取整 1 向下取整 4 四舍五入)
      */
-    private Integer round;
+    private Integer round= 0;
 
     /**
      * 性别
@@ -48,11 +52,6 @@ public final class SportProjectEntity implements Serializable {
     private String weightType;
 
     /**
-     * 运动附加标准id
-     */
-    private String addSportSkuId;
-
-    /**
      * 项目id
      */
     private String sportSkuId;
@@ -63,30 +62,11 @@ public final class SportProjectEntity implements Serializable {
     private String sportSkuName;
 
     /**
-     * 结算类型
-     * 0仅分数 1仅等级 2分数和等级
-     */
-    private Integer settlementType;
-
-    /**
-     * 测量方式
-     */
-    private String measureMode;
-
-    /**
-     * 单位名称
-     */
-    private String unitName;
-
-    /**
      * 限制报告数量
      */
-    private Integer limitReportCount;
+    private Integer limitReportCount = 0;
 
-    /**
-     * 测量单位代码
-     */
-    private String measureUnitCode;
+    private Integer testCount = 0;
 
     public static SportProjectEntity convertToEntity(SportProjectData data) {
         if (data == null) {
@@ -99,14 +79,10 @@ public final class SportProjectEntity implements Serializable {
         entity.setSex(data.getSex());
         entity.setWeight(data.getWeight());
         entity.setWeightType(data.getWeightType());
-        entity.setAddSportSkuId(data.getAddSportSkuId());
         entity.setSportSkuId(data.getSportSkuId());
         entity.setSportSkuName(data.getSportSkuName());
-        entity.setSettlementType(data.getSettlementType());
-        entity.setMeasureMode(data.getMeasureMode());
-        entity.setUnitName(data.getUnitName());
         entity.setLimitReportCount(data.getLimitReportCount());
-        entity.setMeasureUnitCode(data.getMeasureUnitCode());
+        entity.setTestCount(data.getTestCount());
         return entity;
     }
 
@@ -121,14 +97,10 @@ public final class SportProjectEntity implements Serializable {
         data.setSex(entity.getSex());
         data.setWeight(entity.getWeight());
         data.setWeightType(entity.getWeightType());
-        data.setAddSportSkuId(entity.getAddSportSkuId());
         data.setSportSkuId(entity.getSportSkuId());
         data.setSportSkuName(entity.getSportSkuName());
-        data.setSettlementType(entity.getSettlementType());
-        data.setMeasureMode(entity.getMeasureMode());
-        data.setUnitName(entity.getUnitName());
         data.setLimitReportCount(entity.getLimitReportCount());
-        data.setMeasureUnitCode(entity.getMeasureUnitCode());
+        data.setTestCount(entity.getTestCount());
         return data;
     }
 }

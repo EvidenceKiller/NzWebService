@@ -1,5 +1,6 @@
 package com.adl.service.data;
 
+import java.io.Serializable;
 import com.adl.service.internal.json.StrictJsonDeserializer;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -10,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @JsonAdapter(StrictJsonDeserializer.class)
-public final class WarRecordRankData {
+public final class WarRecordRankData implements Serializable {
 
     /**
      * 用户ID
@@ -40,19 +41,19 @@ public final class WarRecordRankData {
      * 胜者成绩
      */
     @SerializedName("winnerAchievement")
-    private Integer winnerAchievement;
+    private Integer winnerAchievement = 0;
 
     /**
      * 胜者个数
      */
     @SerializedName("winnerCount")
-    private Integer winnerCount;
+    private Integer winnerCount = 0;
 
     /**
      * 胜者时间
      */
     @SerializedName("winnerTime")
-    private Integer winnerTime;
+    private Integer winnerTime = 0;
 
     /**
      * 败者用户ID
@@ -76,17 +77,17 @@ public final class WarRecordRankData {
      * 败者成绩
      */
     @SerializedName("loserAchievement")
-    private Integer loserAchievement;
+    private Integer loserAchievement = 0;
 
     /**
      * 败者个数
      */
     @SerializedName("loserCount")
-    private Integer loserCount;
+    private Integer loserCount = 0;
 
     /**
      * 败者时间
      */
     @SerializedName("loserTime")
-    private Integer loserTime;
+    private Integer loserTime = 0;
 }

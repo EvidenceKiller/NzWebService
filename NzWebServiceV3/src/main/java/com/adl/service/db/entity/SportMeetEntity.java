@@ -1,5 +1,7 @@
 package com.adl.service.db.entity;
 
+import androidx.annotation.RestrictTo;
+
 import com.adl.service.db.converter.ListClassSimpleEntityConverter;
 import com.adl.service.db.converter.ListSportMeetGroupTeamEntityConverter;
 import com.adl.service.db.converter.ListSportMeetSimpleClassEntityConverter;
@@ -26,10 +28,11 @@ import lombok.NoArgsConstructor;
         ListSportMeetSimpleClassEntityConverter.class,
         ListClassSimpleEntityConverter.class
 })
+@RestrictTo(RestrictTo.Scope.LIBRARY)
 public final class SportMeetEntity implements Serializable {
 
     @PrimaryKey(autoGenerate = true)
-    private long lid;
+    private Long lid= 0L;
 
     // 应用编码【手动添加】
     @ColumnInfo(name = "_app_code")
@@ -39,7 +42,7 @@ public final class SportMeetEntity implements Serializable {
      * 是否启用排序
      */
     @ColumnInfo(name = "_enable_sort")
-    private Boolean enableSort;
+    private Boolean enableSort= Boolean.FALSE;
 
     /**
      * 模块字符串
@@ -69,25 +72,25 @@ public final class SportMeetEntity implements Serializable {
      * 开始时间
      */
     @ColumnInfo(name = "_start_time")
-    private Long startTime;
+    private Long startTime= 0L;
 
     /**
      * 结束时间
      */
     @ColumnInfo(name = "_end_time")
-    private Long endTime;
+    private Long endTime= 0L;
 
     /**
      * 报名开始时间
      */
     @ColumnInfo(name = "_apply_start_time")
-    private Long applyStartTime;
+    private Long applyStartTime= 0L;
 
     /**
      * 报名结束时间
      */
     @ColumnInfo(name = "_apply_end_time")
-    private Long applyEndTime;
+    private Long applyEndTime= 0L;
 
     /**
      * 创建者编码
@@ -117,31 +120,31 @@ public final class SportMeetEntity implements Serializable {
      * 删除标志
      */
     @ColumnInfo(name = "_del_flag")
-    private Boolean delFlag;
+    private Boolean delFlag= Boolean.FALSE;
 
     /**
      * 创建时间
      */
     @ColumnInfo(name = "_create_time")
-    private Long createTime;
+    private Long createTime= 0L;
 
     /**
      * 更新时间
      */
     @ColumnInfo(name = "_update_time")
-    private Long updateTime;
+    private Long updateTime= 0L;
 
     /**
      * 限制团队数量
      */
     @ColumnInfo(name = "_limit_team_num")
-    private Integer limitTeamNum;
+    private Integer limitTeamNum= 0;
 
     /**
      * 限制人数
      */
     @ColumnInfo(name = "_limit_person_num")
-    private Integer limitPersonNum;
+    private Integer limitPersonNum= 0;
 
     /**
      * 运动会副标题
@@ -183,13 +186,13 @@ public final class SportMeetEntity implements Serializable {
      * 状态
      */
     @ColumnInfo(name = "_state")
-    private Integer state;
+    private Integer state= 0;
 
     /**
      * 报名状态
      */
     @ColumnInfo(name = "_apply_state")
-    private Integer applyState;
+    private Integer applyState= 0;
 
     /**
      * 班级ID列表
@@ -213,13 +216,13 @@ public final class SportMeetEntity implements Serializable {
      * 报名用户数量
      */
     @ColumnInfo(name = "_apply_user_count")
-    private Integer applyUserCount;
+    private Integer applyUserCount= 0;
 
     /**
      * 运动员数量
      */
     @ColumnInfo(name = "_players_num")
-    private Integer playersNum;
+    private Integer playersNum= 0;
 
     /**
      * 密码

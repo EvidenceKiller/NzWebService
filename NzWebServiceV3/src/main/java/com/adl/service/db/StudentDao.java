@@ -40,9 +40,8 @@ public interface StudentDao {
     @Query("select count (*) from _student")
     int countSize();
 
-    @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
     @Query("select _account_id from _student")
-    List<StudentEntity> getAllAccountId();
+    List<String> getAllAccountId();
 
     @Query("select * from _student")
     List<StudentEntity> getAll();
@@ -208,7 +207,7 @@ public interface StudentDao {
     * 获取最近的学生更新时间
     * */
     @Query("select _update_time from _student order by _update_time desc limit 1")
-    String getLastStudentUpdateTime();
+    Long getLastStudentUpdateTime();
 
     /*
     * 通过_plan_student表连表查询 学生

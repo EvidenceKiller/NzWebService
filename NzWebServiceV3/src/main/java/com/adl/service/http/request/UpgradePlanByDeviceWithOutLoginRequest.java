@@ -3,8 +3,10 @@ package com.adl.service.http.request;
 import com.google.gson.annotations.SerializedName;
 
 import lombok.Getter;
+import lombok.ToString;
 
 @Getter
+@ToString(callSuper = true)
 public final class UpgradePlanByDeviceWithOutLoginRequest extends BaseRequest {
 
     /** 路径参数 */

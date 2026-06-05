@@ -1,5 +1,6 @@
 package com.adl.service.data;
 
+import java.io.Serializable;
 import com.adl.service.internal.json.StrictJsonDeserializer;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -10,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @JsonAdapter(StrictJsonDeserializer.class)
-public final class SportSkuSimpleData {
+public final class SportSkuSimpleData implements Serializable {
     @SerializedName("sportSkuId")
     private String sportSkuId;
 
@@ -18,7 +19,7 @@ public final class SportSkuSimpleData {
     private String sportSkuName;
 
     @SerializedName("createTime")
-    private String createTime;
+    private Long createTime = 0L;
 
     @SerializedName("levelType")
     private String levelType;

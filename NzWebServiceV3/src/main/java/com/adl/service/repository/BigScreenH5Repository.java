@@ -14,8 +14,10 @@ import com.adl.service.repository.prepare.BigScreenH5PrepareHelper;
 
 import java.util.List;
 
+import androidx.annotation.RestrictTo;
 import io.reactivex.rxjava3.core.Single;
 
+@RestrictTo(RestrictTo.Scope.LIBRARY)
 public final class BigScreenH5Repository {
     private final BigScreenH5PrepareHelper prepareHelper = new BigScreenH5PrepareHelper();
     private final BigScreenH5FetchHelper fetchHelper = new BigScreenH5FetchHelper();

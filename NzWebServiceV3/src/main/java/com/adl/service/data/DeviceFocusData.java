@@ -1,5 +1,6 @@
 package com.adl.service.data;
 
+import java.io.Serializable;
 import com.adl.service.internal.json.StrictJsonDeserializer;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -12,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @JsonAdapter(StrictJsonDeserializer.class)
-public final class DeviceFocusData {
+public final class DeviceFocusData implements Serializable {
 
     @SerializedName("id")
     private String id;
@@ -51,19 +52,19 @@ public final class DeviceFocusData {
      * 专注时间类型
      */
     @SerializedName("timeType")
-    private Integer timeType;
+    private Integer timeType = 0;
 
     /**
      * 专注开始时间
      */
     @SerializedName("startTime")
-    private Long startTime;
+    private Long startTime = 0L;
 
     /**
      * 专注结束时间
      */
     @SerializedName("endTime")
-    private Long endTime;
+    private Long endTime = 0L;
 
     /**
      * 设备ids

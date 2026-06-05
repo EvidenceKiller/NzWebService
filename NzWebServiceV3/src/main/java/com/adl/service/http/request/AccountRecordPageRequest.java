@@ -3,8 +3,10 @@ package com.adl.service.http.request;
 import com.google.gson.annotations.SerializedName;
 
 import lombok.Getter;
+import lombok.ToString;
 
 @Getter
+@ToString(callSuper = true)
 public final class AccountRecordPageRequest extends BasePageRequest {
 
     /**
@@ -61,6 +63,12 @@ public final class AccountRecordPageRequest extends BasePageRequest {
     @SerializedName("classId")
     private String classId;
 
+    /**
+     * 组织id
+     */
+    @SerializedName("orgId")
+    private String orgId;
+
     private AccountRecordPageRequest(Builder builder) {
         super(builder);
         this.ptPlanId = builder.ptPlanId;
@@ -72,6 +80,7 @@ public final class AccountRecordPageRequest extends BasePageRequest {
         this.accountId = builder.accountId;
         this.sportSkuId = builder.sportSkuId;
         this.classId = builder.classId;
+        this.orgId = builder.orgId;
     }
 
     public static Builder builder() {
@@ -92,6 +101,7 @@ public final class AccountRecordPageRequest extends BasePageRequest {
         private String accountId;
         private String sportSkuId;
         private String classId;
+        private String orgId;
 
         public Builder ptPlanId(String ptPlanId) {
             this.ptPlanId = ptPlanId;
@@ -135,6 +145,11 @@ public final class AccountRecordPageRequest extends BasePageRequest {
 
         public Builder classId(String classId) {
             this.classId = classId;
+            return this;
+        }
+
+        public Builder orgId(String orgId) {
+            this.orgId = orgId;
             return this;
         }
 

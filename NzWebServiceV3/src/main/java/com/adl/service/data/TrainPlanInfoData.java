@@ -1,5 +1,6 @@
 package com.adl.service.data;
 
+import java.io.Serializable;
 import com.adl.service.internal.json.StrictJsonDeserializer;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -12,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @JsonAdapter(StrictJsonDeserializer.class)
-public final class TrainPlanInfoData {
+public final class TrainPlanInfoData implements Serializable {
     /**
      * 机构ID
      */
@@ -23,7 +24,7 @@ public final class TrainPlanInfoData {
      * 创建时间
      */
     @SerializedName("createTime")
-    private Long createTime;
+    private Long createTime = 0L;
 
     /**
      * 机构名称
@@ -35,13 +36,13 @@ public final class TrainPlanInfoData {
      * 结束时间
      */
     @SerializedName("endTime")
-    private Long endTime;
+    private Long endTime = 0L;
 
     /**
      * 开始时间
      */
     @SerializedName("startTime")
-    private Long startTime;
+    private Long startTime = 0L;
 
     /**
      * 标题
@@ -71,13 +72,13 @@ public final class TrainPlanInfoData {
      * 培训计划天数
      */
     @SerializedName("trainPlanDays")
-    private Integer trainPlanDays;
+    private Integer trainPlanDays = 0;
 
     /**
      * 账号数量
      */
     @SerializedName("accountNumber")
-    private Integer accountNumber;
+    private Integer accountNumber = 0;
 
     /**
      * 培训计划描述
@@ -89,5 +90,5 @@ public final class TrainPlanInfoData {
      * 检查数据
      */
     @SerializedName("checkData")
-    private Boolean checkData;
+    private Boolean checkData = Boolean.FALSE;
 }

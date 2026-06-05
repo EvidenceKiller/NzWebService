@@ -1,5 +1,6 @@
 package com.adl.service.data;
 
+import java.io.Serializable;
 import com.adl.service.internal.json.StrictJsonDeserializer;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -12,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @JsonAdapter(StrictJsonDeserializer.class)
-public final class LoginInfoAccountRoleData {
+public final class LoginInfoAccountRoleData implements Serializable {
     /**
      * 租户uid
      */
@@ -42,7 +43,7 @@ public final class LoginInfoAccountRoleData {
      * 注意：注释可能不准确，根据字段名应为"是否是当前角色"等含义
      */
     @SerializedName("presentFlag")
-    private Boolean presentFlag;
+    private Boolean presentFlag = Boolean.FALSE;
 
     /**
      * 是否为系统预制角色
@@ -50,7 +51,7 @@ public final class LoginInfoAccountRoleData {
      * false: 否
      */
     @SerializedName("systemFlag")
-    private Boolean systemFlag;
+    private Boolean systemFlag = Boolean.FALSE;
 
     /**
      * 菜单集

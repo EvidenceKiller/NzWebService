@@ -1,5 +1,6 @@
 package com.adl.service.data;
 
+import java.io.Serializable;
 import com.adl.service.internal.json.StrictJsonDeserializer;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -15,7 +16,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @JsonAdapter(StrictJsonDeserializer.class)
-public final class LoginInfoAccountData {
+public final class LoginInfoAccountData implements Serializable {
     /**
      * 租户id
      */
@@ -62,7 +63,7 @@ public final class LoginInfoAccountData {
      * 当前执行身份
      */
     @SerializedName("roleType")
-    private Integer roleType;
+    private Integer roleType = 0;
 
     /**
      * 用户登录账号
@@ -110,13 +111,13 @@ public final class LoginInfoAccountData {
      * 是否当前登录用户 true: 是 false: 不是
      */
     @SerializedName("presentFlag")
-    private Boolean presentFlag;
+    private Boolean presentFlag = Boolean.FALSE;
 
     /**
      * 当前用户是否激活 true: 是 false: 不是
      */
     @SerializedName("enabled")
-    private Boolean enabled;
+    private Boolean enabled = Boolean.FALSE;
 
     /**
      * 角色集

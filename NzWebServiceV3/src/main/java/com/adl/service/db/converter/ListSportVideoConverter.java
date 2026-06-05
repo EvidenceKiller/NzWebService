@@ -1,6 +1,6 @@
 package com.adl.service.db.converter;
 
-import com.adl.service.data.SportVideoData;
+import com.adl.service.db.entity.SportVideoEntity;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -12,14 +12,14 @@ import androidx.room.TypeConverter;
 public class ListSportVideoConverter {
 
     @TypeConverter
-    public static List<SportVideoData> stringToObject(String value) {
-        Type listType = new TypeToken<List<SportVideoData>>() {
+    public static List<SportVideoEntity> stringToObject(String value) {
+        Type listType = new TypeToken<List<SportVideoEntity>>() {
         }.getType();
         return new Gson().fromJson(value, listType);
     }
 
     @TypeConverter
-    public static String objectToString(List<SportVideoData> json) {
+    public static String objectToString(List<SportVideoEntity> json) {
         Gson gson = new Gson();
         return gson.toJson(json);
     }

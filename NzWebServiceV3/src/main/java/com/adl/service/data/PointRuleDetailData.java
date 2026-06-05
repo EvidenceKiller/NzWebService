@@ -1,0 +1,22 @@
+package com.adl.service.data;
+
+import com.adl.service.internal.json.StrictJsonDeserializer;
+import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
+import java.util.List;
+
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@JsonAdapter(StrictJsonDeserializer.class)
+public final class PointRuleDetailData implements Serializable {
+    @SerializedName("skuId")
+    private String skuId;
+
+    @SerializedName("score")
+    private Integer score = 0;
+}

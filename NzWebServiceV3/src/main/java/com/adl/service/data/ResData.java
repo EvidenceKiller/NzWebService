@@ -1,5 +1,6 @@
 package com.adl.service.data;
 
+import java.io.Serializable;
 import com.adl.service.internal.json.StrictJsonDeserializer;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -12,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @JsonAdapter(StrictJsonDeserializer.class)
-public final class ResData {
+public final class ResData implements Serializable {
     /**
      * 资源内容
      */
@@ -35,13 +36,13 @@ public final class ResData {
      * 创建时间
      */
     @SerializedName("createTime")
-    private String createTime;
+    private Long createTime = 0L;
 
     /**
      * 启停用 参考枚举 adl_tis_enabled
      */
     @SerializedName("enabled")
-    private Boolean enabled;
+    private Boolean enabled = Boolean.FALSE;
 
     /**
      * ID
@@ -71,7 +72,7 @@ public final class ResData {
      * 排序
      */
     @SerializedName("sortNum")
-    private Integer sortNum;
+    private Integer sortNum = 0;
 
     /**
      * 资源标题
@@ -83,13 +84,13 @@ public final class ResData {
      * 资源文件类型 参考枚举 adl_tis_res_type
      */
     @SerializedName("type")
-    private Integer type;
+    private Integer type = 0;
 
     /**
      * 更新时间
      */
     @SerializedName("updateTime")
-    private String updateTime;
+    private Long updateTime = 0L;
 
     /**
      * 应用代码列表
@@ -101,11 +102,17 @@ public final class ResData {
      * 资源类型 1-备课助手 2-校本资源
      */
     @SerializedName("resType")
-    private Integer resType;
+    private Integer resType = 0;
 
     /**
      * 资源类型列表
      */
     @SerializedName("resTypes")
     private List<ResTypeData> resTypes;
+
+    @SerializedName("enableSort")
+    private Boolean enableSort;
+
+    @SerializedName("moduleStr")
+    private String moduleStr;
 }

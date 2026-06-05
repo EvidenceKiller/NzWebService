@@ -71,6 +71,9 @@ final class StrictJsonFieldValidator {
         if (Modifier.isTransient(mod)) {
             return true;
         }
+        if (field.getAnnotation(SerializedName.class) == null) {
+            return true;
+        }
         return field.isSynthetic();
     }
 

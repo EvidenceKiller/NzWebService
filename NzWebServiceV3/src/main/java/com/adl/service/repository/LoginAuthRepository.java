@@ -7,8 +7,10 @@ import com.adl.service.repository.fetch.LoginAuthFetchHelper;
 import com.adl.service.repository.persist.LoginAuthPersistHelper;
 import com.adl.service.repository.prepare.LoginAuthPrepareHelper;
 
+import androidx.annotation.RestrictTo;
 import io.reactivex.rxjava3.core.Single;
 
+@RestrictTo(RestrictTo.Scope.LIBRARY)
 public final class LoginAuthRepository {
     private final LoginAuthPrepareHelper prepareHelper = new LoginAuthPrepareHelper();
     private final LoginAuthFetchHelper fetchHelper = new LoginAuthFetchHelper();

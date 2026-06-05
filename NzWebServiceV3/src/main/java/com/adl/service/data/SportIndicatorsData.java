@@ -1,5 +1,6 @@
 package com.adl.service.data;
 
+import java.io.Serializable;
 import com.adl.service.internal.json.StrictJsonDeserializer;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -12,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @JsonAdapter(StrictJsonDeserializer.class)
-public final class SportIndicatorsData {
+public final class SportIndicatorsData<VALUE, REMARK> implements Serializable {
     //  指标code
     @SerializedName("indicatorsCode")
     private String indicatorsCode;
@@ -21,10 +22,10 @@ public final class SportIndicatorsData {
     private String indicatorsName;
     //  指标值
     @SerializedName("indicatorsValue")
-    private String indicatorsValue;
+    private VALUE indicatorsValue;
     //  指标描述
     @SerializedName("indicatorsRemark")
-    private String indicatorsRemark;
+    private REMARK indicatorsRemark;
     //  指标单位
     @SerializedName("indicatorsUnit")
     private String indicatorsUnit;

@@ -1,5 +1,6 @@
 package com.adl.service.data;
 
+import java.io.Serializable;
 import com.adl.service.internal.json.StrictJsonDeserializer;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -10,9 +11,9 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @JsonAdapter(StrictJsonDeserializer.class)
-public final class SportMeetSimpleClassData {
+public final class SportMeetSimpleClassData implements Serializable {
     @SerializedName("id")
-    private Integer id;
+    private Integer id = 0;
 
     /**
      * 机构Id
@@ -30,7 +31,7 @@ public final class SportMeetSimpleClassData {
      * 报名人数
      */
     @SerializedName("applyUserCount")
-    private Integer applyUserCount;
+    private Integer applyUserCount = 0;
 
     /**
      * 班级Id
@@ -39,8 +40,8 @@ public final class SportMeetSimpleClassData {
     private String classId;
 
     @SerializedName("createTime")
-    private String createTime;
+    private Long createTime = 0L;
 
     @SerializedName("updateTime")
-    private String updateTime;
+    private Long updateTime = 0L;
 }

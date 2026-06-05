@@ -1,6 +1,7 @@
 package com.adl.service.repository;
 
 import com.adl.service.callback.GetPageResult;
+import com.adl.service.callback.RequestUserCallback;
 import com.adl.service.data.AcayearData;
 import com.adl.service.data.ClassData;
 import com.adl.service.data.ClassInfoData;
@@ -23,8 +24,10 @@ import com.adl.service.repository.prepare.CommonInfoPrepareHelper;
 
 import java.util.List;
 
+import androidx.annotation.RestrictTo;
 import io.reactivex.rxjava3.core.Single;
 
+@RestrictTo(RestrictTo.Scope.LIBRARY)
 public final class CommonInfoRepository {
     private final CommonInfoPrepareHelper prepareHelper = new CommonInfoPrepareHelper();
     private final CommonInfoFetchHelper fetchHelper = new CommonInfoFetchHelper();
@@ -46,6 +49,10 @@ public final class CommonInfoRepository {
         return instance;
     }
 
+    public Single<Boolean> loadCommonInfo(boolean forceUpdate, int faceType, long pageSize, RequestUserCallback callback) {
+        return BaseRepositoryUtil.repositoryAsSingle(persistHelper.createLoadCommonInfoFunc(forceUpdate, faceType, pageSize, callback));
+    }
+
     public Single<List<GradeTreeData>> getGradeTree(EmptyRequest request) {
         return BaseRepositoryUtil.repositoryAsSingle(request, fetchHelper.createGetGradeTreeFunc());
     }
@@ -62,97 +69,42 @@ public final class CommonInfoRepository {
         return BaseRepositoryUtil.repositoryAsSingle(request, fetchHelper.createGetClassInfoFunc());
     }
 
-    public Single<LoginInfoData> queryLoginInfo() {
-        return BaseRepositoryUtil.repositoryAsSingle(prepareHelper.createPrepareLoginInfoFunc());
-    }
-
     public Single<LoginInfoData> getLoginInfo(EmptyRequest request) {
         return BaseRepositoryUtil.repositoryAsSingle(request,
+                prepareHelper.createPrepareLoginInfoFunc(),
                 fetchHelper.createGetLoginInfoFunc(),
-                persistHelper.createPersistLoginInfoFunc());
+                persistHelper.createPersistLoginInfoFunc(request));
     }
 
     public Single<List<AcayearData>> getAcayearList(EmptyRequest request) {
         return BaseRepositoryUtil.repositoryAsSingle(request, fetchHelper.createGetAcayearListFunc());
     }
 
-    public Single<List<TeacherData>> queryAllTeacherList() {
-        return BaseRepositoryUtil.repositoryAsSingle(prepareHelper.createPrepareTeacherListFunc());
-    }
-
-    public Single<List<TeacherData>> queryAllTeacherListWithFaceData() {
-        return BaseRepositoryUtil.repositoryAsSingle(prepareHelper.createPrepareTeacherListWithFaceDataFunc());
-    }
-
-    public Single<Integer> queryAllTeacherCount() {
-        return BaseRepositoryUtil.repositoryAsSingle(prepareHelper.createPrepareTeacherCountFunc());
-    }
-
-    public Single<TeacherData> queryTeacherByAccountId(String accountId) {
-        return BaseRepositoryUtil.repositoryAsSingle(prepareHelper.createPrepareTeacherByAccountIdFunc(accountId));
-    }
-
-    public Single<List<TeacherData>> queryTeacherListByAccountIds(List<String> accountIds) {
-        return BaseRepositoryUtil.repositoryAsSingle(prepareHelper.createPrepareTeacherListByAccountIdsFunc(accountIds));
-    }
-
-    public Single<GetPageResult> getTeacherPagesAll(TeacherPageRequest request) {
+    public Single<GetPageResult> getTeacherPagesAll(TeacherPageRequest request, RequestUserCallback callback) {
         return BaseRepositoryUtil.repositoryListsAsSingle(request,
                 prepareHelper.createPrepareTeacherPagesAllFunc(),
                 fetchHelper.createGetTeacherPagesAllFunc(request),
-                persistHelper.createPersistTeacherPageFunc());
+                persistHelper.createPersistTeacherPageFunc(callback));
     }
 
     public Single<List<TeacherData>> getTeacherPage(TeacherPageRequest request) {
         return BaseRepositoryUtil.repositoryAsSingle(request,
                 fetchHelper.createGetTeacherPageFunc(),
-                persistHelper.createPersistTeacherPageFunc());
+                persistHelper.createPersistTeacherPageFunc(null));
     }
 
-    public Single<List<StudentData>> queryAllStudent() {
-        return BaseRepositoryUtil.repositoryAsSingle(prepareHelper.createPrepareStudentFunc());
-    }
-
-    public Single<List<StudentData>> queryAllStudentWithFaceData() {
-        return BaseRepositoryUtil.repositoryAsSingle(prepareHelper.createPrepareStudentWithFaceDataFunc());
-    }
-
-    public Single<Integer> queryAllStudentCount() {
-        return BaseRepositoryUtil.repositoryAsSingle(prepareHelper.createPrepareStudentCountFunc());
-    }
-
-    public Single<StudentData> queryStudentByAccountId(String accountId) {
-        return BaseRepositoryUtil.repositoryAsSingle(prepareHelper.createPrepareStudentByAccountIdFunc(accountId));
-    }
-
-    public Single<List<StudentData>> queryStudentByAccountIds(List<String> accountIds) {
-        return BaseRepositoryUtil.repositoryAsSingle(prepareHelper.createPrepareStudentByAccountIdsFunc(accountIds));
-    }
-
-    public Single<List<StudentData>> queryStudentByClassIds(List<String> classIds) {
-        return BaseRepositoryUtil.repositoryAsSingle(prepareHelper.createPrepareStudentByClassIdsFunc(classIds));
-    }
-
-    public Single<List<StudentData>> queryStudentByCardNum(String cardNum) {
-        return BaseRepositoryUtil.repositoryAsSingle(prepareHelper.createPrepareStudentByCardNumFunc(cardNum));
-    }
-
-    public Single<Long> queryStudentRecentUpdateTime() {
-        return BaseRepositoryUtil.repositoryAsSingle(prepareHelper.createPrepareStudentRecentUpdateTimeFunc());
-    }
-
-    public Single<GetPageResult> getStudentPagesAll(StudentPageRequest request) {
+    public Single<GetPageResult> getStudentPagesAll(StudentPageRequest request, RequestUserCallback callback) {
         return BaseRepositoryUtil.repositoryPagesAsSingle(request,
                 prepareHelper.createPrepareStudentPagesAllFunc(),
                 fetchHelper.createGetStudentPagesAllFunc(request),
-                persistHelper.createPersistStudentPageFunc()
+                persistHelper.createPersistStudentPageFunc(callback)
         );
     }
 
     public Single<List<StudentData>> getStudentPage(StudentPageRequest request) {
         return BaseRepositoryUtil.repositoryPageAsSingle(request,
                 fetchHelper.createGetStudentPageFunc(),
-                persistHelper.createPersistStudentPageFunc());
+                persistHelper.createPersistStudentPageFunc(null));
     }
 
     public Single<List<DictData>> getDictList(DictRequest request) {

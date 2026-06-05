@@ -1,5 +1,6 @@
 package com.adl.service.data;
 
+import java.io.Serializable;
 import com.adl.service.internal.json.StrictJsonDeserializer;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -12,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @JsonAdapter(StrictJsonDeserializer.class)
-public final class StandardConfigData {
+public final class StandardConfigData implements Serializable {
 
     /**
      * 标准ID
@@ -60,5 +61,5 @@ public final class StandardConfigData {
      * 创建时间
      */
     @SerializedName("createTime")
-    private String createTime;
+    private Long createTime = 0L;
 }

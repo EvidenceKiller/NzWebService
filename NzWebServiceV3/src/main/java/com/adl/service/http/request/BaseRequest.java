@@ -1,11 +1,13 @@
 package com.adl.service.http.request;
 
 import lombok.Getter;
+import lombok.ToString;
 
 /**
  * 请求基类
  */
 @Getter
+@ToString
 public abstract class BaseRequest {
 
     private transient Boolean forceUpdate;

@@ -1,5 +1,7 @@
 package com.adl.service.db.entity;
 
+import androidx.annotation.RestrictTo;
+
 import com.adl.service.data.DictData;
 
 import org.jetbrains.annotations.NotNull;
@@ -13,11 +15,12 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @Entity(tableName = "_dict")
+@RestrictTo(RestrictTo.Scope.LIBRARY)
 public final class DictEntity {
     public static final long EXPIRED_TIME = 1000L * 60L * 60L * 12L;
 
     @ColumnInfo(name = "_enable_sort")
-    private Boolean enableSort;
+    private Boolean enableSort= Boolean.FALSE;
 
     @ColumnInfo(name = "_module_str")
     private String moduleStr;
@@ -52,7 +55,7 @@ public final class DictEntity {
      * 排序 升序
      */
     @ColumnInfo(name = "_sort_num")
-    private Integer sortNum;
+    private Integer sortNum= 0;
 
     /**
      * 是否默认
@@ -82,22 +85,22 @@ public final class DictEntity {
      * 创建时间
      */
     @ColumnInfo(name = "_create_time")
-    private String createTime;
+    private Long createTime = 0L;
 
     /**
      * 更新时间
      */
     @ColumnInfo(name = "_update_time")
-    private String updateTime;
+    private Long updateTime = 0L;
 
     /**
      * 字典数据类型 1-string 2-number 3-bool
      */
     @ColumnInfo(name = "_data_type")
-    private Integer dataType;
+    private Integer dataType= 0;
 
     @ColumnInfo(name = "_expired_time")
-    private Long expiredTime;
+    private Long expiredTime= 0L;
 
     public static DictEntity convertToEntity(DictData dictData) {
         if (dictData == null) {

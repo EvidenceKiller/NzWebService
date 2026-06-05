@@ -1,5 +1,7 @@
 package com.adl.service.db.entity;
 
+import androidx.annotation.RestrictTo;
+
 import com.adl.service.data.SportMeetSimpleClassData;
 
 import lombok.Data;
@@ -7,8 +9,9 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
+@RestrictTo(RestrictTo.Scope.LIBRARY)
 public final class SportMeetSimpleClassEntity {
-    private Integer id;
+    private Integer id= 0;
 
     /**
      * 机构Id
@@ -23,14 +26,14 @@ public final class SportMeetSimpleClassEntity {
     /**
      * 报名人数
      */
-    private Integer applyUserCount;
+    private Integer applyUserCount= 0;
 
     /**
      * 班级Id
      */
     private String classId;
-    private String createTime;
-    private String updateTime;
+    private Long createTime = 0L;
+    private Long updateTime = 0L;
 
     public static SportMeetSimpleClassEntity convertToEntity(SportMeetSimpleClassData data) {
         if (data == null) {

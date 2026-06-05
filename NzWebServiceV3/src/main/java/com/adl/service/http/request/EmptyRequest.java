@@ -1,8 +1,10 @@
 package com.adl.service.http.request;
 
 import lombok.Getter;
+import lombok.ToString;
 
 @Getter
+@ToString(callSuper = true)
 public final class EmptyRequest extends BaseRequest {
 
     private EmptyRequest(Builder builder) {

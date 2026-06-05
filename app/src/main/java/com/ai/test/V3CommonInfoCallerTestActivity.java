@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.adl.service.AdlService;
 import com.adl.service.callback.GetPageResult;
 import com.adl.service.callback.RequestCallback;
+import com.adl.service.callback.RequestUserCallback;
 import com.adl.service.http.request.BaseDirection;
 import com.adl.service.http.request.BaseSort;
 import com.adl.service.http.request.ClassInfoRequest;
@@ -54,6 +55,9 @@ public class V3CommonInfoCallerTestActivity extends AppCompatActivity {
         gridLayout = findViewById(R.id.gl_test);
         findViewById(R.id.btn_back).setOnClickListener(v -> finish());
         findViewById(R.id.btn_clear).setOnClickListener(v -> resultView.setText(""));
+
+        createButton("loadCommonInfo").setOnClickListener(v -> loadCommonInfo());
+        createButton("loadCommonInfoForce").setOnClickListener(v -> loadCommonInfoForce());
 
         createButton("getGradeTreeAsync").setOnClickListener(v -> getGradeTreeAsync());
         createButton("getGradeTreeSync").setOnClickListener(v -> getGradeTreeSync());
@@ -103,6 +107,44 @@ public class V3CommonInfoCallerTestActivity extends AppCompatActivity {
 
         createButton("getStudentPagesAllAsync").setOnClickListener(v -> getStudentPagesAllAsync());
         createButton("getStudentPagesAllSync").setOnClickListener(v -> getStudentPagesAllSync());
+    }
+
+    private void loadCommonInfo() {
+        AdlService.getService().getCommonInfoCaller().loadCommonInfoAsync(RequestScope.of(this), false, new RequestUserCallback(this, true) {
+            @Override
+            public void nextStatus(int status, String msg) {
+
+            }
+
+            @Override
+            public void success(Object data) {
+
+            }
+
+            @Override
+            public void error(String error) {
+
+            }
+        });
+    }
+
+    private void loadCommonInfoForce() {
+        AdlService.getService().getCommonInfoCaller().loadCommonInfoAsync(RequestScope.of(this), true, new RequestUserCallback(this, true) {
+            @Override
+            public void nextStatus(int status, String msg) {
+
+            }
+
+            @Override
+            public void success(Object data) {
+
+            }
+
+            @Override
+            public void error(String error) {
+
+            }
+        });
     }
 
     private void getGradeTreeAsync() {
@@ -511,6 +553,7 @@ public class V3CommonInfoCallerTestActivity extends AppCompatActivity {
 
     private void getStudentPageAsync() {
         StudentPageRequest request = StudentPageRequest.builder()
+                .current(1L)
                 .faceType(2)
                 .build();
         AdlService.getService().getCommonInfoCaller().getStudentPageAsync(RequestScope.of(this), request, new RequestCallback<List<StudentData>>() {
@@ -541,6 +584,7 @@ public class V3CommonInfoCallerTestActivity extends AppCompatActivity {
     private void getStudentPageSync() {
         AdlService.getService().executeSyncOnIo(RequestScope.of(this), () -> {
             StudentPageRequest request = StudentPageRequest.builder()
+                    .current(1L)
                     .build();
             return AdlService.getService().getCommonInfoCaller().getStudentPageSync(request);
         }, new RequestCallback<List<StudentData>>() {
@@ -676,7 +720,7 @@ public class V3CommonInfoCallerTestActivity extends AppCompatActivity {
 
     private void queryAllStudentSync() {
         AdlService.getService().executeSyncOnIo(RequestScope.of(this), () -> {
-            return AdlService.getService().getCommonInfoCaller().queryAllStudentSync();
+            return AdlService.getService().getUserDaoCaller().queryAllStudent();
         }, new RequestCallback<List<StudentData>>() {
             @Override
             public void onSuccess(List<StudentData> data) {
@@ -705,7 +749,7 @@ public class V3CommonInfoCallerTestActivity extends AppCompatActivity {
 
     private void queryAllStudentWithFaceDataSync() {
         AdlService.getService().executeSyncOnIo(RequestScope.of(this), () -> {
-            return AdlService.getService().getCommonInfoCaller().queryAllStudentWithFaceDataSync();
+            return AdlService.getService().getUserDaoCaller().queryAllStudentWithFaceData();
         }, new RequestCallback<List<StudentData>>() {
             @Override
             public void onSuccess(List<StudentData> data) {
@@ -734,7 +778,7 @@ public class V3CommonInfoCallerTestActivity extends AppCompatActivity {
 
     private void queryAllStudentCountSync() {
         AdlService.getService().executeSyncOnIo(RequestScope.of(this), () -> {
-            return AdlService.getService().getCommonInfoCaller().queryAllStudentCountSync();
+            return AdlService.getService().getUserDaoCaller().queryAllStudentCount();
         }, new RequestCallback<Integer>() {
             @Override
             public void onSuccess(Integer data) {
@@ -762,7 +806,7 @@ public class V3CommonInfoCallerTestActivity extends AppCompatActivity {
 
     private void queryStudentByAccountIdSync() {
         AdlService.getService().executeSyncOnIo(RequestScope.of(this), () -> {
-            return AdlService.getService().getCommonInfoCaller().queryStudentByAccountIdSync("test_account_id");
+            return AdlService.getService().getUserDaoCaller().queryStudentByAccountId("test_account_id");
         }, new RequestCallback<StudentData>() {
             @Override
             public void onSuccess(StudentData data) {
@@ -793,7 +837,7 @@ public class V3CommonInfoCallerTestActivity extends AppCompatActivity {
             List<String> accountIds = new ArrayList<>();
             accountIds.add("test_account_id_1");
             accountIds.add("test_account_id_2");
-            return AdlService.getService().getCommonInfoCaller().queryStudentByAccountIdsSync(accountIds);
+            return AdlService.getService().getUserDaoCaller().queryStudentByAccountIds(accountIds);
         }, new RequestCallback<List<StudentData>>() {
             @Override
             public void onSuccess(List<StudentData> data) {
@@ -825,7 +869,7 @@ public class V3CommonInfoCallerTestActivity extends AppCompatActivity {
             List<String> classIds = new ArrayList<>();
             classIds.add("test_class_id_1");
             classIds.add("test_class_id_2");
-            return AdlService.getService().getCommonInfoCaller().queryStudentByClassIdsSync(classIds);
+            return AdlService.getService().getUserDaoCaller().queryStudentByClassIds(classIds);
         }, new RequestCallback<List<StudentData>>() {
             @Override
             public void onSuccess(List<StudentData> data) {
@@ -854,7 +898,7 @@ public class V3CommonInfoCallerTestActivity extends AppCompatActivity {
 
     private void queryStudentByCarNumSync() {
         AdlService.getService().executeSyncOnIo(RequestScope.of(this), () -> {
-            return AdlService.getService().getCommonInfoCaller().queryStudentByCarNumSync("1234567890");
+            return AdlService.getService().getUserDaoCaller().queryStudentByCardNum("1234567890");
         }, new RequestCallback<List<StudentData>>() {
             @Override
             public void onSuccess(List<StudentData> data) {
@@ -883,7 +927,7 @@ public class V3CommonInfoCallerTestActivity extends AppCompatActivity {
 
     private void queryAllTeacherListSync() {
         AdlService.getService().executeSyncOnIo(RequestScope.of(this), () -> {
-            return AdlService.getService().getCommonInfoCaller().queryAllTeacherListSync();
+            return AdlService.getService().getUserDaoCaller().queryAllTeacherList();
         }, new RequestCallback<List<TeacherData>>() {
             @Override
             public void onSuccess(List<TeacherData> data) {
@@ -912,7 +956,7 @@ public class V3CommonInfoCallerTestActivity extends AppCompatActivity {
 
     private void queryAllTeacherListWithFaceDataSync() {
         AdlService.getService().executeSyncOnIo(RequestScope.of(this), () -> {
-            return AdlService.getService().getCommonInfoCaller().queryAllTeacherListWithFaceDataSync();
+            return AdlService.getService().getUserDaoCaller().queryAllTeacherListWithFaceData();
         }, new RequestCallback<List<TeacherData>>() {
             @Override
             public void onSuccess(List<TeacherData> data) {
@@ -941,7 +985,7 @@ public class V3CommonInfoCallerTestActivity extends AppCompatActivity {
 
     private void queryTeacherByAccountIdSync() {
         AdlService.getService().executeSyncOnIo(RequestScope.of(this), () -> {
-            return AdlService.getService().getCommonInfoCaller().queryTeacherByAccountIdSync("test_teacher_account_id");
+            return AdlService.getService().getUserDaoCaller().queryTeacherByAccountId("test_teacher_account_id");
         }, new RequestCallback<TeacherData>() {
             @Override
             public void onSuccess(TeacherData data) {
@@ -972,7 +1016,7 @@ public class V3CommonInfoCallerTestActivity extends AppCompatActivity {
             List<String> accountIds = new ArrayList<>();
             accountIds.add("test_teacher_account_id_1");
             accountIds.add("test_teacher_account_id_2");
-            return AdlService.getService().getCommonInfoCaller().queryTeacherListByAccountIdsSync(accountIds);
+            return AdlService.getService().getUserDaoCaller().queryTeacherListByAccountIds(accountIds);
         }, new RequestCallback<List<TeacherData>>() {
             @Override
             public void onSuccess(List<TeacherData> data) {
@@ -1000,7 +1044,7 @@ public class V3CommonInfoCallerTestActivity extends AppCompatActivity {
     }
 
     private void getTeacherListsAllAsync() {
-        TeacherPageRequest request = TeacherPageRequest.builder().build();
+        TeacherPageRequest request = TeacherPageRequest.builder().pageSize(3L).build();
         AdlService.getService().getCommonInfoCaller().getTeacherPagesAllAsync(RequestScope.of(this), request, new RequestCallback<GetPageResult>() {
             @Override
             public void onSuccess(GetPageResult data) {

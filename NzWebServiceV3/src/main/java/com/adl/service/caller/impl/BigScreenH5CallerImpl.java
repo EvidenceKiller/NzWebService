@@ -35,8 +35,8 @@ public final class BigScreenH5CallerImpl implements BigScreenH5Caller {
     }
 
     @Override
-    public List<TeachCourseDetailData> getTeachCourseDetailListSync(TeachCourseRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGet(bigScreenH5Repository.getTeachCourseDetailList(request));
+    public List<TeachCourseDetailData> getTeachCourseDetailListSync(TeachCourseRequest request) {
+        return RxCallbackScheduler.blockingGetNoThrow(bigScreenH5Repository.getTeachCourseDetailList(request));
     }
 
     @Override
@@ -45,8 +45,8 @@ public final class BigScreenH5CallerImpl implements BigScreenH5Caller {
     }
 
     @Override
-    public List<String> getTeachCourseDataDatesSync(TeachCourseDataDatesRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGet(bigScreenH5Repository.getTeachCourseDataDates(request));
+    public List<String> getTeachCourseDataDatesSync(TeachCourseDataDatesRequest request) {
+        return RxCallbackScheduler.blockingGetNoThrow(bigScreenH5Repository.getTeachCourseDataDates(request));
     }
 
     @Override
@@ -55,8 +55,8 @@ public final class BigScreenH5CallerImpl implements BigScreenH5Caller {
     }
 
     @Override
-    public Integer getTeachCourseTimesSync(TeachCourseRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGet(bigScreenH5Repository.getTeachCourseTimes(request));
+    public Integer getTeachCourseTimesSync(TeachCourseRequest request) {
+        return RxCallbackScheduler.blockingGetNoThrow(bigScreenH5Repository.getTeachCourseTimes(request), Integer.class);
     }
 
     @Override
@@ -65,8 +65,8 @@ public final class BigScreenH5CallerImpl implements BigScreenH5Caller {
     }
 
     @Override
-    public Boolean getTeachCourseButtonClickableSync(TeachCourseButtonClickCountRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGet(bigScreenH5Repository.getTeachCourseButtonClickable(request));
+    public Boolean getTeachCourseButtonClickableSync(TeachCourseButtonClickCountRequest request) {
+        return RxCallbackScheduler.blockingGetNoThrow(bigScreenH5Repository.getTeachCourseButtonClickable(request), Boolean.class);
     }
 
     @Override
@@ -75,8 +75,8 @@ public final class BigScreenH5CallerImpl implements BigScreenH5Caller {
     }
 
     @Override
-    public List<SunshineRunningSportDetailData> getSunshineRunningSportDetailPageSync(SunshineRunningSportDetailPageRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGet(bigScreenH5Repository.getSunshineRunningSportDetailPage(request));
+    public List<SunshineRunningSportDetailData> getSunshineRunningSportDetailPageSync(SunshineRunningSportDetailPageRequest request) {
+        return RxCallbackScheduler.blockingGetNoThrow(bigScreenH5Repository.getSunshineRunningSportDetailPage(request));
     }
 
     @Override
@@ -85,7 +85,7 @@ public final class BigScreenH5CallerImpl implements BigScreenH5Caller {
     }
 
     @Override
-    public List<ClassroomCompetitionRecordData> getSunshineRunningCompetitionRecordPageSync(SunshineRunningCompetitionRecordPageRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGet(bigScreenH5Repository.getSunshineRunningCompetitionRecordPage(request));
+    public List<ClassroomCompetitionRecordData> getSunshineRunningCompetitionRecordPageSync(SunshineRunningCompetitionRecordPageRequest request) {
+        return RxCallbackScheduler.blockingGetNoThrow(bigScreenH5Repository.getSunshineRunningCompetitionRecordPage(request));
     }
 }

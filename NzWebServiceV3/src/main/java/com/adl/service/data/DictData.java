@@ -1,5 +1,6 @@
 package com.adl.service.data;
 
+import java.io.Serializable;
 import com.adl.service.internal.json.StrictJsonDeserializer;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -10,9 +11,9 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @JsonAdapter(StrictJsonDeserializer.class)
-public final class DictData {
+public final class DictData implements Serializable {
     @SerializedName("enableSort")
-    private Boolean enableSort;
+    private Boolean enableSort = Boolean.FALSE;
 
     @SerializedName("moduleStr")
     private String moduleStr;
@@ -45,7 +46,7 @@ public final class DictData {
      * 排序 升序
      */
     @SerializedName("sortNum")
-    private Integer sortNum;
+    private Integer sortNum = 0;
 
     /**
      * 是否默认
@@ -75,17 +76,17 @@ public final class DictData {
      * 创建时间
      */
     @SerializedName("createTime")
-    private String createTime;
+    private Long createTime = 0L;
 
     /**
      * 更新时间
      */
     @SerializedName("updateTime")
-    private String updateTime;
+    private Long updateTime = 0L;
 
     /**
      * 字典数据类型 1-string 2-number 3-bool
      */
     @SerializedName("dataType")
-    private Integer dataType;
+    private Integer dataType = 0;
 }

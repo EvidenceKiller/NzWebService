@@ -1,0 +1,18 @@
+package com.adl.service.internal.json;
+
+import com.google.gson.ExclusionStrategy;
+import com.google.gson.FieldAttributes;
+import com.google.gson.annotations.SerializedName;
+
+public class SerializedNameExclusionStrategy implements ExclusionStrategy {
+    @Override
+    public boolean shouldSkipField(FieldAttributes field) {
+        // 跳过没有 @SerializedName 注解的字段
+        return field.getAnnotation(SerializedName.class) == null;
+    }
+
+    @Override
+    public boolean shouldSkipClass(Class<?> clazz) {
+        return false;
+    }
+}

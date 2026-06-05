@@ -1,9 +1,12 @@
 package com.adl.service.db.entity;
 
+import androidx.annotation.RestrictTo;
+
 import com.adl.service.data.SportSkuData;
 import com.adl.service.db.converter.ListSportSkuDescEntityConverter;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
@@ -14,10 +17,11 @@ import lombok.Data;
 @Data
 @Entity(tableName = "_sport_sku")
 @TypeConverters(value = {ListSportSkuDescEntityConverter.class})
+@RestrictTo(RestrictTo.Scope.LIBRARY)
 public final class SportSkuEntity {
 
     @PrimaryKey(autoGenerate = true)
-    private long lid;
+    private Long lid= 0L;
 
     @ColumnInfo(name = "_app_code")
     private String appCode;
@@ -26,7 +30,7 @@ public final class SportSkuEntity {
     private String sceneId;
 
     @ColumnInfo(name = "_enable_sort")
-    private Boolean enableSort;
+    private Boolean enableSort= Boolean.FALSE;
 
     @ColumnInfo(name = "_module_str")
     private String moduleStr;
@@ -35,13 +39,13 @@ public final class SportSkuEntity {
      * 精度方式 详见码表
      */
     @ColumnInfo(name = "_accuracy_method")
-    private Integer accuracyMethod;
+    private Integer accuracyMethod= 0;
 
     /**
      * 精度类型 详见码表
      */
     @ColumnInfo(name = "_accuracy_type")
-    private Integer accuracyType;
+    private Integer accuracyType= 0;
 
     /**
      * 动作演示地址
@@ -77,13 +81,13 @@ public final class SportSkuEntity {
      * 删除标记为
      */
     @ColumnInfo(name = "_del_flag")
-    private Boolean delFlag;
+    private Boolean delFlag= Boolean.FALSE;
 
     /**
      * 启停用 参考字典编码：adl_bms_enabled (1 启用 0 禁用)
      */
     @ColumnInfo(name = "_enabled")
-    private Boolean enabled;
+    private Boolean enabled= Boolean.FALSE;
 
     /**
      * 结束方式为其他时的备注
@@ -95,13 +99,13 @@ public final class SportSkuEntity {
      * 结束类型 参考字典编码：adl_bms_sport_sku_end_type
      */
     @ColumnInfo(name = "_end_type")
-    private Integer endType;
+    private Integer endType= 0;
 
     /**
      * 结束方式 参考字典编码：adl_sport_end_unit
      */
     @ColumnInfo(name = "_end_value")
-    private Integer endValue;
+    private Long endValue= 0L;
 
     /**
      * 默认图标地址
@@ -143,13 +147,13 @@ public final class SportSkuEntity {
      * 测量范围结束值
      */
     @ColumnInfo(name = "_range_end_value")
-    private Double rangeEndValue;
+    private Double rangeEndValue= 0.0;
 
     /**
      * 测量范围起始值
      */
     @ColumnInfo(name = "_range_start_value")
-    private Double rangeStartValue;
+    private Double rangeStartValue= 0.0;
 
     /**
      * 备注
@@ -173,7 +177,7 @@ public final class SportSkuEntity {
      * 场景运动排序
      */
     @ColumnInfo(name = "_scene_sku_sort")
-    private Integer sceneSkuSort;
+    private Integer sceneSkuSort= 0;
 
     /**
      * 运动单项代码 参考字典编码：adl_sport_item
@@ -203,7 +207,7 @@ public final class SportSkuEntity {
      * 项目高低优 参考字典编码：adl_bms_sport_priority
      */
     @ColumnInfo(name = "_sport_priority")
-    private Integer sportPriority;
+    private Integer sportPriority= 0;
 
     /**
      * sku描述，是个json string
@@ -245,7 +249,7 @@ public final class SportSkuEntity {
      * 测试人数 空为不限制
      */
     @ColumnInfo(name = "_test_count")
-    private Integer testCount;
+    private Integer testCount= 0;
 
     /**
      * 测试人数
@@ -280,14 +284,8 @@ public final class SportSkuEntity {
     /**
      * 场景SKU分类
      */
-    @ColumnInfo(name = "_scene_sku_type")
-    private String sceneSkuType;
-
-    @ColumnInfo(name = "_create_time")
-    private Long createTime;
-
-    @ColumnInfo(name = "_update_time")
-    private Long updateTime;
+    @ColumnInfo(name = "_scene_sport_sku_type")
+    private String sceneSportSkuType;
 
     public static SportSkuEntity convertToEntity(SportSkuData data, String appCode, String sceneId) {
         if (data == null) {
@@ -326,6 +324,9 @@ public final class SportSkuEntity {
         entity.setSportNatureNames(data.getSportNatureNames());
         entity.setSportPriority(data.getSportPriority());
         entity.setSportSkuDesc(data.getSportSkuDesc());
+        if (data.getSportSkuDesc() != null && !data.getSportSkuDesc().isEmpty()) {
+            entity.setSportSkuDescJson(data.getSportSkuDescJson().stream().map(SportSkuDescEntity::convertToEntity).collect(Collectors.toList()));
+        }
         entity.setSportSkuId(data.getSportSkuId());
         entity.setSportSkuName(data.getSportSkuName());
         entity.setSportTypeCode(data.getSportTypeCode());
@@ -336,7 +337,7 @@ public final class SportSkuEntity {
         entity.setTxVid(data.getTxVid());
         entity.setVideoCoverUrl(data.getVideoCoverUrl());
         entity.setVideoUrl(data.getVideoUrl());
-        entity.setSceneSkuType(data.getSceneSkuType());
+        entity.setSceneSportSkuType(data.getSceneSportSkuType());
         return entity;
     }
 
@@ -375,6 +376,9 @@ public final class SportSkuEntity {
         data.setSportNatureNames(entity.getSportNatureNames());
         data.setSportPriority(entity.getSportPriority());
         data.setSportSkuDesc(entity.getSportSkuDesc());
+        if (entity.getSportSkuDesc() != null && !entity.getSportSkuDesc().isEmpty()) {
+            data.setSportSkuDescJson(entity.getSportSkuDescJson().stream().map(SportSkuDescEntity::convertToData).collect(Collectors.toList()));
+        }
         data.setSportSkuId(entity.getSportSkuId());
         data.setSportSkuName(entity.getSportSkuName());
         data.setSportTypeCode(entity.getSportTypeCode());
@@ -385,7 +389,7 @@ public final class SportSkuEntity {
         data.setTxVid(entity.getTxVid());
         data.setVideoCoverUrl(entity.getVideoCoverUrl());
         data.setVideoUrl(entity.getVideoUrl());
-        data.setSceneSkuType(entity.getSceneSkuType());
+        data.setSceneSportSkuType(entity.getSceneSportSkuType());
         return data;
     }
 }

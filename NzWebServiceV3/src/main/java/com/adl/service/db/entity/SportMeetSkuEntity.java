@@ -1,5 +1,7 @@
 package com.adl.service.db.entity;
 
+import androidx.annotation.RestrictTo;
+
 import com.adl.service.data.SportMeetSkuData;
 
 import java.io.Serializable;
@@ -10,6 +12,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
+@RestrictTo(RestrictTo.Scope.LIBRARY)
 public final class SportMeetSkuEntity implements Serializable {
     //  运动会运动sku标识码
     private String id;
@@ -22,19 +25,19 @@ public final class SportMeetSkuEntity implements Serializable {
     //  类型名称
     private String sportTypeName;
     //  精度方式 详见码表
-    private int accuracyMethod;
+    private Integer accuracyMethod= 0;
     //  精度类型 详见码表
-    private int accuracyType;
+    private Integer accuracyType= 0;
     //  报名人数
-    private int applyUserCount;
+    private Integer applyUserCount= 0;
     //  比赛方式
-    private int competitionType;
+    private Integer competitionType= 0;
     //  封面地址
     private String coverUrl;
     //  结束类型 参考字典编码：adl_bms_sport_sku_end_type
-    private int endType;
+    private Integer endType= 0;
     //  结束方式 参考字典编码：adl_sport_end_unit
-    private int endValue;
+    private Long endValue = 0L;
     //  结束方式为其他时的备注
     private String endRemark;
     //  测量方式 参考字典编码：adl_bms_sport_sku_measure_mode
@@ -42,15 +45,15 @@ public final class SportMeetSkuEntity implements Serializable {
     //  测量单位代码 参考字典编码：adl_sport_sport_unit
     private String measureUnitCode;
     //  排序 低优策略
-    private int meetSkuSort;
+    private Integer meetSkuSort= 0;
     //  项目设置id
     private String settingId;
     //  项目高低优 参考字典编码：adl_bms_sport_priority
-    private int sportPriority;
+    private Integer sportPriority= 0;
     //  测试人数
-    private int testCount;
+    private Integer testCount= 0;
 
-    private int competitionNum;
+    private Integer competitionNum= 0;
 
     private List<String> appCodes;
 

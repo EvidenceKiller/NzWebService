@@ -1,5 +1,6 @@
 package com.adl.service.data;
 
+import java.io.Serializable;
 import com.adl.service.internal.json.StrictJsonDeserializer;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -12,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @JsonAdapter(StrictJsonDeserializer.class)
-public final class TeacherData {
+public final class TeacherData implements Serializable {
 
     @SerializedName("userId")
     private String userId;
@@ -30,7 +31,7 @@ public final class TeacherData {
     private String accountPhoneNum;
 
     @SerializedName("userSex")
-    private Integer userSex;
+    private Integer userSex = 0;
 
     @SerializedName("jobNum")
     private String jobNum;
@@ -51,19 +52,19 @@ public final class TeacherData {
     private String thumbnailUserFaceImgUrl;
 
     @SerializedName("createTime")
-    private String createTime;
+    private Long createTime = 0L;
 
     @SerializedName("updateTime")
-    private String updateTime;
+    private Long updateTime = 0L;
 
     @SerializedName("avatarFlag")
-    private Boolean avatarFlag;
+    private Boolean avatarFlag = Boolean.FALSE;
 
     @SerializedName("recordFlag")
-    private Boolean recordFlag;
+    private Boolean recordFlag = Boolean.FALSE;
 
     @SerializedName("delFlag")
-    private Boolean delFlag;
+    private Boolean delFlag = Boolean.FALSE;
 
     @SerializedName("faceDataList")
     private List<FaceData> faceDataList;

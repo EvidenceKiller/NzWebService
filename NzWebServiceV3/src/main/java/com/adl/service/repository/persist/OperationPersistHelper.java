@@ -9,6 +9,7 @@ import com.adl.service.db.DaoManagerProxy;
 import com.adl.service.db.entity.DictMapEntity;
 import com.adl.service.db.entity.SceneEntity;
 import com.adl.service.db.entity.SportSkuEntity;
+import com.adl.service.exception.NzCommonException;
 import com.adl.service.http.request.DictMapRequest;
 import com.adl.service.http.request.SceneListRequest;
 import com.adl.service.http.request.SportSkuPageRequest;
@@ -30,7 +31,7 @@ public final class OperationPersistHelper {
     public Function<List<SceneData>, Single<List<SceneData>>> createPersistSceneListFunc(SceneListRequest request) {
         return (dataList) -> {
             if (dataList == null || dataList.isEmpty()) {
-                return Single.just(dataList);
+                return Single.error(new NzCommonException("scene data list is null"));
             }
             if (TextUtils.isEmpty(request.getAppCode())) {
                 DaoManagerProxy.getInstance().getSceneDao().clearAll();
@@ -48,7 +49,7 @@ public final class OperationPersistHelper {
     public Function<List<SportSkuData>, Single<List<SportSkuData>>> createPersistSportSkuPageFunc(SportSkuPageRequest request) {
         return (pageData) -> {
             if (pageData == null || pageData.isEmpty()) {
-                return Single.just(pageData);
+                return Single.error(new NzCommonException("sport sku data list is null"));
             }
             List<SportSkuEntity> entityList = pageData.stream()
                     .map(data -> SportSkuEntity.convertToEntity(data, request.getAppCode(), request.getSceneId()))
@@ -61,9 +62,9 @@ public final class OperationPersistHelper {
     public Function<List<DictMapData>, Single<List<DictMapData>>> createPersistDictMapListFunc(DictMapRequest request) {
         return (dataList) -> {
             if (dataList == null || dataList.isEmpty()) {
-                return Single.just(dataList);
+                return Single.error(new NzCommonException("dict map data list is null"));
             }
-            MemoryCacheManager.getInstance().put(CacheTag.CACHE_TAG_DICT_MAP_LIST + InnerUtil.toJson(request), dataList, CacheTag.CACHE_EXPIRED_TIME_DICT_MAP_LIST);
+            MemoryCacheManager.getInstance().put(CacheTag.CACHE_TAG_DICT_MAP_LIST + InnerUtil.toJson(request), dataList, DictMapEntity.EXPIRED_TIME);
             DaoManagerProxy.getInstance().getDictMapDao().clearDictMapBySportSkuId(request.getSportSkuId());
             List<DictMapEntity> entityList = dataList.stream()
                     .map(data -> DictMapEntity.convertToEntity(data, request.getSportSkuId()))

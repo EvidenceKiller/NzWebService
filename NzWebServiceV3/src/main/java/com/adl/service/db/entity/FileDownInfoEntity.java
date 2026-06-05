@@ -1,5 +1,7 @@
 package com.adl.service.db.entity;
 
+import androidx.annotation.RestrictTo;
+
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -15,12 +17,13 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @Entity(tableName = "_file_down_info")
+@RestrictTo(RestrictTo.Scope.LIBRARY)
 public class FileDownInfoEntity {
     @PrimaryKey(autoGenerate = true)
-    private long lid;
+    private Long lid= 0L;
 
     @ColumnInfo(name = "_type")
-    private int type;
+    private Integer type= 0;
 
     @ColumnInfo(name = "_url")
     private String url;
@@ -32,5 +35,5 @@ public class FileDownInfoEntity {
     private String localPath;
 
     @ColumnInfo(name = "_content_length")
-    private long contentLength;
+    private Long contentLength= 0L;
 }

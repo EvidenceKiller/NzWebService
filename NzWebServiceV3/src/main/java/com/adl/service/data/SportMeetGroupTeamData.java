@@ -1,5 +1,6 @@
 package com.adl.service.data;
 
+import java.io.Serializable;
 import com.adl.service.internal.json.StrictJsonDeserializer;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -12,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @JsonAdapter(StrictJsonDeserializer.class)
-public class SportMeetGroupTeamData {
+public final class SportMeetGroupTeamData implements Serializable {
     //  运动会id【手动添加】
     @SerializedName("meetId")
     private String meetId;
@@ -39,23 +40,23 @@ public class SportMeetGroupTeamData {
 
     //  组数
     @SerializedName("teamNum")
-    private int teamNum;
+    private Integer teamNum = 0;
 
     //  人数
     @SerializedName("number")
-    private int number;
+    private Integer number = 0;
 
     //  比赛状态 0未完赛 1已完赛
     @SerializedName("competitionStatus")
-    private int competitionStatus;
+    private Integer competitionStatus = 0;
 
     //  tis_competition_meet_type  1集体 2个人
     @SerializedName("competitionType")
-    private int competitionType;
+    private Integer competitionType = 0;
 
     //  轮次
     @SerializedName("competitionRound")
-    private int competitionRound;
+    private Integer competitionRound = 0;
 
     //  人员详情
     @SerializedName("details")

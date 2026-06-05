@@ -1,5 +1,7 @@
 package com.adl.service.db.entity;
 
+import androidx.annotation.RestrictTo;
+
 import com.adl.service.data.CompetitionData;
 
 import org.jetbrains.annotations.NotNull;
@@ -15,6 +17,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @Entity(tableName = "_competition")
+@RestrictTo(RestrictTo.Scope.LIBRARY)
 public final class CompetitionEntity {
     /**
      * 唯一标识符
@@ -52,25 +55,25 @@ public final class CompetitionEntity {
      * 在线类型
      */
     @ColumnInfo(name = "_online_type")
-    private Integer onlineType;
+    private Integer onlineType= 0;
 
     /**
      * 机构级别
      */
     @ColumnInfo(name = "_org_level")
-    private Integer orgLevel;
+    private Integer orgLevel= 0;
 
     /**
      * 开始时间
      */
     @ColumnInfo(name = "_start_time")
-    private Long startTime;
+    private Long startTime= 0L;
 
     /**
      * 结束时间
      */
     @ColumnInfo(name = "_end_time")
-    private Long endTime;
+    private Long endTime= 0L;
 
     /**
      * 应用代码列表
@@ -88,19 +91,19 @@ public final class CompetitionEntity {
      * 创建时间
      */
     @ColumnInfo(name = "_create_time")
-    private Long createTime;
+    private Long createTime= 0L;
 
     /**
      * 竞赛启用状态
      */
     @ColumnInfo(name = "_competition_enabled")
-    private Integer competitionEnabled;
+    private Integer competitionEnabled= 0;
 
     /**
      * 编辑标志
      */
     @ColumnInfo(name = "_edit_flag")
-    private Boolean editFlag;
+    private Boolean editFlag= Boolean.FALSE;
 
     /**
      * 机构名称列表
@@ -112,7 +115,7 @@ public final class CompetitionEntity {
      * 机构类型
      */
     @ColumnInfo(name = "_org_type")
-    private Integer orgType;
+    private Integer orgType= 0;
 
     /**
      * 创建者机构名称
@@ -124,7 +127,7 @@ public final class CompetitionEntity {
      * 参与人数
      */
     @ColumnInfo(name = "_join_num")
-    private Integer joinNum;
+    private Integer joinNum= 0;
 
     public static CompetitionEntity convertToEntity(CompetitionData data) {
         if (data == null) {

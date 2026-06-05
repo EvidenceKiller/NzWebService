@@ -32,12 +32,12 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             // Release：启用严格校验（与 BuildType 绑定，勿用运行时 isDebug）
-            buildConfigField "boolean", "ENABLE_STRICT_JSON_DESERIALIZATION", "false"
+            buildConfigField "boolean", "ENABLE_STRICT_JSON_DESERIALIZATION", "true"
 
             android.libraryVariants.all { variant ->
                 variant.outputs.all {
                     def date = new Date().format('yyyy-MM-dd')
-                    outputFileName = "NzWebSerivceV3-${date}.aar"
+                    outputFileName = "NzWebServiceV3-${date}.aar"
                 }
             }
         }
@@ -113,6 +113,6 @@ dependencies {
     api(name: 'AdlBase-2026-03-10', ext: 'aar')
     api(name: 'NzAuthCore-v2.0.1-2026-04-01', ext: 'aar')
 
-    api ("com.ssp:ssp-common-oss-android:1.1.1@aar")
+    api ("com.ssp:ssp-common-oss-android:1.1.3@aar")
 
 }

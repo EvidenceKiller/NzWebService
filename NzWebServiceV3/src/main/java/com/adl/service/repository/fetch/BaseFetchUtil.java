@@ -3,12 +3,15 @@ package com.adl.service.repository.fetch;
 import com.adl.service.data.BasePageData;
 import com.adl.service.data.BaseResponse;
 import com.adl.service.exception.NzCommonException;
+import com.adl.service.exception.NzDownloadFileException;
 import com.adl.service.exception.NzHttpException;
 import com.adl.service.utils.CommonUtil;
 
 import java.util.List;
 
 import io.reactivex.rxjava3.core.Single;
+import okhttp3.ResponseBody;
+import retrofit2.Response;
 
 class BaseFetchUtil {
 
@@ -60,6 +63,24 @@ class BaseFetchUtil {
                 return CommonUtil.createEmptySingle(clazz);
             }
             return Single.just(baseResponse.getData().getRecords());
+        });
+    }
+
+    public static Single<ResponseBody> scheduleDownloadFileResponse(Single<Response<ResponseBody>> response) {
+        if (response == null) {
+            return Single.error(new NzCommonException("response single is null"));
+        }
+        return response.flatMap(resp -> {
+            if (resp == null) {
+                return Single.error(new NzDownloadFileException(null, "response is null"));
+            }
+            if (!resp.isSuccessful()) {
+                return Single.error(new NzDownloadFileException(String.valueOf(resp.body()), "response is not successful"));
+            }
+            if (resp.body() == null) {
+                return Single.error(new NzDownloadFileException(String.valueOf(resp.body()), "response body is null"));
+            }
+            return Single.just(resp.body());
         });
     }
 }

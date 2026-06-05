@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.adl.service.AdlService;
 import com.adl.service.callback.RequestCallback;
+import com.adl.service.data.ResInfoData;
 import com.adl.service.http.request.BaseGroup;
 import com.adl.service.http.request.BaseGroupAccountInfo;
 import com.adl.service.http.request.CompetitionPageRequest;
@@ -765,9 +766,9 @@ public class V3BusinessCallerTestActivity extends AppCompatActivity {
 
     private void getResInfoAsync() {
         ResInfoRequest request = buildResInfoRequest();
-        AdlService.getService().getBusinessCaller().getResInfoAsync(RequestScope.of(this), request, new RequestCallback<ResData>() {
+        AdlService.getService().getBusinessCaller().getResInfoAsync(RequestScope.of(this), request, new RequestCallback<ResInfoData>() {
             @Override
-            public void onSuccess(ResData data) {
+            public void onSuccess(ResInfoData data) {
                 if (data != null) {
                     Log.d(TAG, "BusinessCallerTestActivity::getResInfoAsync::onSuccess : data : " + data);
                     resultView.setText(data.toString());
@@ -791,9 +792,9 @@ public class V3BusinessCallerTestActivity extends AppCompatActivity {
     private void getResInfoSync() {
         AdlService.getService().executeSyncOnIo(RequestScope.of(this),
                 () -> AdlService.getService().getBusinessCaller().getResInfoSync(buildResInfoRequest()),
-                new RequestCallback<ResData>() {
+                new RequestCallback<ResInfoData>() {
                     @Override
-                    public void onSuccess(ResData data) {
+                    public void onSuccess(ResInfoData data) {
                         if (data != null) {
                             Log.d(TAG, "BusinessCallerTestActivity::getResInfoSync::onSuccess : data : " + data);
                             resultView.setText(data.toString());

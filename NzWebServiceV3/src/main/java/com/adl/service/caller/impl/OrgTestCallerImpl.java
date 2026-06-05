@@ -24,8 +24,9 @@ import com.adl.service.http.request.PlanPageRequest;
 import com.adl.service.http.request.PlanStudentPageRequest;
 import com.adl.service.http.request.RequestScope;
 import com.adl.service.http.request.StandardConfigPageRequest;
+import com.adl.service.internal.CallerManager;
+import com.adl.service.internal.RetrofitManager;
 import com.adl.service.internal.RxCallbackScheduler;
-import com.adl.service.internal.SubscriptionManager;
 import com.adl.service.log.NzLog;
 import com.adl.service.repository.CommonInfoRepository;
 import com.adl.service.repository.OrgTestRepository;
@@ -34,8 +35,6 @@ import com.adl.service.utils.InnerUtil;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import io.reactivex.rxjava3.disposables.Disposable;
 
 /**
  * OrgTestCaller 实现（SDK 内部使用，通过 {@link AdlService} 暴露）。
@@ -49,13 +48,13 @@ public final class OrgTestCallerImpl implements OrgTestCaller {
     }
 
     @Override
-    public void reLoadAllOrgTestDataSync(boolean syncStandard) throws NzBaseException {
-        long serverTime = RxCallbackScheduler.blockingGet(CommonInfoRepository.getInstance().getServerTime());
+    public void reLoadAllOrgTestDataSync(boolean syncStandard) {
+        long serverTime = RxCallbackScheduler.blockingGetNoThrow(CommonInfoRepository.getInstance().getServerTime());
         NzLog.d("服务器时间: " + InnerUtil.formatByTimeCode(serverTime));
         List<Integer> statusList = Arrays.asList(IDefine.SportPlanStatusNew, IDefine.SportPlanStatusDoing);
 
         ////////////// 1.同步全部运动计划 ////////////
-        clearPlanDataSync();
+        CallerManager.getInstance().getPlanDaoCaller().clearPlanData();
         GetPageResult planSyncResult = new GetPageResult();
         for (Integer status : statusList) {
             PlanPageRequest planPageRequest = PlanPageRequest.builder()
@@ -73,7 +72,7 @@ public final class OrgTestCallerImpl implements OrgTestCaller {
         NzLog.d("reGetAllOrgTestDataSync merged plan count: " + planDataList.size() + ", request result: " + planSyncResult);
 
         ////////////// 2.同步运动计划下学生 ////////////
-        clearPlanStudentDataSync();
+        CallerManager.getInstance().getPlanDaoCaller().clearPlanStudentData();
         for (PlanEntity plan : planDataList) {
             if (TextUtils.isEmpty(plan.getEndTime()) || serverTime > Long.parseLong(plan.getEndTime())) {
                 continue;
@@ -85,7 +84,7 @@ public final class OrgTestCallerImpl implements OrgTestCaller {
 
         ////////////// 3.同步运动标准 ////////////
         if (syncStandard) {
-            clearStandardConfigDataSync();
+            CallerManager.getInstance().getPlanDaoCaller().clearStandardConfigData();
             ArrayList<Pair<String, String>> standardList = new ArrayList<>();
 
             for (PlanEntity plan : planDataList) {
@@ -117,18 +116,13 @@ public final class OrgTestCallerImpl implements OrgTestCaller {
     }
 
     @Override
-    public void clearStandardConfigDataSync() throws NzBaseException {
-        RxCallbackScheduler.blockingGet(orgTestRepository.clearStandardConfigData());
-    }
-
-    @Override
     public long getStandardConfigPagesAllAsync(RequestScope scope, StandardConfigPageRequest request, RequestCallback<GetPageResult> callback) {
         return RxCallbackScheduler.schedule(scope, orgTestRepository.getStandardConfigPagesAll(request), callback);
     }
 
     @Override
-    public GetPageResult getStandardConfigPagesAllSync(StandardConfigPageRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGet(orgTestRepository.getStandardConfigPagesAll(request));
+    public GetPageResult getStandardConfigPagesAllSync(StandardConfigPageRequest request) {
+        return RxCallbackScheduler.blockingGetNoThrow(orgTestRepository.getStandardConfigPagesAll(request));
     }
 
     @Override
@@ -137,13 +131,8 @@ public final class OrgTestCallerImpl implements OrgTestCaller {
     }
 
     @Override
-    public List<StandardConfigData> getStandardConfigPageSync(StandardConfigPageRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGet(orgTestRepository.getStandardConfigPage(request));
-    }
-
-    @Override
-    public void clearPlanStudentDataSync() throws NzBaseException {
-        RxCallbackScheduler.blockingGet(orgTestRepository.clearPlanStudentData());
+    public List<StandardConfigData> getStandardConfigPageSync(StandardConfigPageRequest request) {
+        return RxCallbackScheduler.blockingGetNoThrow(orgTestRepository.getStandardConfigPage(request));
     }
 
     @Override
@@ -152,8 +141,8 @@ public final class OrgTestCallerImpl implements OrgTestCaller {
     }
 
     @Override
-    public GetPageResult getPlanStudentPagesAllSync(PlanStudentPageRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGet(orgTestRepository.getPlanStudentPagesAll(request));
+    public GetPageResult getPlanStudentPagesAllSync(PlanStudentPageRequest request) {
+        return RxCallbackScheduler.blockingGetNoThrow(orgTestRepository.getPlanStudentPagesAll(request));
     }
 
     @Override
@@ -162,13 +151,8 @@ public final class OrgTestCallerImpl implements OrgTestCaller {
     }
 
     @Override
-    public List<PlanStudentData> getPlanStudentPageSync(PlanStudentPageRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGet(orgTestRepository.getPlanStudentPage(request));
-    }
-
-    @Override
-    public void clearPlanDataSync() throws NzBaseException {
-        RxCallbackScheduler.blockingGet(orgTestRepository.clearPlanData());
+    public List<PlanStudentData> getPlanStudentPageSync(PlanStudentPageRequest request) {
+        return RxCallbackScheduler.blockingGetNoThrow(orgTestRepository.getPlanStudentPage(request));
     }
 
     @Override
@@ -177,8 +161,8 @@ public final class OrgTestCallerImpl implements OrgTestCaller {
     }
 
     @Override
-    public GetPageResult getPlanPagesAllSync(PlanPageRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGet(orgTestRepository.getPlanPagesAll(request));
+    public GetPageResult getPlanPagesAllSync(PlanPageRequest request) {
+        return RxCallbackScheduler.blockingGetNoThrow(orgTestRepository.getPlanPagesAll(request));
     }
 
     @Override
@@ -187,8 +171,8 @@ public final class OrgTestCallerImpl implements OrgTestCaller {
     }
 
     @Override
-    public List<PlanData> getPlanPageSync(PlanPageRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGet(orgTestRepository.getPlanPage(request));
+    public List<PlanData> getPlanPageSync(PlanPageRequest request) {
+        return RxCallbackScheduler.blockingGetNoThrow(orgTestRepository.getPlanPage(request));
     }
 
     @Override
@@ -197,8 +181,8 @@ public final class OrgTestCallerImpl implements OrgTestCaller {
     }
 
     @Override
-    public PlanInfoData getPlanInfoSync(PlanInfoRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGet(orgTestRepository.getPlanInfo(request));
+    public PlanInfoData getPlanInfoSync(PlanInfoRequest request) {
+        return RxCallbackScheduler.blockingGetNoThrow(orgTestRepository.getPlanInfo(request));
     }
 
     @Override
@@ -207,8 +191,8 @@ public final class OrgTestCallerImpl implements OrgTestCaller {
     }
 
     @Override
-    public List<PlanClassData> getPlanClassPageSync(PlanClassPageRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGet(orgTestRepository.getPlanClassPage(request));
+    public List<PlanClassData> getPlanClassPageSync(PlanClassPageRequest request) {
+        return RxCallbackScheduler.blockingGetNoThrow(orgTestRepository.getPlanClassPage(request));
     }
 
     @Override
@@ -217,7 +201,7 @@ public final class OrgTestCallerImpl implements OrgTestCaller {
     }
 
     @Override
-    public Boolean checkStudentInPlanSync(CheckStudentInPlanRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGet(orgTestRepository.checkStudentInPlan(request));
+    public Boolean checkStudentInPlanSync(CheckStudentInPlanRequest request) {
+        return RxCallbackScheduler.blockingGetNoThrow(orgTestRepository.checkStudentInPlan(request), Boolean.class);
     }
 }

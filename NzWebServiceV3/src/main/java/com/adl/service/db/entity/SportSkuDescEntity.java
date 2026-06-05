@@ -1,5 +1,7 @@
 package com.adl.service.db.entity;
 
+import androidx.annotation.RestrictTo;
+
 import com.adl.service.data.SportSkuDescData;
 
 import lombok.Data;
@@ -7,6 +9,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
+@RestrictTo(RestrictTo.Scope.LIBRARY)
 public final class SportSkuDescEntity {
     /**
      * id

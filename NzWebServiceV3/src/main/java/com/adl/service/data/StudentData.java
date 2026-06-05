@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @JsonAdapter(StrictJsonDeserializer.class)
-public class StudentData implements Serializable {
+public final class StudentData implements Serializable {
 
     @SerializedName("userId")
     private String userId;
@@ -122,11 +122,11 @@ public class StudentData implements Serializable {
 
     //  创建时间
     @SerializedName("createTime")
-    private String createTime;
+    private Long createTime = 0L;
 
     //  更新时间
     @SerializedName("updateTime")
-    private String updateTime;
+    private Long updateTime = 0L;
 
     //  删除标识  0：可用  1：删除
     @SerializedName("delFlag")
@@ -150,32 +150,32 @@ public class StudentData implements Serializable {
 
     // 学段类型 小学1 初中2 高中3 大学4
     @SerializedName("enterYear")
-    private Integer enterYear;
+    private Integer enterYear = 0;
 
     //  班级id
     @SerializedName("classNum")
     private String classNum;
 
     @SerializedName("classStatus")
-    private Integer classStatus;
+    private Integer classStatus = 0;
 
     @SerializedName("nationCode")
-    private Integer nationCode;
+    private Integer nationCode = 0;
 
     @SerializedName("userName")
     private String userName;
 
     @SerializedName("certType")
-    private Integer certType;
+    private Integer certType = 0;
 
     @SerializedName("certNum")
     private String certNum;
 
     @SerializedName("avatarFlag")
-    private Boolean avatarFlag;
+    private Boolean avatarFlag = Boolean.FALSE;
 
     @SerializedName("recordFlag")
-    private Boolean recordFlag;
+    private Boolean recordFlag = Boolean.FALSE;
 
     @SerializedName("faceDataList")
     private List<FaceData> faceDataList;
@@ -191,4 +191,7 @@ public class StudentData implements Serializable {
 
     @SerializedName("address")
     private String address;
+
+    @SerializedName("cardType")
+    private String cardType;
 }

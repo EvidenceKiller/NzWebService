@@ -1,5 +1,6 @@
 package com.adl.service.data;
 
+import java.io.Serializable;
 import com.adl.service.internal.json.StrictJsonDeserializer;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -10,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @JsonAdapter(StrictJsonDeserializer.class)
-public final class ClassInfoData {
+public final class ClassInfoData implements Serializable {
 
     /**
      * 班级id
@@ -22,7 +23,7 @@ public final class ClassInfoData {
      * 班级代码 1 2 3 4 5
      */
     @SerializedName("classNum")
-    private Integer classNum;
+    private Integer classNum = 0;
 
     /**
      * 班级名称
@@ -46,7 +47,7 @@ public final class ClassInfoData {
      * 班级状态 1. 进行中 2. 未开学 3. 已毕业
      */
     @SerializedName("status")
-    private Integer status;
+    private Integer status = 0;
 
     /**
      * 专业ID

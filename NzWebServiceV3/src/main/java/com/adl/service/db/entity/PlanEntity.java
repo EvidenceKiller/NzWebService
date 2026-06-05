@@ -1,5 +1,7 @@
 package com.adl.service.db.entity;
 
+import androidx.annotation.RestrictTo;
+
 import com.adl.service.db.converter.ListSportProjectEntityConverter;
 import com.adl.service.data.PlanData;
 
@@ -20,12 +22,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity(tableName = "_sport_plan")
 @TypeConverters(value = {ListSportProjectEntityConverter.class})
+@RestrictTo(RestrictTo.Scope.LIBRARY)
 public final class PlanEntity implements Serializable {
     /**
      * 创建时间
      */
     @ColumnInfo(name = "_create_time")
-    private String createTime;
+    private Long createTime = 0L;
 
     /**
      * 创建者名称
@@ -93,25 +96,25 @@ public final class PlanEntity implements Serializable {
      * 学生数量
      */
     @ColumnInfo(name = "_student_num")
-    private Integer studentNum;
+    private Integer studentNum= 0;
 
     /**
      * 安排数量
      */
     @ColumnInfo(name = "_arrange_num")
-    private Integer arrangeNum;
+    private Integer arrangeNum= 0;
 
     /**
      * 完成数量
      */
     @ColumnInfo(name = "_finish_num")
-    private Integer finishNum;
+    private Integer finishNum= 0;
 
     /**
      * 自测标识
      */
     @ColumnInfo(name = "_self_test")
-    private Integer selfTest;
+    private Integer selfTest= 0;
 
     public static PlanEntity convertToEntity(PlanData data) {
         if (data == null) {

@@ -19,7 +19,7 @@ public final class SportProjectData implements Serializable {
      * (0 整数 1 小数后一位 2 小数后两位 3 小数后三位)
      */
     @SerializedName("decimalPrecision")
-    private Integer decimalPrecision;
+    private Integer decimalPrecision = 0;
 
     /**
      * 项目分计算方程式
@@ -33,7 +33,7 @@ public final class SportProjectData implements Serializable {
      * (0 向上取整 1 向下取整 4 四舍五入)
      */
     @SerializedName("round")
-    private Integer round;
+    private Integer round = 0;
 
     /**
      * 性别
@@ -57,12 +57,6 @@ public final class SportProjectData implements Serializable {
     private String weightType;
 
     /**
-     * 运动附加标准id
-     */
-    @SerializedName("addSportSkuId")
-    private String addSportSkuId;
-
-    /**
      * 项目id
      */
     @SerializedName("sportSkuId")
@@ -75,33 +69,11 @@ public final class SportProjectData implements Serializable {
     private String sportSkuName;
 
     /**
-     * 结算类型
-     * 0仅分数 1仅等级 2分数和等级
-     */
-    @SerializedName("settlementType")
-    private Integer settlementType;
-
-    /**
-     * 测量方式
-     */
-    @SerializedName("measureMode")
-    private String measureMode;
-
-    /**
-     * 单位名称
-     */
-    @SerializedName("unitName")
-    private String unitName;
-
-    /**
      * 限制报告数量
      */
     @SerializedName("limitReportCount")
-    private Integer limitReportCount;
+    private Integer limitReportCount = 0;
 
-    /**
-     * 测量单位代码
-     */
-    @SerializedName("measureUnitCode")
-    private String measureUnitCode;
+    @SerializedName("testCount")
+    private Integer testCount = 0;
 }

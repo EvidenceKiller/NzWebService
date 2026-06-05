@@ -1,5 +1,6 @@
 package com.adl.service.data;
 
+import java.io.Serializable;
 import com.adl.service.internal.json.StrictJsonDeserializer;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -12,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @JsonAdapter(StrictJsonDeserializer.class)
-public final class WikiData {
+public final class WikiData implements Serializable {
     @SerializedName("orgId")
     private String orgId;
 
@@ -29,7 +30,7 @@ public final class WikiData {
     private String wikiType;
 
     @SerializedName("enabled")
-    private Boolean enabled;
+    private Boolean enabled = Boolean.FALSE;
 
     @SerializedName("wikiSort")
     private String wikiSort;
@@ -41,5 +42,5 @@ public final class WikiData {
     private List<String> appCodes;
 
     @SerializedName("createTime")
-    private Long createTime;
+    private Long createTime = 0L;
 }

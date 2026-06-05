@@ -1,5 +1,6 @@
 package com.adl.service.data;
 
+import java.io.Serializable;
 import com.adl.service.internal.json.StrictJsonDeserializer;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -12,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @JsonAdapter(StrictJsonDeserializer.class)
-public final class SportSkuDetailData {
+public final class SportSkuDetailData implements Serializable {
 
     /**
      * sku标识码 {运动单项code} + {四位顺序号}
@@ -78,37 +79,37 @@ public final class SportSkuDetailData {
      * 测量范围结束值
      */
     @SerializedName("rangeEndValue")
-    private Double rangeEndValue;
+    private Double rangeEndValue = 0.0;
 
     /**
      * 测量范围起始值
      */
     @SerializedName("rangeStartValue")
-    private Double rangeStartValue;
+    private Double rangeStartValue = 0.0;
 
     /**
      * 精度类型 详见码表
      */
     @SerializedName("accuracyType")
-    private Integer accuracyType;
+    private Integer accuracyType = 0;
 
     /**
      * 结束类型 参考字典编码：adl_bms_sport_sku_end_type
      */
     @SerializedName("endType")
-    private Integer endType;
+    private Integer endType = 0;
 
     /**
      * 精度方式 详见码表
      */
     @SerializedName("accuracyMethod")
-    private Integer accuracyMethod;
+    private Integer accuracyMethod = 0;
 
     /**
      * 结束方式 参考字典编码：adl_sport_end_unit
      */
     @SerializedName("endValue")
-    private Long endValue;
+    private Long endValue = 0L;
 
     /**
      * 结束方式为其他时的备注
@@ -165,6 +166,12 @@ public final class SportSkuDetailData {
     private String sportSkuDesc;
 
     /**
+     * 运动描述
+     */
+    @SerializedName("sportSkuDescJson")
+    private List<SportSkuDescData> sportSkuDescJson;
+
+    /**
      * 体测模板文件地址
      */
     @SerializedName("testTemplateUrl")
@@ -204,25 +211,25 @@ public final class SportSkuDetailData {
      * 启停用 参考字典编码：adl_bms_enabled（1 启用 0 禁用）
      */
     @SerializedName("enabled")
-    private Boolean enabled;
+    private Boolean enabled = Boolean.FALSE;
 
     /**
      * 删除标记为
      */
     @SerializedName("delFlag")
-    private Boolean delFlag;
+    private Boolean delFlag = Boolean.FALSE;
 
     /**
      * 项目高低优 参考字典编码：adl_bms_sport_priority
      */
     @SerializedName("sportPriority")
-    private Integer sportPriority;
+    private Integer sportPriority = 0;
 
     /**
      * 测试人数 空为不限制
      */
     @SerializedName("testCount")
-    private Integer testCount;
+    private Integer testCount = 0;
 
     /**
      * 场景运动Id
@@ -240,7 +247,7 @@ public final class SportSkuDetailData {
      * 场景运动排序
      */
     @SerializedName("sceneSkuSort")
-    private Integer sceneSkuSort;
+    private Integer sceneSkuSort = 0;
 
     @SerializedName("appCodes")
     private List<String> appCodes;
@@ -248,6 +255,6 @@ public final class SportSkuDetailData {
     @SerializedName("qualities")
     private List<Integer> qualities;
 
-    @SerializedName("sceneSkuType")
-    private String sceneSkuType;
+    @SerializedName("sceneSportSkuType")
+    private String sceneSportSkuType;
 }

@@ -1,5 +1,6 @@
 package com.adl.service.data;
 
+import java.io.Serializable;
 import com.adl.service.internal.json.StrictJsonDeserializer;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -10,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @JsonAdapter(StrictJsonDeserializer.class)
-public final class LoginInfoAccountRoleMenuData {
+public final class LoginInfoAccountRoleMenuData implements Serializable {
     /**
      * 菜单id
      */
@@ -57,11 +58,11 @@ public final class LoginInfoAccountRoleMenuData {
      * 是否是跳转菜单
      */
     @SerializedName("redirectFlag")
-    private Integer redirectFlag;
+    private Integer redirectFlag = 0;
 
     /**
      * 菜单排序标识符
      */
     @SerializedName("sortNum")
-    private Integer sortNum;
+    private Integer sortNum = 0;
 }

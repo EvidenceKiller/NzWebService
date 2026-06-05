@@ -28,7 +28,6 @@ import okio.BufferedSource;
 
 public class SmartCacheInterceptor implements Interceptor {
 
-    private final Context context;
     private final boolean enableCache;
     private final long cacheTimeSeconds;
     //接口缓存白名单
@@ -55,7 +54,6 @@ public class SmartCacheInterceptor implements Interceptor {
     public SmartCacheInterceptor(Context context,
                                  boolean enableCache,
                                  long cacheTimeSeconds) {
-        this.context = context;
         this.enableCache = enableCache;
         this.cacheTimeSeconds = cacheTimeSeconds;
         this.customCache = new HttpFileCache(context);

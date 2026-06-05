@@ -129,14 +129,14 @@ public class V3BigScreenStatsCallerTestActivity extends AppCompatActivity {
     }
 
     private SportRankRequest buildSportRankRequest() {
-        return SportRankRequest.builder("101101", "5")
+        return SportRankRequest.builder("101101")
                 .rankNumber(5L)
                 .sportSceneCodes(Arrays.asList("1003", "1002", "1001"))
                 .build();
     }
 
     private SportRankRequest buildSportRankKing() {
-        return SportRankRequest.builder("101101", "5")
+        return SportRankRequest.builder("101101")
                 .rankNumber(7L)
                 .sportSceneCodes(Arrays.asList("1003", "1002", "1001"))
                 .dayType("3")
@@ -144,7 +144,7 @@ public class V3BigScreenStatsCallerTestActivity extends AppCompatActivity {
     }
 
     private SportRankRequest buildPhysicalTrainingRankRequest() {
-        return SportRankRequest.builder("101101", "5")
+        return SportRankRequest.builder("101101")
                 .rankNumber(20L)
                 .sportSkuId("4301010001")
                 .sportSceneCodes(Arrays.asList("1003", "1002", "1001"))
@@ -153,7 +153,7 @@ public class V3BigScreenStatsCallerTestActivity extends AppCompatActivity {
     }
 
     private SportRankRequest buildExerciseSumTimeRankRequest() {
-        return SportRankRequest.builder("101101", "5")
+        return SportRankRequest.builder("101101")
                 .rankNumber(7L)
                 .sportSceneCodes(Arrays.asList("1003", "1002", "1001", "3004"))
                 .dayType("3")

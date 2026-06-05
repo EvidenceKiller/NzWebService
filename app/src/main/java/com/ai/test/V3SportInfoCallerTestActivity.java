@@ -9,13 +9,15 @@ import android.widget.TextView;
 
 import com.adl.service.AdlService;
 import com.adl.service.callback.RequestCallback;
+import com.adl.service.data.ReportSportStudentAllData;
+import com.adl.service.data.ReportSportStudentCompetitionData;
+import com.adl.service.data.ReportSportStudentData;
+import com.adl.service.data.ReportSportStudentMeetData;
+import com.adl.service.data.ReportSportStudentPlanData;
+import com.adl.service.data.ReportSportStudentTrainData;
+import com.adl.service.data.ReportSportTeacherData;
 import com.adl.service.http.request.AccountRecordPageRequest;
 import com.adl.service.http.request.OrgRecordPageRequest;
-import com.adl.service.http.request.ReportStudentCompetitionRequest;
-import com.adl.service.http.request.ReportStudentMeetRequest;
-import com.adl.service.http.request.ReportStudentPlanRequest;
-import com.adl.service.http.request.ReportStudentSportRequest;
-import com.adl.service.http.request.ReportTeacherSportRequest;
 import com.adl.service.http.request.RequestScope;
 import com.adl.service.data.AccountRecordData;
 import com.adl.service.data.OrgRecordData;
@@ -64,41 +66,6 @@ public class V3SportInfoCallerTestActivity extends AppCompatActivity {
         createButton("getAccountRecordPageSync").setOnClickListener(v -> getAccountRecordPageSync());
     }
 
-    private ReportStudentSportRequest buildReportStudentSportRequest() {
-        return ReportStudentSportRequest.builder(
-                "9901060001", "1965665142485622785", "101101", 0, 10L, "1776082153044", "1776082213054",
-                "50", "1001", "4301010001", "temp", 60000L)
-                .build();
-    }
-
-    private ReportTeacherSportRequest buildReportTeacherSportRequest() {
-        return ReportTeacherSportRequest.builder(
-                "1965665142485622785", "101101", "test1111", 0, 10L, "1776082153044", "1776082213054",
-                "50", "1001", "4301010001", "temp", 60000L)
-                .build();
-    }
-
-    private ReportStudentMeetRequest buildReportStudentMeetRequest() {
-        return ReportStudentMeetRequest.builder(
-                "1965665142485622785", "101101", 0, 10L, "1776082153044", "1776082213054",
-                "50", "1001", "4301010001", "temp", 60000L)
-                .build();
-    }
-
-    private ReportStudentPlanRequest buildReportStudentPlanRequest() {
-        return ReportStudentPlanRequest.builder(
-                "1965665142485622785", "101101", 0, 10L, "1776082153044", "1776082213054",
-                "50", "1001", "4301010001", "temp", 60000L)
-                .build();
-    }
-
-    private ReportStudentCompetitionRequest buildReportStudentCompetitionRequest() {
-        return ReportStudentCompetitionRequest.builder(
-                "1965665142485622785", "101101", 0, 10L, "1776082153044", "1776082213054",
-                "50", "1001", "4301010001", "temp", 60000L)
-                .build();
-    }
-
     private AccountRecordPageRequest buildAccountRecordPageRequest() {
         AccountRecordPageRequest request = AccountRecordPageRequest.builder().forceUpdate(true).pageSize(10L).semesterId("101101").build();
         return request;
@@ -128,89 +95,89 @@ public class V3SportInfoCallerTestActivity extends AppCompatActivity {
 
     private void updateStudentSportAsync() {
         AdlService.getService().getSportInfoCaller().updateStudentSportAsync(
-                RequestScope.of(this), buildReportStudentSportRequest(), booleanCallback("updateStudentSportAsync"));
+                RequestScope.of(this), new ReportSportStudentAllData(), booleanCallback("updateStudentSportAsync"));
     }
 
     private void updateStudentSportSync() {
         AdlService.getService().executeSyncOnIo(RequestScope.of(this),
-                () -> AdlService.getService().getSportInfoCaller().updateStudentSportSync(buildReportStudentSportRequest()),
+                () -> AdlService.getService().getSportInfoCaller().updateStudentSportSync(new ReportSportStudentAllData()),
                 booleanCallback("updateStudentSportSync"));
     }
 
     private void reportTeacherSportAsync() {
         AdlService.getService().getSportInfoCaller().reportTeacherSportAsync(
-                RequestScope.of(this), buildReportTeacherSportRequest(), booleanCallback("reportTeacherSportAsync"));
+                RequestScope.of(this), new ReportSportTeacherData(), booleanCallback("reportTeacherSportAsync"));
     }
 
     private void reportTeacherSportSync() {
         AdlService.getService().executeSyncOnIo(RequestScope.of(this),
-                () -> AdlService.getService().getSportInfoCaller().reportTeacherSportSync(buildReportTeacherSportRequest()),
+                () -> AdlService.getService().getSportInfoCaller().reportTeacherSportSync(new ReportSportTeacherData()),
                 booleanCallback("reportTeacherSportSync"));
     }
 
     private void reportStudentTrainAsync() {
         AdlService.getService().getSportInfoCaller().reportStudentTrainAsync(
-                RequestScope.of(this), buildReportStudentSportRequest(), booleanCallback("reportStudentTrainAsync"));
+                RequestScope.of(this), new ReportSportStudentTrainData(), booleanCallback("reportStudentTrainAsync"));
     }
 
     private void reportStudentTrainSync() {
         AdlService.getService().executeSyncOnIo(RequestScope.of(this),
-                () -> AdlService.getService().getSportInfoCaller().reportStudentTrainSync(buildReportStudentSportRequest()),
+                () -> AdlService.getService().getSportInfoCaller().reportStudentTrainSync(new ReportSportStudentTrainData()),
                 booleanCallback("reportStudentTrainSync"));
     }
 
     private void reportStudentSportAsync() {
         AdlService.getService().getSportInfoCaller().reportStudentSportAsync(
-                RequestScope.of(this), buildReportStudentSportRequest(), booleanCallback("reportStudentSportAsync"));
+                RequestScope.of(this), new ReportSportStudentData(), booleanCallback("reportStudentSportAsync"));
     }
 
     private void reportStudentSportSync() {
         AdlService.getService().executeSyncOnIo(RequestScope.of(this),
-                () -> AdlService.getService().getSportInfoCaller().reportStudentSportSync(buildReportStudentSportRequest()),
+                () -> AdlService.getService().getSportInfoCaller().reportStudentSportSync(new ReportSportStudentData()),
                 booleanCallback("reportStudentSportSync"));
     }
 
     private void reportStudentPlanAsync() {
         AdlService.getService().getSportInfoCaller().reportStudentPlanAsync(
-                RequestScope.of(this), buildReportStudentPlanRequest(), booleanCallback("reportStudentPlanAsync"));
+                RequestScope.of(this), new ReportSportStudentPlanData(), booleanCallback("reportStudentPlanAsync"));
     }
 
     private void reportStudentPlanSync() {
         AdlService.getService().executeSyncOnIo(RequestScope.of(this),
-                () -> AdlService.getService().getSportInfoCaller().reportStudentPlanSync(buildReportStudentPlanRequest()),
+                () -> AdlService.getService().getSportInfoCaller().reportStudentPlanSync(new ReportSportStudentPlanData()),
                 booleanCallback("reportStudentPlanSync"));
     }
 
     private void reportStudentMeetAsync() {
         AdlService.getService().getSportInfoCaller().reportStudentMeetAsync(
-                RequestScope.of(this), buildReportStudentMeetRequest(), booleanCallback("reportStudentMeetAsync"));
+                RequestScope.of(this), new ReportSportStudentMeetData(), booleanCallback("reportStudentMeetAsync"));
     }
 
     private void reportStudentMeetSync() {
         AdlService.getService().executeSyncOnIo(RequestScope.of(this),
-                () -> AdlService.getService().getSportInfoCaller().reportStudentMeetSync(buildReportStudentMeetRequest()),
+                () -> AdlService.getService().getSportInfoCaller().reportStudentMeetSync(new ReportSportStudentMeetData()),
                 booleanCallback("reportStudentMeetSync"));
     }
 
     private void reportStudentCompetitionAsync() {
         AdlService.getService().getSportInfoCaller().reportStudentCompetitionAsync(
-                RequestScope.of(this), buildReportStudentCompetitionRequest(), booleanCallback("reportStudentCompetitionAsync"));
+                RequestScope.of(this), new ReportSportStudentCompetitionData(), booleanCallback("reportStudentCompetitionAsync"));
     }
 
     private void reportStudentCompetitionSync() {
         AdlService.getService().executeSyncOnIo(RequestScope.of(this),
-                () -> AdlService.getService().getSportInfoCaller().reportStudentCompetitionSync(buildReportStudentCompetitionRequest()),
+                () -> AdlService.getService().getSportInfoCaller().reportStudentCompetitionSync(new ReportSportStudentCompetitionData()),
                 booleanCallback("reportStudentCompetitionSync"));
     }
 
     private void reportStudentAllSportAsync() {
         AdlService.getService().getSportInfoCaller().reportStudentAllSportAsync(
-                RequestScope.of(this), buildReportStudentSportRequest(), booleanCallback("reportStudentAllSportAsync"));
+                RequestScope.of(this), new ReportSportStudentAllData(), booleanCallback("reportStudentAllSportAsync"));
     }
 
     private void reportStudentAllSportSync() {
         AdlService.getService().executeSyncOnIo(RequestScope.of(this),
-                () -> AdlService.getService().getSportInfoCaller().reportStudentAllSportSync(buildReportStudentSportRequest()),
+                () -> AdlService.getService().getSportInfoCaller().reportStudentAllSportSync(new ReportSportStudentAllData()),
                 booleanCallback("reportStudentAllSportSync"));
     }
 

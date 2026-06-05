@@ -1,5 +1,7 @@
 package com.adl.service.db.entity;
 
+import androidx.annotation.RestrictTo;
+
 import com.adl.service.data.DictMapData;
 
 import androidx.room.ColumnInfo;
@@ -11,12 +13,12 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @Entity(tableName = "_dict_map")
+@RestrictTo(RestrictTo.Scope.LIBRARY)
 public final class DictMapEntity {
-//    public static final long EXPIRED_TIME = 1000L * 60L * 60L * 12L;
-    public static final long EXPIRED_TIME = 1000L * 60L * 5L;
+    public static final long EXPIRED_TIME = 1000L * 60L * 60L * 12L;
 
     @PrimaryKey(autoGenerate = true)
-    private long lid;
+    private Long lid= 0L;
 
     @ColumnInfo(name = "_sport_sku_id")
     private String sportSkuId;
@@ -34,7 +36,7 @@ public final class DictMapEntity {
     private String type;
 
     @ColumnInfo(name = "_expired_time")
-    private Long expiredTime;
+    private Long expiredTime= 0L;
 
     public static DictMapEntity convertToEntity(DictMapData data, String sportSkuId) {
         if (data == null) {

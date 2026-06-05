@@ -29,7 +29,7 @@ public interface BigScreenH5Caller {
      * 分组教学列表
      * <p>同步调用。</p>
      */
-    List<TeachCourseDetailData> getTeachCourseDetailListSync(TeachCourseRequest request) throws NzBaseException;
+    List<TeachCourseDetailData> getTeachCourseDetailListSync(TeachCourseRequest request);
 
     /**
      * 有数据的日期列表
@@ -41,7 +41,7 @@ public interface BigScreenH5Caller {
      * 有数据的日期列表
      * <p>同步调用。</p>
      */
-    List<String> getTeachCourseDataDatesSync(TeachCourseDataDatesRequest request) throws NzBaseException;
+    List<String> getTeachCourseDataDatesSync(TeachCourseDataDatesRequest request);
 
     /**
      * 最大次数
@@ -53,7 +53,7 @@ public interface BigScreenH5Caller {
      * 最大次数
      * <p>同步调用。</p>
      */
-    Integer getTeachCourseTimesSync(TeachCourseRequest request) throws NzBaseException;
+    Integer getTeachCourseTimesSync(TeachCourseRequest request);
 
     /**
      * 教学按钮点击计数
@@ -65,7 +65,7 @@ public interface BigScreenH5Caller {
      * 教学按钮点击计数
      * <p>同步调用。</p>
      */
-    Boolean getTeachCourseButtonClickableSync(TeachCourseButtonClickCountRequest request) throws NzBaseException;
+    Boolean getTeachCourseButtonClickableSync(TeachCourseButtonClickCountRequest request);
 
     /**
      * 历史记录
@@ -77,7 +77,7 @@ public interface BigScreenH5Caller {
      * 历史记录
      * <p>同步调用。</p>
      */
-    List<SunshineRunningSportDetailData> getSunshineRunningSportDetailPageSync(SunshineRunningSportDetailPageRequest request) throws NzBaseException;
+    List<SunshineRunningSportDetailData> getSunshineRunningSportDetailPageSync(SunshineRunningSportDetailPageRequest request);
 
     /**
      * 历史记录
@@ -89,6 +89,6 @@ public interface BigScreenH5Caller {
      * 历史记录
      * <p>同步调用。</p>
      */
-    List<ClassroomCompetitionRecordData> getSunshineRunningCompetitionRecordPageSync(SunshineRunningCompetitionRecordPageRequest request) throws NzBaseException;
+    List<ClassroomCompetitionRecordData> getSunshineRunningCompetitionRecordPageSync(SunshineRunningCompetitionRecordPageRequest request);
 
 }

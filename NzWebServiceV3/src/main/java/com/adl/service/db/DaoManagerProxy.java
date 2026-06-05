@@ -152,4 +152,20 @@ public final class DaoManagerProxy {
     public LoginInfoDao getLoginInfoDao() {
         return mDaoManager.getLoginInfoDao();
     }
+
+    public RecordLocalDao getRecordLocalDao() {
+        return mDaoManager.getRecordLocalDao();
+    }
+
+    public RecordUploadDao getRecordUploadDao() {
+        return mDaoManager.getRecordUploadDao();
+    }
+
+    public RecordResDao getRecordResDao() {
+        return mDaoManager.getRecordResDao();
+    }
+
+    public TeacherSportDao getTeacherSportDao() {
+        return mDaoManager.getTeacherSportDao();
+    }
 }

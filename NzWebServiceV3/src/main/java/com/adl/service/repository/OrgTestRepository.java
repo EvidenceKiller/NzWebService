@@ -18,8 +18,10 @@ import com.adl.service.repository.prepare.OrgTestPrepareHelper;
 
 import java.util.List;
 
+import androidx.annotation.RestrictTo;
 import io.reactivex.rxjava3.core.Single;
 
+@RestrictTo(RestrictTo.Scope.LIBRARY)
 public final class OrgTestRepository {
     private final OrgTestPrepareHelper prepareHelper = new OrgTestPrepareHelper();
     private final OrgTestFetchHelper fetchHelper = new OrgTestFetchHelper();
@@ -41,10 +43,6 @@ public final class OrgTestRepository {
         return instance;
     }
 
-    public Single<Void> clearStandardConfigData() {
-        return BaseRepositoryUtil.repositoryAsSingle(prepareHelper.createPrepareStandardConfigDataFunc());
-    }
-
     public Single<GetPageResult> getStandardConfigPagesAll(StandardConfigPageRequest request) {
         return BaseRepositoryUtil.repositoryListsAsSingle(request,
                 fetchHelper.createGetStandardConfigPagesAllFunc(request),
@@ -55,10 +53,6 @@ public final class OrgTestRepository {
         return BaseRepositoryUtil.repositoryAsSingle(request,
                 fetchHelper.createGetStandardConfigPageFunc(),
                 persistHelper.createPersistStandardConfigPageFunc());
-    }
-
-    public Single<Void> clearPlanStudentData() {
-        return BaseRepositoryUtil.repositoryAsSingle(prepareHelper.createClearPlanStudentPagesAllFunc());
     }
 
     public Single<GetPageResult> getPlanStudentPagesAll(PlanStudentPageRequest request) {
@@ -72,10 +66,6 @@ public final class OrgTestRepository {
         return BaseRepositoryUtil.repositoryPageAsSingle(request,
                 fetchHelper.createGetPlanStudentPageFunc(),
                 persistHelper.createPersistPlanStudentPageFunc(request));
-    }
-
-    public Single<Void> clearPlanData() {
-        return BaseRepositoryUtil.repositoryAsSingle(prepareHelper.createClearPlanPagesAllFunc());
     }
 
     public Single<GetPageResult> getPlanPagesAll(PlanPageRequest request) {

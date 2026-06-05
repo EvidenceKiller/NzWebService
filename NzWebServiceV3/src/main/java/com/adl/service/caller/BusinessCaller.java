@@ -8,6 +8,8 @@ import com.adl.service.data.GroupData;
 import com.adl.service.data.GroupTeamData;
 import com.adl.service.data.GroupTeamDetailData;
 import com.adl.service.data.ResData;
+import com.adl.service.data.ResInfoData;
+import com.adl.service.data.ResTabData;
 import com.adl.service.data.ResTypeData;
 import com.adl.service.data.SportMeetData;
 import com.adl.service.data.TrainPlanInfoData;
@@ -17,6 +19,7 @@ import com.adl.service.http.request.CompetitionPageRequest;
 import com.adl.service.http.request.CompetitionRankDetailRequest;
 import com.adl.service.http.request.DownloadGroupTeamDetailPageRequest;
 import com.adl.service.http.request.DownloadGroupTeamPageRequest;
+import com.adl.service.http.request.EmptyRequest;
 import com.adl.service.http.request.GetGroupRequest;
 import com.adl.service.http.request.JoinCompetitionRankRequest;
 import com.adl.service.http.request.RequestScope;
@@ -45,7 +48,7 @@ public interface BusinessCaller {
      * 保存分组信息
      * <p>同步调用。</p>
      */
-    Boolean saveGroupSync(SaveGroupRequest request) throws NzBaseException;
+    Boolean saveGroupSync(SaveGroupRequest request);
 
     /**
      * 获取分组信息
@@ -57,7 +60,7 @@ public interface BusinessCaller {
      * 获取分组信息
      * <p>同步调用。</p>
      */
-    GroupData getGroupSync(GetGroupRequest request) throws NzBaseException;
+    GroupData getGroupSync(GetGroupRequest request);
 
     /**
      * 训练计划一天的项目
@@ -69,7 +72,7 @@ public interface BusinessCaller {
      * 训练计划一天的项目
      * <p>同步调用。</p>
      */
-    List<TrainPlanOneDayProjectData> getTrainPlanOneDayProjectListSync(TrainPlanOneDayProjectListRequest request) throws NzBaseException;
+    List<TrainPlanOneDayProjectData> getTrainPlanOneDayProjectListSync(TrainPlanOneDayProjectListRequest request);
 
     /**
      * 训练计划列表
@@ -81,7 +84,7 @@ public interface BusinessCaller {
      * 训练计划列表
      * <p>同步调用。</p>
      */
-    List<TrainPlanInfoData> getTrainPlanInfoPageSync(TrainPlanInfoPageRequest request) throws NzBaseException;
+    List<TrainPlanInfoData> getTrainPlanInfoPageSync(TrainPlanInfoPageRequest request);
 
     /**
      * 参与竞技排名赛事
@@ -93,7 +96,7 @@ public interface BusinessCaller {
      * 参与竞技排名赛事
      * <p>同步调用。</p>
      */
-    Boolean joinCompetitionRankSync(JoinCompetitionRankRequest request) throws NzBaseException;
+    Boolean joinCompetitionRankSync(JoinCompetitionRankRequest request);
 
     /**
      * 获取赛事竞技排名赛详情
@@ -105,11 +108,11 @@ public interface BusinessCaller {
      * 获取赛事竞技排名赛详情
      * <p>同步调用。</p>
      */
-    CompetitionRankDetailData getCompetitionRankDetailSync(CompetitionRankDetailRequest request) throws NzBaseException;
+    CompetitionRankDetailData getCompetitionRankDetailSync(CompetitionRankDetailRequest request);
 
     long getCompetitionPagesAllAsync(RequestScope scope, CompetitionPageRequest request, RequestCallback<GetPageResult> callback);
 
-    GetPageResult getCompetitionPagesAllSync(CompetitionPageRequest request) throws NzBaseException;
+    GetPageResult getCompetitionPagesAllSync(CompetitionPageRequest request);
 
     /**
      * 赛事列表
@@ -121,7 +124,7 @@ public interface BusinessCaller {
      * 赛事列表
      * <p>同步调用。</p>
      */
-    List<CompetitionData> getCompetitionPageSync(CompetitionPageRequest request) throws NzBaseException;
+    List<CompetitionData> getCompetitionPageSync(CompetitionPageRequest request);
 
     long getSportMeetPagesAllAsync(RequestScope scope, SportMeetPageRequest request, RequestCallback<GetPageResult> callback);
 
@@ -129,7 +132,7 @@ public interface BusinessCaller {
      * 获取所有运动会列表
      * <p>同步调用。</p>
      */
-    GetPageResult getSportMeetPagesAllSync(SportMeetPageRequest request) throws NzBaseException;
+    GetPageResult getSportMeetPagesAllSync(SportMeetPageRequest request);
 
     /**
      * 分页获取运动会列表
@@ -141,7 +144,7 @@ public interface BusinessCaller {
      * 分页获取运动会列表
      * <p>同步调用。</p>
      */
-    List<SportMeetData> getSportMeetPageSync(SportMeetPageRequest request) throws NzBaseException;
+    List<SportMeetData> getSportMeetPageSync(SportMeetPageRequest request);
 
     /**
      * 拉取编排数据
@@ -153,7 +156,7 @@ public interface BusinessCaller {
      * 拉取编排数据
      * <p>同步调用。</p>
      */
-    List<GroupTeamData> downloadGroupTeamPageSync(DownloadGroupTeamPageRequest request) throws NzBaseException;
+    List<GroupTeamData> downloadGroupTeamPageSync(DownloadGroupTeamPageRequest request);
 
     /**
      * 拉取编排详情数据
@@ -165,7 +168,19 @@ public interface BusinessCaller {
      * 拉取编排详情数据
      * <p>同步调用。</p>
      */
-    List<GroupTeamDetailData> downloadGroupTeamDetailPageSync(DownloadGroupTeamDetailPageRequest request) throws NzBaseException;
+    List<GroupTeamDetailData> downloadGroupTeamDetailPageSync(DownloadGroupTeamDetailPageRequest request);
+
+    /**
+     * 获取资源标签列表
+     * <p>异步调用。</p>
+     */
+    long getResTabListAsync(RequestScope scope, EmptyRequest request, RequestCallback<List<ResTabData>> callback);
+
+    /**
+     * 获取资源标签列表
+     * <p>同步调用。</p>
+     */
+    List<ResTabData> getResTabListSync(EmptyRequest request);
 
     /**
      * 获取资源分类列表
@@ -177,7 +192,7 @@ public interface BusinessCaller {
      * 获取资源分类列表
      * <p>同步调用。</p>
      */
-    List<ResTypeData> getResTypeListSync(ResTypeListRequest request) throws NzBaseException;
+    List<ResTypeData> getResTypeListSync(ResTypeListRequest request);
 
     /**
      * 获取资源列表
@@ -189,18 +204,18 @@ public interface BusinessCaller {
      * 获取资源列表
      * <p>同步调用。</p>
      */
-    List<ResData> getResPageSync(ResPageRequest request) throws NzBaseException;
+    List<ResData> getResPageSync(ResPageRequest request);
 
     /**
      * 获取资源详情
      * <p>异步调用。</p>
      */
-    long getResInfoAsync(RequestScope scope, ResInfoRequest request, RequestCallback<ResData> callback);
+    long getResInfoAsync(RequestScope scope, ResInfoRequest request, RequestCallback<ResInfoData> callback);
 
     /**
      * 获取资源详情
      * <p>同步调用。</p>
      */
-    ResData getResInfoSync(ResInfoRequest request) throws NzBaseException;
+    ResInfoData getResInfoSync(ResInfoRequest request);
 
 }

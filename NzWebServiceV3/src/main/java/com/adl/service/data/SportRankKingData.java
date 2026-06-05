@@ -1,5 +1,6 @@
 package com.adl.service.data;
 
+import java.io.Serializable;
 import com.adl.service.internal.json.StrictJsonDeserializer;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -10,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @JsonAdapter(StrictJsonDeserializer.class)
-public final class SportRankKingData {
+public final class SportRankKingData implements Serializable {
 
     /**
      * 用户标识码
@@ -52,7 +53,7 @@ public final class SportRankKingData {
      * 运动得分
      */
     @SerializedName("sportScore")
-    private Double sportScore;
+    private Double sportScore = 0.0;
 
     /**
      * 运动结果
@@ -70,13 +71,13 @@ public final class SportRankKingData {
      * 运动时间
      */
     @SerializedName("sportTime")
-    private Integer sportTime;
+    private Integer sportTime = 0;
 
     /**
      * 运动计数
      */
     @SerializedName("sportCount")
-    private Integer sportCount;
+    private Integer sportCount = 0;
 
     /**
      * 运动打卡日期
@@ -100,5 +101,5 @@ public final class SportRankKingData {
      * 霸榜项目数
      */
     @SerializedName("count")
-    private Integer count;
+    private Integer count = 0;
 }

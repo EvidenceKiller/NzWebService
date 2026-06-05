@@ -10,6 +10,8 @@ import com.adl.service.data.GroupData;
 import com.adl.service.data.GroupTeamData;
 import com.adl.service.data.GroupTeamDetailData;
 import com.adl.service.data.ResData;
+import com.adl.service.data.ResInfoData;
+import com.adl.service.data.ResTabData;
 import com.adl.service.data.ResTypeData;
 import com.adl.service.data.SportMeetData;
 import com.adl.service.data.TrainPlanInfoData;
@@ -19,6 +21,7 @@ import com.adl.service.http.request.CompetitionPageRequest;
 import com.adl.service.http.request.CompetitionRankDetailRequest;
 import com.adl.service.http.request.DownloadGroupTeamDetailPageRequest;
 import com.adl.service.http.request.DownloadGroupTeamPageRequest;
+import com.adl.service.http.request.EmptyRequest;
 import com.adl.service.http.request.GetGroupRequest;
 import com.adl.service.http.request.JoinCompetitionRankRequest;
 import com.adl.service.http.request.RequestScope;
@@ -30,12 +33,9 @@ import com.adl.service.http.request.SportMeetPageRequest;
 import com.adl.service.http.request.TrainPlanInfoPageRequest;
 import com.adl.service.http.request.TrainPlanOneDayProjectListRequest;
 import com.adl.service.internal.RxCallbackScheduler;
-import com.adl.service.internal.SubscriptionManager;
 import com.adl.service.repository.BusinessRepository;
 
 import java.util.List;
-
-import io.reactivex.rxjava3.disposables.Disposable;
 
 /**
  * BusinessCaller 实现（SDK 内部使用，通过 {@link AdlService} 暴露）。
@@ -54,8 +54,8 @@ public final class BusinessCallerImpl implements BusinessCaller {
     }
 
     @Override
-    public Boolean saveGroupSync(SaveGroupRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGet(businessRepository.saveGroup(request));
+    public Boolean saveGroupSync(SaveGroupRequest request) {
+        return RxCallbackScheduler.blockingGetNoThrow(businessRepository.saveGroup(request), Boolean.class);
     }
 
     @Override
@@ -64,8 +64,8 @@ public final class BusinessCallerImpl implements BusinessCaller {
     }
 
     @Override
-    public GroupData getGroupSync(GetGroupRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGet(businessRepository.getGroup(request));
+    public GroupData getGroupSync(GetGroupRequest request) {
+        return RxCallbackScheduler.blockingGetNoThrow(businessRepository.getGroup(request));
     }
 
     @Override
@@ -74,8 +74,8 @@ public final class BusinessCallerImpl implements BusinessCaller {
     }
 
     @Override
-    public List<TrainPlanOneDayProjectData> getTrainPlanOneDayProjectListSync(TrainPlanOneDayProjectListRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGet(businessRepository.getTrainPlanOneDayProjectList(request));
+    public List<TrainPlanOneDayProjectData> getTrainPlanOneDayProjectListSync(TrainPlanOneDayProjectListRequest request) {
+        return RxCallbackScheduler.blockingGetNoThrow(businessRepository.getTrainPlanOneDayProjectList(request));
     }
 
     @Override
@@ -84,8 +84,8 @@ public final class BusinessCallerImpl implements BusinessCaller {
     }
 
     @Override
-    public List<TrainPlanInfoData> getTrainPlanInfoPageSync(TrainPlanInfoPageRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGet(businessRepository.getTrainPlanInfoPage(request));
+    public List<TrainPlanInfoData> getTrainPlanInfoPageSync(TrainPlanInfoPageRequest request) {
+        return RxCallbackScheduler.blockingGetNoThrow(businessRepository.getTrainPlanInfoPage(request));
     }
 
     @Override
@@ -94,8 +94,8 @@ public final class BusinessCallerImpl implements BusinessCaller {
     }
 
     @Override
-    public Boolean joinCompetitionRankSync(JoinCompetitionRankRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGet(businessRepository.joinCompetitionRank(request));
+    public Boolean joinCompetitionRankSync(JoinCompetitionRankRequest request) {
+        return RxCallbackScheduler.blockingGetNoThrow(businessRepository.joinCompetitionRank(request));
     }
 
     @Override
@@ -104,8 +104,8 @@ public final class BusinessCallerImpl implements BusinessCaller {
     }
 
     @Override
-    public CompetitionRankDetailData getCompetitionRankDetailSync(CompetitionRankDetailRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGet(businessRepository.getCompetitionRankDetail(request));
+    public CompetitionRankDetailData getCompetitionRankDetailSync(CompetitionRankDetailRequest request) {
+        return RxCallbackScheduler.blockingGetNoThrow(businessRepository.getCompetitionRankDetail(request));
     }
 
     @Override
@@ -114,8 +114,8 @@ public final class BusinessCallerImpl implements BusinessCaller {
     }
 
     @Override
-    public GetPageResult getCompetitionPagesAllSync(CompetitionPageRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGet(businessRepository.getCompetitionPagesAll(request));
+    public GetPageResult getCompetitionPagesAllSync(CompetitionPageRequest request) {
+        return RxCallbackScheduler.blockingGetNoThrow(businessRepository.getCompetitionPagesAll(request));
     }
 
     @Override
@@ -124,8 +124,8 @@ public final class BusinessCallerImpl implements BusinessCaller {
     }
 
     @Override
-    public List<CompetitionData> getCompetitionPageSync(CompetitionPageRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGet(businessRepository.getCompetitionPage(request));
+    public List<CompetitionData> getCompetitionPageSync(CompetitionPageRequest request) {
+        return RxCallbackScheduler.blockingGetNoThrow(businessRepository.getCompetitionPage(request));
     }
 
     @Override
@@ -134,8 +134,8 @@ public final class BusinessCallerImpl implements BusinessCaller {
     }
 
     @Override
-    public GetPageResult getSportMeetPagesAllSync(SportMeetPageRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGet(businessRepository.getSportMeetPagesAll(request));
+    public GetPageResult getSportMeetPagesAllSync(SportMeetPageRequest request) {
+        return RxCallbackScheduler.blockingGetNoThrow(businessRepository.getSportMeetPagesAll(request));
     }
 
     @Override
@@ -144,8 +144,8 @@ public final class BusinessCallerImpl implements BusinessCaller {
     }
 
     @Override
-    public List<SportMeetData> getSportMeetPageSync(SportMeetPageRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGet(businessRepository.getSportMeetPage(request));
+    public List<SportMeetData> getSportMeetPageSync(SportMeetPageRequest request) {
+        return RxCallbackScheduler.blockingGetNoThrow(businessRepository.getSportMeetPage(request));
     }
 
     @Override
@@ -154,8 +154,8 @@ public final class BusinessCallerImpl implements BusinessCaller {
     }
 
     @Override
-    public List<GroupTeamData> downloadGroupTeamPageSync(DownloadGroupTeamPageRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGet(businessRepository.downloadGroupTeamPage(request));
+    public List<GroupTeamData> downloadGroupTeamPageSync(DownloadGroupTeamPageRequest request) {
+        return RxCallbackScheduler.blockingGetNoThrow(businessRepository.downloadGroupTeamPage(request));
     }
 
     @Override
@@ -164,8 +164,18 @@ public final class BusinessCallerImpl implements BusinessCaller {
     }
 
     @Override
-    public List<GroupTeamDetailData> downloadGroupTeamDetailPageSync(DownloadGroupTeamDetailPageRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGet(businessRepository.downloadGroupTeamDetailPage(request));
+    public List<GroupTeamDetailData> downloadGroupTeamDetailPageSync(DownloadGroupTeamDetailPageRequest request) {
+        return RxCallbackScheduler.blockingGetNoThrow(businessRepository.downloadGroupTeamDetailPage(request));
+    }
+
+    @Override
+    public long getResTabListAsync(RequestScope scope, EmptyRequest request, RequestCallback<List<ResTabData>> callback) {
+        return RxCallbackScheduler.schedule(scope, businessRepository.getResTabList(request), callback);
+    }
+
+    @Override
+    public List<ResTabData> getResTabListSync(EmptyRequest request) {
+        return RxCallbackScheduler.blockingGetNoThrow(businessRepository.getResTabList(request));
     }
 
     @Override
@@ -174,8 +184,8 @@ public final class BusinessCallerImpl implements BusinessCaller {
     }
 
     @Override
-    public List<ResTypeData> getResTypeListSync(ResTypeListRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGet(businessRepository.getResTypeList(request));
+    public List<ResTypeData> getResTypeListSync(ResTypeListRequest request) {
+        return RxCallbackScheduler.blockingGetNoThrow(businessRepository.getResTypeList(request));
     }
 
     @Override
@@ -184,17 +194,17 @@ public final class BusinessCallerImpl implements BusinessCaller {
     }
 
     @Override
-    public List<ResData> getResPageSync(ResPageRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGet(businessRepository.getResPage(request));
+    public List<ResData> getResPageSync(ResPageRequest request) {
+        return RxCallbackScheduler.blockingGetNoThrow(businessRepository.getResPage(request));
     }
 
     @Override
-    public long getResInfoAsync(RequestScope scope, ResInfoRequest request, RequestCallback<ResData> callback) {
+    public long getResInfoAsync(RequestScope scope, ResInfoRequest request, RequestCallback<ResInfoData> callback) {
         return RxCallbackScheduler.schedule(scope, businessRepository.getResInfo(request), callback);
     }
 
     @Override
-    public ResData getResInfoSync(ResInfoRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGet(businessRepository.getResInfo(request));
+    public ResInfoData getResInfoSync(ResInfoRequest request) {
+        return RxCallbackScheduler.blockingGetNoThrow(businessRepository.getResInfo(request));
     }
 }

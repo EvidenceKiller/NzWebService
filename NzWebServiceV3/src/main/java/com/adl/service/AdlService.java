@@ -2,32 +2,44 @@ package com.adl.service;
 
 import android.content.Context;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.adl.base.file.AdlFileHelper;
 import com.adl.service.callback.RequestCallback;
 import com.adl.service.caller.BigScreenH5Caller;
 import com.adl.service.caller.BigScreenStatsCaller;
 import com.adl.service.caller.BusinessCaller;
+import com.adl.service.caller.CommonDaoCaller;
 import com.adl.service.caller.CommonInfoCaller;
+import com.adl.service.caller.DownloadFileCaller;
+import com.adl.service.caller.DownloadFileDaoCaller;
 import com.adl.service.caller.LoginAuthCaller;
 import com.adl.service.caller.OperationCaller;
+import com.adl.service.caller.OpsMaintCaller;
 import com.adl.service.caller.OrgTestCaller;
+import com.adl.service.caller.PlanDaoCaller;
+import com.adl.service.caller.RecordDaoCaller;
 import com.adl.service.caller.SportInfoCaller;
-import com.adl.service.common.BaseService;
-import com.adl.service.common.FileDownManager;
-import com.adl.service.utils.FileUtil;
+import com.adl.service.caller.UploadOssCaller;
+import com.adl.service.caller.UploadQiNiuYunCaller;
+import com.adl.service.caller.UploadRecordCaller;
+import com.adl.service.caller.UserDaoCaller;
+import com.adl.service.common.AdlConfig;
+import com.adl.service.common.AdlConfigService;
 import com.adl.service.common.IDefine;
 import com.adl.service.common.InnerPreferences;
 import com.adl.service.common.NzConfig;
 import com.adl.service.common.NzConfigBusiness;
 import com.adl.service.common.NzConfigNode;
 import com.adl.service.db.DaoManagerProxy;
+import com.adl.service.http.request.RequestScope;
+import com.adl.service.internal.CallerManager;
 import com.adl.service.internal.RetrofitManager;
 import com.adl.service.internal.RxCallbackScheduler;
 import com.adl.service.internal.SubscriptionManager;
 import com.adl.service.log.NzLog;
-import com.adl.service.upload.OssFileUploadService;
-import com.adl.service.http.request.RequestScope;
+import com.adl.service.utils.FileUtil;
+import com.adl.service.utils.InnerUtil;
 import com.google.gson.Gson;
 
 import java.io.File;
@@ -37,7 +49,6 @@ import java.io.InputStream;
 import java.util.concurrent.Callable;
 
 import io.reactivex.rxjava3.core.Single;
-import io.reactivex.rxjava3.disposables.Disposable;
 
 /**
  * ProjectName: AiPowerAuth
@@ -49,18 +60,18 @@ public final class AdlService {
 
     /** 懒加载、双重检查锁定的单例 */
     private static volatile AdlService _instance;
-    private ConfigService mConfig;
+    private AdlConfig mConfig;
     private Context mContext;
     private String orgId;
     private NzConfig mNzConfig;
 
     private AdlService(Context context) {
         mContext = context;
-        mConfig = new ConfigService();
+        mConfig = new AdlConfig();
 
         //  设置默认参数
         setSdcard("zy.sport.cache");
-        setHost("http://112.19.167.50:18082/gateway/api");
+        setHost(InnerUtil.getIpHost());
         setQiNiuHost(IDefine.DefaultHost);
         setQiNiuBucket(IDefine.QiNiuPublicBucket);
 
@@ -68,6 +79,7 @@ public final class AdlService {
         InnerPreferences pf = InnerPreferences.instance();
         pf.init(context);
         DaoManagerProxy.init(context);
+        RetrofitManager.getInstance().init(context, getHost());
     }
 
     public static AdlService create(Context context) {
@@ -182,35 +194,75 @@ public final class AdlService {
     }
 
     public CommonInfoCaller getCommonInfoCaller() {
-        return RetrofitManager.getInstance().getCommonInfoCaller();
+        return CallerManager.getInstance().getCommonInfoCaller();
     }
 
     public SportInfoCaller getSportInfoCaller() {
-        return RetrofitManager.getInstance().getSportInfoCaller();
+        return CallerManager.getInstance().getSportInfoCaller();
     }
 
     public OrgTestCaller getOrgTestCaller() {
-        return RetrofitManager.getInstance().getOrgTestCaller();
+        return CallerManager.getInstance().getOrgTestCaller();
     }
 
     public OperationCaller getOperationCaller() {
-        return RetrofitManager.getInstance().getOperationCaller();
+        return CallerManager.getInstance().getOperationCaller();
+    }
+
+    public OpsMaintCaller getOpsMaintCaller() {
+        return CallerManager.getInstance().getOpsMaintCaller();
     }
 
     public BusinessCaller getBusinessCaller() {
-        return RetrofitManager.getInstance().getBusinessCaller();
+        return CallerManager.getInstance().getBusinessCaller();
     }
 
     public LoginAuthCaller getLoginAuthCaller() {
-        return RetrofitManager.getInstance().getLoginAuthCaller();
+        return CallerManager.getInstance().getLoginAuthCaller();
     }
 
     public BigScreenStatsCaller getBigScreenStatsCaller() {
-        return RetrofitManager.getInstance().getBigScreenStatsCaller();
+        return CallerManager.getInstance().getBigScreenStatsCaller();
     }
 
     public BigScreenH5Caller getBigScreenH5Caller() {
-        return RetrofitManager.getInstance().getBigScreenH5Caller();
+        return CallerManager.getInstance().getBigScreenH5Caller();
+    }
+
+    public UploadQiNiuYunCaller getUploadQiNiuYunCaller() {
+        return CallerManager.getInstance().getUploadQiNiuYunCaller();
+    }
+
+    public UploadOssCaller getUploadOssCaller() {
+        return CallerManager.getInstance().getUploadOssCaller();
+    }
+
+    public UploadRecordCaller getUploadRecordCaller() {
+        return CallerManager.getInstance().getUploadRecordCaller();
+    }
+
+    public DownloadFileCaller getDownloadFileCaller() {
+        return CallerManager.getInstance().getDownloadFileCaller();
+    }
+
+    public DownloadFileDaoCaller getDownloadFileDaoCaller() {
+        return CallerManager.getInstance().getDownloadFileDaoCaller();
+    }
+
+    public CommonDaoCaller getCommonDaoCaller() {
+        return CallerManager.getInstance().getCommonDaoCaller();
+    }
+
+    public UserDaoCaller getUserDaoCaller() {
+        return CallerManager.getInstance().getUserDaoCaller();
+    }
+
+    public PlanDaoCaller getPlanDaoCaller() {
+        return CallerManager.getInstance().getPlanDaoCaller();
+    }
+
+    public RecordDaoCaller getRecordDaoCaller() {
+        return CallerManager.getInstance().getRecordDaoCaller();
     }
 
     // ===================================================
@@ -263,14 +315,12 @@ public final class AdlService {
         // 全局配置对象
         InnerPreferences.instance().putObject(IDefine.SpConfigService, mConfig);
         // 服务统一配置
-        BaseService.setConfigService(mConfig);
+        AdlConfigService.setAdlConfig(mConfig);
         // 根目录
         FileUtil.setSportRoot(AdlFileHelper.SportRoot);
 
-        // 人脸管理
-        FileDownManager.instance().init(mConfig);
-
-        RetrofitManager.getInstance().init(mConfig.getHost(), mConfig.isDebug());
+        RetrofitManager.getInstance().init(mContext, mConfig.getHost());
+        CallerManager.getInstance().init();
 
         new Thread(() -> {
 
@@ -341,7 +391,8 @@ public final class AdlService {
             NzLog.d("ossTokenHost:" + getOssTokenHost());
             NzLog.d("facePrefix:" + getFacePrefix());
 
-            String prefix = OssFileUploadService.instance().getPrefix();
+            CallerManager.getInstance().getUploadOssCaller().init();
+            String prefix = CallerManager.getInstance().getUploadOssCaller().getPrefix();
             if (!TextUtils.isEmpty(prefix) && TextUtils.isEmpty(AdlService.getService().getFacePrefix())) {
                 if (!prefix.endsWith("/")) {
                     prefix = prefix + "/";
@@ -380,7 +431,8 @@ public final class AdlService {
     }
 
     public void release() {
-        OssFileUploadService.instance().release();
+        RetrofitManager.getInstance().release();
+        CallerManager.getInstance().release();
         NzLog.shutdown();
     }
 }

@@ -1,5 +1,7 @@
 package com.adl.service.db.entity;
 
+import androidx.annotation.RestrictTo;
+
 import com.adl.service.data.PlanSportData;
 import com.google.gson.annotations.SerializedName;
 
@@ -8,12 +10,13 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
+@RestrictTo(RestrictTo.Scope.LIBRARY)
 public final class PlanSportEntity {
     /**
      * 项目性别限制
      */
     @SerializedName("sex")
-    private Integer sex;
+    private Integer sex= 0;
 
     /**
      * 运动skuId

@@ -1,5 +1,9 @@
 package com.adl.service.db.entity;
 
+import com.adl.service.data.FileUploadInfoData;
+
+import androidx.annotation.RestrictTo;
+
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -15,10 +19,11 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @Entity(tableName = "_file_upload_info")
+@RestrictTo(RestrictTo.Scope.LIBRARY)
 public class FileUploadInfoEntity {
 
     @PrimaryKey(autoGenerate = true)
-    private long lid;
+    private Long lid= 0L;
 
     // 机构信息（切换机构）
     @ColumnInfo(name = "_org_id")
@@ -29,7 +34,7 @@ public class FileUploadInfoEntity {
 
     // 上传状态
     @ColumnInfo(name = "_upload_status")
-    private int uploadStatus;
+    private Integer uploadStatus= 0;
 
     @ColumnInfo(name = "_remote_file_name")
     private String remoteFileName;
@@ -41,8 +46,41 @@ public class FileUploadInfoEntity {
     private String remoteBucket;
 
     @ColumnInfo(name = "_create_time")
-    private long createTime;
+    private Long createTime= 0L;
 
     @ColumnInfo(name = "_remark")
     private String remark;
+
+    public static FileUploadInfoData convertToData(FileUploadInfoEntity entity) {
+        if (entity == null) {
+            return null;
+        }
+        FileUploadInfoData data = new FileUploadInfoData();
+        data.setOrgId(entity.getOrgId());
+        data.setLocalPath(entity.getLocalPath());
+        data.setUploadStatus(entity.getUploadStatus());
+        data.setRemoteFileName(entity.getRemoteFileName());
+        data.setRemoteUrl(entity.getRemoteUrl());
+        data.setRemoteBucket(entity.getRemoteBucket());
+        data.setCreateTime(entity.getCreateTime());
+        data.setRemark(entity.getRemark());
+        return data;
+    }
+
+    public static FileUploadInfoEntity convertToEntity(FileUploadInfoData data) {
+        if (data == null) {
+            return null;
+        }
+
+        FileUploadInfoEntity entity = new FileUploadInfoEntity();
+        entity.setOrgId(data.getOrgId());
+        entity.setLocalPath(data.getLocalPath());
+        entity.setUploadStatus(data.getUploadStatus());
+        entity.setRemoteFileName(data.getRemoteFileName());
+        entity.setRemoteUrl(data.getRemoteUrl());
+        entity.setRemoteBucket(data.getRemoteBucket());
+        entity.setCreateTime(data.getCreateTime());
+        entity.setRemark(data.getRemark());
+        return entity;
+    }
 }

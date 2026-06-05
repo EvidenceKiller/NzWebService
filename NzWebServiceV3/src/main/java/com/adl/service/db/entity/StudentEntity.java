@@ -1,5 +1,7 @@
 package com.adl.service.db.entity;
 
+import androidx.annotation.RestrictTo;
+
 import com.adl.service.db.converter.ListFaceEntityConverter;
 import com.adl.service.data.StudentData;
 
@@ -21,6 +23,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity(tableName = "_student", indices = {@Index(value = {"_account_id"})})
 @TypeConverters(value = {ListFaceEntityConverter.class})
+@RestrictTo(RestrictTo.Scope.LIBRARY)
 public class StudentEntity implements Serializable {
 
     @ColumnInfo(name = "_user_id")
@@ -132,11 +135,11 @@ public class StudentEntity implements Serializable {
 
     //  创建时间
     @ColumnInfo(name = "_create_time")
-    private String createTime;
+    private Long createTime = 0L;
 
     //  更新时间
     @ColumnInfo(name = "_update_time")
-    private String updateTime;
+    private Long updateTime = 0L;
 
     //  删除标识  0：可用  1：删除
     @ColumnInfo(name = "_del_flag")
@@ -160,32 +163,32 @@ public class StudentEntity implements Serializable {
 
     // 学段类型 小学1 初中2 高中3 大学4
     @ColumnInfo(name = "_enter_year")
-    private Integer enterYear;
+    private Integer enterYear= 0;
 
     //  班级id
     @ColumnInfo(name = "_class_num")
     private String classNum;
 
     @ColumnInfo(name = "_class_status")
-    private Integer classStatus;
+    private Integer classStatus= 0;
 
     @ColumnInfo(name = "_nation_code")
-    private Integer nationCode;
+    private Integer nationCode= 0;
 
     @ColumnInfo(name = "_user_name")
     private String userName;
 
     @ColumnInfo(name = "_cert_type")
-    private Integer certType;
+    private Integer certType= 0;
 
     @ColumnInfo(name = "_cert_num")
     private String certNum;
 
     @ColumnInfo(name = "_avatar_flag")
-    private Boolean avatarFlag;
+    private Boolean avatarFlag= Boolean.FALSE;
 
     @ColumnInfo(name = "_record_flag")
-    private Boolean recordFlag;
+    private Boolean recordFlag= Boolean.FALSE;
 
     @ColumnInfo(name = "_face_data_list")
     private List<FaceEntity> faceDataList;
@@ -201,6 +204,9 @@ public class StudentEntity implements Serializable {
 
     @ColumnInfo(name = "_address")
     private String address;
+
+    @ColumnInfo(name = "_card_type", defaultValue = "")
+    private String cardType;
 
     public static StudentEntity convertToEntity(StudentData studentData) {
         if (studentData == null) {
@@ -263,6 +269,7 @@ public class StudentEntity implements Serializable {
         entity.setAccountNameFirstLetterPinYin(studentData.getAccountNameFirstLetterPinYin());
         entity.setBirthday(studentData.getBirthday());
         entity.setAddress(studentData.getAddress());
+        entity.setCardType(studentData.getCardType());
         return entity;
     }
 
@@ -327,6 +334,7 @@ public class StudentEntity implements Serializable {
         data.setAccountNameFirstLetterPinYin(entity.getAccountNameFirstLetterPinYin());
         data.setBirthday(entity.getBirthday());
         data.setAddress(entity.getAddress());
+        data.setCardType(entity.getCardType());
         return data;
     }
 }

@@ -47,6 +47,9 @@ final class ReflectiveJsonMapper {
                 JsonElement el = jsonObject.get(jsonFieldName);
                 try {
                     field.setAccessible(true);
+                    if (el != null && el.isJsonNull()) {
+                        continue;
+                    }
                     Type resolvedFieldType = resolveType(field.getGenericType(), typeVarMap);
                     Object value = context.deserialize(el, resolvedFieldType);
                     field.set(instance, value);

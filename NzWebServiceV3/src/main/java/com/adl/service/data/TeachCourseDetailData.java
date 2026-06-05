@@ -1,5 +1,6 @@
 package com.adl.service.data;
 
+import java.io.Serializable;
 import com.adl.service.internal.json.StrictJsonDeserializer;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -12,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @JsonAdapter(StrictJsonDeserializer.class)
-public final class TeachCourseDetailData {
+public final class TeachCourseDetailData implements Serializable {
     /**
      * 账户ID
      */
@@ -35,7 +36,7 @@ public final class TeachCourseDetailData {
      * 运动分数
      */
     @SerializedName("sportScore")
-    private Double sportScore;
+    private Double sportScore = 0.0;
 
     /**
      * 运动结果
@@ -71,7 +72,7 @@ public final class TeachCourseDetailData {
      * 课程次数
      */
     @SerializedName("courseTimes")
-    private Integer courseTimes;
+    private Integer courseTimes = 0;
 
     /**
      * 运动单位
@@ -83,43 +84,43 @@ public final class TeachCourseDetailData {
      * 运动时长
      */
     @SerializedName("sportTime")
-    private Long sportTime;
+    private Long sportTime = 0L;
 
     /**
      * 运动开始时间
      */
     @SerializedName("sportStartTime")
-    private Long sportStartTime;
+    private Long sportStartTime = 0L;
 
     /**
      * 运动结束时间
      */
     @SerializedName("sportEndTime")
-    private Long sportEndTime;
+    private Long sportEndTime = 0L;
 
     /**
      * 运动测试时间
      */
     @SerializedName("sportTestTime")
-    private Long sportTestTime;
+    private Long sportTestTime = 0L;
 
     /**
      * 账户性别
      */
     @SerializedName("sex")
-    private Integer sex;
+    private Integer sex = 0;
 
     /**
      * 运动视频集合
      */
     @SerializedName("sportVideoUrls")
-    private List<String> sportVideoUrls;
+    private String sportVideoUrls;
 
     /**
      * 运动指标集合
      */
     @SerializedName("list")
-    private List<SportIndicatorsData> list;
+    private List<SportIndicatorsData<Object, Object>> list;
 
     /**
      * 横向报告URL
@@ -132,4 +133,6 @@ public final class TeachCourseDetailData {
      */
     @SerializedName("reportVerticalUrl")
     private String reportVerticalUrl;
+
+    private Boolean isExpanded = Boolean.FALSE;
 }

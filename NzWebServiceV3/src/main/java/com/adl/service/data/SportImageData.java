@@ -4,13 +4,17 @@ import com.adl.service.internal.json.StrictJsonDeserializer;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @JsonAdapter(StrictJsonDeserializer.class)
-public final class SportImageData {
+public final class SportImageData implements Serializable {
     /**
      * 图片相对地址
      */
@@ -34,4 +38,15 @@ public final class SportImageData {
      */
     @SerializedName("groupIndex")
     private String groupIndex;
+
+    public SportImageData(String imageUrl, String imageDesc) {
+        this.imageUrl = imageUrl;
+        this.imageDesc = imageDesc;
+    }
+
+    public SportImageData(String imageDesc, String imageUrl, String groupIndex) {
+        this.imageUrl = imageUrl;
+        this.imageDesc = imageDesc;
+        this.groupIndex = groupIndex;
+    }
 }

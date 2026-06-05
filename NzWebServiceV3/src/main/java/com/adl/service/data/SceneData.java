@@ -1,5 +1,6 @@
 package com.adl.service.data;
 
+import java.io.Serializable;
 import com.adl.service.internal.json.StrictJsonDeserializer;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -10,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @JsonAdapter(StrictJsonDeserializer.class)
-public final class SceneData {
+public final class SceneData implements Serializable {
 
     /**
      * 主键id
@@ -40,7 +41,7 @@ public final class SceneData {
      * 序号
      */
     @SerializedName("sceneSort")
-    private Long sceneSort;
+    private Long sceneSort = 0L;
 
     /**
      * 场景类型 场景类型 1 锻炼 测试
@@ -49,5 +50,5 @@ public final class SceneData {
     private String sceneType;
 
     @SerializedName("enabled")
-    private Boolean enabled;
+    private Boolean enabled = Boolean.FALSE;
 }

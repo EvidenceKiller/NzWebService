@@ -5,8 +5,10 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 import lombok.Getter;
+import lombok.ToString;
 
 @Getter
+@ToString(callSuper = true)
 public final class SportSportRankKingRequest extends BaseRequest {
 
     /** 场景code 1001 锻炼 */

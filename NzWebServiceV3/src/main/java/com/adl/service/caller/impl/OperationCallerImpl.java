@@ -7,19 +7,27 @@ import com.adl.service.caller.OperationCaller;
 import com.adl.service.data.BannerDetailData;
 import com.adl.service.data.DeviceFocusData;
 import com.adl.service.data.DictMapData;
+import com.adl.service.data.PointRuleDetailData;
 import com.adl.service.data.SceneData;
 import com.adl.service.data.SportSkuData;
 import com.adl.service.data.SportSkuDetailData;
+import com.adl.service.data.WikiData;
+import com.adl.service.data.WikiDetailData;
+import com.adl.service.data.WikiTypeData;
 import com.adl.service.db.DaoManagerProxy;
 import com.adl.service.exception.NzBaseException;
 import com.adl.service.http.request.BannerDetailListRequest;
 import com.adl.service.http.request.DeviceFocusListRequest;
 import com.adl.service.http.request.DictMapRequest;
+import com.adl.service.http.request.PointRuleDetailRequest;
 import com.adl.service.http.request.RequestScope;
 import com.adl.service.http.request.SceneListRequest;
 import com.adl.service.http.request.SportSkuDetailRequest;
 import com.adl.service.http.request.SportSkuPageRequest;
 import com.adl.service.http.request.UploadDeviceNameRequest;
+import com.adl.service.http.request.WikiDetailRequest;
+import com.adl.service.http.request.WikiPageRequest;
+import com.adl.service.http.request.WikiTypePageRequest;
 import com.adl.service.internal.RxCallbackScheduler;
 import com.adl.service.log.NzLog;
 import com.adl.service.repository.CommonInfoRepository;
@@ -42,8 +50,8 @@ public final class OperationCallerImpl implements OperationCaller {
     }
 
     @Override
-    public void reLoadAllSceneDataSync(Map<String, List<String>> map) throws NzBaseException {
-        long serverTime = RxCallbackScheduler.blockingGet(CommonInfoRepository.getInstance().getServerTime());
+    public void reLoadAllSceneDataSync(Map<String, List<String>> map) {
+        long serverTime = RxCallbackScheduler.blockingGetNoThrow(CommonInfoRepository.getInstance().getServerTime());
         NzLog.d("服务器时间: " + InnerUtil.formatByTimeCode(serverTime));
 
         DaoManagerProxy.getInstance().getSceneDao().clearAll();
@@ -78,8 +86,8 @@ public final class OperationCallerImpl implements OperationCaller {
     }
 
     @Override
-    public List<BannerDetailData> getBannerDetailListSync(BannerDetailListRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGet(operationRepository.getBannerDetailList(request));
+    public List<BannerDetailData> getBannerDetailListSync(BannerDetailListRequest request) {
+        return RxCallbackScheduler.blockingGetNoThrow(operationRepository.getBannerDetailList(request));
     }
 
     @Override
@@ -88,8 +96,8 @@ public final class OperationCallerImpl implements OperationCaller {
     }
 
     @Override
-    public GetPageResult getSportSkuPagesAllSync(SportSkuPageRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGet(operationRepository.getSportSkuPagesAll(request));
+    public GetPageResult getSportSkuPagesAllSync(SportSkuPageRequest request) {
+        return RxCallbackScheduler.blockingGetNoThrow(operationRepository.getSportSkuPagesAll(request));
     }
 
     @Override
@@ -98,8 +106,8 @@ public final class OperationCallerImpl implements OperationCaller {
     }
 
     @Override
-    public List<SportSkuData> getSportSkuPageSync(SportSkuPageRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGet(operationRepository.getSportSkuPage(request));
+    public List<SportSkuData> getSportSkuPageSync(SportSkuPageRequest request) {
+        return RxCallbackScheduler.blockingGetNoThrow(operationRepository.getSportSkuPage(request));
     }
 
     @Override
@@ -108,8 +116,8 @@ public final class OperationCallerImpl implements OperationCaller {
     }
 
     @Override
-    public SportSkuDetailData getSportSkuDetailSync(SportSkuDetailRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGet(operationRepository.getSportSkuDetail(request));
+    public SportSkuDetailData getSportSkuDetailSync(SportSkuDetailRequest request) {
+        return RxCallbackScheduler.blockingGetNoThrow(operationRepository.getSportSkuDetail(request));
     }
 
     @Override
@@ -118,8 +126,8 @@ public final class OperationCallerImpl implements OperationCaller {
     }
 
     @Override
-    public List<DictMapData> getDictMapSync(DictMapRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGet(operationRepository.getDictMap(request));
+    public List<DictMapData> getDictMapSync(DictMapRequest request) {
+        return RxCallbackScheduler.blockingGetNoThrow(operationRepository.getDictMap(request));
     }
 
     @Override
@@ -128,8 +136,38 @@ public final class OperationCallerImpl implements OperationCaller {
     }
 
     @Override
-    public List<SceneData> getSceneListSync(SceneListRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGet(operationRepository.getSceneList(request));
+    public List<SceneData> getSceneListSync(SceneListRequest request) {
+        return RxCallbackScheduler.blockingGetNoThrow(operationRepository.getSceneList(request));
+    }
+
+    @Override
+    public long getWikiTypePageAsync(RequestScope scope, WikiTypePageRequest request, RequestCallback<List<WikiTypeData>> callback) {
+        return RxCallbackScheduler.schedule(scope, operationRepository.getWikiTypePage(request), callback);
+    }
+
+    @Override
+    public List<WikiTypeData> getWikiTypePageSync(WikiTypePageRequest request) {
+        return RxCallbackScheduler.blockingGetNoThrow(operationRepository.getWikiTypePage(request));
+    }
+
+    @Override
+    public long getWikiPageAsync(RequestScope scope, WikiPageRequest request, RequestCallback<List<WikiData>> callback) {
+        return RxCallbackScheduler.schedule(scope, operationRepository.getWikiPage(request), callback);
+    }
+
+    @Override
+    public List<WikiData> getWikiPageSync(WikiPageRequest request) {
+        return RxCallbackScheduler.blockingGetNoThrow(operationRepository.getWikiPage(request));
+    }
+
+    @Override
+    public long getWikiDetailAsync(RequestScope scope, WikiDetailRequest request, RequestCallback<WikiDetailData> callback) {
+        return RxCallbackScheduler.schedule(scope, operationRepository.getWikiDetail(request), callback);
+    }
+
+    @Override
+    public WikiDetailData getWikiDetailSync(WikiDetailRequest request) {
+        return RxCallbackScheduler.blockingGetNoThrow(operationRepository.getWikiDetail(request));
     }
 
     @Override
@@ -138,8 +176,8 @@ public final class OperationCallerImpl implements OperationCaller {
     }
 
     @Override
-    public Boolean uploadDeviceNameSync(UploadDeviceNameRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGet(operationRepository.uploadDeviceName(request));
+    public Boolean uploadDeviceNameSync(UploadDeviceNameRequest request) {
+        return RxCallbackScheduler.blockingGetNoThrow(operationRepository.uploadDeviceName(request), Boolean.class);
     }
 
     @Override
@@ -148,7 +186,17 @@ public final class OperationCallerImpl implements OperationCaller {
     }
 
     @Override
-    public List<DeviceFocusData> getDeviceFocusListSync(DeviceFocusListRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGet(operationRepository.getDeviceFocusList(request));
+    public List<DeviceFocusData> getDeviceFocusListSync(DeviceFocusListRequest request) {
+        return RxCallbackScheduler.blockingGetNoThrow(operationRepository.getDeviceFocusList(request));
+    }
+
+    @Override
+    public long getPointRuleDetailAsync(RequestScope scope, PointRuleDetailRequest request, RequestCallback<PointRuleDetailData> callback) {
+        return RxCallbackScheduler.schedule(scope, operationRepository.getPointRuleDetail(request), callback);
+    }
+
+    @Override
+    public PointRuleDetailData getPointRuleDetailSync(PointRuleDetailRequest request) {
+        return RxCallbackScheduler.blockingGetNoThrow(operationRepository.getPointRuleDetail(request));
     }
 }

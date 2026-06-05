@@ -1,5 +1,6 @@
 package com.adl.service.data;
 
+import java.io.Serializable;
 import com.adl.service.internal.json.StrictJsonDeserializer;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -12,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @JsonAdapter(StrictJsonDeserializer.class)
-public final class WikiDetailData {
+public final class WikiDetailData implements Serializable {
 
     /**
      * 运动百科id，唯一
@@ -48,7 +49,7 @@ public final class WikiDetailData {
      * 状态
      */
     @SerializedName("enabled")
-    private Boolean enabled;
+    private Boolean enabled = Boolean.FALSE;
 
     /**
      * 排序
@@ -72,7 +73,7 @@ public final class WikiDetailData {
      * 创建时间
      */
     @SerializedName("createTime")
-    private String createTime;
+    private Long createTime = 0L;
 
     /**
      * 百科视频列表

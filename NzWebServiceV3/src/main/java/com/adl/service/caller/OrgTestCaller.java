@@ -7,7 +7,6 @@ import com.adl.service.data.PlanData;
 import com.adl.service.data.PlanInfoData;
 import com.adl.service.data.PlanStudentData;
 import com.adl.service.data.StandardConfigData;
-import com.adl.service.exception.NzBaseException;
 import com.adl.service.http.request.CheckStudentInPlanRequest;
 import com.adl.service.http.request.PlanClassPageRequest;
 import com.adl.service.http.request.PlanInfoRequest;
@@ -23,13 +22,11 @@ import java.util.List;
  */
 public interface OrgTestCaller {
 
-    void reLoadAllOrgTestDataSync(boolean syncStandard) throws NzBaseException;
-
-    void clearStandardConfigDataSync() throws NzBaseException;
+    void reLoadAllOrgTestDataSync(boolean syncStandard);
 
     long getStandardConfigPagesAllAsync(RequestScope scope, StandardConfigPageRequest request, RequestCallback<GetPageResult> callback);
 
-    GetPageResult getStandardConfigPagesAllSync(StandardConfigPageRequest request) throws NzBaseException;
+    GetPageResult getStandardConfigPagesAllSync(StandardConfigPageRequest request);
 
     /**
      * 获取标准列表
@@ -41,13 +38,11 @@ public interface OrgTestCaller {
      * 获取标准列表
      * <p>同步调用。</p>
      */
-    List<StandardConfigData> getStandardConfigPageSync(StandardConfigPageRequest request) throws NzBaseException;
-
-    void clearPlanStudentDataSync() throws NzBaseException;
+    List<StandardConfigData> getStandardConfigPageSync(StandardConfigPageRequest request);
 
     long getPlanStudentPagesAllAsync(RequestScope scope, PlanStudentPageRequest request, RequestCallback<GetPageResult> callback);
 
-    GetPageResult getPlanStudentPagesAllSync(PlanStudentPageRequest request) throws NzBaseException;
+    GetPageResult getPlanStudentPagesAllSync(PlanStudentPageRequest request);
 
     /**
      * 获取计划下学生
@@ -59,9 +54,7 @@ public interface OrgTestCaller {
      * 获取计划下学生
      * <p>同步调用。</p>
      */
-    List<PlanStudentData> getPlanStudentPageSync(PlanStudentPageRequest request) throws NzBaseException;
-
-    void clearPlanDataSync() throws NzBaseException;
+    List<PlanStudentData> getPlanStudentPageSync(PlanStudentPageRequest request);
 
     /**
      * 获取所有的分页计划列表
@@ -71,7 +64,6 @@ public interface OrgTestCaller {
      * @param request
      * @param callback
      * @return
-     * @throws NzBaseException
      */
     long getPlanPagesAllAsync(RequestScope scope, PlanPageRequest request, RequestCallback<GetPageResult> callback);
 
@@ -81,9 +73,8 @@ public interface OrgTestCaller {
      *
      * @param request
      * @return
-     * @throws NzBaseException
      */
-    GetPageResult getPlanPagesAllSync(PlanPageRequest request) throws NzBaseException;
+    GetPageResult getPlanPagesAllSync(PlanPageRequest request);
 
     /**
      * 获取计划列表
@@ -95,7 +86,7 @@ public interface OrgTestCaller {
      * 获取计划列表
      * <p>同步调用。</p>
      */
-    List<PlanData> getPlanPageSync(PlanPageRequest request) throws NzBaseException;
+    List<PlanData> getPlanPageSync(PlanPageRequest request);
 
     /**
      * 获取组织测试计划详情
@@ -107,7 +98,7 @@ public interface OrgTestCaller {
      * 获取组织测试计划详情
      * <p>同步调用。</p>
      */
-    PlanInfoData getPlanInfoSync(PlanInfoRequest request) throws NzBaseException;
+    PlanInfoData getPlanInfoSync(PlanInfoRequest request);
 
     /**
      * 获取计划班级列表
@@ -119,7 +110,7 @@ public interface OrgTestCaller {
      * 获取计划班级列表
      * <p>同步调用。</p>
      */
-    List<PlanClassData> getPlanClassPageSync(PlanClassPageRequest request) throws NzBaseException;
+    List<PlanClassData> getPlanClassPageSync(PlanClassPageRequest request);
 
     /**
      * 查询学生是否在计划下
@@ -131,6 +122,6 @@ public interface OrgTestCaller {
      * 查询学生是否在计划下
      * <p>同步调用。</p>
      */
-    Boolean checkStudentInPlanSync(CheckStudentInPlanRequest request) throws NzBaseException;
+    Boolean checkStudentInPlanSync(CheckStudentInPlanRequest request);
 
 }

@@ -1,5 +1,7 @@
 package com.adl.service.db.entity;
 
+import androidx.annotation.RestrictTo;
+
 import com.adl.service.db.converter.ListPlanSportEntityConverter;
 import com.adl.service.data.PlanStudentData;
 
@@ -19,10 +21,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity(tableName = "_plan_student", indices = {@Index(value = {"_plan_id"})})
 @TypeConverters(value = {ListPlanSportEntityConverter.class})
+@RestrictTo(RestrictTo.Scope.LIBRARY)
 public final class PlanStudentEntity implements Serializable {
 
     @PrimaryKey(autoGenerate = true)
-    private long lid;
+    private Long lid= 0L;
 
     /**
      * 账号标识码
@@ -76,7 +79,7 @@ public final class PlanStudentEntity implements Serializable {
      * 学生性别
      */
     @ColumnInfo(name = "_sex")
-    private Integer sex;
+    private Integer sex= 0;
 
     /**
      * 学籍号
@@ -94,13 +97,13 @@ public final class PlanStudentEntity implements Serializable {
      * 班级序号
      */
     @ColumnInfo(name = "_class_num")
-    private Integer classNum;
+    private Integer classNum= 0;
 
     /**
      * 年级序号
      */
     @ColumnInfo(name = "_grade_num")
-    private Integer gradeNum;
+    private Integer gradeNum= 0;
 
     /**
      * 阶段ID

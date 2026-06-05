@@ -1,5 +1,6 @@
 package com.adl.service.data;
 
+import java.io.Serializable;
 import com.adl.service.internal.json.StrictJsonDeserializer;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -12,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @JsonAdapter(StrictJsonDeserializer.class)
-public final class CompetitionRankDetailData {
+public final class CompetitionRankDetailData implements Serializable {
     /**
      * 唯一标识符
      */
@@ -47,13 +48,13 @@ public final class CompetitionRankDetailData {
      * 在线类型
      */
     @SerializedName("onlineType")
-    private Integer onlineType;
+    private Integer onlineType = 0;
 
     /**
      * 机构级别
      */
     @SerializedName("orgLevel")
-    private Integer orgLevel;
+    private Integer orgLevel = 0;
 
     /**
      * 机构级别名称
@@ -95,7 +96,7 @@ public final class CompetitionRankDetailData {
      * 排名规则
      */
     @SerializedName("rankRule")
-    private Integer rankRule;
+    private Integer rankRule = 0;
 
     /**
      * 竞赛项目列表
@@ -113,19 +114,19 @@ public final class CompetitionRankDetailData {
      * 参与标志
      */
     @SerializedName("joinFlag")
-    private Boolean joinFlag;
+    private Boolean joinFlag = Boolean.FALSE;
 
     /**
      * 机构类型
      */
     @SerializedName("orgType")
-    private Integer orgType;
+    private Integer orgType = 0;
 
     /**
      * 竞赛启用状态
      */
     @SerializedName("competitionEnabled")
-    private Integer competitionEnabled;
+    private Integer competitionEnabled = 0;
 
     /**
      * 机构ID
@@ -137,5 +138,5 @@ public final class CompetitionRankDetailData {
      * 编辑标志
      */
     @SerializedName("editFlag")
-    private Boolean editFlag;
+    private Boolean editFlag = Boolean.FALSE;
 }

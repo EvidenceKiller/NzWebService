@@ -34,72 +34,72 @@ public interface BigScreenStatsService {
     /**
      * 双人对战排行榜
      */
-    @POST("v3/gateway/api/tis/device/statistics/account/sport/warRecordRank")
+    @POST("tis/device/statistics/account/sport/warRecordRank")
     Single<BaseResponse<List<WarRecordRankData>>> getWarRecordRank(@Body WarRecordRankRequest request);
 
     /**
      * 个人运动排名
      */
-    @POST("v3/gateway/api/tis/device/statistics/account/sport/personRank")
+    @POST("tis/device/statistics/account/sport/personRank")
     Single<BaseResponse<PersonRankData>> getPersonRank(@Body PersonRankRequest request);
 
     /**
      * 多人对战胜利榜
      */
-    @POST("v3/gateway/api/tis/device/statistics/account/sport/morePeopleVictoryRank")
+    @POST("tis/device/statistics/account/sport/morePeopleVictoryRank")
     Single<BaseResponse<List<MorePeopleVictoryRankData>>> getMorePeopleVictoryRank(@Body MorePeopleVictoryRankRequest request);
 
     /**
      * 多人对战排行榜
      */
-    @POST("v3/gateway/api/tis/device/statistics/account/sport/morePeopleRecordRank")
+    @POST("tis/device/statistics/account/sport/morePeopleRecordRank")
     Single<BaseResponse<List<MorePeopleRecordRankData>>> getMorePeopleRecordRank(@Body MorePeopleRecordRankRequest request);
 
     /**
      * 总览数据
      */
-    @POST("v3/gateway/api/tis/device/statistics/home/sport/overview")
+    @POST("tis/device/statistics/home/sport/overview")
     Single<BaseResponse<OverviewData>> getOverview(@Body OverviewRequest request);
 
     /**
      * 赛事排行榜
      */
-    @POST("v3/gateway/api/tis/device/statistics/pco/sport/competitionRank")
+    @POST("tis/device/statistics/pco/sport/competitionRank")
     Single<BaseResponse<CompetitionRankData>> getCompetitionRank(@Body CompetitionRankRequest request);
 
     /**
      * 项目结果求和排名
      */
-    @POST("v3/gateway/api/tis/device/statistics/exercise/sport/sumScoreRank")
+    @POST("tis/device/statistics/exercise/sport/sumScoreRank")
     Single<BaseResponse<List<SumScoreRankData>>> sumScoreRank(@Body SumScoreRankRequest request);
 
     /**
      * 项目热度排行
      */
-    @POST("v3/gateway/api/tis/device/statistics/exercise/sport/sportSkuRank")
+    @POST("tis/device/statistics/exercise/sport/sportSkuRank")
     Single<BaseResponse<List<SportSkuRankData>>> getSportSkuRank(@Body SportRankRequest request);
 
     /**
      * 霸榜之王
      */
-    @POST("v3/gateway/api/tis/device/statistics/exercise/sport/sportRankKing")
+    @POST("tis/device/statistics/exercise/sport/sportRankKing")
     Single<BaseResponse<List<SportRankKingData>>> getSportRankKing(@Body SportRankRequest request);
 
     /**
      * 锻炼排行榜、历史最佳
      */
-    @POST("v3/gateway/api/tis/device/statistics/exercise/sport/physicalTrainingRank")
+    @POST("tis/device/statistics/exercise/sport/physicalTrainingRank")
     Single<BaseResponse<List<SportRankKingData>>> getPhysicalTrainingRank(@Body SportRankRequest request);
 
     /**
      * 锻炼之星
      */
-    @POST("v3/gateway/api/tis/device/statistics/exercise/sport/exerciseSumTimeRank")
+    @POST("tis/device/statistics/exercise/sport/exerciseSumTimeRank")
     Single<BaseResponse<List<SportRankKingData>>> getExerciseSumTimeRank(@Body SportRankRequest request);
 
     /**
      * 最佳榜单
      */
-    @POST("v3/gateway/api/tis/device/statistics/exercise/sport/bestRankTop")
+    @POST("tis/device/statistics/exercise/sport/bestRankTop")
     Single<BaseResponse<List<BestRankTopData>>> getBestRankTop(@Body BestRankTopRequest request);
 }

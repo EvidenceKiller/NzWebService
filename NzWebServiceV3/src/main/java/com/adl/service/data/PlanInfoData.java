@@ -1,5 +1,6 @@
 package com.adl.service.data;
 
+import java.io.Serializable;
 import com.adl.service.internal.json.StrictJsonDeserializer;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -13,7 +14,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @JsonAdapter(StrictJsonDeserializer.class)
-public final class PlanInfoData {
+public final class PlanInfoData implements Serializable {
 
     @SerializedName("planId")
     private String planId;
@@ -31,7 +32,7 @@ public final class PlanInfoData {
     private String endTime;
 
     @SerializedName("createTime")
-    private String createTime;
+    private Long createTime = 0L;
 
     @SerializedName("standardId")
     private String standardId;
@@ -76,67 +77,67 @@ public final class PlanInfoData {
      * 线上支付金额 线上支付金额，最低金额为0.01
      */
     @SerializedName("payPrice")
-    private Double payPrice;
+    private Double payPrice = 0.0;
 
     /**
      * 批量下发标识位 0 否 1 是
      */
     @SerializedName("distributeFlag")
-    private Boolean distributeFlag;
+    private Boolean distributeFlag = Boolean.FALSE;
 
     /**
      * 全部学校标识位 0 全部 1 部分
      */
     @SerializedName("clazzAllFlag")
-    private Boolean clazzAllFlag;
+    private Boolean clazzAllFlag = Boolean.FALSE;
 
     /**
      * 报名标识位 0 不需要 1 需要
      */
     @SerializedName("signUpFlag")
-    private Boolean signUpFlag;
+    private Boolean signUpFlag = Boolean.FALSE;
 
     /**
      * 满分类型 参考字典编码：adl_tis_physical_test_plan_full_credit_type（1 项目满分 2 总满分）
      */
     @SerializedName("fullCreditType")
-    private Integer fullCreditType;
+    private Integer fullCreditType = 0;
 
     /**
      * 取整方式 参考字典编码：adl_tis_physical_test_plan_round（0 向上取整 1 向下取整 4 四舍五入）
      */
     @SerializedName("round")
-    private Integer round;
+    private Integer round = 0;
 
     /**
      * 精度 参考字典编码：adl_tis_physical_test_plan_decimal_precision（0 整数 1 小数后一位 2 小数后两位 3 小数后三位 ）
      */
     @SerializedName("decimalPrecision")
-    private Integer decimalPrecision;
+    private Integer decimalPrecision = 0;
 
     /**
      * 支付类型 参考字典编码：adl_tis_physical_test_plan_pay_type（1 免费 2 线下支付 3 线上支付（每人））
      */
     @SerializedName("payType")
-    private Integer payType;
+    private Integer payType = 0;
 
     /**
      * 自助测试 参考字典编码：adl_tis_physical_test_plan_self_test（0 非自助测试 1自助测试 ）
      */
     @SerializedName("selfTest")
-    private Integer selfTest;
+    private Integer selfTest = 0;
 
     @SerializedName("orgId")
     private String orgId;
 
     @SerializedName("delFlag")
-    private Boolean delFlag;
+    private Boolean delFlag = Boolean.FALSE;
 
     /**
      * 预约标识位 0 不需要 1 需要
      */
     @SerializedName("reserveFlag")
-    private Boolean reserveFlag;
+    private Boolean reserveFlag = Boolean.FALSE;
 
     /**
      * 计划结束时间

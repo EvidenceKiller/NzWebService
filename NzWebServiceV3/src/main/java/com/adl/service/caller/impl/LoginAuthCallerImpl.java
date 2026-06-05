@@ -31,8 +31,8 @@ public final class LoginAuthCallerImpl implements LoginAuthCaller {
     }
 
     @Override
-    public LoginData loginSync(LoginRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGet(loginAuthRepository.login(request));
+    public LoginData loginSync(LoginRequest request) {
+        return RxCallbackScheduler.blockingGetNoThrow(loginAuthRepository.login(request));
     }
 
     @Override
@@ -41,7 +41,7 @@ public final class LoginAuthCallerImpl implements LoginAuthCaller {
     }
 
     @Override
-    public String logoutSync(LogoutRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGet(loginAuthRepository.logout(request));
+    public String logoutSync(LogoutRequest request) {
+        return RxCallbackScheduler.blockingGetNoThrow(loginAuthRepository.logout(request), String.class);
     }
 }

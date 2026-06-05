@@ -21,7 +21,7 @@ public final class PlanData implements Serializable {
      * 创建时间
      */
     @SerializedName("createTime")
-    private String createTime;
+    private Long createTime = 0L;
 
     /**
      * 创建者名称
@@ -89,23 +89,23 @@ public final class PlanData implements Serializable {
      * 学生数量
      */
     @SerializedName("studentNum")
-    private Integer studentNum;
+    private Integer studentNum = 0;
 
     /**
      * 安排数量
      */
     @SerializedName("arrangeNum")
-    private Integer arrangeNum;
+    private Integer arrangeNum = 0;
 
     /**
      * 完成数量
      */
     @SerializedName("finishNum")
-    private Integer finishNum;
+    private Integer finishNum = 0;
 
     /**
      * 自测标识
      */
     @SerializedName("selfTest")
-    private Integer selfTest;
+    private Integer selfTest = 0;
 }

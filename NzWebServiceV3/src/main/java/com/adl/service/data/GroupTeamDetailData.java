@@ -1,5 +1,6 @@
 package com.adl.service.data;
 
+import java.io.Serializable;
 import com.adl.service.internal.json.StrictJsonDeserializer;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -10,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @JsonAdapter(StrictJsonDeserializer.class)
-public final class GroupTeamDetailData {
+public final class GroupTeamDetailData implements Serializable {
 
     /**
      * 分组code
@@ -28,13 +29,13 @@ public final class GroupTeamDetailData {
      * 组号
      */
     @SerializedName("groupNo")
-    private Integer groupNo;
+    private Integer groupNo = 0;
 
     /**
      * 识别类型 参考字典编码：adl_tis_competition_meet_identify_type（0跑道识别 1运动员编码 2序号识别）
      */
     @SerializedName("identifyType")
-    private Integer identifyType;
+    private Integer identifyType = 0;
 
     /**
      * 跑道号
@@ -94,13 +95,13 @@ public final class GroupTeamDetailData {
      * 性别
      */
     @SerializedName("sex")
-    private Integer sex;
+    private Integer sex = 0;
 
     /**
      * 团体人数
      */
     @SerializedName("studentNum")
-    private Integer studentNum;
+    private Integer studentNum = 0;
 
     /**
      * 运动结果

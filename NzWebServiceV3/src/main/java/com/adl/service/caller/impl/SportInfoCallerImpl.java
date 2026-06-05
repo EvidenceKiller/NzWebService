@@ -5,22 +5,21 @@ import com.adl.service.callback.RequestCallback;
 import com.adl.service.caller.SportInfoCaller;
 import com.adl.service.data.AccountRecordData;
 import com.adl.service.data.OrgRecordData;
+import com.adl.service.data.ReportSportStudentAllData;
+import com.adl.service.data.ReportSportStudentCompetitionData;
+import com.adl.service.data.ReportSportStudentData;
+import com.adl.service.data.ReportSportStudentMeetData;
+import com.adl.service.data.ReportSportStudentPlanData;
+import com.adl.service.data.ReportSportStudentTrainData;
+import com.adl.service.data.ReportSportTeacherData;
 import com.adl.service.exception.NzBaseException;
 import com.adl.service.http.request.AccountRecordPageRequest;
 import com.adl.service.http.request.OrgRecordPageRequest;
-import com.adl.service.http.request.ReportStudentCompetitionRequest;
-import com.adl.service.http.request.ReportStudentMeetRequest;
-import com.adl.service.http.request.ReportStudentPlanRequest;
-import com.adl.service.http.request.ReportStudentSportRequest;
-import com.adl.service.http.request.ReportTeacherSportRequest;
 import com.adl.service.http.request.RequestScope;
 import com.adl.service.internal.RxCallbackScheduler;
-import com.adl.service.internal.SubscriptionManager;
 import com.adl.service.repository.SportInfoRepository;
 
 import java.util.List;
-
-import io.reactivex.rxjava3.disposables.Disposable;
 
 /**
  * SportInfoCaller 实现（SDK 内部使用，通过 {@link AdlService} 暴露）。
@@ -34,83 +33,83 @@ public final class SportInfoCallerImpl implements SportInfoCaller {
     }
 
     @Override
-    public long updateStudentSportAsync(RequestScope scope, ReportStudentSportRequest request, RequestCallback<Boolean> callback) {
+    public long updateStudentSportAsync(RequestScope scope, ReportSportStudentAllData request, RequestCallback<Boolean> callback) {
         return RxCallbackScheduler.schedule(scope, sportInfoRepository.updateStudentSport(request), callback);
     }
 
     @Override
-    public Boolean updateStudentSportSync(ReportStudentSportRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGet(sportInfoRepository.updateStudentSport(request));
+    public Boolean updateStudentSportSync(ReportSportStudentAllData request) {
+        return RxCallbackScheduler.blockingGetNoThrow(sportInfoRepository.updateStudentSport(request), Boolean.class);
     }
 
     @Override
-    public long reportTeacherSportAsync(RequestScope scope, ReportTeacherSportRequest request, RequestCallback<Boolean> callback) {
+    public long reportTeacherSportAsync(RequestScope scope, ReportSportTeacherData request, RequestCallback<Boolean> callback) {
         return RxCallbackScheduler.schedule(scope, sportInfoRepository.reportTeacherSport(request), callback);
     }
 
     @Override
-    public Boolean reportTeacherSportSync(ReportTeacherSportRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGet(sportInfoRepository.reportTeacherSport(request));
+    public Boolean reportTeacherSportSync(ReportSportTeacherData request) {
+        return RxCallbackScheduler.blockingGetNoThrow(sportInfoRepository.reportTeacherSport(request), Boolean.class);
     }
 
     @Override
-    public long reportStudentTrainAsync(RequestScope scope, ReportStudentSportRequest request, RequestCallback<Boolean> callback) {
+    public long reportStudentTrainAsync(RequestScope scope, ReportSportStudentTrainData request, RequestCallback<Boolean> callback) {
         return RxCallbackScheduler.schedule(scope, sportInfoRepository.reportStudentTrain(request), callback);
     }
 
     @Override
-    public Boolean reportStudentTrainSync(ReportStudentSportRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGet(sportInfoRepository.reportStudentTrain(request));
+    public Boolean reportStudentTrainSync(ReportSportStudentTrainData request) {
+        return RxCallbackScheduler.blockingGetNoThrow(sportInfoRepository.reportStudentTrain(request), Boolean.class);
     }
 
     @Override
-    public long reportStudentSportAsync(RequestScope scope, ReportStudentSportRequest request, RequestCallback<Boolean> callback) {
+    public long reportStudentSportAsync(RequestScope scope, ReportSportStudentData request, RequestCallback<Boolean> callback) {
         return RxCallbackScheduler.schedule(scope, sportInfoRepository.reportStudentSport(request), callback);
     }
 
     @Override
-    public Boolean reportStudentSportSync(ReportStudentSportRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGet(sportInfoRepository.reportStudentSport(request));
+    public Boolean reportStudentSportSync(ReportSportStudentData request) {
+        return RxCallbackScheduler.blockingGetNoThrow(sportInfoRepository.reportStudentSport(request), Boolean.class);
     }
 
     @Override
-    public long reportStudentPlanAsync(RequestScope scope, ReportStudentPlanRequest request, RequestCallback<Boolean> callback) {
+    public long reportStudentPlanAsync(RequestScope scope, ReportSportStudentPlanData request, RequestCallback<Boolean> callback) {
         return RxCallbackScheduler.schedule(scope, sportInfoRepository.reportStudentPlan(request), callback);
     }
 
     @Override
-    public Boolean reportStudentPlanSync(ReportStudentPlanRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGet(sportInfoRepository.reportStudentPlan(request));
+    public Boolean reportStudentPlanSync(ReportSportStudentPlanData request) {
+        return RxCallbackScheduler.blockingGetNoThrow(sportInfoRepository.reportStudentPlan(request), Boolean.class);
     }
 
     @Override
-    public long reportStudentMeetAsync(RequestScope scope, ReportStudentMeetRequest request, RequestCallback<Boolean> callback) {
+    public long reportStudentMeetAsync(RequestScope scope, ReportSportStudentMeetData request, RequestCallback<Boolean> callback) {
         return RxCallbackScheduler.schedule(scope, sportInfoRepository.reportStudentMeet(request), callback);
     }
 
     @Override
-    public Boolean reportStudentMeetSync(ReportStudentMeetRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGet(sportInfoRepository.reportStudentMeet(request));
+    public Boolean reportStudentMeetSync(ReportSportStudentMeetData request) {
+        return RxCallbackScheduler.blockingGetNoThrow(sportInfoRepository.reportStudentMeet(request), Boolean.class);
     }
 
     @Override
-    public long reportStudentCompetitionAsync(RequestScope scope, ReportStudentCompetitionRequest request, RequestCallback<Boolean> callback) {
+    public long reportStudentCompetitionAsync(RequestScope scope, ReportSportStudentCompetitionData request, RequestCallback<Boolean> callback) {
         return RxCallbackScheduler.schedule(scope, sportInfoRepository.reportStudentCompetition(request), callback);
     }
 
     @Override
-    public Boolean reportStudentCompetitionSync(ReportStudentCompetitionRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGet(sportInfoRepository.reportStudentCompetition(request));
+    public Boolean reportStudentCompetitionSync(ReportSportStudentCompetitionData request) {
+        return RxCallbackScheduler.blockingGetNoThrow(sportInfoRepository.reportStudentCompetition(request), Boolean.class);
     }
 
     @Override
-    public long reportStudentAllSportAsync(RequestScope scope, ReportStudentSportRequest request, RequestCallback<Boolean> callback) {
+    public long reportStudentAllSportAsync(RequestScope scope, ReportSportStudentAllData request, RequestCallback<Boolean> callback) {
         return RxCallbackScheduler.schedule(scope, sportInfoRepository.reportStudentAllSport(request), callback);
     }
 
     @Override
-    public Boolean reportStudentAllSportSync(ReportStudentSportRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGet(sportInfoRepository.reportStudentAllSport(request));
+    public Boolean reportStudentAllSportSync(ReportSportStudentAllData request) {
+        return RxCallbackScheduler.blockingGetNoThrow(sportInfoRepository.reportStudentAllSport(request), Boolean.class);
     }
 
     @Override
@@ -119,8 +118,8 @@ public final class SportInfoCallerImpl implements SportInfoCaller {
     }
 
     @Override
-    public List<OrgRecordData> getOrgRecordPageSync(OrgRecordPageRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGet(sportInfoRepository.getOrgRecordPage(request));
+    public List<OrgRecordData> getOrgRecordPageSync(OrgRecordPageRequest request) {
+        return RxCallbackScheduler.blockingGetNoThrow(sportInfoRepository.getOrgRecordPage(request));
     }
 
     @Override
@@ -129,7 +128,7 @@ public final class SportInfoCallerImpl implements SportInfoCaller {
     }
 
     @Override
-    public List<AccountRecordData> getAccountRecordPageSync(AccountRecordPageRequest request) throws NzBaseException {
-        return RxCallbackScheduler.blockingGet(sportInfoRepository.getAccountRecordPage(request));
+    public List<AccountRecordData> getAccountRecordPageSync(AccountRecordPageRequest request) {
+        return RxCallbackScheduler.blockingGetNoThrow(sportInfoRepository.getAccountRecordPage(request));
     }
 }

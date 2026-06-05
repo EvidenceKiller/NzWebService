@@ -1,5 +1,6 @@
 package com.adl.service.data;
 
+import java.io.Serializable;
 import com.adl.service.utils.CommonUtil;
 import com.adl.service.internal.json.StrictJsonDeserializer;
 import com.google.gson.annotations.JsonAdapter;
@@ -15,12 +16,12 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @JsonAdapter(StrictJsonDeserializer.class)
-public final class SportMeetData {
+public final class SportMeetData implements Serializable {
     /**
      * 是否启用排序
      */
     @SerializedName("enableSort")
-    private Boolean enableSort;
+    private Boolean enableSort = Boolean.FALSE;
 
     /**
      * 模块字符串
@@ -50,25 +51,25 @@ public final class SportMeetData {
      * 开始时间
      */
     @SerializedName("startTime")
-    private Long startTime;
+    private Long startTime = 0L;
 
     /**
      * 结束时间
      */
     @SerializedName("endTime")
-    private Long endTime;
+    private Long endTime = 0L;
 
     /**
      * 报名开始时间
      */
     @SerializedName("applyStartTime")
-    private Long applyStartTime;
+    private Long applyStartTime = 0L;
 
     /**
      * 报名结束时间
      */
     @SerializedName("applyEndTime")
-    private Long applyEndTime;
+    private Long applyEndTime = 0L;
 
     /**
      * 创建者编码
@@ -98,31 +99,31 @@ public final class SportMeetData {
      * 删除标志
      */
     @SerializedName("delFlag")
-    private Boolean delFlag;
+    private Boolean delFlag = Boolean.FALSE;
 
     /**
      * 创建时间
      */
     @SerializedName("createTime")
-    private Long createTime;
+    private Long createTime = 0L;
 
     /**
      * 更新时间
      */
     @SerializedName("updateTime")
-    private Long updateTime;
+    private Long updateTime = 0L;
 
     /**
      * 限制团队数量
      */
     @SerializedName("limitTeamNum")
-    private Integer limitTeamNum;
+    private Integer limitTeamNum = 0;
 
     /**
      * 限制人数
      */
     @SerializedName("limitPersonNum")
-    private Integer limitPersonNum;
+    private Integer limitPersonNum = 0;
 
     /**
      * 运动会副标题
@@ -164,13 +165,13 @@ public final class SportMeetData {
      * 状态
      */
     @SerializedName("state")
-    private Integer state;
+    private Integer state = 0;
 
     /**
      * 报名状态
      */
     @SerializedName("applyState")
-    private Integer applyState;
+    private Integer applyState = 0;
 
     /**
      * 班级ID列表
@@ -194,13 +195,13 @@ public final class SportMeetData {
      * 报名用户数量
      */
     @SerializedName("applyUserCount")
-    private Integer applyUserCount;
+    private Integer applyUserCount = 0;
 
     /**
      * 运动员数量
      */
     @SerializedName("playersNum")
-    private Integer playersNum;
+    private Integer playersNum = 0;
 
     /**
      * 密码

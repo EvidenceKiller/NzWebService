@@ -3,6 +3,7 @@ package com.ai.test;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.util.Log;
 
 import com.adl.auth.common.AdlAppCode;
 import com.adl.auth.core.AdlAuthCallback;
@@ -10,6 +11,8 @@ import com.adl.auth.core.AdlAuthFactory;
 import com.adl.base.activity.NextWriter;
 import com.adl.base.log.AdlLogger;
 import com.adl.service.AdlService;
+import com.adl.service.callback.RequestCallback;
+import com.adl.service.http.request.RequestScope;
 import com.adl.ts.general.R;
 import com.yanzhenjie.permission.AndPermission;
 
@@ -18,7 +21,7 @@ public class StartActivity extends BaseActivity {
     private String testAuthHost_V2 = "http://172.16.2.102:18005/gateway/api/device/auth";
     private String testBusHost_V2 = "http://172.16.0.206:8082/gateway/api";
     // v3 host
-    private String testBusHost_V3 = "http://172.16.2.102:9082/";
+    private String testBusHost_V3 = "http://172.16.2.102:9082/v3/gateway/api/";
 
 //    private static String testHost = "http://112.19.167.50:18005/gateway/api/device/auth";
 //    private static String testBusHost = "http://112.19.167.50:18082/gateway/api";
@@ -48,6 +51,22 @@ public class StartActivity extends BaseActivity {
     }
 
     private void next() {
+        AdlService.getService().getCommonInfoCaller().getServerTimeAsync(RequestScope.of(this), new RequestCallback<Long>() {
+            @Override
+            public void onSuccess(Long data) {
+                Log.i("ZXN_TEST", "current time : " + data);
+            }
+
+            @Override
+            public void onError(String error) {
+
+            }
+
+            @Override
+            public void onFail(int code, String msg) {
+
+            }
+        });
 
         final boolean readConfig = true;
         final boolean debug = true;

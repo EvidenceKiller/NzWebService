@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "927bb58f97fad927aaeaeb2bf14405ba",
+    "identityHash": "8c7ff5c468434c2f8a0f68d2f58d425d",
     "entities": [
       {
         "tableName": "_student",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`_user_id` TEXT, `_account_id` TEXT NOT NULL, `_account_name` TEXT, `_account_num` TEXT, `_account_phone_num` TEXT, `_user_phone_num` TEXT, `_card_nums` TEXT, `_card_num_str` TEXT, `_class_id` TEXT, `_grade_stage_chinese_name` TEXT, `_class_name` TEXT, `_faculty_id` TEXT, `_faculty_name` TEXT, `_college_id` TEXT, `_college_name` TEXT, `_major_id` TEXT, `_major_code` TEXT, `_major_name` TEXT, `_org_name` TEXT, `_user_face_img_url` TEXT, `_thumbnail_user_face_img_url` TEXT, `_account_avatar` TEXT, `_student_code` TEXT, `_student_num` TEXT, `_acayear_sem_code` TEXT, `_acayear_sem_name` TEXT, `_acayear_sem_en_date` TEXT, `_grade_id` TEXT, `_grade_name` TEXT, `_user_sex` TEXT, `_photo_status` TEXT, `_create_time` TEXT, `_update_time` TEXT, `_del_flag` TEXT, `_sec_code` TEXT, `_sec_name` TEXT, `_stage_type` TEXT, `_grade_num` TEXT, `_enter_year` INTEGER, `_class_num` TEXT, `_class_status` INTEGER, `_nation_code` INTEGER, `_user_name` TEXT, `_cert_type` INTEGER, `_cert_num` TEXT, `_avatar_flag` INTEGER, `_record_flag` INTEGER, `_face_data_list` TEXT, `_account_name_pin_yin` TEXT, `_account_name_first_letter_pin_yin` TEXT, `_birthday` TEXT, `_address` TEXT, PRIMARY KEY(`_account_id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`_user_id` TEXT, `_account_id` TEXT NOT NULL, `_account_name` TEXT, `_account_num` TEXT, `_account_phone_num` TEXT, `_user_phone_num` TEXT, `_card_nums` TEXT, `_card_num_str` TEXT, `_class_id` TEXT, `_grade_stage_chinese_name` TEXT, `_class_name` TEXT, `_faculty_id` TEXT, `_faculty_name` TEXT, `_college_id` TEXT, `_college_name` TEXT, `_major_id` TEXT, `_major_code` TEXT, `_major_name` TEXT, `_org_name` TEXT, `_user_face_img_url` TEXT, `_thumbnail_user_face_img_url` TEXT, `_account_avatar` TEXT, `_student_code` TEXT, `_student_num` TEXT, `_acayear_sem_code` TEXT, `_acayear_sem_name` TEXT, `_acayear_sem_en_date` TEXT, `_grade_id` TEXT, `_grade_name` TEXT, `_user_sex` TEXT, `_photo_status` TEXT, `_create_time` INTEGER, `_update_time` INTEGER, `_del_flag` TEXT, `_sec_code` TEXT, `_sec_name` TEXT, `_stage_type` TEXT, `_grade_num` TEXT, `_enter_year` INTEGER, `_class_num` TEXT, `_class_status` INTEGER, `_nation_code` INTEGER, `_user_name` TEXT, `_cert_type` INTEGER, `_cert_num` TEXT, `_avatar_flag` INTEGER, `_record_flag` INTEGER, `_face_data_list` TEXT, `_account_name_pin_yin` TEXT, `_account_name_first_letter_pin_yin` TEXT, `_birthday` TEXT, `_address` TEXT, `_card_type` TEXT DEFAULT '', PRIMARY KEY(`_account_id`))",
         "fields": [
           {
             "fieldPath": "userId",
@@ -197,13 +197,13 @@
           {
             "fieldPath": "createTime",
             "columnName": "_create_time",
-            "affinity": "TEXT",
+            "affinity": "INTEGER",
             "notNull": false
           },
           {
             "fieldPath": "updateTime",
             "columnName": "_update_time",
-            "affinity": "TEXT",
+            "affinity": "INTEGER",
             "notNull": false
           },
           {
@@ -319,6 +319,13 @@
             "columnName": "_address",
             "affinity": "TEXT",
             "notNull": false
+          },
+          {
+            "fieldPath": "cardType",
+            "columnName": "_card_type",
+            "affinity": "TEXT",
+            "notNull": false,
+            "defaultValue": "''"
           }
         ],
         "primaryKey": {
@@ -342,7 +349,7 @@
       },
       {
         "tableName": "_teacher",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`_user_id` TEXT, `_account_id` TEXT NOT NULL, `_account_name` TEXT, `_account_num` TEXT, `_account_phone_num` TEXT, `_user_sex` INTEGER, `_job_num` TEXT, `_account_avatar` TEXT, `_account_name_pin_yin` TEXT, `_account_name_first_letter_pin_yin` TEXT, `_user_face_img_url` TEXT, `_thumbnail_user_face_img_url` TEXT, `_create_time` TEXT, `_update_time` TEXT, `_avatar_flag` INTEGER, `_record_flag` INTEGER, `_del_flag` INTEGER, `_face_data_list` TEXT, PRIMARY KEY(`_account_id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`_user_id` TEXT, `_account_id` TEXT NOT NULL, `_account_name` TEXT, `_account_num` TEXT, `_account_phone_num` TEXT, `_user_sex` INTEGER, `_job_num` TEXT, `_account_avatar` TEXT, `_account_name_pin_yin` TEXT, `_account_name_first_letter_pin_yin` TEXT, `_user_face_img_url` TEXT, `_thumbnail_user_face_img_url` TEXT, `_create_time` INTEGER, `_update_time` INTEGER, `_avatar_flag` INTEGER, `_record_flag` INTEGER, `_del_flag` INTEGER, `_face_data_list` TEXT, PRIMARY KEY(`_account_id`))",
         "fields": [
           {
             "fieldPath": "userId",
@@ -419,13 +426,13 @@
           {
             "fieldPath": "createTime",
             "columnName": "_create_time",
-            "affinity": "TEXT",
+            "affinity": "INTEGER",
             "notNull": false
           },
           {
             "fieldPath": "updateTime",
             "columnName": "_update_time",
-            "affinity": "TEXT",
+            "affinity": "INTEGER",
             "notNull": false
           },
           {
@@ -464,19 +471,19 @@
       },
       {
         "tableName": "_file_down_info",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`lid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `_type` INTEGER NOT NULL, `_url` TEXT, `_file_name` TEXT, `_local_path` TEXT, `_content_length` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`lid` INTEGER PRIMARY KEY AUTOINCREMENT, `_type` INTEGER, `_url` TEXT, `_file_name` TEXT, `_local_path` TEXT, `_content_length` INTEGER)",
         "fields": [
           {
             "fieldPath": "lid",
             "columnName": "lid",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "type",
             "columnName": "_type",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "url",
@@ -500,7 +507,7 @@
             "fieldPath": "contentLength",
             "columnName": "_content_length",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           }
         ],
         "primaryKey": {
@@ -514,13 +521,13 @@
       },
       {
         "tableName": "_file_upload_info",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`lid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `_org_id` TEXT, `_local_path` TEXT, `_upload_status` INTEGER NOT NULL, `_remote_file_name` TEXT, `_remote_url` TEXT, `_remote_bucket` TEXT, `_create_time` INTEGER NOT NULL, `_remark` TEXT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`lid` INTEGER PRIMARY KEY AUTOINCREMENT, `_org_id` TEXT, `_local_path` TEXT, `_upload_status` INTEGER, `_remote_file_name` TEXT, `_remote_url` TEXT, `_remote_bucket` TEXT, `_create_time` INTEGER, `_remark` TEXT)",
         "fields": [
           {
             "fieldPath": "lid",
             "columnName": "lid",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "orgId",
@@ -538,7 +545,7 @@
             "fieldPath": "uploadStatus",
             "columnName": "_upload_status",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "remoteFileName",
@@ -562,7 +569,7 @@
             "fieldPath": "createTime",
             "columnName": "_create_time",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "remark",
@@ -582,12 +589,12 @@
       },
       {
         "tableName": "_sport_plan",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`_create_time` TEXT, `_creator_name` TEXT, `_end_time` TEXT, `_plan_id` TEXT NOT NULL, `_plan_name` TEXT, `_sport_projects` TEXT, `_standard_id` TEXT, `_standard_name` TEXT, `_standard_type` TEXT, `_start_time` TEXT, `_status` TEXT, `_student_num` INTEGER, `_arrange_num` INTEGER, `_finish_num` INTEGER, `_self_test` INTEGER, PRIMARY KEY(`_plan_id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`_create_time` INTEGER, `_creator_name` TEXT, `_end_time` TEXT, `_plan_id` TEXT NOT NULL, `_plan_name` TEXT, `_sport_projects` TEXT, `_standard_id` TEXT, `_standard_name` TEXT, `_standard_type` TEXT, `_start_time` TEXT, `_status` TEXT, `_student_num` INTEGER, `_arrange_num` INTEGER, `_finish_num` INTEGER, `_self_test` INTEGER, PRIMARY KEY(`_plan_id`))",
         "fields": [
           {
             "fieldPath": "createTime",
             "columnName": "_create_time",
-            "affinity": "TEXT",
+            "affinity": "INTEGER",
             "notNull": false
           },
           {
@@ -686,13 +693,13 @@
       },
       {
         "tableName": "_plan_student",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`lid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `_account_id` TEXT, `_admission_num` TEXT, `_class_id` TEXT, `_class_name` TEXT, `_grade_id` TEXT, `_grade_name` TEXT, `_plan_id` TEXT, `_projects` TEXT, `_sex` INTEGER, `_student_code` TEXT, `_student_name` TEXT, `_class_num` INTEGER, `_grade_num` INTEGER, `_stage_id` TEXT, `_student_num` TEXT, `_account_name_pin_yin` TEXT, `_college_id` TEXT, `_college_name` TEXT, `_faculty_id` TEXT, `_faculty_name` TEXT, `_first_letter_pin_yin` TEXT, `_major_id` TEXT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`lid` INTEGER PRIMARY KEY AUTOINCREMENT, `_account_id` TEXT, `_admission_num` TEXT, `_class_id` TEXT, `_class_name` TEXT, `_grade_id` TEXT, `_grade_name` TEXT, `_plan_id` TEXT, `_projects` TEXT, `_sex` INTEGER, `_student_code` TEXT, `_student_name` TEXT, `_class_num` INTEGER, `_grade_num` INTEGER, `_stage_id` TEXT, `_student_num` TEXT, `_account_name_pin_yin` TEXT, `_college_id` TEXT, `_college_name` TEXT, `_faculty_id` TEXT, `_faculty_name` TEXT, `_first_letter_pin_yin` TEXT, `_major_id` TEXT)",
         "fields": [
           {
             "fieldPath": "lid",
             "columnName": "lid",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "accountId",
@@ -848,13 +855,13 @@
       },
       {
         "tableName": "_standard_config",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`lid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `_standard_id` TEXT, `_standard_name` TEXT, `_standard_type` TEXT, `_enabled` TEXT, `_org_all_flag` TEXT, `_sport_sku_list` TEXT, `_area_names` TEXT, `_create_time` TEXT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`lid` INTEGER PRIMARY KEY AUTOINCREMENT, `_standard_id` TEXT, `_standard_name` TEXT, `_standard_type` TEXT, `_enabled` TEXT, `_org_all_flag` TEXT, `_sport_sku_list` TEXT, `_area_names` TEXT, `_create_time` INTEGER)",
         "fields": [
           {
             "fieldPath": "lid",
             "columnName": "lid",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "standardId",
@@ -901,7 +908,7 @@
           {
             "fieldPath": "createTime",
             "columnName": "_create_time",
-            "affinity": "TEXT",
+            "affinity": "INTEGER",
             "notNull": false
           }
         ],
@@ -916,13 +923,13 @@
       },
       {
         "tableName": "_scene",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`lid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `_id` TEXT, `_scene_code` TEXT, `_scene_name` TEXT, `_app_code` TEXT, `_app_codes` TEXT, `_scene_sort` INTEGER, `_scene_type` TEXT, `_enabled` INTEGER)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`lid` INTEGER PRIMARY KEY AUTOINCREMENT, `_id` TEXT, `_scene_code` TEXT, `_scene_name` TEXT, `_app_code` TEXT, `_app_codes` TEXT, `_scene_sort` INTEGER, `_scene_type` TEXT, `_enabled` INTEGER)",
         "fields": [
           {
             "fieldPath": "lid",
             "columnName": "lid",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "id",
@@ -983,14 +990,276 @@
         "foreignKeys": []
       },
       {
-        "tableName": "_sport_sku",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`lid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `_app_code` TEXT, `_scene_id` TEXT, `_enable_sort` INTEGER, `_module_str` TEXT, `_accuracy_method` INTEGER, `_accuracy_type` INTEGER, `_action_video_url` TEXT, `_app_codes` TEXT, `_audio_name` TEXT, `_audio_url` TEXT, `_cover_url` TEXT, `_del_flag` INTEGER, `_enabled` INTEGER, `_end_remark` TEXT, `_end_type` INTEGER, `_end_value` INTEGER, `_icon_url` TEXT, `_measure_mode` TEXT, `_measure_unit_code` TEXT, `_qualities` TEXT, `_qus_template_name` TEXT, `_qus_template_url` TEXT, `_range_end_value` REAL, `_range_start_value` REAL, `_remark` TEXT, `_scene_code` TEXT, `_scene_sku_id` TEXT, `_scene_sku_sort` INTEGER, `_sport_item_code` TEXT, `_sport_item_name` TEXT, `_sport_nature_codes` TEXT, `_sport_nature_names` TEXT, `_sport_priority` INTEGER, `_sport_sku_desc` TEXT, `_sport_sku_desc_json` TEXT, `_sport_sku_id` TEXT, `_sport_sku_name` TEXT, `_sport_type_code` TEXT, `_sport_type_name` TEXT, `_test_count` INTEGER, `_test_template_name` TEXT, `_test_template_url` TEXT, `_tx_vid` TEXT, `_video_cover_url` TEXT, `_video_url` TEXT, `_scene_sku_type` TEXT, `_create_time` INTEGER, `_update_time` INTEGER)",
+        "tableName": "_scene_sport",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`lid` INTEGER PRIMARY KEY AUTOINCREMENT, `_app_code` TEXT, `_app_codes` TEXT, `_scene_id` TEXT, `_sport_sku_id` TEXT, `_sport_nature_codes` TEXT, `_sport_nature_names` TEXT, `_sport_type_code` TEXT, `_sport_type_name` TEXT, `_sport_item_code` TEXT, `_sport_item_name` TEXT, `_sport_sku_name` TEXT, `_measure_mode` TEXT, `_measure_unit_code` TEXT, `_range_end_value` TEXT, `_range_start_value` TEXT, `_accuracy_type` TEXT, `_end_type` TEXT, `_accuracy_method` TEXT, `_end_value` INTEGER, `_end_remark` TEXT, `_icon_url` TEXT, `_cover_url` TEXT, `_action_video_rrl` TEXT, `_audio_url` TEXT, `_audio_name` TEXT, `_video_url` TEXT, `_video_cover_url` TEXT, `_sport_sku_desc` TEXT, `_test_template_url` TEXT, `_test_template_name` TEXT, `_qus_template_url` TEXT, `_qus_template_name` TEXT, `_tx_v_id` TEXT, `_remark` TEXT, `_enabled` INTEGER, `_sport_priority` TEXT, `_scene_sku_id` TEXT, `_qualities` TEXT, `_test_count` TEXT DEFAULT '', `_scene_sku_type` TEXT DEFAULT '')",
         "fields": [
           {
             "fieldPath": "lid",
             "columnName": "lid",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
+          },
+          {
+            "fieldPath": "appCode",
+            "columnName": "_app_code",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "appCodes",
+            "columnName": "_app_codes",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sceneId",
+            "columnName": "_scene_id",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sportSkuId",
+            "columnName": "_sport_sku_id",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sportNatureCodes",
+            "columnName": "_sport_nature_codes",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sportNatureNames",
+            "columnName": "_sport_nature_names",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sportTypeCode",
+            "columnName": "_sport_type_code",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sportTypeName",
+            "columnName": "_sport_type_name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sportItemCode",
+            "columnName": "_sport_item_code",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sportItemName",
+            "columnName": "_sport_item_name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sportSkuName",
+            "columnName": "_sport_sku_name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "measureMode",
+            "columnName": "_measure_mode",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "measureUnitCode",
+            "columnName": "_measure_unit_code",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "rangeEndValue",
+            "columnName": "_range_end_value",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "rangeStartValue",
+            "columnName": "_range_start_value",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "accuracyType",
+            "columnName": "_accuracy_type",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "endType",
+            "columnName": "_end_type",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "accuracyMethod",
+            "columnName": "_accuracy_method",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "endValue",
+            "columnName": "_end_value",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "endRemark",
+            "columnName": "_end_remark",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "iconUrl",
+            "columnName": "_icon_url",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "coverUrl",
+            "columnName": "_cover_url",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "actionVideoUrl",
+            "columnName": "_action_video_rrl",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "audioUrl",
+            "columnName": "_audio_url",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "audioName",
+            "columnName": "_audio_name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "videoUrl",
+            "columnName": "_video_url",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "videoCoverUrl",
+            "columnName": "_video_cover_url",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sportSkuDesc",
+            "columnName": "_sport_sku_desc",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "testTemplateUrl",
+            "columnName": "_test_template_url",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "testTemplateName",
+            "columnName": "_test_template_name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "qusTemplateUrl",
+            "columnName": "_qus_template_url",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "qusTemplateName",
+            "columnName": "_qus_template_name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "txVid",
+            "columnName": "_tx_v_id",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "remark",
+            "columnName": "_remark",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "enabled",
+            "columnName": "_enabled",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sportPriority",
+            "columnName": "_sport_priority",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sceneSkuId",
+            "columnName": "_scene_sku_id",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "qualities",
+            "columnName": "_qualities",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "testCount",
+            "columnName": "_test_count",
+            "affinity": "TEXT",
+            "notNull": false,
+            "defaultValue": "''"
+          },
+          {
+            "fieldPath": "sceneSkuType",
+            "columnName": "_scene_sku_type",
+            "affinity": "TEXT",
+            "notNull": false,
+            "defaultValue": "''"
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "lid"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "_sport_sku",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`lid` INTEGER PRIMARY KEY AUTOINCREMENT, `_app_code` TEXT, `_scene_id` TEXT, `_enable_sort` INTEGER, `_module_str` TEXT, `_accuracy_method` INTEGER, `_accuracy_type` INTEGER, `_action_video_url` TEXT, `_app_codes` TEXT, `_audio_name` TEXT, `_audio_url` TEXT, `_cover_url` TEXT, `_del_flag` INTEGER, `_enabled` INTEGER, `_end_remark` TEXT, `_end_type` INTEGER, `_end_value` INTEGER, `_icon_url` TEXT, `_measure_mode` TEXT, `_measure_unit_code` TEXT, `_qualities` TEXT, `_qus_template_name` TEXT, `_qus_template_url` TEXT, `_range_end_value` REAL, `_range_start_value` REAL, `_remark` TEXT, `_scene_code` TEXT, `_scene_sku_id` TEXT, `_scene_sku_sort` INTEGER, `_sport_item_code` TEXT, `_sport_item_name` TEXT, `_sport_nature_codes` TEXT, `_sport_nature_names` TEXT, `_sport_priority` INTEGER, `_sport_sku_desc` TEXT, `_sport_sku_desc_json` TEXT, `_sport_sku_id` TEXT, `_sport_sku_name` TEXT, `_sport_type_code` TEXT, `_sport_type_name` TEXT, `_test_count` INTEGER, `_test_template_name` TEXT, `_test_template_url` TEXT, `_tx_vid` TEXT, `_video_cover_url` TEXT, `_video_url` TEXT, `_scene_sport_sku_type` TEXT)",
+        "fields": [
+          {
+            "fieldPath": "lid",
+            "columnName": "lid",
+            "affinity": "INTEGER",
+            "notNull": false
           },
           {
             "fieldPath": "appCode",
@@ -1263,21 +1532,9 @@
             "notNull": false
           },
           {
-            "fieldPath": "sceneSkuType",
-            "columnName": "_scene_sku_type",
+            "fieldPath": "sceneSportSkuType",
+            "columnName": "_scene_sport_sku_type",
             "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "createTime",
-            "columnName": "_create_time",
-            "affinity": "INTEGER",
-            "notNull": false
-          },
-          {
-            "fieldPath": "updateTime",
-            "columnName": "_update_time",
-            "affinity": "INTEGER",
             "notNull": false
           }
         ],
@@ -1292,13 +1549,13 @@
       },
       {
         "tableName": "_sport_meet",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`lid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `_app_code` TEXT, `_enable_sort` INTEGER, `_module_str` TEXT, `_id` TEXT, `_org_id` TEXT, `_meet_title` TEXT, `_start_time` INTEGER, `_end_time` INTEGER, `_apply_start_time` INTEGER, `_apply_end_time` INTEGER, `_creator_num` TEXT, `_file_url` TEXT, `_file_name` TEXT, `_app_codes` TEXT, `_del_flag` INTEGER, `_create_time` INTEGER, `_update_time` INTEGER, `_limit_team_num` INTEGER, `_limit_person_num` INTEGER, `_meet_subtitle` TEXT, `_meet_cover` TEXT, `_acayear_sem_code` TEXT, `_sport_style_images` TEXT, `_sku_list` TEXT, `_class_list` TEXT, `_state` INTEGER, `_apply_state` INTEGER, `_class_ids` TEXT, `_classes` TEXT, `_org_name` TEXT, `_apply_user_count` INTEGER, `_players_num` INTEGER, `_password` TEXT, `_group_teams` TEXT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`lid` INTEGER PRIMARY KEY AUTOINCREMENT, `_app_code` TEXT, `_enable_sort` INTEGER, `_module_str` TEXT, `_id` TEXT, `_org_id` TEXT, `_meet_title` TEXT, `_start_time` INTEGER, `_end_time` INTEGER, `_apply_start_time` INTEGER, `_apply_end_time` INTEGER, `_creator_num` TEXT, `_file_url` TEXT, `_file_name` TEXT, `_app_codes` TEXT, `_del_flag` INTEGER, `_create_time` INTEGER, `_update_time` INTEGER, `_limit_team_num` INTEGER, `_limit_person_num` INTEGER, `_meet_subtitle` TEXT, `_meet_cover` TEXT, `_acayear_sem_code` TEXT, `_sport_style_images` TEXT, `_sku_list` TEXT, `_class_list` TEXT, `_state` INTEGER, `_apply_state` INTEGER, `_class_ids` TEXT, `_classes` TEXT, `_org_name` TEXT, `_apply_user_count` INTEGER, `_players_num` INTEGER, `_password` TEXT, `_group_teams` TEXT)",
         "fields": [
           {
             "fieldPath": "lid",
             "columnName": "lid",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "appCode",
@@ -1516,13 +1773,13 @@
       },
       {
         "tableName": "_sport_meet_group_team",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`lid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `_app_code` TEXT, `_meet_id` TEXT, `_team_unit_code` TEXT, `_team_unit_name` TEXT, `_sport_sku_name` TEXT, `_sport_sku_id` TEXT, `_meet_sport_skuId` TEXT, `_team_num` INTEGER NOT NULL, `_number` INTEGER NOT NULL, `_competition_status` INTEGER NOT NULL, `_competition_type` INTEGER NOT NULL, `_competition_round` INTEGER NOT NULL, `_details` TEXT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`lid` INTEGER PRIMARY KEY AUTOINCREMENT, `_app_code` TEXT, `_meet_id` TEXT, `_team_unit_code` TEXT, `_team_unit_name` TEXT, `_sport_sku_name` TEXT, `_sport_sku_id` TEXT, `_meet_sport_skuId` TEXT, `_team_num` INTEGER, `_number` INTEGER, `_competition_status` INTEGER, `_competition_type` INTEGER, `_competition_round` INTEGER, `_details` TEXT)",
         "fields": [
           {
             "fieldPath": "lid",
             "columnName": "lid",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "appCode",
@@ -1570,31 +1827,31 @@
             "fieldPath": "teamNum",
             "columnName": "_team_num",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "number",
             "columnName": "_number",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "competitionStatus",
             "columnName": "_competition_status",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "competitionType",
             "columnName": "_competition_type",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "competitionRound",
             "columnName": "_competition_round",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "details",
@@ -1614,13 +1871,13 @@
       },
       {
         "tableName": "_sport_meet_group_detail",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`lid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `_app_code` TEXT, `_meet_id` TEXT, `_meet_sport_skuId` TEXT, `_competition_round` INTEGER NOT NULL, `_team_unit_code` TEXT, `_team_unit_name` TEXT, `_group_no` INTEGER NOT NULL, `_identify_type` INTEGER NOT NULL, `_runway_code` TEXT, `_number_code` TEXT, `_serial_code` TEXT, `_sport_account_num` TEXT, `_account_name` TEXT, `_account_id` TEXT, `_class_id` TEXT, `_class_name` TEXT, `_account_avatar` TEXT, `_sport_result` TEXT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`lid` INTEGER PRIMARY KEY AUTOINCREMENT, `_app_code` TEXT, `_meet_id` TEXT, `_meet_sport_skuId` TEXT, `_competition_round` INTEGER, `_team_unit_code` TEXT, `_team_unit_name` TEXT, `_group_no` INTEGER, `_identify_type` INTEGER, `_runway_code` TEXT, `_number_code` TEXT, `_serial_code` TEXT, `_sport_account_num` TEXT, `_account_name` TEXT, `_account_id` TEXT, `_class_id` TEXT, `_class_name` TEXT, `_account_avatar` TEXT, `_sport_result` TEXT)",
         "fields": [
           {
             "fieldPath": "lid",
             "columnName": "lid",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "appCode",
@@ -1644,7 +1901,7 @@
             "fieldPath": "competitionRound",
             "columnName": "_competition_round",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "teamUnitCode",
@@ -1662,13 +1919,13 @@
             "fieldPath": "groupNo",
             "columnName": "_group_no",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "identifyType",
             "columnName": "_identify_type",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "runwayCode",
@@ -1864,7 +2121,7 @@
       },
       {
         "tableName": "_dict",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`_enable_sort` INTEGER, `_module_str` TEXT, `_id` TEXT NOT NULL, `_dict_code` TEXT, `_dict_value` TEXT, `_dict_label` TEXT, `_sort_num` INTEGER, `_default_flag` TEXT, `_ext_data` TEXT, `_remark` TEXT, `_lang` TEXT, `_create_time` TEXT, `_update_time` TEXT, `_data_type` INTEGER, `_expired_time` INTEGER, PRIMARY KEY(`_id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`_enable_sort` INTEGER, `_module_str` TEXT, `_id` TEXT NOT NULL, `_dict_code` TEXT, `_dict_value` TEXT, `_dict_label` TEXT, `_sort_num` INTEGER, `_default_flag` TEXT, `_ext_data` TEXT, `_remark` TEXT, `_lang` TEXT, `_create_time` INTEGER, `_update_time` INTEGER, `_data_type` INTEGER, `_expired_time` INTEGER, PRIMARY KEY(`_id`))",
         "fields": [
           {
             "fieldPath": "enableSort",
@@ -1935,13 +2192,13 @@
           {
             "fieldPath": "createTime",
             "columnName": "_create_time",
-            "affinity": "TEXT",
+            "affinity": "INTEGER",
             "notNull": false
           },
           {
             "fieldPath": "updateTime",
             "columnName": "_update_time",
-            "affinity": "TEXT",
+            "affinity": "INTEGER",
             "notNull": false
           },
           {
@@ -1968,13 +2225,13 @@
       },
       {
         "tableName": "_login_info",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`lid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `_pid` TEXT, `_org_name` TEXT, `_org_code` TEXT, `_org_type` INTEGER, `_area_codes` TEXT, `_area_names` TEXT, `_address` TEXT, `_account_name` TEXT, `_account_num` TEXT, `_orglogo` TEXT, `_tel` TEXT, `_email` TEXT, `_org_id` TEXT, `_edu_code` TEXT, `_platform_name` TEXT, `_longitude` TEXT, `_latitude` TEXT, `_device_common_password` TEXT, `_enabled` INTEGER, `_file_size_limit` INTEGER, `_porg_name` TEXT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`lid` INTEGER PRIMARY KEY AUTOINCREMENT, `_pid` TEXT, `_org_name` TEXT, `_org_code` TEXT, `_org_type` INTEGER, `_area_codes` TEXT, `_area_names` TEXT, `_address` TEXT, `_account_name` TEXT, `_account_num` TEXT, `_orglogo` TEXT, `_tel` TEXT, `_email` TEXT, `_org_id` TEXT, `_edu_code` TEXT, `_platform_name` TEXT, `_longitude` TEXT, `_latitude` TEXT, `_device_common_password` TEXT, `_enabled` INTEGER, `_file_size_limit` INTEGER, `_porg_name` TEXT, `_expired_time` INTEGER)",
         "fields": [
           {
             "fieldPath": "lid",
             "columnName": "lid",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "pid",
@@ -2101,6 +2358,12 @@
             "columnName": "_porg_name",
             "affinity": "TEXT",
             "notNull": false
+          },
+          {
+            "fieldPath": "expiredTime",
+            "columnName": "_expired_time",
+            "affinity": "INTEGER",
+            "notNull": false
           }
         ],
         "primaryKey": {
@@ -2113,14 +2376,935 @@
         "foreignKeys": []
       },
       {
+        "tableName": "_sport_record_upload",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`_id` TEXT NOT NULL, `_account_id` TEXT, `_app_code` TEXT, `_sport_scene_code` TEXT, `_account_type` TEXT, `_device_id` TEXT, `_invalid_flag` INTEGER, `_sport_sku_id` TEXT, `_sport_unit` TEXT, `_sport_result` TEXT, `_sport_violation_status` INTEGER, `_sport_violation_number` TEXT, `_sport_count` TEXT, `_sport_score` TEXT, `_sport_level` TEXT, `_sport_time` TEXT, `_sport_test_time` TEXT, `_sport_start_time` TEXT, `_sport_end_time` TEXT, `_multi_person_id` TEXT, `_multi_person_rank` INTEGER, `_multi_person_index` INTEGER DEFAULT 0, `_sport_images` TEXT, `_sport_videos` TEXT, `_sport_competition` TEXT, `_sport_meet` TEXT, `_sport_plan` TEXT, `_sport_train_plan` TEXT DEFAULT '', `_sport_nature_code` TEXT DEFAULT '', `_sport_type_code` TEXT DEFAULT '', `_sport_indicators` TEXT, `_sport_sku_sub_type` TEXT DEFAULT '', `_place_id` TEXT DEFAULT '', `_place_name` TEXT DEFAULT '', `_number` INTEGER DEFAULT 0, `_circle` INTEGER DEFAULT 0, `_create_time` INTEGER DEFAULT 0, `_update_time` INTEGER DEFAULT 0, `_report_version` TEXT DEFAULT '', `_report_code` TEXT DEFAULT '', PRIMARY KEY(`_id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "accountId",
+            "columnName": "_account_id",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "appCode",
+            "columnName": "_app_code",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sportSceneCode",
+            "columnName": "_sport_scene_code",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "accountType",
+            "columnName": "_account_type",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "deviceId",
+            "columnName": "_device_id",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "invalidFlag",
+            "columnName": "_invalid_flag",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sportSkuId",
+            "columnName": "_sport_sku_id",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sportUnit",
+            "columnName": "_sport_unit",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sportResult",
+            "columnName": "_sport_result",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sportViolationStatus",
+            "columnName": "_sport_violation_status",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sportViolationNumber",
+            "columnName": "_sport_violation_number",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sportCount",
+            "columnName": "_sport_count",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sportScore",
+            "columnName": "_sport_score",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sportLevel",
+            "columnName": "_sport_level",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sportTime",
+            "columnName": "_sport_time",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sportTestTime",
+            "columnName": "_sport_test_time",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sportStartTime",
+            "columnName": "_sport_start_time",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sportEndTime",
+            "columnName": "_sport_end_time",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "multiPersonId",
+            "columnName": "_multi_person_id",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "multiPersonRank",
+            "columnName": "_multi_person_rank",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "multiPersonIndex",
+            "columnName": "_multi_person_index",
+            "affinity": "INTEGER",
+            "notNull": false,
+            "defaultValue": "0"
+          },
+          {
+            "fieldPath": "sportImages",
+            "columnName": "_sport_images",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sportVideos",
+            "columnName": "_sport_videos",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "competitionAthletics",
+            "columnName": "_sport_competition",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sportMeet",
+            "columnName": "_sport_meet",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sportPlan",
+            "columnName": "_sport_plan",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "trainPlan",
+            "columnName": "_sport_train_plan",
+            "affinity": "TEXT",
+            "notNull": false,
+            "defaultValue": "''"
+          },
+          {
+            "fieldPath": "sportNatureCodes",
+            "columnName": "_sport_nature_code",
+            "affinity": "TEXT",
+            "notNull": false,
+            "defaultValue": "''"
+          },
+          {
+            "fieldPath": "sportTypeCode",
+            "columnName": "_sport_type_code",
+            "affinity": "TEXT",
+            "notNull": false,
+            "defaultValue": "''"
+          },
+          {
+            "fieldPath": "sportIndicators",
+            "columnName": "_sport_indicators",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sportSkuSubType",
+            "columnName": "_sport_sku_sub_type",
+            "affinity": "TEXT",
+            "notNull": false,
+            "defaultValue": "''"
+          },
+          {
+            "fieldPath": "placeId",
+            "columnName": "_place_id",
+            "affinity": "TEXT",
+            "notNull": false,
+            "defaultValue": "''"
+          },
+          {
+            "fieldPath": "placeName",
+            "columnName": "_place_name",
+            "affinity": "TEXT",
+            "notNull": false,
+            "defaultValue": "''"
+          },
+          {
+            "fieldPath": "number",
+            "columnName": "_number",
+            "affinity": "INTEGER",
+            "notNull": false,
+            "defaultValue": "0"
+          },
+          {
+            "fieldPath": "circle",
+            "columnName": "_circle",
+            "affinity": "INTEGER",
+            "notNull": false,
+            "defaultValue": "0"
+          },
+          {
+            "fieldPath": "createTime",
+            "columnName": "_create_time",
+            "affinity": "INTEGER",
+            "notNull": false,
+            "defaultValue": "0"
+          },
+          {
+            "fieldPath": "updateTime",
+            "columnName": "_update_time",
+            "affinity": "INTEGER",
+            "notNull": false,
+            "defaultValue": "0"
+          },
+          {
+            "fieldPath": "reportVersion",
+            "columnName": "_report_version",
+            "affinity": "TEXT",
+            "notNull": false,
+            "defaultValue": "''"
+          },
+          {
+            "fieldPath": "reportCode",
+            "columnName": "_report_code",
+            "affinity": "TEXT",
+            "notNull": false,
+            "defaultValue": "''"
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "_id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "_sport_record_local",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`_upload_file_status` INTEGER, `_upload_data_status` INTEGER, `_upload_modify_status` INTEGER DEFAULT 0, `_upload_error_msg` TEXT DEFAULT '', `_upload_data_fail_num` INTEGER DEFAULT 0, `_upload_date` TEXT DEFAULT '', `_belong_id` TEXT, `_scene_id` TEXT, `_scene_name` TEXT, `_scene_sub_id` TEXT, `_scene_sub_name` TEXT, `_business_type` TEXT, `_sport_nature` TEXT, `_sport_item_code` TEXT, `_sport_sku_name` TEXT, `_sport_unit_name` TEXT, `_account_name` TEXT, `_college_id` TEXT, `_college_name` TEXT, `_faculty_id` TEXT, `_faculty_name` TEXT, `_major_id` TEXT, `_major_name` TEXT, `_stage_type` TEXT, `_grade_id` TEXT, `_grade_name` TEXT, `_grade_num` TEXT, `_class_id` TEXT, `_class_name` TEXT, `_class_num` TEXT, `_user_face_img_url` TEXT, `_student_code` TEXT, `_student_name_py` TEXT, `_student_name_py_short` TEXT, `_user_sex` TEXT, `_extra` TEXT, `_sport_groupId` TEXT, `_sport_groupName` TEXT, `_status` INTEGER DEFAULT 0, `_sex` TEXT, `_orgId` TEXT, `_orgName` TEXT, `_sportItemName` TEXT, `_planUid` TEXT, `_projectUid` TEXT, `_uploadStatus` INTEGER DEFAULT 0, `_sportSort` INTEGER DEFAULT 0, `_spendTime` TEXT DEFAULT '', `_shouldLines` INTEGER DEFAULT 0, `_testGroupId` TEXT DEFAULT '', `_round` INTEGER DEFAULT 0, `_startRound` INTEGER DEFAULT 0, `_groupNumber` TEXT DEFAULT '', `_id` TEXT NOT NULL, `_account_id` TEXT, `_app_code` TEXT, `_sport_scene_code` TEXT, `_account_type` TEXT, `_device_id` TEXT, `_invalid_flag` INTEGER, `_sport_sku_id` TEXT, `_sport_unit` TEXT, `_sport_result` TEXT, `_sport_violation_status` INTEGER, `_sport_violation_number` TEXT, `_sport_count` TEXT, `_sport_score` TEXT, `_sport_level` TEXT, `_sport_time` TEXT, `_sport_test_time` TEXT, `_sport_start_time` TEXT, `_sport_end_time` TEXT, `_multi_person_id` TEXT, `_multi_person_rank` INTEGER, `_multi_person_index` INTEGER DEFAULT 0, `_sport_images` TEXT, `_sport_videos` TEXT, `_sport_competition` TEXT, `_sport_meet` TEXT, `_sport_plan` TEXT, `_sport_train_plan` TEXT DEFAULT '', `_sport_nature_code` TEXT DEFAULT '', `_sport_type_code` TEXT DEFAULT '', `_sport_indicators` TEXT, `_sport_sku_sub_type` TEXT DEFAULT '', `_place_id` TEXT DEFAULT '', `_place_name` TEXT DEFAULT '', `_number` INTEGER DEFAULT 0, `_circle` INTEGER DEFAULT 0, `_create_time` INTEGER DEFAULT 0, `_update_time` INTEGER DEFAULT 0, `_report_version` TEXT DEFAULT '', `_report_code` TEXT DEFAULT '', PRIMARY KEY(`_id`))",
+        "fields": [
+          {
+            "fieldPath": "uploadFileStatus",
+            "columnName": "_upload_file_status",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "uploadDataStatus",
+            "columnName": "_upload_data_status",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "uploadModifyStatus",
+            "columnName": "_upload_modify_status",
+            "affinity": "INTEGER",
+            "notNull": false,
+            "defaultValue": "0"
+          },
+          {
+            "fieldPath": "uploadErrorMsg",
+            "columnName": "_upload_error_msg",
+            "affinity": "TEXT",
+            "notNull": false,
+            "defaultValue": "''"
+          },
+          {
+            "fieldPath": "uploadDataFailNum",
+            "columnName": "_upload_data_fail_num",
+            "affinity": "INTEGER",
+            "notNull": false,
+            "defaultValue": "0"
+          },
+          {
+            "fieldPath": "uploadDate",
+            "columnName": "_upload_date",
+            "affinity": "TEXT",
+            "notNull": false,
+            "defaultValue": "''"
+          },
+          {
+            "fieldPath": "belongId",
+            "columnName": "_belong_id",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sceneId",
+            "columnName": "_scene_id",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sceneName",
+            "columnName": "_scene_name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sceneSubId",
+            "columnName": "_scene_sub_id",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sceneSubName",
+            "columnName": "_scene_sub_name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "businessType",
+            "columnName": "_business_type",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sportNature",
+            "columnName": "_sport_nature",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sportItemCode",
+            "columnName": "_sport_item_code",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sportSkuName",
+            "columnName": "_sport_sku_name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sportUnitName",
+            "columnName": "_sport_unit_name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "accountName",
+            "columnName": "_account_name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "collegeId",
+            "columnName": "_college_id",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "collegeName",
+            "columnName": "_college_name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "facultyId",
+            "columnName": "_faculty_id",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "facultyName",
+            "columnName": "_faculty_name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "majorId",
+            "columnName": "_major_id",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "majorName",
+            "columnName": "_major_name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "stageType",
+            "columnName": "_stage_type",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "gradeId",
+            "columnName": "_grade_id",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "gradeName",
+            "columnName": "_grade_name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "gradeNum",
+            "columnName": "_grade_num",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "classId",
+            "columnName": "_class_id",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "className",
+            "columnName": "_class_name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "classNum",
+            "columnName": "_class_num",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "userFaceImgUrl",
+            "columnName": "_user_face_img_url",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "studentCode",
+            "columnName": "_student_code",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "studentNamePY",
+            "columnName": "_student_name_py",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "studentNamePYShort",
+            "columnName": "_student_name_py_short",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "userSex",
+            "columnName": "_user_sex",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "extra",
+            "columnName": "_extra",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sportGroupId",
+            "columnName": "_sport_groupId",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sportGroupName",
+            "columnName": "_sport_groupName",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "status",
+            "columnName": "_status",
+            "affinity": "INTEGER",
+            "notNull": false,
+            "defaultValue": "0"
+          },
+          {
+            "fieldPath": "sex",
+            "columnName": "_sex",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "orgId",
+            "columnName": "_orgId",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "orgName",
+            "columnName": "_orgName",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sportItemName",
+            "columnName": "_sportItemName",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "planUid",
+            "columnName": "_planUid",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "projectUid",
+            "columnName": "_projectUid",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "uploadStatus",
+            "columnName": "_uploadStatus",
+            "affinity": "INTEGER",
+            "notNull": false,
+            "defaultValue": "0"
+          },
+          {
+            "fieldPath": "sportSort",
+            "columnName": "_sportSort",
+            "affinity": "INTEGER",
+            "notNull": false,
+            "defaultValue": "0"
+          },
+          {
+            "fieldPath": "spendTime",
+            "columnName": "_spendTime",
+            "affinity": "TEXT",
+            "notNull": false,
+            "defaultValue": "''"
+          },
+          {
+            "fieldPath": "shouldLines",
+            "columnName": "_shouldLines",
+            "affinity": "INTEGER",
+            "notNull": false,
+            "defaultValue": "0"
+          },
+          {
+            "fieldPath": "testGroupId",
+            "columnName": "_testGroupId",
+            "affinity": "TEXT",
+            "notNull": false,
+            "defaultValue": "''"
+          },
+          {
+            "fieldPath": "round",
+            "columnName": "_round",
+            "affinity": "INTEGER",
+            "notNull": false,
+            "defaultValue": "0"
+          },
+          {
+            "fieldPath": "startRound",
+            "columnName": "_startRound",
+            "affinity": "INTEGER",
+            "notNull": false,
+            "defaultValue": "0"
+          },
+          {
+            "fieldPath": "groupNumber",
+            "columnName": "_groupNumber",
+            "affinity": "TEXT",
+            "notNull": false,
+            "defaultValue": "''"
+          },
+          {
+            "fieldPath": "id",
+            "columnName": "_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "accountId",
+            "columnName": "_account_id",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "appCode",
+            "columnName": "_app_code",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sportSceneCode",
+            "columnName": "_sport_scene_code",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "accountType",
+            "columnName": "_account_type",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "deviceId",
+            "columnName": "_device_id",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "invalidFlag",
+            "columnName": "_invalid_flag",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sportSkuId",
+            "columnName": "_sport_sku_id",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sportUnit",
+            "columnName": "_sport_unit",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sportResult",
+            "columnName": "_sport_result",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sportViolationStatus",
+            "columnName": "_sport_violation_status",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sportViolationNumber",
+            "columnName": "_sport_violation_number",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sportCount",
+            "columnName": "_sport_count",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sportScore",
+            "columnName": "_sport_score",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sportLevel",
+            "columnName": "_sport_level",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sportTime",
+            "columnName": "_sport_time",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sportTestTime",
+            "columnName": "_sport_test_time",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sportStartTime",
+            "columnName": "_sport_start_time",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sportEndTime",
+            "columnName": "_sport_end_time",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "multiPersonId",
+            "columnName": "_multi_person_id",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "multiPersonRank",
+            "columnName": "_multi_person_rank",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "multiPersonIndex",
+            "columnName": "_multi_person_index",
+            "affinity": "INTEGER",
+            "notNull": false,
+            "defaultValue": "0"
+          },
+          {
+            "fieldPath": "sportImages",
+            "columnName": "_sport_images",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sportVideos",
+            "columnName": "_sport_videos",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "competitionAthletics",
+            "columnName": "_sport_competition",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sportMeet",
+            "columnName": "_sport_meet",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sportPlan",
+            "columnName": "_sport_plan",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "trainPlan",
+            "columnName": "_sport_train_plan",
+            "affinity": "TEXT",
+            "notNull": false,
+            "defaultValue": "''"
+          },
+          {
+            "fieldPath": "sportNatureCodes",
+            "columnName": "_sport_nature_code",
+            "affinity": "TEXT",
+            "notNull": false,
+            "defaultValue": "''"
+          },
+          {
+            "fieldPath": "sportTypeCode",
+            "columnName": "_sport_type_code",
+            "affinity": "TEXT",
+            "notNull": false,
+            "defaultValue": "''"
+          },
+          {
+            "fieldPath": "sportIndicators",
+            "columnName": "_sport_indicators",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sportSkuSubType",
+            "columnName": "_sport_sku_sub_type",
+            "affinity": "TEXT",
+            "notNull": false,
+            "defaultValue": "''"
+          },
+          {
+            "fieldPath": "placeId",
+            "columnName": "_place_id",
+            "affinity": "TEXT",
+            "notNull": false,
+            "defaultValue": "''"
+          },
+          {
+            "fieldPath": "placeName",
+            "columnName": "_place_name",
+            "affinity": "TEXT",
+            "notNull": false,
+            "defaultValue": "''"
+          },
+          {
+            "fieldPath": "number",
+            "columnName": "_number",
+            "affinity": "INTEGER",
+            "notNull": false,
+            "defaultValue": "0"
+          },
+          {
+            "fieldPath": "circle",
+            "columnName": "_circle",
+            "affinity": "INTEGER",
+            "notNull": false,
+            "defaultValue": "0"
+          },
+          {
+            "fieldPath": "createTime",
+            "columnName": "_create_time",
+            "affinity": "INTEGER",
+            "notNull": false,
+            "defaultValue": "0"
+          },
+          {
+            "fieldPath": "updateTime",
+            "columnName": "_update_time",
+            "affinity": "INTEGER",
+            "notNull": false,
+            "defaultValue": "0"
+          },
+          {
+            "fieldPath": "reportVersion",
+            "columnName": "_report_version",
+            "affinity": "TEXT",
+            "notNull": false,
+            "defaultValue": "''"
+          },
+          {
+            "fieldPath": "reportCode",
+            "columnName": "_report_code",
+            "affinity": "TEXT",
+            "notNull": false,
+            "defaultValue": "''"
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "_id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "_record_res_upload",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `_upload_flag` INTEGER, `_account_id` TEXT, `_sport_sku_id` TEXT, `_local_path` TEXT, `_upload_file_prefix` TEXT, `_upload_file_name` TEXT)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "uploadFlag",
+            "columnName": "_upload_flag",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "accountId",
+            "columnName": "_account_id",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sportSkuId",
+            "columnName": "_sport_sku_id",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "localPath",
+            "columnName": "_local_path",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "uploadFilePrefix",
+            "columnName": "_upload_file_prefix",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "uploadFileName",
+            "columnName": "_upload_file_name",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
         "tableName": "_dict_map",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`lid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `_sport_sku_id` TEXT, `_dict` TEXT, `_right_key` TEXT, `_wrong_key` TEXT, `_type` TEXT, `_expired_time` INTEGER)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`lid` INTEGER PRIMARY KEY AUTOINCREMENT, `_sport_sku_id` TEXT, `_dict` TEXT, `_right_key` TEXT, `_wrong_key` TEXT, `_type` TEXT, `_expired_time` INTEGER)",
         "fields": [
           {
             "fieldPath": "lid",
             "columnName": "lid",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "sportSkuId",
@@ -2167,12 +3351,192 @@
         },
         "indices": [],
         "foreignKeys": []
+      },
+      {
+        "tableName": "_teacher_sport_local",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`_id` TEXT NOT NULL, `_account_id` TEXT, `_belong_id` TEXT, `_app_code` TEXT, `_app_name` TEXT, `_account_name` TEXT, `_perfect_count` INTEGER, `_bravo_count` INTEGER, `_extra_json` TEXT, `_good_count` INTEGER, `_sport_end_time` TEXT, `_sport_start_time` TEXT, `_sport_sku_id` TEXT, `_sport_sku_sub_type` TEXT, `_sport_status` INTEGER, `_sport_count` INTEGER, `_sport_score` REAL, `_sport_result` TEXT, `_sport_violation_status` INTEGER, `_sport_scene_code` TEXT, `_upload_data_status` INTEGER, `_upload_modify_status` INTEGER DEFAULT 0, `_upload_data_fail_num` INTEGER DEFAULT 0, `_upload_date` TEXT DEFAULT '', `_device_id` TEXT DEFAULT '', `_sport_unit_code` TEXT, `_invalid_flag` INTEGER, PRIMARY KEY(`_id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "accountId",
+            "columnName": "_account_id",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "belongId",
+            "columnName": "_belong_id",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "appCode",
+            "columnName": "_app_code",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "appName",
+            "columnName": "_app_name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "accountName",
+            "columnName": "_account_name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "perfectCount",
+            "columnName": "_perfect_count",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "bravoCount",
+            "columnName": "_bravo_count",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "extraJson",
+            "columnName": "_extra_json",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "goodCount",
+            "columnName": "_good_count",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sportEndTime",
+            "columnName": "_sport_end_time",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sportStartTime",
+            "columnName": "_sport_start_time",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sportSkuId",
+            "columnName": "_sport_sku_id",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sportSkuSubType",
+            "columnName": "_sport_sku_sub_type",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sportTime",
+            "columnName": "_sport_status",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sportCount",
+            "columnName": "_sport_count",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sportScore",
+            "columnName": "_sport_score",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sportResult",
+            "columnName": "_sport_result",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sportViolationStatus",
+            "columnName": "_sport_violation_status",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sportSceneCode",
+            "columnName": "_sport_scene_code",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "uploadDataStatus",
+            "columnName": "_upload_data_status",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "uploadModifyStatus",
+            "columnName": "_upload_modify_status",
+            "affinity": "INTEGER",
+            "notNull": false,
+            "defaultValue": "0"
+          },
+          {
+            "fieldPath": "uploadDataFailNum",
+            "columnName": "_upload_data_fail_num",
+            "affinity": "INTEGER",
+            "notNull": false,
+            "defaultValue": "0"
+          },
+          {
+            "fieldPath": "uploadDate",
+            "columnName": "_upload_date",
+            "affinity": "TEXT",
+            "notNull": false,
+            "defaultValue": "''"
+          },
+          {
+            "fieldPath": "deviceId",
+            "columnName": "_device_id",
+            "affinity": "TEXT",
+            "notNull": false,
+            "defaultValue": "''"
+          },
+          {
+            "fieldPath": "sportUnitCode",
+            "columnName": "_sport_unit_code",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "invalidFlag",
+            "columnName": "_invalid_flag",
+            "affinity": "INTEGER",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "_id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '927bb58f97fad927aaeaeb2bf14405ba')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '8c7ff5c468434c2f8a0f68d2f58d425d')"
     ]
   }
 }

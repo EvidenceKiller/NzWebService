@@ -6,11 +6,15 @@ import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.LifecycleOwner;
+import lombok.ToString;
 
 /**
  * 异步请求作用域，仅允许由 {@link Activity} 或 {@link Fragment} 创建，
  * 用于绑定请求生命周期并在界面销毁时取消对应订阅。
  */
+@ToString(callSuper = true)
 public final class RequestScope {
 
     private final Object owner;

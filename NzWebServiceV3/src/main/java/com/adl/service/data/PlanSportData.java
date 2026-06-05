@@ -1,5 +1,6 @@
 package com.adl.service.data;
 
+import java.io.Serializable;
 import com.adl.service.internal.json.StrictJsonDeserializer;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -10,12 +11,12 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @JsonAdapter(StrictJsonDeserializer.class)
-public final class PlanSportData {
+public final class PlanSportData implements Serializable {
     /**
      * 项目性别限制
      */
     @SerializedName("sex")
-    private Integer sex;
+    private Integer sex = 0;
 
     /**
      * 运动skuId

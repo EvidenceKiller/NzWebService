@@ -1,5 +1,6 @@
 package com.adl.service.data;
 
+import java.io.Serializable;
 import com.adl.service.internal.json.StrictJsonDeserializer;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -10,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @JsonAdapter(StrictJsonDeserializer.class)
-public final class LoginInfoData {
+public final class LoginInfoData implements Serializable {
     /**
      * 上级机构ID
      */
@@ -33,7 +34,7 @@ public final class LoginInfoData {
      * 机构类型
      */
     @SerializedName("orgType")
-    private Integer orgType;
+    private Integer orgType = 0;
 
     /**
      * 区域代码
@@ -125,13 +126,13 @@ public final class LoginInfoData {
      * 参考字典编码: adl_tis_enabled
      */
     @SerializedName("enabled")
-    private Boolean enabled;
+    private Boolean enabled = Boolean.FALSE;
 
     /**
      * 机构资源文件上传总大小限制
      */
     @SerializedName("fileSizeLimit")
-    private Long fileSizeLimit;
+    private Long fileSizeLimit = 0L;
 
     @SerializedName("porgName")
     private String porgName;

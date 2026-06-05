@@ -1,8 +1,11 @@
 package com.adl.service.exception;
 
 import com.adl.service.log.NzLog;
+import com.google.gson.JsonParseException;
 
 import java.io.IOException;
+import java.util.concurrent.CancellationException;
+import java.util.concurrent.TimeoutException;
 
 import retrofit2.HttpException;
 
@@ -12,6 +15,59 @@ import retrofit2.HttpException;
 public final class NzExceptionMapper {
 
     private NzExceptionMapper() {
+    }
+
+    public static boolean isInterruptedException(Throwable t) {
+        Throwable current = t;
+        while (current != null && current.getCause() != current) {
+            if (current instanceof InterruptedException) {
+                return true;
+            }
+            current = current.getCause();
+        }
+        return false;
+    }
+
+    public static boolean isCatchException(Throwable throwable) {
+        if (isNeedCatch(throwable)) {
+            return true;
+        }
+        Throwable current = throwable;
+        while (current != null && current.getCause() != current) {
+            current = current.getCause();
+            if (isNeedCatch(current)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static boolean isNeedCatch(Throwable throwable) {
+        if (throwable == null) {
+            return false;
+        }
+        if (throwable instanceof NzBaseException) {
+            return true;
+        }
+        if (throwable instanceof IOException) {
+            return true;
+        }
+        if (throwable instanceof HttpException) {
+            return true;
+        }
+        if (throwable instanceof CancellationException) {
+            return true;
+        }
+        if (throwable instanceof TimeoutException) {
+            return true;
+        }
+        if (throwable instanceof InterruptedException) {
+            return true;
+        }
+        if (throwable instanceof JsonParseException) {
+            return true;
+        }
+        return false;
     }
 
     public static NzBaseException map(Throwable throwable) {
@@ -47,6 +103,7 @@ public final class NzExceptionMapper {
 
     public static String toMessage(Throwable throwable) {
         NzLog.i("NzExceptionMapper : toMessage : " + throwable);
+        throwable.printStackTrace();
         NzBaseException ex = map(throwable);
         String msg = ex.getMessage();
         String safeMsg = throwable.getClass().getSimpleName() + ": " + (msg != null ? msg : ex.toString());

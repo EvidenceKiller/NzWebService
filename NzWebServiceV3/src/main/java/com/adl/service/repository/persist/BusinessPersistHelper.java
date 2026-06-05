@@ -7,6 +7,7 @@ import com.adl.service.db.entity.CompetitionEntity;
 import com.adl.service.db.entity.SportMeetEntity;
 import com.adl.service.db.entity.SportMeetGroupDetailEntity;
 import com.adl.service.db.entity.SportMeetGroupTeamEntity;
+import com.adl.service.exception.NzCommonException;
 import com.adl.service.http.request.SportMeetPageRequest;
 import com.adl.service.utils.CommonUtil;
 
@@ -26,7 +27,7 @@ public final class BusinessPersistHelper {
     public Function<List<CompetitionData>, Single<List<CompetitionData>>> createPersistCompetitionPageFunc() {
         return (pageData) -> {
             if (pageData == null || pageData.isEmpty()) {
-                return Single.just(pageData);
+                return Single.error(new NzCommonException("competition data list is null"));
             }
             List<CompetitionEntity> entityList = pageData.stream()
                     .map(data -> CompetitionEntity.convertToEntity(data))
@@ -39,7 +40,7 @@ public final class BusinessPersistHelper {
     public Function<List<SportMeetData>, Single<List<SportMeetData>>> createPersistSportMeetPageFunc(SportMeetPageRequest request) {
         return (pageData) -> {
             if (pageData == null || pageData.isEmpty()) {
-                return Single.just(pageData);
+                return Single.error(new NzCommonException("sport meet data list is null"));
             }
             List<SportMeetEntity> persistList = new LinkedList<>();
             Iterator<SportMeetData> iterator = pageData.iterator();

@@ -1,5 +1,6 @@
 package com.adl.service.data;
 
+import java.io.Serializable;
 import com.adl.service.internal.json.StrictJsonDeserializer;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -12,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @JsonAdapter(StrictJsonDeserializer.class)
-public final class AcayearData {
+public final class AcayearData implements Serializable {
 
     /**
      * 学年
@@ -30,5 +31,5 @@ public final class AcayearData {
      * 是否当前学年 1：是 0 不是
      */
     @SerializedName("isNowAcayear")
-    private Integer isNowAcayear;
+    private Integer isNowAcayear = 0;
 }

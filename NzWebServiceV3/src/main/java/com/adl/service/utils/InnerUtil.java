@@ -1,6 +1,9 @@
 package com.adl.service.utils;
 
+import android.text.TextUtils;
+
 import com.adl.service.AdlService;
+import com.adl.service.common.AdlConfigService;
 import com.adl.service.exception.NzBaseException;
 import com.adl.service.exception.NzCommonException;
 import com.adl.service.internal.RetrofitManager;
@@ -39,31 +42,14 @@ public class InnerUtil {
     private static SimpleDateFormat YMD_FORMAT = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
 
     public static String getIpHost() {
+        if (AdlService.getService() == null) {
+            return SERVICE_HOST;
+        }
         Matcher matcher = URL_PATTERN.matcher(AdlService.getService().getHost());
         if (matcher.find()) {
             return matcher.group(0);
         }
         return SERVICE_HOST;
-    }
-
-    /**
-     * TODO 临时实现
-     * 获取服务端时间
-     */
-    public static long getServerTime() throws NzBaseException {
-        try {
-            Request request = new Request.Builder().url(InnerUtil.getIpHost() + "/time").build();
-            Response response = RetrofitManager.getInstance().newCall(request);
-            if (response.isSuccessful() && response.body() != null) {
-                com.alibaba.fastjson.JSONObject jo = JSON.parseObject(response.body().string());
-                // 服务器返回时间为秒
-                return (long) (jo.getDoubleValue("timestamp") * 1000L);
-            } else {
-                throw new NzCommonException("Get Server time meet some error : " + response.message());
-            }
-        } catch (IOException e) {
-            throw new NzCommonException("Get Server time meet some error", e);
-        }
     }
 
     public static String formatByTimeCode(long time) {
@@ -168,5 +154,22 @@ public class InnerUtil {
         } catch (JSONException ignored) {
         }
         return null;
+    }
+
+    // 人脸路径拼接
+    public static String formatFaceUrl(String url) {
+        if (AdlConfigService.getAdlConfig() == null) return url;
+        String prefix = AdlConfigService.getAdlConfig().getFacePrefix();
+        if (TextUtils.isEmpty(prefix)) return url;
+        if (TextUtils.isEmpty(url)) return prefix;
+        boolean pe = prefix.endsWith("/");
+        boolean us = url.startsWith("/");
+        if (pe && us) {
+            return prefix + url.substring(1);
+        } else if (!pe && !us) {
+            return prefix + "/" + url;
+        } else {
+            return prefix + url;
+        }
     }
 }

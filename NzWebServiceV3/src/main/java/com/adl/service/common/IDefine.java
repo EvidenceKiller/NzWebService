@@ -16,11 +16,6 @@ public interface IDefine {
     //  token
     String SpToken = "sp_token";
 
-    //  普教
-    String PlatformK12 = "k12";
-    //  高教
-    String PlatformGx = "gx";
-
     // 七牛公共资源目录
     String QiNiuPublicBucket = "adl-ssp";
     String QiNiuRemovePathSmartScreen = "/bigScreen/";
@@ -30,7 +25,7 @@ public interface IDefine {
 
     // 时间单位
     long Minute = 60 * 1000;
-    long UpdateIntervalTime = 2 * Minute;
+    long UPDATE_INTERVAL_TIME = 2 * Minute;
 
     // 公共目录
     String DefSportRoot = "zy.sport.cache";
@@ -68,11 +63,11 @@ public interface IDefine {
     int FileUploadStatusError = 10; // 上传错误
 
     // 基础信息同步状态
-    int SyncOrgStatus = 1;  // 同步机构
-    int SyncStudentStatus = 2; // 同步学生
-    int SyncTeacherStatus = 3; // 同步老师
-    int SyncCitizenStatus = 4; // 同步老师
-    int SyncCompleteStatus = 99; // 同步完成
+    int SYNC_ORG_STATUS = 1;  // 同步机构
+    int SYNC_STUDENT_STATUS = 2; // 同步学生
+    int SYNC_TEACHER_STATUS = 3; // 同步老师
+    int SYNC_CITIZEN_STATUS = 4; // 同步老师
+    int SYNC_COMPLETE_STATUS = 99; // 同步完成
 
     //  测试类型
     String standardTypeALL = "";//

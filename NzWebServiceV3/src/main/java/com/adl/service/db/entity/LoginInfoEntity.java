@@ -1,5 +1,7 @@
 package com.adl.service.db.entity;
 
+import androidx.annotation.RestrictTo;
+
 import com.adl.service.data.LoginInfoData;
 
 import androidx.room.ColumnInfo;
@@ -11,10 +13,12 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @Entity(tableName = "_login_info")
+@RestrictTo(RestrictTo.Scope.LIBRARY)
 public final class LoginInfoEntity {
+    public static final long EXPIRED_TIME = 1000L * 60L * 60L * 24L;
 
     @PrimaryKey(autoGenerate = true)
-    private long lid;
+    private Long lid= 0L;
 
     /**
      * 上级机构ID
@@ -38,7 +42,7 @@ public final class LoginInfoEntity {
      * 机构类型
      */
     @ColumnInfo(name = "_org_type")
-    private Integer orgType;
+    private Integer orgType= 0;
 
     /**
      * 区域代码
@@ -130,16 +134,19 @@ public final class LoginInfoEntity {
      * 参考字典编码: adl_tis_enabled
      */
     @ColumnInfo(name = "_enabled")
-    private Boolean enabled;
+    private Boolean enabled= Boolean.FALSE;
 
     /**
      * 机构资源文件上传总大小限制
      */
     @ColumnInfo(name = "_file_size_limit")
-    private Long fileSizeLimit;
+    private Long fileSizeLimit= 0L;
 
     @ColumnInfo(name = "_porg_name")
     private String porgName;
+
+    @ColumnInfo(name = "_expired_time")
+    private Long expiredTime= 0L;
 
     public static LoginInfoEntity convertToEntity(LoginInfoData data) {
         if (data == null) {
@@ -167,6 +174,7 @@ public final class LoginInfoEntity {
         entity.setEnabled(data.getEnabled());
         entity.setFileSizeLimit(data.getFileSizeLimit());
         entity.setPorgName(data.getPorgName());
+        entity.setExpiredTime(System.currentTimeMillis() + EXPIRED_TIME);
         return entity;
     }
 
