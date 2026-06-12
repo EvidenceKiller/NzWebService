@@ -1,5 +1,6 @@
 package com.adl.service.repository;
 
+import com.adl.service.callback.ResponseResult;
 import com.adl.service.data.LoginData;
 import com.adl.service.http.request.LoginRequest;
 import com.adl.service.http.request.LogoutRequest;
@@ -32,11 +33,11 @@ public final class LoginAuthRepository {
         return instance;
     }
 
-    public Single<LoginData> login(LoginRequest request) {
+    public Single<ResponseResult<LoginData>> login(LoginRequest request) {
         return BaseRepositoryUtil.repositoryAsSingle(request, fetchHelper.createLoginFunc());
     }
 
-    public Single<String> logout(LogoutRequest request) {
+    public Single<ResponseResult<String>> logout(LogoutRequest request) {
         return BaseRepositoryUtil.repositoryAsSingle(request, fetchHelper.createLogoutFunc());
     }
 }

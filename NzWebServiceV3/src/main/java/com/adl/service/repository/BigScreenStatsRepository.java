@@ -1,5 +1,6 @@
 package com.adl.service.repository;
 
+import com.adl.service.callback.ResponseResult;
 import com.adl.service.data.BestRankTopData;
 import com.adl.service.data.CompetitionRankData;
 import com.adl.service.data.MorePeopleRecordRankData;
@@ -50,51 +51,51 @@ public final class BigScreenStatsRepository {
         return instance;
     }
 
-    public Single<List<WarRecordRankData>> getWarRecordRank(WarRecordRankRequest request) {
+    public Single<ResponseResult<List<WarRecordRankData>>> getWarRecordRank(WarRecordRankRequest request) {
         return BaseRepositoryUtil.repositoryAsSingle(request, fetchHelper.createGetWarRecordRankFunc());
     }
 
-    public Single<PersonRankData> getPersonRank(PersonRankRequest request) {
+    public Single<ResponseResult<PersonRankData>> getPersonRank(PersonRankRequest request) {
         return BaseRepositoryUtil.repositoryAsSingle(request, fetchHelper.createGetPersonRankFunc());
     }
 
-    public Single<List<MorePeopleVictoryRankData>> getMorePeopleVictoryRank(MorePeopleVictoryRankRequest request) {
+    public Single<ResponseResult<List<MorePeopleVictoryRankData>>> getMorePeopleVictoryRank(MorePeopleVictoryRankRequest request) {
         return BaseRepositoryUtil.repositoryAsSingle(request, fetchHelper.createGetMorePeopleVictoryRankFunc());
     }
 
-    public Single<List<MorePeopleRecordRankData>> getMorePeopleRecordRank(MorePeopleRecordRankRequest request) {
+    public Single<ResponseResult<List<MorePeopleRecordRankData>>> getMorePeopleRecordRank(MorePeopleRecordRankRequest request) {
         return BaseRepositoryUtil.repositoryAsSingle(request, fetchHelper.createGetMorePeopleRecordRankFunc());
     }
 
-    public Single<OverviewData> getOverview(OverviewRequest request) {
+    public Single<ResponseResult<OverviewData>> getOverview(OverviewRequest request) {
         return BaseRepositoryUtil.repositoryAsSingle(request, fetchHelper.createGetOverviewFunc());
     }
 
-    public Single<CompetitionRankData> getCompetitionRank(CompetitionRankRequest request) {
+    public Single<ResponseResult<CompetitionRankData>> getCompetitionRank(CompetitionRankRequest request) {
         return BaseRepositoryUtil.repositoryAsSingle(request, fetchHelper.createGetCompetitionRankFunc());
     }
 
-    public Single<List<SumScoreRankData>> sumScoreRank(SumScoreRankRequest request) {
+    public Single<ResponseResult<List<SumScoreRankData>>> sumScoreRank(SumScoreRankRequest request) {
         return BaseRepositoryUtil.repositoryAsSingle(request, fetchHelper.createSumScoreRankFunc());
     }
 
-    public Single<List<SportSkuRankData>> getSportSkuRank(SportRankRequest request) {
+    public Single<ResponseResult<List<SportSkuRankData>>> getSportSkuRank(SportRankRequest request) {
         return BaseRepositoryUtil.repositoryAsSingle(request, fetchHelper.createGetSportSkuRankFunc());
     }
 
-    public Single<List<SportRankKingData>> getSportRankKing(SportRankRequest request) {
+    public Single<ResponseResult<List<SportRankKingData>>> getSportRankKing(SportRankRequest request) {
         return BaseRepositoryUtil.repositoryAsSingle(request, fetchHelper.createGetSportRankKingFunc());
     }
 
-    public Single<List<SportRankKingData>> getPhysicalTrainingRank(SportRankRequest request) {
+    public Single<ResponseResult<List<SportRankKingData>>> getPhysicalTrainingRank(SportRankRequest request) {
         return BaseRepositoryUtil.repositoryAsSingle(request, fetchHelper.createGetPhysicalTrainingRankFunc());
     }
 
-    public Single<List<SportRankKingData>> getExerciseSumTimeRank(SportRankRequest request) {
+    public Single<ResponseResult<List<SportRankKingData>>> getExerciseSumTimeRank(SportRankRequest request) {
         return BaseRepositoryUtil.repositoryAsSingle(request, fetchHelper.createGetExerciseSumTimeRankFunc());
     }
 
-    public Single<List<BestRankTopData>> getBestRankTop(BestRankTopRequest request) {
+    public Single<ResponseResult<List<BestRankTopData>>> getBestRankTop(BestRankTopRequest request) {
         return BaseRepositoryUtil.repositoryAsSingle(request, fetchHelper.createGetBestRankTopFunc());
     }
 }

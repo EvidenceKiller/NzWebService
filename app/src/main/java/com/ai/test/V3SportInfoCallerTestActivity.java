@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import com.adl.service.AdlService;
 import com.adl.service.callback.RequestCallback;
+import com.adl.service.callback.ResponseResult;
+import com.adl.service.common.NzResponseCode;
 import com.adl.service.data.ReportSportStudentAllData;
 import com.adl.service.data.ReportSportStudentCompetitionData;
 import com.adl.service.data.ReportSportStudentData;
@@ -80,15 +82,9 @@ public class V3SportInfoCallerTestActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFail(int code, String msg) {
-                Log.d(TAG, "SportInfoCallerTestActivity::" + methodName + "::onFail : code : " + code + ", msg : " + msg);
+            public void onError(int code, String msg) {
+                Log.d(TAG, "SportInfoCallerTestActivity::" + methodName + "::onError : code : " + code + ", msg : " + msg);
                 resultView.setText(msg);
-            }
-
-            @Override
-            public void onError(String error) {
-                Log.d(TAG, "SportInfoCallerTestActivity::" + methodName + "::onError : error : " + error);
-                resultView.setText(error);
             }
         };
     }
@@ -99,9 +95,14 @@ public class V3SportInfoCallerTestActivity extends AppCompatActivity {
     }
 
     private void updateStudentSportSync() {
-        AdlService.getService().executeSyncOnIo(RequestScope.of(this),
-                () -> AdlService.getService().getSportInfoCaller().updateStudentSportSync(new ReportSportStudentAllData()),
-                booleanCallback("updateStudentSportSync"));
+        ResponseResult<Boolean> result = AdlService.getService().getSportInfoCaller().updateStudentSportSync(new ReportSportStudentAllData());
+        if (result.getCode() == NzResponseCode.NZ_SUCCESS) {
+            Log.d(TAG, "SportInfoCallerTestActivity::updateStudentSportSync::onSuccess : data : " + result.getData());
+            resultView.setText(String.valueOf(result.getData()));
+        } else {
+            Log.d(TAG, "SportInfoCallerTestActivity::updateStudentSportSync::onError : code : " + result.getCode() + ", msg : " + result.getMsg());
+            resultView.setText(result.getMsg());
+        }
     }
 
     private void reportTeacherSportAsync() {
@@ -110,9 +111,14 @@ public class V3SportInfoCallerTestActivity extends AppCompatActivity {
     }
 
     private void reportTeacherSportSync() {
-        AdlService.getService().executeSyncOnIo(RequestScope.of(this),
-                () -> AdlService.getService().getSportInfoCaller().reportTeacherSportSync(new ReportSportTeacherData()),
-                booleanCallback("reportTeacherSportSync"));
+        ResponseResult<Boolean> result = AdlService.getService().getSportInfoCaller().reportTeacherSportSync(new ReportSportTeacherData());
+        if (result.getCode() == NzResponseCode.NZ_SUCCESS) {
+            Log.d(TAG, "SportInfoCallerTestActivity::reportTeacherSportSync::onSuccess : data : " + result.getData());
+            resultView.setText(String.valueOf(result.getData()));
+        } else {
+            Log.d(TAG, "SportInfoCallerTestActivity::reportTeacherSportSync::onError : code : " + result.getCode() + ", msg : " + result.getMsg());
+            resultView.setText(result.getMsg());
+        }
     }
 
     private void reportStudentTrainAsync() {
@@ -121,9 +127,14 @@ public class V3SportInfoCallerTestActivity extends AppCompatActivity {
     }
 
     private void reportStudentTrainSync() {
-        AdlService.getService().executeSyncOnIo(RequestScope.of(this),
-                () -> AdlService.getService().getSportInfoCaller().reportStudentTrainSync(new ReportSportStudentTrainData()),
-                booleanCallback("reportStudentTrainSync"));
+        ResponseResult<Boolean> result = AdlService.getService().getSportInfoCaller().reportStudentTrainSync(new ReportSportStudentTrainData());
+        if (result.getCode() == NzResponseCode.NZ_SUCCESS) {
+            Log.d(TAG, "SportInfoCallerTestActivity::reportStudentTrainSync::onSuccess : data : " + result.getData());
+            resultView.setText(String.valueOf(result.getData()));
+        } else {
+            Log.d(TAG, "SportInfoCallerTestActivity::reportStudentTrainSync::onError : code : " + result.getCode() + ", msg : " + result.getMsg());
+            resultView.setText(result.getMsg());
+        }
     }
 
     private void reportStudentSportAsync() {
@@ -132,9 +143,14 @@ public class V3SportInfoCallerTestActivity extends AppCompatActivity {
     }
 
     private void reportStudentSportSync() {
-        AdlService.getService().executeSyncOnIo(RequestScope.of(this),
-                () -> AdlService.getService().getSportInfoCaller().reportStudentSportSync(new ReportSportStudentData()),
-                booleanCallback("reportStudentSportSync"));
+        ResponseResult<Boolean> result = AdlService.getService().getSportInfoCaller().reportStudentSportSync(new ReportSportStudentData());
+        if (result.getCode() == NzResponseCode.NZ_SUCCESS) {
+            Log.d(TAG, "SportInfoCallerTestActivity::reportStudentSportSync::onSuccess : data : " + result.getData());
+            resultView.setText(String.valueOf(result.getData()));
+        } else {
+            Log.d(TAG, "SportInfoCallerTestActivity::reportStudentSportSync::onError : code : " + result.getCode() + ", msg : " + result.getMsg());
+            resultView.setText(result.getMsg());
+        }
     }
 
     private void reportStudentPlanAsync() {
@@ -143,9 +159,14 @@ public class V3SportInfoCallerTestActivity extends AppCompatActivity {
     }
 
     private void reportStudentPlanSync() {
-        AdlService.getService().executeSyncOnIo(RequestScope.of(this),
-                () -> AdlService.getService().getSportInfoCaller().reportStudentPlanSync(new ReportSportStudentPlanData()),
-                booleanCallback("reportStudentPlanSync"));
+        ResponseResult<Boolean> result = AdlService.getService().getSportInfoCaller().reportStudentPlanSync(new ReportSportStudentPlanData());
+        if (result.getCode() == NzResponseCode.NZ_SUCCESS) {
+            Log.d(TAG, "SportInfoCallerTestActivity::reportStudentPlanSync::onSuccess : data : " + result.getData());
+            resultView.setText(String.valueOf(result.getData()));
+        } else {
+            Log.d(TAG, "SportInfoCallerTestActivity::reportStudentPlanSync::onError : code : " + result.getCode() + ", msg : " + result.getMsg());
+            resultView.setText(result.getMsg());
+        }
     }
 
     private void reportStudentMeetAsync() {
@@ -154,9 +175,14 @@ public class V3SportInfoCallerTestActivity extends AppCompatActivity {
     }
 
     private void reportStudentMeetSync() {
-        AdlService.getService().executeSyncOnIo(RequestScope.of(this),
-                () -> AdlService.getService().getSportInfoCaller().reportStudentMeetSync(new ReportSportStudentMeetData()),
-                booleanCallback("reportStudentMeetSync"));
+        ResponseResult<Boolean> result = AdlService.getService().getSportInfoCaller().reportStudentMeetSync(new ReportSportStudentMeetData());
+        if (result.getCode() == NzResponseCode.NZ_SUCCESS) {
+            Log.d(TAG, "SportInfoCallerTestActivity::reportStudentMeetSync::onSuccess : data : " + result.getData());
+            resultView.setText(String.valueOf(result.getData()));
+        } else {
+            Log.d(TAG, "SportInfoCallerTestActivity::reportStudentMeetSync::onError : code : " + result.getCode() + ", msg : " + result.getMsg());
+            resultView.setText(result.getMsg());
+        }
     }
 
     private void reportStudentCompetitionAsync() {
@@ -165,9 +191,14 @@ public class V3SportInfoCallerTestActivity extends AppCompatActivity {
     }
 
     private void reportStudentCompetitionSync() {
-        AdlService.getService().executeSyncOnIo(RequestScope.of(this),
-                () -> AdlService.getService().getSportInfoCaller().reportStudentCompetitionSync(new ReportSportStudentCompetitionData()),
-                booleanCallback("reportStudentCompetitionSync"));
+        ResponseResult<Boolean> result = AdlService.getService().getSportInfoCaller().reportStudentCompetitionSync(new ReportSportStudentCompetitionData());
+        if (result.getCode() == NzResponseCode.NZ_SUCCESS) {
+            Log.d(TAG, "SportInfoCallerTestActivity::reportStudentCompetitionSync::onSuccess : data : " + result.getData());
+            resultView.setText(String.valueOf(result.getData()));
+        } else {
+            Log.d(TAG, "SportInfoCallerTestActivity::reportStudentCompetitionSync::onError : code : " + result.getCode() + ", msg : " + result.getMsg());
+            resultView.setText(result.getMsg());
+        }
     }
 
     private void reportStudentAllSportAsync() {
@@ -176,9 +207,14 @@ public class V3SportInfoCallerTestActivity extends AppCompatActivity {
     }
 
     private void reportStudentAllSportSync() {
-        AdlService.getService().executeSyncOnIo(RequestScope.of(this),
-                () -> AdlService.getService().getSportInfoCaller().reportStudentAllSportSync(new ReportSportStudentAllData()),
-                booleanCallback("reportStudentAllSportSync"));
+        ResponseResult<Boolean> result = AdlService.getService().getSportInfoCaller().reportStudentAllSportSync(new ReportSportStudentAllData());
+        if (result.getCode() == NzResponseCode.NZ_SUCCESS) {
+            Log.d(TAG, "SportInfoCallerTestActivity::reportStudentAllSportSync::onSuccess : data : " + result.getData());
+            resultView.setText(String.valueOf(result.getData()));
+        } else {
+            Log.d(TAG, "SportInfoCallerTestActivity::reportStudentAllSportSync::onError : code : " + result.getCode() + ", msg : " + result.getMsg());
+            resultView.setText(result.getMsg());
+        }
     }
 
     private void getOrgRecordPageAsync() {
@@ -191,41 +227,22 @@ public class V3SportInfoCallerTestActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onFail(int code, String msg) {
-                        Log.d(TAG, "SportInfoCallerTestActivity::getOrgRecordPageAsync::onFail : code : " + code + ", msg : " + msg);
+                    public void onError(int code, String msg) {
+                        Log.d(TAG, "SportInfoCallerTestActivity::getOrgRecordPageAsync::onError : code : " + code + ", msg : " + msg);
                         resultView.setText(msg);
-                    }
-
-                    @Override
-                    public void onError(String error) {
-                        Log.d(TAG, "SportInfoCallerTestActivity::getOrgRecordPageAsync::onError : error : " + error);
-                        resultView.setText(error);
                     }
                 });
     }
 
     private void getOrgRecordPageSync() {
-        AdlService.getService().executeSyncOnIo(RequestScope.of(this),
-                () -> AdlService.getService().getSportInfoCaller().getOrgRecordPageSync(OrgRecordPageRequest.builder().build()),
-                new RequestCallback<List<OrgRecordData>>() {
-                    @Override
-                    public void onSuccess(List<OrgRecordData> data) {
-                        Log.d(TAG, "SportInfoCallerTestActivity::getOrgRecordPageSync::onSuccess : data : " + data);
-                        resultView.setText(String.valueOf(data));
-                    }
-
-                    @Override
-                    public void onFail(int code, String msg) {
-                        Log.d(TAG, "SportInfoCallerTestActivity::getOrgRecordPageSync::onFail : code : " + code + ", msg : " + msg);
-                        resultView.setText(msg);
-                    }
-
-                    @Override
-                    public void onError(String error) {
-                        Log.d(TAG, "SportInfoCallerTestActivity::getOrgRecordPageSync::onError : error : " + error);
-                        resultView.setText(error);
-                    }
-                });
+        ResponseResult<List<OrgRecordData>> result = AdlService.getService().getSportInfoCaller().getOrgRecordPageSync(OrgRecordPageRequest.builder().build());
+        if (result.getCode() == NzResponseCode.NZ_SUCCESS) {
+            Log.d(TAG, "SportInfoCallerTestActivity::getOrgRecordPageSync::onSuccess : data : " + result.getData());
+            resultView.setText(result.getData().toString());
+        } else {
+            Log.d(TAG, "SportInfoCallerTestActivity::getOrgRecordPageSync::onError : code : " + result.getCode() + ", msg : " + result.getMsg());
+            resultView.setText(result.getMsg());
+        }
     }
 
     private void getAccountRecordPageAsync() {
@@ -238,41 +255,22 @@ public class V3SportInfoCallerTestActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onFail(int code, String msg) {
-                        Log.d(TAG, "SportInfoCallerTestActivity::getAccountRecordPageAsync::onFail : code : " + code + ", msg : " + msg);
+                    public void onError(int code, String msg) {
+                        Log.d(TAG, "SportInfoCallerTestActivity::getAccountRecordPageAsync::onError : code : " + code + ", msg : " + msg);
                         resultView.setText(msg);
-                    }
-
-                    @Override
-                    public void onError(String error) {
-                        Log.d(TAG, "SportInfoCallerTestActivity::getAccountRecordPageAsync::onError : error : " + error);
-                        resultView.setText(error);
                     }
                 });
     }
 
     private void getAccountRecordPageSync() {
-        AdlService.getService().executeSyncOnIo(RequestScope.of(this),
-                () -> AdlService.getService().getSportInfoCaller().getAccountRecordPageSync(buildAccountRecordPageRequest()),
-                new RequestCallback<List<AccountRecordData>>() {
-                    @Override
-                    public void onSuccess(List<AccountRecordData> data) {
-                        Log.d(TAG, "SportInfoCallerTestActivity::getAccountRecordPageSync::onSuccess : data : " + data);
-                        resultView.setText(String.valueOf(data));
-                    }
-
-                    @Override
-                    public void onFail(int code, String msg) {
-                        Log.d(TAG, "SportInfoCallerTestActivity::getAccountRecordPageSync::onFail : code : " + code + ", msg : " + msg);
-                        resultView.setText(msg);
-                    }
-
-                    @Override
-                    public void onError(String error) {
-                        Log.d(TAG, "SportInfoCallerTestActivity::getAccountRecordPageSync::onError : error : " + error);
-                        resultView.setText(error);
-                    }
-                });
+        ResponseResult<List<AccountRecordData>> result = AdlService.getService().getSportInfoCaller().getAccountRecordPageSync(buildAccountRecordPageRequest());
+        if (result.getCode() == NzResponseCode.NZ_SUCCESS) {
+            Log.d(TAG, "SportInfoCallerTestActivity::getAccountRecordPageSync::onSuccess : data : " + result.getData());
+            resultView.setText(result.getData().toString());
+        } else {
+            Log.d(TAG, "SportInfoCallerTestActivity::getAccountRecordPageSync::onError : code : " + result.getCode() + ", msg : " + result.getMsg());
+            resultView.setText(result.getMsg());
+        }
     }
 
 

@@ -1,7 +1,8 @@
 package com.adl.service.caller;
 
-import com.adl.service.callback.GetPageResult;
+import com.adl.service.data.PageSummaryData;
 import com.adl.service.callback.RequestCallback;
+import com.adl.service.callback.ResponseResult;
 import com.adl.service.data.CompetitionData;
 import com.adl.service.data.CompetitionRankDetailData;
 import com.adl.service.data.GroupData;
@@ -14,7 +15,6 @@ import com.adl.service.data.ResTypeData;
 import com.adl.service.data.SportMeetData;
 import com.adl.service.data.TrainPlanInfoData;
 import com.adl.service.data.TrainPlanOneDayProjectData;
-import com.adl.service.exception.NzBaseException;
 import com.adl.service.http.request.CompetitionPageRequest;
 import com.adl.service.http.request.CompetitionRankDetailRequest;
 import com.adl.service.http.request.DownloadGroupTeamDetailPageRequest;
@@ -48,7 +48,7 @@ public interface BusinessCaller {
      * 保存分组信息
      * <p>同步调用。</p>
      */
-    Boolean saveGroupSync(SaveGroupRequest request);
+    ResponseResult<Boolean> saveGroupSync(SaveGroupRequest request);
 
     /**
      * 获取分组信息
@@ -60,7 +60,7 @@ public interface BusinessCaller {
      * 获取分组信息
      * <p>同步调用。</p>
      */
-    GroupData getGroupSync(GetGroupRequest request);
+    ResponseResult<GroupData> getGroupSync(GetGroupRequest request);
 
     /**
      * 训练计划一天的项目
@@ -72,7 +72,7 @@ public interface BusinessCaller {
      * 训练计划一天的项目
      * <p>同步调用。</p>
      */
-    List<TrainPlanOneDayProjectData> getTrainPlanOneDayProjectListSync(TrainPlanOneDayProjectListRequest request);
+    ResponseResult<List<TrainPlanOneDayProjectData>> getTrainPlanOneDayProjectListSync(TrainPlanOneDayProjectListRequest request);
 
     /**
      * 训练计划列表
@@ -84,7 +84,7 @@ public interface BusinessCaller {
      * 训练计划列表
      * <p>同步调用。</p>
      */
-    List<TrainPlanInfoData> getTrainPlanInfoPageSync(TrainPlanInfoPageRequest request);
+    ResponseResult<List<TrainPlanInfoData>> getTrainPlanInfoPageSync(TrainPlanInfoPageRequest request);
 
     /**
      * 参与竞技排名赛事
@@ -96,7 +96,7 @@ public interface BusinessCaller {
      * 参与竞技排名赛事
      * <p>同步调用。</p>
      */
-    Boolean joinCompetitionRankSync(JoinCompetitionRankRequest request);
+    ResponseResult<Boolean> joinCompetitionRankSync(JoinCompetitionRankRequest request);
 
     /**
      * 获取赛事竞技排名赛详情
@@ -108,11 +108,11 @@ public interface BusinessCaller {
      * 获取赛事竞技排名赛详情
      * <p>同步调用。</p>
      */
-    CompetitionRankDetailData getCompetitionRankDetailSync(CompetitionRankDetailRequest request);
+    ResponseResult<CompetitionRankDetailData> getCompetitionRankDetailSync(CompetitionRankDetailRequest request);
 
-    long getCompetitionPagesAllAsync(RequestScope scope, CompetitionPageRequest request, RequestCallback<GetPageResult> callback);
+    long getCompetitionPagesAllAsync(RequestScope scope, CompetitionPageRequest request, RequestCallback<PageSummaryData> callback);
 
-    GetPageResult getCompetitionPagesAllSync(CompetitionPageRequest request);
+    ResponseResult<PageSummaryData> getCompetitionPagesAllSync(CompetitionPageRequest request);
 
     /**
      * 赛事列表
@@ -124,15 +124,15 @@ public interface BusinessCaller {
      * 赛事列表
      * <p>同步调用。</p>
      */
-    List<CompetitionData> getCompetitionPageSync(CompetitionPageRequest request);
+    ResponseResult<List<CompetitionData>> getCompetitionPageSync(CompetitionPageRequest request);
 
-    long getSportMeetPagesAllAsync(RequestScope scope, SportMeetPageRequest request, RequestCallback<GetPageResult> callback);
+    long getSportMeetPagesAllAsync(RequestScope scope, SportMeetPageRequest request, RequestCallback<PageSummaryData> callback);
 
     /**
      * 获取所有运动会列表
      * <p>同步调用。</p>
      */
-    GetPageResult getSportMeetPagesAllSync(SportMeetPageRequest request);
+    ResponseResult<PageSummaryData> getSportMeetPagesAllSync(SportMeetPageRequest request);
 
     /**
      * 分页获取运动会列表
@@ -144,7 +144,7 @@ public interface BusinessCaller {
      * 分页获取运动会列表
      * <p>同步调用。</p>
      */
-    List<SportMeetData> getSportMeetPageSync(SportMeetPageRequest request);
+    ResponseResult<List<SportMeetData>> getSportMeetPageSync(SportMeetPageRequest request);
 
     /**
      * 拉取编排数据
@@ -156,7 +156,7 @@ public interface BusinessCaller {
      * 拉取编排数据
      * <p>同步调用。</p>
      */
-    List<GroupTeamData> downloadGroupTeamPageSync(DownloadGroupTeamPageRequest request);
+    ResponseResult<List<GroupTeamData>> downloadGroupTeamPageSync(DownloadGroupTeamPageRequest request);
 
     /**
      * 拉取编排详情数据
@@ -168,7 +168,7 @@ public interface BusinessCaller {
      * 拉取编排详情数据
      * <p>同步调用。</p>
      */
-    List<GroupTeamDetailData> downloadGroupTeamDetailPageSync(DownloadGroupTeamDetailPageRequest request);
+    ResponseResult<List<GroupTeamDetailData>> downloadGroupTeamDetailPageSync(DownloadGroupTeamDetailPageRequest request);
 
     /**
      * 获取资源标签列表
@@ -180,7 +180,7 @@ public interface BusinessCaller {
      * 获取资源标签列表
      * <p>同步调用。</p>
      */
-    List<ResTabData> getResTabListSync(EmptyRequest request);
+    ResponseResult<List<ResTabData>> getResTabListSync(EmptyRequest request);
 
     /**
      * 获取资源分类列表
@@ -192,7 +192,7 @@ public interface BusinessCaller {
      * 获取资源分类列表
      * <p>同步调用。</p>
      */
-    List<ResTypeData> getResTypeListSync(ResTypeListRequest request);
+    ResponseResult<List<ResTypeData>> getResTypeListSync(ResTypeListRequest request);
 
     /**
      * 获取资源列表
@@ -204,7 +204,7 @@ public interface BusinessCaller {
      * 获取资源列表
      * <p>同步调用。</p>
      */
-    List<ResData> getResPageSync(ResPageRequest request);
+    ResponseResult<List<ResData>> getResPageSync(ResPageRequest request);
 
     /**
      * 获取资源详情
@@ -216,6 +216,6 @@ public interface BusinessCaller {
      * 获取资源详情
      * <p>同步调用。</p>
      */
-    ResInfoData getResInfoSync(ResInfoRequest request);
+    ResponseResult<ResInfoData> getResInfoSync(ResInfoRequest request);
 
 }

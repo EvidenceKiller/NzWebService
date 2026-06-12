@@ -2,6 +2,7 @@ package com.adl.service.repository.fetch;
 
 import android.text.TextUtils;
 
+import com.adl.service.callback.ResponseResult;
 import com.adl.service.data.BestRankTopData;
 import com.adl.service.data.CompetitionRankData;
 import com.adl.service.data.MorePeopleRecordRankData;
@@ -46,60 +47,51 @@ public final class BigScreenStatsFetchHelper {
         return bigScreenStatsService;
     }
 
-    @SuppressWarnings("unchecked")
-    public Function<WarRecordRankRequest, Single<List<WarRecordRankData>>> createGetWarRecordRankFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(getService().getWarRecordRank(request), (Class<List<WarRecordRankData>>) (Class<?>) List.class);
+    public Function<WarRecordRankRequest, Single<ResponseResult<List<WarRecordRankData>>>> createGetWarRecordRankFunc() {
+        return (request) -> BaseFetchUtil.scheduleResponse(getService().getWarRecordRank(request));
     }
 
-    public Function<PersonRankRequest, Single<PersonRankData>> createGetPersonRankFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(getService().getPersonRank(request), PersonRankData.class);
+    public Function<PersonRankRequest, Single<ResponseResult<PersonRankData>>> createGetPersonRankFunc() {
+        return (request) -> BaseFetchUtil.scheduleResponse(getService().getPersonRank(request));
     }
 
-    @SuppressWarnings("unchecked")
-    public Function<MorePeopleVictoryRankRequest, Single<List<MorePeopleVictoryRankData>>> createGetMorePeopleVictoryRankFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(getService().getMorePeopleVictoryRank(request), (Class<List<MorePeopleVictoryRankData>>) (Class<?>) List.class);
+    public Function<MorePeopleVictoryRankRequest, Single<ResponseResult<List<MorePeopleVictoryRankData>>>> createGetMorePeopleVictoryRankFunc() {
+        return (request) -> BaseFetchUtil.scheduleResponse(getService().getMorePeopleVictoryRank(request));
     }
 
-    @SuppressWarnings("unchecked")
-    public Function<MorePeopleRecordRankRequest, Single<List<MorePeopleRecordRankData>>> createGetMorePeopleRecordRankFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(getService().getMorePeopleRecordRank(request), (Class<List<MorePeopleRecordRankData>>) (Class<?>) List.class);
+    public Function<MorePeopleRecordRankRequest, Single<ResponseResult<List<MorePeopleRecordRankData>>>> createGetMorePeopleRecordRankFunc() {
+        return (request) -> BaseFetchUtil.scheduleResponse(getService().getMorePeopleRecordRank(request));
     }
 
-    public Function<OverviewRequest, Single<OverviewData>> createGetOverviewFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(getService().getOverview(request), OverviewData.class);
+    public Function<OverviewRequest, Single<ResponseResult<OverviewData>>> createGetOverviewFunc() {
+        return (request) -> BaseFetchUtil.scheduleResponse(getService().getOverview(request));
     }
 
-    public Function<CompetitionRankRequest, Single<CompetitionRankData>> createGetCompetitionRankFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(getService().getCompetitionRank(request), CompetitionRankData.class);
+    public Function<CompetitionRankRequest, Single<ResponseResult<CompetitionRankData>>> createGetCompetitionRankFunc() {
+        return (request) -> BaseFetchUtil.scheduleResponse(getService().getCompetitionRank(request));
     }
 
-    @SuppressWarnings("unchecked")
-    public Function<SumScoreRankRequest, Single<List<SumScoreRankData>>> createSumScoreRankFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(getService().sumScoreRank(request), (Class<List<SumScoreRankData>>) (Class<?>) List.class);
+    public Function<SumScoreRankRequest, Single<ResponseResult<List<SumScoreRankData>>>> createSumScoreRankFunc() {
+        return (request) -> BaseFetchUtil.scheduleResponse(getService().sumScoreRank(request));
     }
 
-    @SuppressWarnings("unchecked")
-    public Function<SportRankRequest, Single<List<SportSkuRankData>>> createGetSportSkuRankFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(getService().getSportSkuRank(request), (Class<List<SportSkuRankData>>) (Class<?>) List.class);
+    public Function<SportRankRequest, Single<ResponseResult<List<SportSkuRankData>>>> createGetSportSkuRankFunc() {
+        return (request) -> BaseFetchUtil.scheduleResponse(getService().getSportSkuRank(request));
     }
 
-    @SuppressWarnings("unchecked")
-    public Function<SportRankRequest, Single<List<SportRankKingData>>> createGetSportRankKingFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(getService().getSportRankKing(request), (Class<List<SportRankKingData>>) (Class<?>) List.class);
+    public Function<SportRankRequest, Single<ResponseResult<List<SportRankKingData>>>> createGetSportRankKingFunc() {
+        return (request) -> BaseFetchUtil.scheduleResponse(getService().getSportRankKing(request));
     }
 
-    @SuppressWarnings("unchecked")
-    public Function<SportRankRequest, Single<List<SportRankKingData>>> createGetPhysicalTrainingRankFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(getService().getPhysicalTrainingRank(request), (Class<List<SportRankKingData>>) (Class<?>) List.class);
+    public Function<SportRankRequest, Single<ResponseResult<List<SportRankKingData>>>> createGetPhysicalTrainingRankFunc() {
+        return (request) -> BaseFetchUtil.scheduleResponse(getService().getPhysicalTrainingRank(request));
     }
 
-    @SuppressWarnings("unchecked")
-    public Function<SportRankRequest, Single<List<SportRankKingData>>> createGetExerciseSumTimeRankFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(getService().getExerciseSumTimeRank(request), (Class<List<SportRankKingData>>) (Class<?>) List.class);
+    public Function<SportRankRequest, Single<ResponseResult<List<SportRankKingData>>>> createGetExerciseSumTimeRankFunc() {
+        return (request) -> BaseFetchUtil.scheduleResponse(getService().getExerciseSumTimeRank(request));
     }
 
-    @SuppressWarnings("unchecked")
-    public Function<BestRankTopRequest, Single<List<BestRankTopData>>> createGetBestRankTopFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(getService().getBestRankTop(request), (Class<List<BestRankTopData>>) (Class<?>) List.class);
+    public Function<BestRankTopRequest, Single<ResponseResult<List<BestRankTopData>>>> createGetBestRankTopFunc() {
+        return (request) -> BaseFetchUtil.scheduleResponse(getService().getBestRankTop(request));
     }
 }

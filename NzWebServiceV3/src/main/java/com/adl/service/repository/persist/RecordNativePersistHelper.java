@@ -12,9 +12,9 @@ import java.util.stream.Collectors;
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.functions.Function;
 
-public final class RecordDaoPersistHelper {
+public final class RecordNativePersistHelper {
 
-    public RecordDaoPersistHelper() {
+    public RecordNativePersistHelper() {
     }
 
     public Function<Void, Single<Boolean>> createInsertRecordFunc(ReportSportStudentAllData data) {

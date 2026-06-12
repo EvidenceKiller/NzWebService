@@ -1,5 +1,6 @@
 package com.adl.service.repository;
 
+import com.adl.service.callback.ResponseResult;
 import com.adl.service.data.UpgradePlanByDeviceData;
 import com.adl.service.http.request.DeviceQrcodeRequest;
 import com.adl.service.http.request.EmptyRequest;
@@ -36,33 +37,33 @@ public final class OpsMaintRepository {
         return instance;
     }
 
-    public Single<Boolean> uploadDeviceInfo(UploadDeviceInfoRequest request) {
+    public Single<ResponseResult<Boolean>> uploadDeviceInfo(UploadDeviceInfoRequest request) {
         return BaseRepositoryUtil.repositoryAsSingle(request, fetchHelper.createUploadDeviceInfoFunc());
     }
 
 
-    public Single<Object> uploadUpgradeLog(UploadUpgradeLogRequest request) {
+    public Single<ResponseResult<Object>> uploadUpgradeLog(UploadUpgradeLogRequest request) {
         return BaseRepositoryUtil.repositoryAsSingle(request, fetchHelper.createUploadUpgradeLogFunc());
     }
 
 
-    public Single<List<UpgradePlanByDeviceData>> getUpgradePlanByDevice(UpgradePlanByDeviceRequest request) {
+    public Single<ResponseResult<List<UpgradePlanByDeviceData>>> getUpgradePlanByDevice(UpgradePlanByDeviceRequest request) {
         return BaseRepositoryUtil.repositoryAsSingle(request, fetchHelper.createGetUpgradePlanByDeviceFunc());
     }
 
-    public Single<String> getUpgradePlanByDeviceWithOutLogin(UpgradePlanByDeviceWithOutLoginRequest request) {
+    public Single<ResponseResult<String>> getUpgradePlanByDeviceWithOutLogin(UpgradePlanByDeviceWithOutLoginRequest request) {
         return BaseRepositoryUtil.repositoryAsSingle(request, fetchHelper.createGetUpgradePlanByDeviceWithOutLoginFunc());
     }
 
-    public Single<Boolean> softwareReport(SoftwareReportRequest request) {
+    public Single<ResponseResult<Boolean>> softwareReport(SoftwareReportRequest request) {
         return BaseRepositoryUtil.repositoryAsSingle(request, fetchHelper.createSoftwareReportFunc());
     }
 
-    public Single<String> getDeviceQrcode(DeviceQrcodeRequest request) {
+    public Single<ResponseResult<String>> getDeviceQrcode(DeviceQrcodeRequest request) {
         return BaseRepositoryUtil.repositoryAsSingle(request, fetchHelper.createGetDeviceQrcodeFunc());
     }
 
-    public Single<Object> logAddBatch(LogAddBatchRequest request) {
+    public Single<ResponseResult<Object>> logAddBatch(LogAddBatchRequest request) {
         return BaseRepositoryUtil.repositoryAsSingle(request, fetchHelper.createLogAddBatchFunc());
     }
 }

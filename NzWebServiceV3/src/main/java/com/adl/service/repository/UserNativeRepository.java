@@ -3,7 +3,7 @@ package com.adl.service.repository;
 import com.adl.service.data.LoginInfoData;
 import com.adl.service.data.StudentData;
 import com.adl.service.data.TeacherData;
-import com.adl.service.repository.persist.UserDaoPersistHelper;
+import com.adl.service.repository.persist.UserNativePersistHelper;
 
 import java.util.List;
 
@@ -11,27 +11,23 @@ import androidx.annotation.RestrictTo;
 import io.reactivex.rxjava3.core.Single;
 
 @RestrictTo(RestrictTo.Scope.LIBRARY)
-public final class UserDaoRepository {
-    private final UserDaoPersistHelper persistHelper = new UserDaoPersistHelper();
+public final class UserNativeRepository {
+    private final UserNativePersistHelper persistHelper = new UserNativePersistHelper();
 
-    private static volatile UserDaoRepository instance;
+    private static volatile UserNativeRepository instance;
 
-    private UserDaoRepository() {
+    private UserNativeRepository() {
     }
 
-    public static UserDaoRepository getInstance() {
+    public static UserNativeRepository getInstance() {
         if (instance == null) {
-            synchronized (UserDaoRepository.class) {
+            synchronized (UserNativeRepository.class) {
                 if (instance == null) {
-                    instance = new UserDaoRepository();
+                    instance = new UserNativeRepository();
                 }
             }
         }
         return instance;
-    }
-
-    public Single<LoginInfoData> queryLoginInfo() {
-        return BaseRepositoryUtil.repositoryAsSingle(persistHelper.createPrepareLoginInfoFunc());
     }
 
     public Single<List<TeacherData>> queryAllTeacherList() {

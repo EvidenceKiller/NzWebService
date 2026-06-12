@@ -1,6 +1,7 @@
 package com.adl.service.caller;
 
 import com.adl.service.callback.RequestCallback;
+import com.adl.service.callback.ResponseResult;
 import com.adl.service.data.BestRankTopData;
 import com.adl.service.data.CompetitionRankData;
 import com.adl.service.data.MorePeopleRecordRankData;
@@ -40,7 +41,7 @@ public interface BigScreenStatsCaller {
      * 双人对战排行榜
      * <p>同步调用。</p>
      */
-    List<WarRecordRankData> getWarRecordRankSync(WarRecordRankRequest request);
+    ResponseResult<List<WarRecordRankData>> getWarRecordRankSync(WarRecordRankRequest request);
 
     /**
      * 个人运动排名
@@ -52,7 +53,7 @@ public interface BigScreenStatsCaller {
      * 个人运动排名
      * <p>同步调用。</p>
      */
-    PersonRankData getPersonRankSync(PersonRankRequest request);
+    ResponseResult<PersonRankData> getPersonRankSync(PersonRankRequest request);
 
     /**
      * 多人对战胜利榜
@@ -64,7 +65,7 @@ public interface BigScreenStatsCaller {
      * 多人对战胜利榜
      * <p>同步调用。</p>
      */
-    List<MorePeopleVictoryRankData> getMorePeopleVictoryRankSync(MorePeopleVictoryRankRequest request);
+    ResponseResult<List<MorePeopleVictoryRankData>> getMorePeopleVictoryRankSync(MorePeopleVictoryRankRequest request);
 
     /**
      * 多人对战排行榜
@@ -76,7 +77,7 @@ public interface BigScreenStatsCaller {
      * 多人对战排行榜
      * <p>同步调用。</p>
      */
-    List<MorePeopleRecordRankData> getMorePeopleRecordRankSync(MorePeopleRecordRankRequest request);
+    ResponseResult<List<MorePeopleRecordRankData>> getMorePeopleRecordRankSync(MorePeopleRecordRankRequest request);
 
     /**
      * 总览数据
@@ -88,7 +89,7 @@ public interface BigScreenStatsCaller {
      * 总览数据
      * <p>同步调用。</p>
      */
-    OverviewData getOverviewSync(OverviewRequest request);
+    ResponseResult<OverviewData> getOverviewSync(OverviewRequest request);
 
     /**
      * 赛事排行榜
@@ -100,7 +101,7 @@ public interface BigScreenStatsCaller {
      * 赛事排行榜
      * <p>同步调用。</p>
      */
-    CompetitionRankData getCompetitionRankSync(CompetitionRankRequest request);
+    ResponseResult<CompetitionRankData> getCompetitionRankSync(CompetitionRankRequest request);
 
     /**
      * 项目结果求和排名
@@ -112,7 +113,7 @@ public interface BigScreenStatsCaller {
      * 项目结果求和排名
      * <p>同步调用。</p>
      */
-    List<SumScoreRankData> sumScoreRankSync(SumScoreRankRequest request);
+    ResponseResult<List<SumScoreRankData>> sumScoreRankSync(SumScoreRankRequest request);
 
     /**
      * 项目热度排行
@@ -124,7 +125,7 @@ public interface BigScreenStatsCaller {
      * 项目热度排行
      * <p>同步调用。</p>
      */
-    List<SportSkuRankData> getSportSkuRankSync(SportRankRequest request);
+    ResponseResult<List<SportSkuRankData>> getSportSkuRankSync(SportRankRequest request);
 
     /**
      * 霸榜之王
@@ -136,7 +137,7 @@ public interface BigScreenStatsCaller {
      * 霸榜之王
      * <p>同步调用。</p>
      */
-    List<SportRankKingData> getSportRankKingSync(SportRankRequest request);
+    ResponseResult<List<SportRankKingData>> getSportRankKingSync(SportRankRequest request);
 
     /**
      * 锻炼排行榜、历史最佳
@@ -148,7 +149,7 @@ public interface BigScreenStatsCaller {
      * 锻炼排行榜、历史最佳
      * <p>同步调用。</p>
      */
-    List<SportRankKingData> getPhysicalTrainingRankSync(SportRankRequest request);
+    ResponseResult<List<SportRankKingData>> getPhysicalTrainingRankSync(SportRankRequest request);
 
     /**
      * 锻炼之星
@@ -160,7 +161,7 @@ public interface BigScreenStatsCaller {
      * 锻炼之星
      * <p>同步调用。</p>
      */
-    List<SportRankKingData> getExerciseSumTimeRankSync(SportRankRequest request);
+    ResponseResult<List<SportRankKingData>> getExerciseSumTimeRankSync(SportRankRequest request);
 
     /**
      * 最佳榜单
@@ -172,6 +173,6 @@ public interface BigScreenStatsCaller {
      * 最佳榜单
      * <p>同步调用。</p>
      */
-    List<BestRankTopData> getBestRankTopSync(BestRankTopRequest request);
+    ResponseResult<List<BestRankTopData>> getBestRankTopSync(BestRankTopRequest request);
 
 }

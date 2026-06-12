@@ -29,4 +29,16 @@ public interface DownloadFileCaller {
 
     // 下载学生人脸信息
     void downStudentThumbnailFaceImage(Boolean useThumbnail, List<StudentData> list, FileListDownCallback callback);
+
+    // 根据Url删除
+    void clearByUrls(List<String> urls);
+
+    // 清空保存的人脸文件
+    void clearAllFace();
+
+    //  清空学生人脸
+    void clearStudentFace();
+
+    //  清空教师人脸
+    void clearTeacherFace();
 }

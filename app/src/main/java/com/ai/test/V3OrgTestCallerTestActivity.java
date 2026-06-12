@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import com.adl.service.AdlService;
 import com.adl.service.callback.RequestCallback;
+import com.adl.service.callback.ResponseResult;
+import com.adl.service.common.NzResponseCode;
 import com.adl.service.http.request.CheckStudentInPlanRequest;
 import com.adl.service.http.request.PlanClassPageRequest;
 import com.adl.service.http.request.PlanInfoRequest;
@@ -20,7 +22,7 @@ import com.adl.service.data.PlanClassData;
 import com.adl.service.data.PlanInfoData;
 import com.adl.service.data.PlanData;
 import com.adl.service.data.PlanStudentData;
-import com.adl.service.callback.GetPageResult;
+import com.adl.service.data.PageSummaryData;
 import com.adl.service.data.StandardConfigData;
 import com.adl.ts.general.R;
 
@@ -108,47 +110,22 @@ public class V3OrgTestCallerTestActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFail(int code, String msg) {
-                Log.d(TAG, "OrgTestCallerTestActivity::getStandardConfigPageAsync::onFail : code : " + code + ", msg : " + msg);
+            public void onError(int code, String msg) {
+                Log.d(TAG, "OrgTestCallerTestActivity::getStandardConfigPageAsync::onError : code : " + code + ", msg : " + msg);
                 resultView.setText(msg);
-            }
-
-            @Override
-            public void onError(String error) {
-                Log.d(TAG, "OrgTestCallerTestActivity::getStandardConfigPageAsync::onError : error : " + error);
-                resultView.setText(error);
             }
         });
     }
 
     private void getStandardConfigPageSync() {
-        AdlService.getService().executeSyncOnIo(RequestScope.of(this), () -> {
-            StandardConfigPageRequest request = buildStandardConfigPageRequest();
-            return AdlService.getService().getOrgTestCaller().getStandardConfigPageSync(request);
-        }, new RequestCallback<List<StandardConfigData>>() {
-            @Override
-            public void onSuccess(List<StandardConfigData> data) {
-                if (data != null) {
-                    Log.d(TAG, "OrgTestCallerTestActivity::getStandardConfigPageSync::onSuccess : data size : " + data.size());
-                    Log.d(TAG, "OrgTestCallerTestActivity::getStandardConfigPageSync::onSuccess : data : " + data);
-                    resultView.setText(data.toString());
-                } else {
-                    Log.d(TAG, "OrgTestCallerTestActivity::getStandardConfigPageSync::onSuccess : data is null");
-                }
-            }
-
-            @Override
-            public void onFail(int code, String msg) {
-                Log.d(TAG, "OrgTestCallerTestActivity::getStandardConfigPageSync::onFail : code : " + code + ", msg : " + msg);
-                resultView.setText(msg);
-            }
-
-            @Override
-            public void onError(String error) {
-                Log.d(TAG, "OrgTestCallerTestActivity::getStandardConfigPageSync::onError : error : " + error);
-                resultView.setText(error);
-            }
-        });
+        ResponseResult<List<StandardConfigData>> result = AdlService.getService().getOrgTestCaller().getStandardConfigPageSync(buildStandardConfigPageRequest());
+        if (result.getCode() == NzResponseCode.NZ_SUCCESS) {
+            Log.d(TAG, "OrgTestCallerTestActivity::getStandardConfigPageSync::onSuccess : data : " + result.getData());
+            resultView.setText(result.getData().toString());
+        } else {
+            Log.d(TAG, "OrgTestCallerTestActivity::getStandardConfigPageSync::onError : code : " + result.getCode() + ", msg : " + result.getMsg());
+            resultView.setText(result.getMsg());
+        }
     }
 
     private void getPlanStudentPageAsync() {
@@ -165,46 +142,22 @@ public class V3OrgTestCallerTestActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFail(int code, String msg) {
-                Log.d(TAG, "OrgTestCallerTestActivity::getPlanStudentPageAsync::onFail : code : " + code + ", msg : " + msg);
+            public void onError(int code, String msg) {
+                Log.d(TAG, "OrgTestCallerTestActivity::getPlanStudentPageAsync::onError : code : " + code + ", msg : " + msg);
                 resultView.setText(msg);
-            }
-
-            @Override
-            public void onError(String error) {
-                Log.d(TAG, "OrgTestCallerTestActivity::getPlanStudentPageAsync::onError : error : " + error);
-                resultView.setText(error);
             }
         });
     }
 
     private void getPlanStudentPageSync() {
-        AdlService.getService().executeSyncOnIo(RequestScope.of(this), () -> {
-            PlanStudentPageRequest request = buildPlanStudentPageRequest();
-            return AdlService.getService().getOrgTestCaller().getPlanStudentPageSync(request);
-        }, new RequestCallback<List<PlanStudentData>>() {
-            @Override
-            public void onSuccess(List<PlanStudentData> data) {
-                if (data != null) {
-                    Log.d(TAG, "OrgTestCallerTestActivity::getPlanStudentPageSync::onSuccess : data : " + data);
-                    resultView.setText(data.toString());
-                } else {
-                    Log.d(TAG, "OrgTestCallerTestActivity::getPlanStudentPageSync::onSuccess : data is null");
-                }
-            }
-
-            @Override
-            public void onFail(int code, String msg) {
-                Log.d(TAG, "OrgTestCallerTestActivity::getPlanStudentPageSync::onFail : code : " + code + ", msg : " + msg);
-                resultView.setText(msg);
-            }
-
-            @Override
-            public void onError(String error) {
-                Log.d(TAG, "OrgTestCallerTestActivity::getPlanStudentPageSync::onError : error : " + error);
-                resultView.setText(error);
-            }
-        });
+        ResponseResult<List<PlanStudentData>> result = AdlService.getService().getOrgTestCaller().getPlanStudentPageSync(buildPlanStudentPageRequest());
+        if (result.getCode() == NzResponseCode.NZ_SUCCESS) {
+            Log.d(TAG, "OrgTestCallerTestActivity::getPlanStudentPageSync::onSuccess : data : " + result.getData());
+            resultView.setText(result.getData().toString());
+        } else {
+            Log.d(TAG, "OrgTestCallerTestActivity::getPlanStudentPageSync::onError : code : " + result.getCode() + ", msg : " + result.getMsg());
+            resultView.setText(result.getMsg());
+        }
     }
 
     private void getPlanPageAsync() {
@@ -221,53 +174,29 @@ public class V3OrgTestCallerTestActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFail(int code, String msg) {
-                Log.d(TAG, "OrgTestCallerTestActivity::getPlanPageAsync::onFail : code : " + code + ", msg : " + msg);
+            public void onError(int code, String msg) {
+                Log.d(TAG, "OrgTestCallerTestActivity::getPlanPageAsync::onError : code : " + code + ", msg : " + msg);
                 resultView.setText(msg);
-            }
-
-            @Override
-            public void onError(String error) {
-                Log.d(TAG, "OrgTestCallerTestActivity::getPlanPageAsync::onError : error : " + error);
-                resultView.setText(error);
             }
         });
     }
 
     private void getPlanPageSync() {
-        AdlService.getService().executeSyncOnIo(RequestScope.of(this), () -> {
-            PlanPageRequest request = buildPlanPageRequest();
-            return AdlService.getService().getOrgTestCaller().getPlanPageSync(request);
-        }, new RequestCallback<List<PlanData>>() {
-            @Override
-            public void onSuccess(List<PlanData> data) {
-                if (data != null) {
-                    Log.d(TAG, "OrgTestCallerTestActivity::getPlanPageSync::onSuccess : data : " + data);
-                    resultView.setText(data.toString());
-                } else {
-                    Log.d(TAG, "OrgTestCallerTestActivity::getPlanPageSync::onSuccess : data is null");
-                }
-            }
-
-            @Override
-            public void onFail(int code, String msg) {
-                Log.d(TAG, "OrgTestCallerTestActivity::getPlanPageSync::onFail : code : " + code + ", msg : " + msg);
-                resultView.setText(msg);
-            }
-
-            @Override
-            public void onError(String error) {
-                Log.d(TAG, "OrgTestCallerTestActivity::getPlanPageSync::onError : error : " + error);
-                resultView.setText(error);
-            }
-        });
+        ResponseResult<List<PlanData>> result = AdlService.getService().getOrgTestCaller().getPlanPageSync(buildPlanPageRequest());
+        if (result.getCode() == NzResponseCode.NZ_SUCCESS) {
+            Log.d(TAG, "OrgTestCallerTestActivity::getPlanPageSync::onSuccess : data : " + result.getData());
+            resultView.setText(result.getData().toString());
+        } else {
+            Log.d(TAG, "OrgTestCallerTestActivity::getPlanPageSync::onError : code : " + result.getCode() + ", msg : " + result.getMsg());
+            resultView.setText(result.getMsg());
+        }
     }
 
     private void getAllPlanPagesAsync() {
         PlanPageRequest request = buildPlanListRequest();
-        AdlService.getService().getOrgTestCaller().getPlanPagesAllAsync(RequestScope.of(this), request, new RequestCallback<GetPageResult>() {
+        AdlService.getService().getOrgTestCaller().getPlanPagesAllAsync(RequestScope.of(this), request, new RequestCallback<PageSummaryData>() {
             @Override
-            public void onSuccess(GetPageResult data) {
+            public void onSuccess(PageSummaryData data) {
                 if (data != null) {
                     Log.d(TAG, "OrgTestCallerTestActivity::getAllPlanPagesAsync::onSuccess : data : " + data);
                     resultView.setText(data.toString());
@@ -277,46 +206,22 @@ public class V3OrgTestCallerTestActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFail(int code, String msg) {
-                Log.d(TAG, "OrgTestCallerTestActivity::getAllPlanPagesAsync::onFail : code : " + code + ", msg : " + msg);
+            public void onError(int code, String msg) {
+                Log.d(TAG, "OrgTestCallerTestActivity::getAllPlanPagesAsync::onError : code : " + code + ", msg : " + msg);
                 resultView.setText(msg);
-            }
-
-            @Override
-            public void onError(String error) {
-                Log.d(TAG, "OrgTestCallerTestActivity::getAllPlanPagesAsync::onError : error : " + error);
-                resultView.setText(error);
             }
         });
     }
 
     private void getAllPlanPagesSync() {
-        AdlService.getService().executeSyncOnIo(RequestScope.of(this), () -> {
-            PlanPageRequest request = buildPlanListRequest();
-            return AdlService.getService().getOrgTestCaller().getPlanPagesAllSync(request);
-        }, new RequestCallback<GetPageResult>() {
-            @Override
-            public void onSuccess(GetPageResult data) {
-                if (data != null) {
-                    Log.d(TAG, "OrgTestCallerTestActivity::getAllPlanPagesSync::onSuccess : data : " + data);
-                    resultView.setText(data.toString());
-                } else {
-                    Log.d(TAG, "OrgTestCallerTestActivity::getAllPlanPagesSync::onSuccess : data is null");
-                }
-            }
-
-            @Override
-            public void onFail(int code, String msg) {
-                Log.d(TAG, "OrgTestCallerTestActivity::getAllPlanPagesSync::onFail : code : " + code + ", msg : " + msg);
-                resultView.setText(msg);
-            }
-
-            @Override
-            public void onError(String error) {
-                Log.d(TAG, "OrgTestCallerTestActivity::getAllPlanPagesSync::onError : error : " + error);
-                resultView.setText(error);
-            }
-        });
+        ResponseResult<PageSummaryData> result = AdlService.getService().getOrgTestCaller().getPlanPagesAllSync(buildPlanListRequest());
+        if (result.getCode() == NzResponseCode.NZ_SUCCESS) {
+            Log.d(TAG, "OrgTestCallerTestActivity::getAllPlanPagesSync::onSuccess : data : " + result.getData());
+            resultView.setText(result.getData().toString());
+        } else {
+            Log.d(TAG, "OrgTestCallerTestActivity::getAllPlanPagesSync::onError : code : " + result.getCode() + ", msg : " + result.getMsg());
+            resultView.setText(result.getMsg());
+        }
     }
 
     private void getPlanInfoAsync() {
@@ -333,46 +238,22 @@ public class V3OrgTestCallerTestActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFail(int code, String msg) {
-                Log.d(TAG, "OrgTestCallerTestActivity::getPlanInfoAsync::onFail : code : " + code + ", msg : " + msg);
+            public void onError(int code, String msg) {
+                Log.d(TAG, "OrgTestCallerTestActivity::getPlanInfoAsync::onError : code : " + code + ", msg : " + msg);
                 resultView.setText(msg);
-            }
-
-            @Override
-            public void onError(String error) {
-                Log.d(TAG, "OrgTestCallerTestActivity::getPlanInfoAsync::onError : error : " + error);
-                resultView.setText(error);
             }
         });
     }
 
     private void getPlanInfoSync() {
-        AdlService.getService().executeSyncOnIo(RequestScope.of(this), () -> {
-            PlanInfoRequest request = PlanInfoRequest.builder("fc7a820389f744b5a094c775ba3037db").build();
-            return AdlService.getService().getOrgTestCaller().getPlanInfoSync(request);
-        }, new RequestCallback<PlanInfoData>() {
-            @Override
-            public void onSuccess(PlanInfoData data) {
-                if (data != null) {
-                    Log.d(TAG, "OrgTestCallerTestActivity::getPlanInfoSync::onSuccess : data : " + data);
-                    resultView.setText(data.toString());
-                } else {
-                    Log.d(TAG, "OrgTestCallerTestActivity::getPlanInfoSync::onSuccess : data is null");
-                }
-            }
-
-            @Override
-            public void onFail(int code, String msg) {
-                Log.d(TAG, "OrgTestCallerTestActivity::getPlanInfoSync::onFail : code : " + code + ", msg : " + msg);
-                resultView.setText(msg);
-            }
-
-            @Override
-            public void onError(String error) {
-                Log.d(TAG, "OrgTestCallerTestActivity::getPlanInfoSync::onError : error : " + error);
-                resultView.setText(error);
-            }
-        });
+        ResponseResult<PlanInfoData> result = AdlService.getService().getOrgTestCaller().getPlanInfoSync(PlanInfoRequest.builder("fc7a820389f744b5a094c775ba3037db").build());
+        if (result.getCode() == NzResponseCode.NZ_SUCCESS) {
+            Log.d(TAG, "OrgTestCallerTestActivity::getPlanInfoSync::onSuccess : data : " + result.getData());
+            resultView.setText(result.getData().toString());
+        } else {
+            Log.d(TAG, "OrgTestCallerTestActivity::getPlanInfoSync::onError : code : " + result.getCode() + ", msg : " + result.getMsg());
+            resultView.setText(result.getMsg());
+        }
     }
 
     private void getPlanClassListAsync() {
@@ -390,47 +271,22 @@ public class V3OrgTestCallerTestActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFail(int code, String msg) {
-                Log.d(TAG, "OrgTestCallerTestActivity::getPlanClassListAsync::onFail : code : " + code + ", msg : " + msg);
+            public void onError(int code, String msg) {
+                Log.d(TAG, "OrgTestCallerTestActivity::getPlanClassListAsync::onError : code : " + code + ", msg : " + msg);
                 resultView.setText(msg);
-            }
-
-            @Override
-            public void onError(String error) {
-                Log.d(TAG, "OrgTestCallerTestActivity::getPlanClassListAsync::onError : error : " + error);
-                resultView.setText(error);
             }
         });
     }
 
     private void getPlanClassListSync() {
-        AdlService.getService().executeSyncOnIo(RequestScope.of(this), () -> {
-            PlanClassPageRequest request = buildPlanClassListRequest();
-            return AdlService.getService().getOrgTestCaller().getPlanClassPageSync(request);
-        }, new RequestCallback<List<PlanClassData>>() {
-            @Override
-            public void onSuccess(List<PlanClassData> data) {
-                if (data != null) {
-                    Log.d(TAG, "OrgTestCallerTestActivity::getPlanClassListSync::onSuccess : data size : " + data.size());
-                    Log.d(TAG, "OrgTestCallerTestActivity::getPlanClassListSync::onSuccess : data : " + data);
-                    resultView.setText(data.toString());
-                } else {
-                    Log.d(TAG, "OrgTestCallerTestActivity::getPlanClassListSync::onSuccess : data is null");
-                }
-            }
-
-            @Override
-            public void onFail(int code, String msg) {
-                Log.d(TAG, "OrgTestCallerTestActivity::getPlanClassListSync::onFail : code : " + code + ", msg : " + msg);
-                resultView.setText(msg);
-            }
-
-            @Override
-            public void onError(String error) {
-                Log.d(TAG, "OrgTestCallerTestActivity::getPlanClassListSync::onError : error : " + error);
-                resultView.setText(error);
-            }
-        });
+        ResponseResult<List<PlanClassData>> result = AdlService.getService().getOrgTestCaller().getPlanClassPageSync(buildPlanClassListRequest());
+        if (result.getCode() == NzResponseCode.NZ_SUCCESS) {
+            Log.d(TAG, "OrgTestCallerTestActivity::getPlanClassListSync::onSuccess : data : " + result.getData());
+            resultView.setText(result.getData().toString());
+        } else {
+            Log.d(TAG, "OrgTestCallerTestActivity::getPlanClassListSync::onError : code : " + result.getCode() + ", msg : " + result.getMsg());
+            resultView.setText(result.getMsg());
+        }
     }
 
     private void checkStudentInPlanAsync() {
@@ -447,46 +303,22 @@ public class V3OrgTestCallerTestActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFail(int code, String msg) {
-                Log.d(TAG, "OrgTestCallerTestActivity::getCheckStudentAsync::onFail : code : " + code + ", msg : " + msg);
+            public void onError(int code, String msg) {
+                Log.d(TAG, "OrgTestCallerTestActivity::getCheckStudentAsync::onError : code : " + code + ", msg : " + msg);
                 resultView.setText(msg);
-            }
-
-            @Override
-            public void onError(String error) {
-                Log.d(TAG, "OrgTestCallerTestActivity::getCheckStudentAsync::onError : error : " + error);
-                resultView.setText(error);
             }
         });
     }
 
     private void checkStudentInPlanSync() {
-        AdlService.getService().executeSyncOnIo(RequestScope.of(this), () -> {
-            CheckStudentInPlanRequest request = buildCheckStudentInPlanRequest();
-            return AdlService.getService().getOrgTestCaller().checkStudentInPlanSync(request);
-        }, new RequestCallback<Boolean>() {
-            @Override
-            public void onSuccess(Boolean data) {
-                if (data != null) {
-                    Log.d(TAG, "OrgTestCallerTestActivity::getCheckStudentSync::onSuccess : data : " + data);
-                    resultView.setText(data.toString());
-                } else {
-                    Log.d(TAG, "OrgTestCallerTestActivity::getCheckStudentSync::onSuccess : data is null");
-                }
-            }
-
-            @Override
-            public void onFail(int code, String msg) {
-                Log.d(TAG, "OrgTestCallerTestActivity::getCheckStudentSync::onFail : code : " + code + ", msg : " + msg);
-                resultView.setText(msg);
-            }
-
-            @Override
-            public void onError(String error) {
-                Log.d(TAG, "OrgTestCallerTestActivity::getCheckStudentSync::onError : error : " + error);
-                resultView.setText(error);
-            }
-        });
+        ResponseResult<Boolean> result = AdlService.getService().getOrgTestCaller().checkStudentInPlanSync(buildCheckStudentInPlanRequest());
+        if (result.getCode() == NzResponseCode.NZ_SUCCESS) {
+            Log.d(TAG, "OrgTestCallerTestActivity::checkStudentInPlanSync::onSuccess : data : " + result.getData());
+            resultView.setText(String.valueOf(result.getData()));
+        } else {
+            Log.d(TAG, "OrgTestCallerTestActivity::checkStudentInPlanSync::onError : code : " + result.getCode() + ", msg : " + result.getMsg());
+            resultView.setText(result.getMsg());
+        }
     }
 
 

@@ -7,6 +7,8 @@ import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
 import android.os.Build;
 
+import com.adl.service.callback.ResponseResult;
+import com.adl.service.common.NzResponseCode;
 import com.adl.service.exception.NzCommonException;
 import com.adl.service.log.NzLog;
 
@@ -131,29 +133,37 @@ public class CommonUtil {
         }
     }
 
-    public static <T> Single<T> createEmptySingle(Class<T> clazz) {
-        if (clazz == null) {
-            return Single.error(new NzCommonException("data is null and clazz is null"));
-        }
-        if (clazz == String.class) return Single.just((T) "");
-        if (clazz == int.class || clazz == Integer.class) return Single.just((T) Integer.valueOf(0));
-        if (clazz == long.class || clazz == Long.class) return Single.just((T) Long.valueOf(0L));
-        if (clazz == boolean.class || clazz == Boolean.class) return Single.just((T) Boolean.FALSE);
-        if (clazz == double.class || clazz == Double.class) return Single.just((T) Double.valueOf(0D));
-        if (clazz == float.class || clazz == Float.class) return Single.just((T) Float.valueOf(0F));
-        if (clazz == short.class || clazz == Short.class) return Single.just((T) Short.valueOf((short) 0));
-        if (clazz == byte.class || clazz == Byte.class) return Single.just((T) Byte.valueOf((byte) 0));
-        if (clazz == char.class || clazz == Character.class) return Single.just((T) Character.valueOf('\0'));
-        if (List.class.isAssignableFrom(clazz)) {
-            @SuppressWarnings("unchecked")
-            T emptyList = (T) Collections.emptyList();
-            return Single.just(emptyList);
-        }
-        try {
-            T defaultData = clazz.getDeclaredConstructor().newInstance();
-            return Single.just(defaultData);
-        } catch (Throwable e) {
-            return Single.error(new NzCommonException("data is null and cannot instantiate " + clazz.getName(), e));
-        }
+//    public static <T> Single<T> createEmptySingle(Class<T> clazz) {
+//        if (clazz == null) {
+//            return Single.error(new NzCommonException("data is null and clazz is null"));
+//        }
+//        if (clazz == String.class) return Single.just((T) "");
+//        if (clazz == int.class || clazz == Integer.class) return Single.just((T) Integer.valueOf(0));
+//        if (clazz == long.class || clazz == Long.class) return Single.just((T) Long.valueOf(0L));
+//        if (clazz == boolean.class || clazz == Boolean.class) return Single.just((T) Boolean.FALSE);
+//        if (clazz == double.class || clazz == Double.class) return Single.just((T) Double.valueOf(0D));
+//        if (clazz == float.class || clazz == Float.class) return Single.just((T) Float.valueOf(0F));
+//        if (clazz == short.class || clazz == Short.class) return Single.just((T) Short.valueOf((short) 0));
+//        if (clazz == byte.class || clazz == Byte.class) return Single.just((T) Byte.valueOf((byte) 0));
+//        if (clazz == char.class || clazz == Character.class) return Single.just((T) Character.valueOf('\0'));
+//        if (List.class.isAssignableFrom(clazz)) {
+//            @SuppressWarnings("unchecked")
+//            T emptyList = (T) Collections.emptyList();
+//            return Single.just(emptyList);
+//        }
+//        try {
+//            T defaultData = clazz.getDeclaredConstructor().newInstance();
+//            return Single.just(defaultData);
+//        } catch (Throwable e) {
+//            return Single.error(new NzCommonException("data is null and cannot instantiate " + clazz.getName(), e));
+//        }
+//    }
+
+    public static <T> ResponseResult<T> createSuccessResponseResult(T t) {
+        ResponseResult<T> result = new ResponseResult<>();
+        result.setCode(NzResponseCode.NZ_SUCCESS);
+        result.setMsg("success");
+        result.setData(t);
+        return result;
     }
 }

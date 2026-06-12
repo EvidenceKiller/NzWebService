@@ -1,6 +1,7 @@
 package com.adl.service.repository;
 
-import com.adl.service.callback.GetPageResult;
+import com.adl.service.data.PageSummaryData;
+import com.adl.service.callback.ResponseResult;
 import com.adl.service.data.CompetitionData;
 import com.adl.service.data.CompetitionRankDetailData;
 import com.adl.service.data.GroupData;
@@ -56,77 +57,77 @@ public final class BusinessRepository {
         return instance;
     }
 
-    public Single<Boolean> saveGroup(SaveGroupRequest request) {
+    public Single<ResponseResult<Boolean>> saveGroup(SaveGroupRequest request) {
         return BaseRepositoryUtil.repositoryAsSingle(request, fetchHelper.createSaveGroupFunc());
     }
 
-    public Single<GroupData> getGroup(GetGroupRequest request) {
+    public Single<ResponseResult<GroupData>> getGroup(GetGroupRequest request) {
         return BaseRepositoryUtil.repositoryAsSingle(request, fetchHelper.createGetGroupFunc());
     }
 
-    public Single<List<TrainPlanOneDayProjectData>> getTrainPlanOneDayProjectList(TrainPlanOneDayProjectListRequest request) {
+    public Single<ResponseResult<List<TrainPlanOneDayProjectData>>> getTrainPlanOneDayProjectList(TrainPlanOneDayProjectListRequest request) {
         return BaseRepositoryUtil.repositoryAsSingle(request, fetchHelper.createGetTrainPlanOneDayProjectListFunc());
     }
 
-    public Single<List<TrainPlanInfoData>> getTrainPlanInfoPage(TrainPlanInfoPageRequest request) {
+    public Single<ResponseResult<List<TrainPlanInfoData>>> getTrainPlanInfoPage(TrainPlanInfoPageRequest request) {
         return BaseRepositoryUtil.repositoryPageAsSingle(request, fetchHelper.createGetTrainPlanInfoPageFunc());
     }
 
-    public Single<Boolean> joinCompetitionRank(JoinCompetitionRankRequest request) {
+    public Single<ResponseResult<Boolean>> joinCompetitionRank(JoinCompetitionRankRequest request) {
         return BaseRepositoryUtil.repositoryAsSingle(request, fetchHelper.createJoinCompetitionRankFunc());
     }
 
-    public Single<CompetitionRankDetailData> getCompetitionRankDetail(CompetitionRankDetailRequest request) {
+    public Single<ResponseResult<CompetitionRankDetailData>> getCompetitionRankDetail(CompetitionRankDetailRequest request) {
         return BaseRepositoryUtil.repositoryAsSingle(request, fetchHelper.createGetCompetitionRankDetailFunc());
     }
 
-    public Single<GetPageResult> getCompetitionPagesAll(CompetitionPageRequest request) {
+    public Single<ResponseResult<PageSummaryData>> getCompetitionPagesAll(CompetitionPageRequest request) {
         return BaseRepositoryUtil.repositoryPagesAsSingle(request,
                 prepareHelper.createPrepareCompetitionPageFunc(),
                 fetchHelper.createGetCompetitionPagesAllFunc(request),
                 persistHelper.createPersistCompetitionPageFunc());
     }
 
-    public Single<List<CompetitionData>> getCompetitionPage(CompetitionPageRequest request) {
+    public Single<ResponseResult<List<CompetitionData>>> getCompetitionPage(CompetitionPageRequest request) {
         return BaseRepositoryUtil.repositoryPageAsSingle(request,
                 fetchHelper.createGetCompetitionPageFunc(),
                 persistHelper.createPersistCompetitionPageFunc());
     }
 
-    public Single<GetPageResult> getSportMeetPagesAll(SportMeetPageRequest request) {
+    public Single<ResponseResult<PageSummaryData>> getSportMeetPagesAll(SportMeetPageRequest request) {
         return BaseRepositoryUtil.repositoryPagesAsSingle(request,
                 prepareHelper.createPrepareSportMeetPageFunc(),
                 fetchHelper.createGetSportMeetPagesAllFunc(request),
                 persistHelper.createPersistSportMeetPageFunc(request));
     }
 
-    public Single<List<SportMeetData>> getSportMeetPage(SportMeetPageRequest request) {
+    public Single<ResponseResult<List<SportMeetData>>> getSportMeetPage(SportMeetPageRequest request) {
         return BaseRepositoryUtil.repositoryPageAsSingle(request,
                 fetchHelper.createGetSportMeetPageFunc(),
                 persistHelper.createPersistSportMeetPageFunc(request));
     }
 
-    public Single<List<GroupTeamData>> downloadGroupTeamPage(DownloadGroupTeamPageRequest request) {
+    public Single<ResponseResult<List<GroupTeamData>>> downloadGroupTeamPage(DownloadGroupTeamPageRequest request) {
         return BaseRepositoryUtil.repositoryAsSingle(request, fetchHelper.createDownloadGroupTeamPageFunc());
     }
 
-    public Single<List<GroupTeamDetailData>> downloadGroupTeamDetailPage(DownloadGroupTeamDetailPageRequest request) {
+    public Single<ResponseResult<List<GroupTeamDetailData>>> downloadGroupTeamDetailPage(DownloadGroupTeamDetailPageRequest request) {
         return BaseRepositoryUtil.repositoryAsSingle(request, fetchHelper.createDownloadGroupTeamDetailPageFunc());
     }
 
-    public Single<List<ResTabData>> getResTabList(EmptyRequest request) {
+    public Single<ResponseResult<List<ResTabData>>> getResTabList(EmptyRequest request) {
         return BaseRepositoryUtil.repositoryAsSingle(request, fetchHelper.createGetResTabListFunc());
     }
 
-    public Single<List<ResTypeData>> getResTypeList(ResTypeListRequest request) {
+    public Single<ResponseResult<List<ResTypeData>>> getResTypeList(ResTypeListRequest request) {
         return BaseRepositoryUtil.repositoryAsSingle(request, fetchHelper.createGetResTypeListFunc());
     }
 
-    public Single<List<ResData>> getResPage(ResPageRequest request) {
+    public Single<ResponseResult<List<ResData>>> getResPage(ResPageRequest request) {
         return BaseRepositoryUtil.repositoryPageAsSingle(request, fetchHelper.createGetResPageFunc());
     }
 
-    public Single<ResInfoData> getResInfo(ResInfoRequest request) {
+    public Single<ResponseResult<ResInfoData>> getResInfo(ResInfoRequest request) {
         return BaseRepositoryUtil.repositoryAsSingle(request, fetchHelper.createGetResInfoFunc());
     }
 }

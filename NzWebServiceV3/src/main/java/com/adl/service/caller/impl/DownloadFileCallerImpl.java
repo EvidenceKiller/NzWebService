@@ -7,14 +7,15 @@ import com.adl.service.callback.DownloadFileTask;
 import com.adl.service.callback.FileDownCallback;
 import com.adl.service.callback.FileDownSampleCallback;
 import com.adl.service.callback.FileListDownCallback;
+import com.adl.service.callback.ResponseResult;
 import com.adl.service.caller.DownloadFileCaller;
 import com.adl.service.common.IDefine;
+import com.adl.service.common.NzResponseCode;
 import com.adl.service.data.StudentData;
 import com.adl.service.data.TeacherData;
 import com.adl.service.db.DaoManagerProxy;
 import com.adl.service.db.FileDownDao;
 import com.adl.service.db.entity.FileDownInfoEntity;
-import com.adl.service.exception.NzBaseException;
 import com.adl.service.internal.RxCallbackScheduler;
 import com.adl.service.log.NzLog;
 import com.adl.service.repository.DownloadFileRepository;
@@ -43,8 +44,11 @@ public final class DownloadFileCallerImpl implements DownloadFileCaller {
 
     private ExecutorService mExecutors;
 
+    private final DownloadFileRepository downloadFileRepository;
+
     public DownloadFileCallerImpl() {
         mExecutors = Executors.newFixedThreadPool(2);
+        downloadFileRepository = DownloadFileRepository.getInstance();
     }
 
     @Override
@@ -208,7 +212,8 @@ public final class DownloadFileCallerImpl implements DownloadFileCaller {
                     continue;
                 }
 
-                if (downloadFileSync(task, callback)) {
+                ResponseResult<Boolean> result = downloadFileSync(task, callback);
+                if (result.getCode() == NzResponseCode.NZ_SUCCESS && result.getData() == Boolean.TRUE) {
                     // 入库
                     if (entity != null) {
                         entity.setContentLength(task.contentLength);
@@ -242,7 +247,34 @@ public final class DownloadFileCallerImpl implements DownloadFileCaller {
         });
     }
 
-    private boolean downloadFileSync(DownloadFileTask task, FileDownCallback callback) {
-        return RxCallbackScheduler.blockingGetNoThrow(DownloadFileRepository.getInstance().downloadFile(task, callback), Boolean.class);
+    private ResponseResult<Boolean> downloadFileSync(DownloadFileTask task, FileDownCallback callback) {
+        return RxCallbackScheduler.scheduleResultSync(downloadFileRepository.downloadFile(task, callback));
+    }
+
+    // 根据Url删除
+    @Override
+    public void clearByUrls(List<String> urls) {
+        RxCallbackScheduler.scheduleSync(downloadFileRepository.clearByUrls(urls));
+    }
+
+    // 清空保存的人脸文件
+    @Override
+    public void clearAllFace() {
+        //  清空学生人脸
+        clearStudentFace();
+        //  清空教师人脸
+        clearTeacherFace();
+    }
+
+    //  清空学生人脸
+    @Override
+    public void clearStudentFace() {
+        RxCallbackScheduler.scheduleSync(downloadFileRepository.clearStudentFace());
+    }
+
+    //  清空教师人脸
+    @Override
+    public void clearTeacherFace() {
+        RxCallbackScheduler.scheduleSync(downloadFileRepository.clearTeacherFace());
     }
 }

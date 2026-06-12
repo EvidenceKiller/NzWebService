@@ -1,5 +1,7 @@
 package com.adl.service.repository.persist;
 
+import com.adl.service.callback.ResponseResult;
+import com.adl.service.common.NzResponseCode;
 import com.adl.service.data.PlanData;
 import com.adl.service.data.PlanStudentData;
 import com.adl.service.data.StandardConfigData;
@@ -8,6 +10,7 @@ import com.adl.service.db.entity.PlanEntity;
 import com.adl.service.db.entity.PlanStudentEntity;
 import com.adl.service.db.entity.StandardConfigEntity;
 import com.adl.service.exception.NzCommonException;
+import com.adl.service.exception.NzPersistException;
 import com.adl.service.http.request.PlanPageRequest;
 import com.adl.service.http.request.PlanStudentPageRequest;
 
@@ -22,24 +25,32 @@ public final class OrgTestPersistHelper {
     public OrgTestPersistHelper() {
     }
 
-    public Function<List<PlanStudentData>, Single<List<PlanStudentData>>> createPersistPlanStudentPageFunc(PlanStudentPageRequest request) {
-        return (pageData) -> {
+    public Function<ResponseResult<List<PlanStudentData>>, Single<ResponseResult<List<PlanStudentData>>>> createPersistPlanStudentPageFunc(PlanStudentPageRequest request) {
+        return (result) -> {
+            if (result == null) {
+                return Single.error(new NzPersistException(NzResponseCode.NZ_PERSIST_ERROR, "response result is null"));
+            }
+            List<PlanStudentData> pageData = result.getData();
             if (pageData == null || pageData.isEmpty()) {
-                return Single.error(new NzCommonException("plan student data list is null"));
+                return Single.error(new NzPersistException(NzResponseCode.NZ_PERSIST_ERROR, "plan student data list is null"));
             }
             List<PlanStudentEntity> entityList = pageData.stream()
                     .map(data -> PlanStudentEntity.convertToEntity(data))
                     .collect(Collectors.toList());
             entityList.forEach(plan -> plan.setPlanId(request.getPlanId()));
             DaoManagerProxy.getInstance().getPlanStudentDao().insertAll(entityList);
-            return Single.just(pageData);
+            return Single.just(result);
         };
     }
 
-    public Function<List<PlanData>, Single<List<PlanData>>> createPersistPlanPageFunc(PlanPageRequest request) {
-        return (pageData) -> {
+    public Function<ResponseResult<List<PlanData>>, Single<ResponseResult<List<PlanData>>>> createPersistPlanPageFunc(PlanPageRequest request) {
+        return (result) -> {
+            if (result == null) {
+                return Single.error(new NzPersistException(NzResponseCode.NZ_PERSIST_ERROR, "response result is null"));
+            }
+            List<PlanData> pageData = result.getData();
             if (pageData == null || pageData.isEmpty()) {
-                return Single.error(new NzCommonException("plan data list is null"));
+                return Single.error(new NzPersistException(NzResponseCode.NZ_PERSIST_ERROR, "plan data list is null"));
             }
             // 将 PlanData 转换为 PlanEntity
             List<PlanEntity> entityList = pageData.stream()
@@ -47,20 +58,24 @@ public final class OrgTestPersistHelper {
                     .collect(Collectors.toList());
 
             DaoManagerProxy.getInstance().getPlanDao().insertPlanList(entityList);
-            return Single.just(pageData);
+            return Single.just(result);
         };
     }
 
-    public Function<List<StandardConfigData>, Single<List<StandardConfigData>>> createPersistStandardConfigPageFunc() {
-        return (dataList) -> {
+    public Function<ResponseResult<List<StandardConfigData>>, Single<ResponseResult<List<StandardConfigData>>>> createPersistStandardConfigPageFunc() {
+        return (result) -> {
+            if (result == null) {
+                return Single.error(new NzPersistException(NzResponseCode.NZ_PERSIST_ERROR, "response result is null"));
+            }
+            List<StandardConfigData> dataList = result.getData();
             if (dataList == null || dataList.isEmpty()) {
-                return Single.error(new NzCommonException("student config data list is null"));
+                return Single.error(new NzPersistException(NzResponseCode.NZ_PERSIST_ERROR, "student config data list is null"));
             }
             List<StandardConfigEntity> entityList = dataList.stream()
                     .map(data -> StandardConfigEntity.convertToEntity(data))
                     .collect(Collectors.toList());
             DaoManagerProxy.getInstance().getStandardConfigDao().insertAll(entityList);
-            return Single.just(dataList);
+            return Single.just(result);
         };
     }
 }

@@ -1,8 +1,9 @@
 package com.adl.service.caller.impl;
 
 import com.adl.service.AdlService;
-import com.adl.service.callback.GetPageResult;
+import com.adl.service.data.PageSummaryData;
 import com.adl.service.callback.RequestCallback;
+import com.adl.service.callback.ResponseResult;
 import com.adl.service.caller.BusinessCaller;
 import com.adl.service.data.CompetitionData;
 import com.adl.service.data.CompetitionRankDetailData;
@@ -16,7 +17,6 @@ import com.adl.service.data.ResTypeData;
 import com.adl.service.data.SportMeetData;
 import com.adl.service.data.TrainPlanInfoData;
 import com.adl.service.data.TrainPlanOneDayProjectData;
-import com.adl.service.exception.NzBaseException;
 import com.adl.service.http.request.CompetitionPageRequest;
 import com.adl.service.http.request.CompetitionRankDetailRequest;
 import com.adl.service.http.request.DownloadGroupTeamDetailPageRequest;
@@ -50,161 +50,161 @@ public final class BusinessCallerImpl implements BusinessCaller {
 
     @Override
     public long saveGroupAsync(RequestScope scope, SaveGroupRequest request, RequestCallback<Boolean> callback) {
-        return RxCallbackScheduler.schedule(scope, businessRepository.saveGroup(request), callback);
+        return RxCallbackScheduler.scheduleResultAsync(scope, businessRepository.saveGroup(request), callback);
     }
 
     @Override
-    public Boolean saveGroupSync(SaveGroupRequest request) {
-        return RxCallbackScheduler.blockingGetNoThrow(businessRepository.saveGroup(request), Boolean.class);
+    public ResponseResult<Boolean> saveGroupSync(SaveGroupRequest request) {
+        return RxCallbackScheduler.scheduleResultSync(businessRepository.saveGroup(request));
     }
 
     @Override
     public long getGroupAsync(RequestScope scope, GetGroupRequest request, RequestCallback<GroupData> callback) {
-        return RxCallbackScheduler.schedule(scope, businessRepository.getGroup(request), callback);
+        return RxCallbackScheduler.scheduleResultAsync(scope, businessRepository.getGroup(request), callback);
     }
 
     @Override
-    public GroupData getGroupSync(GetGroupRequest request) {
-        return RxCallbackScheduler.blockingGetNoThrow(businessRepository.getGroup(request));
+    public ResponseResult<GroupData> getGroupSync(GetGroupRequest request) {
+        return RxCallbackScheduler.scheduleResultSync(businessRepository.getGroup(request));
     }
 
     @Override
     public long getTrainPlanOneDayProjectListAsync(RequestScope scope, TrainPlanOneDayProjectListRequest request, RequestCallback<List<TrainPlanOneDayProjectData>> callback) {
-        return RxCallbackScheduler.schedule(scope, businessRepository.getTrainPlanOneDayProjectList(request), callback);
+        return RxCallbackScheduler.scheduleResultAsync(scope, businessRepository.getTrainPlanOneDayProjectList(request), callback);
     }
 
     @Override
-    public List<TrainPlanOneDayProjectData> getTrainPlanOneDayProjectListSync(TrainPlanOneDayProjectListRequest request) {
-        return RxCallbackScheduler.blockingGetNoThrow(businessRepository.getTrainPlanOneDayProjectList(request));
+    public ResponseResult<List<TrainPlanOneDayProjectData>> getTrainPlanOneDayProjectListSync(TrainPlanOneDayProjectListRequest request) {
+        return RxCallbackScheduler.scheduleResultSync(businessRepository.getTrainPlanOneDayProjectList(request));
     }
 
     @Override
     public long getTrainPlanInfoPageAsync(RequestScope scope, TrainPlanInfoPageRequest request, RequestCallback<List<TrainPlanInfoData>> callback) {
-        return RxCallbackScheduler.schedule(scope, businessRepository.getTrainPlanInfoPage(request), callback);
+        return RxCallbackScheduler.scheduleResultAsync(scope, businessRepository.getTrainPlanInfoPage(request), callback);
     }
 
     @Override
-    public List<TrainPlanInfoData> getTrainPlanInfoPageSync(TrainPlanInfoPageRequest request) {
-        return RxCallbackScheduler.blockingGetNoThrow(businessRepository.getTrainPlanInfoPage(request));
+    public ResponseResult<List<TrainPlanInfoData>> getTrainPlanInfoPageSync(TrainPlanInfoPageRequest request) {
+        return RxCallbackScheduler.scheduleResultSync(businessRepository.getTrainPlanInfoPage(request));
     }
 
     @Override
     public long joinCompetitionRankAsync(RequestScope scope, JoinCompetitionRankRequest request, RequestCallback<Boolean> callback) {
-        return RxCallbackScheduler.schedule(scope, businessRepository.joinCompetitionRank(request), callback);
+        return RxCallbackScheduler.scheduleResultAsync(scope, businessRepository.joinCompetitionRank(request), callback);
     }
 
     @Override
-    public Boolean joinCompetitionRankSync(JoinCompetitionRankRequest request) {
-        return RxCallbackScheduler.blockingGetNoThrow(businessRepository.joinCompetitionRank(request));
+    public ResponseResult<Boolean> joinCompetitionRankSync(JoinCompetitionRankRequest request) {
+        return RxCallbackScheduler.scheduleResultSync(businessRepository.joinCompetitionRank(request));
     }
 
     @Override
     public long getCompetitionRankDetailAsync(RequestScope scope, CompetitionRankDetailRequest request, RequestCallback<CompetitionRankDetailData> callback) {
-        return RxCallbackScheduler.schedule(scope, businessRepository.getCompetitionRankDetail(request), callback);
+        return RxCallbackScheduler.scheduleResultAsync(scope, businessRepository.getCompetitionRankDetail(request), callback);
     }
 
     @Override
-    public CompetitionRankDetailData getCompetitionRankDetailSync(CompetitionRankDetailRequest request) {
-        return RxCallbackScheduler.blockingGetNoThrow(businessRepository.getCompetitionRankDetail(request));
+    public ResponseResult<CompetitionRankDetailData> getCompetitionRankDetailSync(CompetitionRankDetailRequest request) {
+        return RxCallbackScheduler.scheduleResultSync(businessRepository.getCompetitionRankDetail(request));
     }
 
     @Override
-    public long getCompetitionPagesAllAsync(RequestScope scope, CompetitionPageRequest request, RequestCallback<GetPageResult> callback) {
-        return RxCallbackScheduler.schedule(scope, businessRepository.getCompetitionPagesAll(request), callback);
+    public long getCompetitionPagesAllAsync(RequestScope scope, CompetitionPageRequest request, RequestCallback<PageSummaryData> callback) {
+        return RxCallbackScheduler.scheduleResultAsync(scope, businessRepository.getCompetitionPagesAll(request), callback);
     }
 
     @Override
-    public GetPageResult getCompetitionPagesAllSync(CompetitionPageRequest request) {
-        return RxCallbackScheduler.blockingGetNoThrow(businessRepository.getCompetitionPagesAll(request));
+    public ResponseResult<PageSummaryData> getCompetitionPagesAllSync(CompetitionPageRequest request) {
+        return RxCallbackScheduler.scheduleResultSync(businessRepository.getCompetitionPagesAll(request));
     }
 
     @Override
     public long getCompetitionPageAsync(RequestScope scope, CompetitionPageRequest request, RequestCallback<List<CompetitionData>> callback) {
-        return RxCallbackScheduler.schedule(scope, businessRepository.getCompetitionPage(request), callback);
+        return RxCallbackScheduler.scheduleResultAsync(scope, businessRepository.getCompetitionPage(request), callback);
     }
 
     @Override
-    public List<CompetitionData> getCompetitionPageSync(CompetitionPageRequest request) {
-        return RxCallbackScheduler.blockingGetNoThrow(businessRepository.getCompetitionPage(request));
+    public ResponseResult<List<CompetitionData>> getCompetitionPageSync(CompetitionPageRequest request) {
+        return RxCallbackScheduler.scheduleResultSync(businessRepository.getCompetitionPage(request));
     }
 
     @Override
-    public long getSportMeetPagesAllAsync(RequestScope scope, SportMeetPageRequest request, RequestCallback<GetPageResult> callback) {
-        return RxCallbackScheduler.schedule(scope, businessRepository.getSportMeetPagesAll(request), callback);
+    public long getSportMeetPagesAllAsync(RequestScope scope, SportMeetPageRequest request, RequestCallback<PageSummaryData> callback) {
+        return RxCallbackScheduler.scheduleResultAsync(scope, businessRepository.getSportMeetPagesAll(request), callback);
     }
 
     @Override
-    public GetPageResult getSportMeetPagesAllSync(SportMeetPageRequest request) {
-        return RxCallbackScheduler.blockingGetNoThrow(businessRepository.getSportMeetPagesAll(request));
+    public ResponseResult<PageSummaryData> getSportMeetPagesAllSync(SportMeetPageRequest request) {
+        return RxCallbackScheduler.scheduleResultSync(businessRepository.getSportMeetPagesAll(request));
     }
 
     @Override
     public long getSportMeetPageAsync(RequestScope scope, SportMeetPageRequest request, RequestCallback<List<SportMeetData>> callback) {
-        return RxCallbackScheduler.schedule(scope, businessRepository.getSportMeetPage(request), callback);
+        return RxCallbackScheduler.scheduleResultAsync(scope, businessRepository.getSportMeetPage(request), callback);
     }
 
     @Override
-    public List<SportMeetData> getSportMeetPageSync(SportMeetPageRequest request) {
-        return RxCallbackScheduler.blockingGetNoThrow(businessRepository.getSportMeetPage(request));
+    public ResponseResult<List<SportMeetData>> getSportMeetPageSync(SportMeetPageRequest request) {
+        return RxCallbackScheduler.scheduleResultSync(businessRepository.getSportMeetPage(request));
     }
 
     @Override
     public long downloadGroupTeamPageAsync(RequestScope scope, DownloadGroupTeamPageRequest request, RequestCallback<List<GroupTeamData>> callback) {
-        return RxCallbackScheduler.schedule(scope, businessRepository.downloadGroupTeamPage(request), callback);
+        return RxCallbackScheduler.scheduleResultAsync(scope, businessRepository.downloadGroupTeamPage(request), callback);
     }
 
     @Override
-    public List<GroupTeamData> downloadGroupTeamPageSync(DownloadGroupTeamPageRequest request) {
-        return RxCallbackScheduler.blockingGetNoThrow(businessRepository.downloadGroupTeamPage(request));
+    public ResponseResult<List<GroupTeamData>> downloadGroupTeamPageSync(DownloadGroupTeamPageRequest request) {
+        return RxCallbackScheduler.scheduleResultSync(businessRepository.downloadGroupTeamPage(request));
     }
 
     @Override
     public long downloadGroupTeamDetailPageAsync(RequestScope scope, DownloadGroupTeamDetailPageRequest request, RequestCallback<List<GroupTeamDetailData>> callback) {
-        return RxCallbackScheduler.schedule(scope, businessRepository.downloadGroupTeamDetailPage(request), callback);
+        return RxCallbackScheduler.scheduleResultAsync(scope, businessRepository.downloadGroupTeamDetailPage(request), callback);
     }
 
     @Override
-    public List<GroupTeamDetailData> downloadGroupTeamDetailPageSync(DownloadGroupTeamDetailPageRequest request) {
-        return RxCallbackScheduler.blockingGetNoThrow(businessRepository.downloadGroupTeamDetailPage(request));
+    public ResponseResult<List<GroupTeamDetailData>> downloadGroupTeamDetailPageSync(DownloadGroupTeamDetailPageRequest request) {
+        return RxCallbackScheduler.scheduleResultSync(businessRepository.downloadGroupTeamDetailPage(request));
     }
 
     @Override
     public long getResTabListAsync(RequestScope scope, EmptyRequest request, RequestCallback<List<ResTabData>> callback) {
-        return RxCallbackScheduler.schedule(scope, businessRepository.getResTabList(request), callback);
+        return RxCallbackScheduler.scheduleResultAsync(scope, businessRepository.getResTabList(request), callback);
     }
 
     @Override
-    public List<ResTabData> getResTabListSync(EmptyRequest request) {
-        return RxCallbackScheduler.blockingGetNoThrow(businessRepository.getResTabList(request));
+    public ResponseResult<List<ResTabData>> getResTabListSync(EmptyRequest request) {
+        return RxCallbackScheduler.scheduleResultSync(businessRepository.getResTabList(request));
     }
 
     @Override
     public long getResTypeListAsync(RequestScope scope, ResTypeListRequest request, RequestCallback<List<ResTypeData>> callback) {
-        return RxCallbackScheduler.schedule(scope, businessRepository.getResTypeList(request), callback);
+        return RxCallbackScheduler.scheduleResultAsync(scope, businessRepository.getResTypeList(request), callback);
     }
 
     @Override
-    public List<ResTypeData> getResTypeListSync(ResTypeListRequest request) {
-        return RxCallbackScheduler.blockingGetNoThrow(businessRepository.getResTypeList(request));
+    public ResponseResult<List<ResTypeData>> getResTypeListSync(ResTypeListRequest request) {
+        return RxCallbackScheduler.scheduleResultSync(businessRepository.getResTypeList(request));
     }
 
     @Override
     public long getResPageAsync(RequestScope scope, ResPageRequest request, RequestCallback<List<ResData>> callback) {
-        return RxCallbackScheduler.schedule(scope, businessRepository.getResPage(request), callback);
+        return RxCallbackScheduler.scheduleResultAsync(scope, businessRepository.getResPage(request), callback);
     }
 
     @Override
-    public List<ResData> getResPageSync(ResPageRequest request) {
-        return RxCallbackScheduler.blockingGetNoThrow(businessRepository.getResPage(request));
+    public ResponseResult<List<ResData>> getResPageSync(ResPageRequest request) {
+        return RxCallbackScheduler.scheduleResultSync(businessRepository.getResPage(request));
     }
 
     @Override
     public long getResInfoAsync(RequestScope scope, ResInfoRequest request, RequestCallback<ResInfoData> callback) {
-        return RxCallbackScheduler.schedule(scope, businessRepository.getResInfo(request), callback);
+        return RxCallbackScheduler.scheduleResultAsync(scope, businessRepository.getResInfo(request), callback);
     }
 
     @Override
-    public ResInfoData getResInfoSync(ResInfoRequest request) {
-        return RxCallbackScheduler.blockingGetNoThrow(businessRepository.getResInfo(request));
+    public ResponseResult<ResInfoData> getResInfoSync(ResInfoRequest request) {
+        return RxCallbackScheduler.scheduleResultSync(businessRepository.getResInfo(request));
     }
 }

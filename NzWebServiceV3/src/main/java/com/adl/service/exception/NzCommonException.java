@@ -5,14 +5,14 @@ package com.adl.service.exception;
  */
 public class NzCommonException extends NzBaseException {
 
-    private static final String CODE = "NZ_COMMON_EXCEPTION";
+    private static final String TAG = "NZ_COMMON_EXCEPTION";
 
     public NzCommonException(String message) {
-        super(CODE, message);
+        super(TAG, message);
     }
 
     public NzCommonException(String message, Throwable cause) {
-        super(CODE, message, cause);
+        super(TAG, message, cause);
     }
 }
 

@@ -98,14 +98,7 @@ public abstract class RequestLoadingCallback<T> implements RequestCallback<T> {
 
     @Override
     @MainThread
-    public void onError(String error) {
-        showError(error);
-        error(error);
-    }
-
-    @Override
-    @MainThread
-    public void onFail(int code, String msg) {
+    public void onError(int code, String msg) {
         showError(msg);
         error(msg);
     }

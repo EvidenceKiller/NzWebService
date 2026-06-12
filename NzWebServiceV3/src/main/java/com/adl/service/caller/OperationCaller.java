@@ -1,6 +1,7 @@
 package com.adl.service.caller;
 
-import com.adl.service.callback.GetPageResult;
+import com.adl.service.callback.ResponseResult;
+import com.adl.service.data.PageSummaryData;
 import com.adl.service.callback.RequestCallback;
 import com.adl.service.data.BannerDetailData;
 import com.adl.service.data.DeviceFocusData;
@@ -12,7 +13,6 @@ import com.adl.service.data.SportSkuDetailData;
 import com.adl.service.data.WikiData;
 import com.adl.service.data.WikiDetailData;
 import com.adl.service.data.WikiTypeData;
-import com.adl.service.exception.NzBaseException;
 import com.adl.service.http.request.BannerDetailListRequest;
 import com.adl.service.http.request.DeviceFocusListRequest;
 import com.adl.service.http.request.DictMapRequest;
@@ -46,11 +46,11 @@ public interface OperationCaller {
      * 获取Banner详情列表
      * <p>同步调用。</p>
      */
-    List<BannerDetailData> getBannerDetailListSync(BannerDetailListRequest request);
+    ResponseResult<List<BannerDetailData>> getBannerDetailListSync(BannerDetailListRequest request);
 
-    long getSportSkuPagesAllAsync(RequestScope scope, SportSkuPageRequest request, RequestCallback<GetPageResult> callback);
+    long getSportSkuPagesAllAsync(RequestScope scope, SportSkuPageRequest request, RequestCallback<PageSummaryData> callback);
 
-    GetPageResult getSportSkuPagesAllSync(SportSkuPageRequest request);
+    ResponseResult<PageSummaryData> getSportSkuPagesAllSync(SportSkuPageRequest request);
 
     /**
      * 获取项目库列表
@@ -62,7 +62,7 @@ public interface OperationCaller {
      * 获取项目库列表
      * <p>同步调用。</p>
      */
-    List<SportSkuData> getSportSkuPageSync(SportSkuPageRequest request);
+    ResponseResult<List<SportSkuData>> getSportSkuPageSync(SportSkuPageRequest request);
 
     /**
      * 获取项目详情
@@ -74,7 +74,7 @@ public interface OperationCaller {
      * 获取项目详情
      * <p>同步调用。</p>
      */
-    SportSkuDetailData getSportSkuDetailSync(SportSkuDetailRequest request);
+    ResponseResult<SportSkuDetailData> getSportSkuDetailSync(SportSkuDetailRequest request);
 
     /**
      * 获取模板内容
@@ -86,7 +86,7 @@ public interface OperationCaller {
      * 获取模板内容
      * <p>同步调用。</p>
      */
-    List<DictMapData> getDictMapSync(DictMapRequest request);
+    ResponseResult<List<DictMapData>> getDictMapSync(DictMapRequest request);
 
     /**
      * 获取场景列表
@@ -98,7 +98,7 @@ public interface OperationCaller {
      * 获取场景列表
      * <p>同步调用。</p>
      */
-    List<SceneData> getSceneListSync(SceneListRequest request);
+    ResponseResult<List<SceneData>> getSceneListSync(SceneListRequest request);
 
     /**
      * 获取百科分类列表
@@ -110,7 +110,7 @@ public interface OperationCaller {
      * 获取百科分类列表
      * <p>同步调用。</p>
      */
-    List<WikiTypeData> getWikiTypePageSync(WikiTypePageRequest request);
+    ResponseResult<List<WikiTypeData>> getWikiTypePageSync(WikiTypePageRequest request);
 
     /**
      * 获取百科列表
@@ -122,7 +122,7 @@ public interface OperationCaller {
      * 获取百科列表
      * <p>同步调用。</p>
      */
-    List<WikiData> getWikiPageSync(WikiPageRequest request);
+    ResponseResult<List<WikiData>> getWikiPageSync(WikiPageRequest request);
 
     /**
      * 获取运动百科详情
@@ -134,7 +134,7 @@ public interface OperationCaller {
      * 获取运动百科详情
      * <p>同步调用。</p>
      */
-    WikiDetailData getWikiDetailSync(WikiDetailRequest request);
+    ResponseResult<WikiDetailData> getWikiDetailSync(WikiDetailRequest request);
 
     /**
      * 修改设备名称
@@ -146,7 +146,7 @@ public interface OperationCaller {
      * 修改设备名称
      * <p>同步调用。</p>
      */
-    Boolean uploadDeviceNameSync(UploadDeviceNameRequest request);
+    ResponseResult<Boolean> uploadDeviceNameSync(UploadDeviceNameRequest request);
 
     /**
      * 获取设备专注信息列表
@@ -158,7 +158,7 @@ public interface OperationCaller {
      * 获取设备专注信息列表
      * <p>同步调用。</p>
      */
-    List<DeviceFocusData> getDeviceFocusListSync(DeviceFocusListRequest request);
+    ResponseResult<List<DeviceFocusData>> getDeviceFocusListSync(DeviceFocusListRequest request);
 
     /**
      * 查询运动能量分值
@@ -170,5 +170,5 @@ public interface OperationCaller {
      * 查询运动能量分值
      * <p>同步调用。</p>
      */
-    PointRuleDetailData getPointRuleDetailSync(PointRuleDetailRequest request);
+    ResponseResult<PointRuleDetailData> getPointRuleDetailSync(PointRuleDetailRequest request);
 }

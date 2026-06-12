@@ -1,4 +1,4 @@
-package com.adl.service.callback;
+package com.adl.service.data;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
-public final class GetPageResult {
+public final class PageSummaryData {
 
     /** 本次同步任务 ID。 */
     private String uuId;

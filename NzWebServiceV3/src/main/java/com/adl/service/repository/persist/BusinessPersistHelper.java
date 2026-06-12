@@ -1,5 +1,7 @@
 package com.adl.service.repository.persist;
 
+import com.adl.service.callback.ResponseResult;
+import com.adl.service.common.NzResponseCode;
 import com.adl.service.data.CompetitionData;
 import com.adl.service.data.SportMeetData;
 import com.adl.service.db.DaoManagerProxy;
@@ -7,7 +9,8 @@ import com.adl.service.db.entity.CompetitionEntity;
 import com.adl.service.db.entity.SportMeetEntity;
 import com.adl.service.db.entity.SportMeetGroupDetailEntity;
 import com.adl.service.db.entity.SportMeetGroupTeamEntity;
-import com.adl.service.exception.NzCommonException;
+import com.adl.service.exception.NzHttpException;
+import com.adl.service.exception.NzPersistException;
 import com.adl.service.http.request.SportMeetPageRequest;
 import com.adl.service.utils.CommonUtil;
 
@@ -24,23 +27,31 @@ public final class BusinessPersistHelper {
     public BusinessPersistHelper() {
     }
 
-    public Function<List<CompetitionData>, Single<List<CompetitionData>>> createPersistCompetitionPageFunc() {
-        return (pageData) -> {
+    public Function<ResponseResult<List<CompetitionData>>, Single<ResponseResult<List<CompetitionData>>>> createPersistCompetitionPageFunc() {
+        return (result) -> {
+            if (result == null) {
+                return Single.error(new NzPersistException(NzResponseCode.NZ_PERSIST_ERROR, "competition result is null"));
+            }
+            List<CompetitionData> pageData = result.getData();
             if (pageData == null || pageData.isEmpty()) {
-                return Single.error(new NzCommonException("competition data list is null"));
+                return Single.error(new NzPersistException(NzResponseCode.NZ_PERSIST_ERROR, "competition data list is null"));
             }
             List<CompetitionEntity> entityList = pageData.stream()
                     .map(data -> CompetitionEntity.convertToEntity(data))
                     .collect(Collectors.toList());
             DaoManagerProxy.getInstance().getCompetitionDao().insertCompetitionList(entityList);
-            return Single.just(pageData);
+            return Single.just(result);
         };
     }
 
-    public Function<List<SportMeetData>, Single<List<SportMeetData>>> createPersistSportMeetPageFunc(SportMeetPageRequest request) {
-        return (pageData) -> {
+    public Function<ResponseResult<List<SportMeetData>>, Single<ResponseResult<List<SportMeetData>>>> createPersistSportMeetPageFunc(SportMeetPageRequest request) {
+        return (result) -> {
+            if (result == null) {
+                return Single.error(new NzPersistException(NzResponseCode.NZ_PERSIST_ERROR, "sport meet result is null"));
+            }
+            List<SportMeetData> pageData = result.getData();
             if (pageData == null || pageData.isEmpty()) {
-                return Single.error(new NzCommonException("sport meet data list is null"));
+                return Single.error(new NzPersistException(NzResponseCode.NZ_PERSIST_ERROR, "sport meet data list is null"));
             }
             List<SportMeetEntity> persistList = new LinkedList<>();
             Iterator<SportMeetData> iterator = pageData.iterator();
@@ -96,7 +107,7 @@ public final class BusinessPersistHelper {
             }
 
             DaoManagerProxy.getInstance().getSportMeetDao().insertAll(persistList);
-            return Single.just(pageData);
+            return Single.just(result);
         };
     }
 }

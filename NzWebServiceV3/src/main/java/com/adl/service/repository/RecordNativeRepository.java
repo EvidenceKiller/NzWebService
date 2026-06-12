@@ -2,9 +2,7 @@ package com.adl.service.repository;
 
 import com.adl.service.data.ReportSportStudentAllData;
 import com.adl.service.data.SportRecordResData;
-import com.adl.service.db.entity.SportRecordEntity;
-import com.adl.service.db.entity.SportRecordResEntity;
-import com.adl.service.repository.persist.RecordDaoPersistHelper;
+import com.adl.service.repository.persist.RecordNativePersistHelper;
 
 import java.util.List;
 
@@ -12,19 +10,19 @@ import androidx.annotation.RestrictTo;
 import io.reactivex.rxjava3.core.Single;
 
 @RestrictTo(RestrictTo.Scope.LIBRARY)
-public final class RecordDaoRepository {
-    private final RecordDaoPersistHelper persistHelper = new RecordDaoPersistHelper();
+public final class RecordNativeRepository {
+    private final RecordNativePersistHelper persistHelper = new RecordNativePersistHelper();
 
-    private static volatile RecordDaoRepository instance;
+    private static volatile RecordNativeRepository instance;
 
-    private RecordDaoRepository() {
+    private RecordNativeRepository() {
     }
 
-    public static RecordDaoRepository getInstance() {
+    public static RecordNativeRepository getInstance() {
         if (instance == null) {
-            synchronized (RecordDaoRepository.class) {
+            synchronized (RecordNativeRepository.class) {
                 if (instance == null) {
-                    instance = new RecordDaoRepository();
+                    instance = new RecordNativeRepository();
                 }
             }
         }

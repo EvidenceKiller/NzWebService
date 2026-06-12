@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * RecordDaoCaller。
  */
-public interface RecordDaoCaller {
+public interface RecordNativeCaller {
 
     void insertRecordSync(ReportSportStudentAllData data);
 

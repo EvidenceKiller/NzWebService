@@ -5,22 +5,22 @@ package com.adl.service.exception;
  */
 public class NzDownloadFileException extends NzBaseException {
 
-    private static final String CODE = "NZ_DOWNLOAD_FILE_EXCEPTION";
+    private static final String TAG = "NZ_DOWNLOAD_FILE_EXCEPTION";
 
-    private String content;
+    private int code;
 
-    public NzDownloadFileException(String content, String message) {
-        super(CODE, message);
-        this.content = content;
+    public NzDownloadFileException(int code, String message) {
+        super(TAG, message);
+        this.code = code;
     }
 
-    public NzDownloadFileException(String content, String message, Throwable cause) {
-        super(CODE, message, cause);
-        this.content = content;
+    public NzDownloadFileException(int code, String message, Throwable cause) {
+        super(TAG, message, cause);
+        this.code = code;
     }
 
-    public String getContent() {
-        return content;
+    public int getCode() {
+        return code;
     }
 }
 

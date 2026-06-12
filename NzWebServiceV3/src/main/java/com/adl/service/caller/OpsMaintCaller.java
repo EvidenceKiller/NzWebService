@@ -1,37 +1,12 @@
 package com.adl.service.caller;
 
-import com.adl.service.callback.GetPageResult;
 import com.adl.service.callback.RequestCallback;
-import com.adl.service.data.CompetitionData;
-import com.adl.service.data.CompetitionRankDetailData;
-import com.adl.service.data.GroupData;
-import com.adl.service.data.GroupTeamData;
-import com.adl.service.data.GroupTeamDetailData;
-import com.adl.service.data.ResData;
-import com.adl.service.data.ResTypeData;
-import com.adl.service.data.SportMeetData;
-import com.adl.service.data.TrainPlanInfoData;
-import com.adl.service.data.TrainPlanOneDayProjectData;
+import com.adl.service.callback.ResponseResult;
 import com.adl.service.data.UpgradePlanByDeviceData;
-import com.adl.service.exception.NzBaseException;
-import com.adl.service.http.request.CompetitionPageRequest;
-import com.adl.service.http.request.CompetitionRankDetailRequest;
 import com.adl.service.http.request.DeviceQrcodeRequest;
-import com.adl.service.http.request.DownloadGroupTeamDetailPageRequest;
-import com.adl.service.http.request.DownloadGroupTeamPageRequest;
-import com.adl.service.http.request.EmptyRequest;
-import com.adl.service.http.request.GetGroupRequest;
-import com.adl.service.http.request.JoinCompetitionRankRequest;
 import com.adl.service.http.request.LogAddBatchRequest;
 import com.adl.service.http.request.RequestScope;
-import com.adl.service.http.request.ResInfoRequest;
-import com.adl.service.http.request.ResPageRequest;
-import com.adl.service.http.request.ResTypeListRequest;
-import com.adl.service.http.request.SaveGroupRequest;
 import com.adl.service.http.request.SoftwareReportRequest;
-import com.adl.service.http.request.SportMeetPageRequest;
-import com.adl.service.http.request.TrainPlanInfoPageRequest;
-import com.adl.service.http.request.TrainPlanOneDayProjectListRequest;
 import com.adl.service.http.request.UpgradePlanByDeviceRequest;
 import com.adl.service.http.request.UpgradePlanByDeviceWithOutLoginRequest;
 import com.adl.service.http.request.UploadDeviceInfoRequest;
@@ -54,7 +29,7 @@ public interface OpsMaintCaller {
      * 上报设备信息(昵称及Mac)
      * <p>同步调用。</p>
      */
-    Boolean uploadDeviceInfoSync(UploadDeviceInfoRequest request);
+    ResponseResult<Boolean> uploadDeviceInfoSync(UploadDeviceInfoRequest request);
 
     /**
      * 设备OTA（上报升级日志）
@@ -66,7 +41,7 @@ public interface OpsMaintCaller {
      * 设备OTA（上报升级日志）
      * <p>同步调用。</p>
      */
-    Object uploadUpgradeLogSync(UploadUpgradeLogRequest request);
+    ResponseResult<Object> uploadUpgradeLogSync(UploadUpgradeLogRequest request);
 
     /**
      * 设备OTA（获取升级计划）
@@ -78,7 +53,7 @@ public interface OpsMaintCaller {
      * 设备OTA（获取升级计划）
      * <p>同步调用。</p>
      */
-    List<UpgradePlanByDeviceData> getUpgradePlanByDeviceSync(UpgradePlanByDeviceRequest request);
+    ResponseResult<List<UpgradePlanByDeviceData>> getUpgradePlanByDeviceSync(UpgradePlanByDeviceRequest request);
 
     /**
      * 设备OTA（无登录状态获取升级计划）
@@ -90,7 +65,7 @@ public interface OpsMaintCaller {
      * 设备OTA（无登录状态获取升级计划）
      * <p>同步调用。</p>
      */
-    String getUpgradePlanByDeviceWithOutLoginSync(UpgradePlanByDeviceWithOutLoginRequest request);
+    ResponseResult<String> getUpgradePlanByDeviceWithOutLoginSync(UpgradePlanByDeviceWithOutLoginRequest request);
 
     /**
      * 设备状态上报（软件版本）
@@ -102,7 +77,7 @@ public interface OpsMaintCaller {
      * 设备状态上报（软件版本）
      * <p>同步调用。</p>
      */
-    Boolean softwareReportSync(SoftwareReportRequest request);
+    ResponseResult<Boolean> softwareReportSync(SoftwareReportRequest request);
 
     /**
      * 设备二维码
@@ -114,7 +89,7 @@ public interface OpsMaintCaller {
      * 设备二维码
      * <p>同步调用。</p>
      */
-    String getDeviceQrcodeSync(DeviceQrcodeRequest request);
+    ResponseResult<String> getDeviceQrcodeSync(DeviceQrcodeRequest request);
 
     /**
      * 设备日志上报
@@ -126,6 +101,6 @@ public interface OpsMaintCaller {
      * 设备日志上报
      * <p>同步调用。</p>
      */
-    Object logAddBatchSync(LogAddBatchRequest request);
+    ResponseResult<Object> logAddBatchSync(LogAddBatchRequest request);
 
 }

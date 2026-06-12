@@ -1,6 +1,7 @@
 package com.adl.service.caller;
 
-import com.adl.service.callback.GetPageResult;
+import com.adl.service.callback.ResponseResult;
+import com.adl.service.data.PageSummaryData;
 import com.adl.service.callback.RequestCallback;
 import com.adl.service.data.PlanClassData;
 import com.adl.service.data.PlanData;
@@ -24,9 +25,9 @@ public interface OrgTestCaller {
 
     void reLoadAllOrgTestDataSync(boolean syncStandard);
 
-    long getStandardConfigPagesAllAsync(RequestScope scope, StandardConfigPageRequest request, RequestCallback<GetPageResult> callback);
+    long getStandardConfigPagesAllAsync(RequestScope scope, StandardConfigPageRequest request, RequestCallback<PageSummaryData> callback);
 
-    GetPageResult getStandardConfigPagesAllSync(StandardConfigPageRequest request);
+    ResponseResult<PageSummaryData> getStandardConfigPagesAllSync(StandardConfigPageRequest request);
 
     /**
      * 获取标准列表
@@ -38,11 +39,11 @@ public interface OrgTestCaller {
      * 获取标准列表
      * <p>同步调用。</p>
      */
-    List<StandardConfigData> getStandardConfigPageSync(StandardConfigPageRequest request);
+    ResponseResult<List<StandardConfigData>> getStandardConfigPageSync(StandardConfigPageRequest request);
 
-    long getPlanStudentPagesAllAsync(RequestScope scope, PlanStudentPageRequest request, RequestCallback<GetPageResult> callback);
+    long getPlanStudentPagesAllAsync(RequestScope scope, PlanStudentPageRequest request, RequestCallback<PageSummaryData> callback);
 
-    GetPageResult getPlanStudentPagesAllSync(PlanStudentPageRequest request);
+    ResponseResult<PageSummaryData> getPlanStudentPagesAllSync(PlanStudentPageRequest request);
 
     /**
      * 获取计划下学生
@@ -54,7 +55,7 @@ public interface OrgTestCaller {
      * 获取计划下学生
      * <p>同步调用。</p>
      */
-    List<PlanStudentData> getPlanStudentPageSync(PlanStudentPageRequest request);
+    ResponseResult<List<PlanStudentData>> getPlanStudentPageSync(PlanStudentPageRequest request);
 
     /**
      * 获取所有的分页计划列表
@@ -65,7 +66,7 @@ public interface OrgTestCaller {
      * @param callback
      * @return
      */
-    long getPlanPagesAllAsync(RequestScope scope, PlanPageRequest request, RequestCallback<GetPageResult> callback);
+    long getPlanPagesAllAsync(RequestScope scope, PlanPageRequest request, RequestCallback<PageSummaryData> callback);
 
     /**
      * 获取所有的分页计划列表
@@ -74,7 +75,7 @@ public interface OrgTestCaller {
      * @param request
      * @return
      */
-    GetPageResult getPlanPagesAllSync(PlanPageRequest request);
+    ResponseResult<PageSummaryData> getPlanPagesAllSync(PlanPageRequest request);
 
     /**
      * 获取计划列表
@@ -86,7 +87,7 @@ public interface OrgTestCaller {
      * 获取计划列表
      * <p>同步调用。</p>
      */
-    List<PlanData> getPlanPageSync(PlanPageRequest request);
+    ResponseResult<List<PlanData>> getPlanPageSync(PlanPageRequest request);
 
     /**
      * 获取组织测试计划详情
@@ -98,7 +99,7 @@ public interface OrgTestCaller {
      * 获取组织测试计划详情
      * <p>同步调用。</p>
      */
-    PlanInfoData getPlanInfoSync(PlanInfoRequest request);
+    ResponseResult<PlanInfoData> getPlanInfoSync(PlanInfoRequest request);
 
     /**
      * 获取计划班级列表
@@ -110,7 +111,7 @@ public interface OrgTestCaller {
      * 获取计划班级列表
      * <p>同步调用。</p>
      */
-    List<PlanClassData> getPlanClassPageSync(PlanClassPageRequest request);
+    ResponseResult<List<PlanClassData>> getPlanClassPageSync(PlanClassPageRequest request);
 
     /**
      * 查询学生是否在计划下
@@ -122,6 +123,6 @@ public interface OrgTestCaller {
      * 查询学生是否在计划下
      * <p>同步调用。</p>
      */
-    Boolean checkStudentInPlanSync(CheckStudentInPlanRequest request);
+    ResponseResult<Boolean> checkStudentInPlanSync(CheckStudentInPlanRequest request);
 
 }

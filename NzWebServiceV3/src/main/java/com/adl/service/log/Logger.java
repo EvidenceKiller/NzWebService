@@ -1,5 +1,6 @@
 package com.adl.service.log;
 
+import android.os.Process;
 import android.util.Log;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -44,12 +45,14 @@ class Logger {
         final Level level;
         final String message;
         final Throwable throwable;
+        final long threadId;
 
-        LogEntry(long timestamp, Level level, String message, Throwable throwable) {
+        LogEntry(long timestamp, Level level, String message, Throwable throwable, long threadId) {
             this.timestamp = timestamp;
             this.level = level;
             this.message = message;
             this.throwable = throwable;
+            this.threadId = threadId;
         }
     }
 
@@ -137,7 +140,13 @@ class Logger {
             return;
         }
 
-        LogEntry entry = new LogEntry(System.currentTimeMillis(), level, message, throwable);
+        LogEntry entry = new LogEntry(
+                System.currentTimeMillis(),
+                level,
+                message,
+                throwable,
+                Process.myTid()
+        );
 
         try {
             if (!logQueue.offer(entry, 100, TimeUnit.MILLISECONDS) && ENABLE_CONSOLE) {
@@ -211,7 +220,11 @@ class Logger {
     }
 
     private String formatLogMessage(LogEntry entry) {
-        return String.format(Locale.CHINA, "%s [%s] %s", dateFormat.format(new Date(entry.timestamp)), entry.level.name(), entry.message);
+        return String.format(Locale.CHINA, "%s [%d] [%s] %s",
+                dateFormat.format(new Date(entry.timestamp)),
+                entry.threadId,
+                entry.level.name(),
+                entry.message);
     }
 
     private String safeFormat(String format, Object... args) {

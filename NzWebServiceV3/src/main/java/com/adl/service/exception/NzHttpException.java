@@ -5,17 +5,17 @@ package com.adl.service.exception;
  */
 public final class NzHttpException extends NzBaseException {
 
-    private static final String CODE = "NZ_HTTP_EXCEPTION";
+    private static final String TAG = "NZ_HTTP_EXCEPTION";
 
     private final int httpCode;
 
     public NzHttpException(int httpCode, String message) {
-        super(CODE, message);
+        super(TAG, message);
         this.httpCode = httpCode;
     }
 
     public NzHttpException(int httpCode, String message, Throwable cause) {
-        super(CODE, message, cause);
+        super(TAG, message, cause);
         this.httpCode = httpCode;
     }
 

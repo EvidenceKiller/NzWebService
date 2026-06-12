@@ -2,28 +2,26 @@ package com.adl.service;
 
 import android.content.Context;
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.adl.base.file.AdlFileHelper;
 import com.adl.service.callback.RequestCallback;
 import com.adl.service.caller.BigScreenH5Caller;
 import com.adl.service.caller.BigScreenStatsCaller;
 import com.adl.service.caller.BusinessCaller;
-import com.adl.service.caller.CommonDaoCaller;
+import com.adl.service.caller.CommonNativeCaller;
 import com.adl.service.caller.CommonInfoCaller;
 import com.adl.service.caller.DownloadFileCaller;
-import com.adl.service.caller.DownloadFileDaoCaller;
 import com.adl.service.caller.LoginAuthCaller;
 import com.adl.service.caller.OperationCaller;
 import com.adl.service.caller.OpsMaintCaller;
 import com.adl.service.caller.OrgTestCaller;
-import com.adl.service.caller.PlanDaoCaller;
-import com.adl.service.caller.RecordDaoCaller;
+import com.adl.service.caller.PlanNativeCaller;
+import com.adl.service.caller.RecordNativeCaller;
 import com.adl.service.caller.SportInfoCaller;
 import com.adl.service.caller.UploadOssCaller;
 import com.adl.service.caller.UploadQiNiuYunCaller;
 import com.adl.service.caller.UploadRecordCaller;
-import com.adl.service.caller.UserDaoCaller;
+import com.adl.service.caller.UserNativeCaller;
 import com.adl.service.common.AdlConfig;
 import com.adl.service.common.AdlConfigService;
 import com.adl.service.common.IDefine;
@@ -245,24 +243,20 @@ public final class AdlService {
         return CallerManager.getInstance().getDownloadFileCaller();
     }
 
-    public DownloadFileDaoCaller getDownloadFileDaoCaller() {
-        return CallerManager.getInstance().getDownloadFileDaoCaller();
+    public CommonNativeCaller getCommonNativeCaller() {
+        return CallerManager.getInstance().getCommonNativeCaller();
     }
 
-    public CommonDaoCaller getCommonDaoCaller() {
-        return CallerManager.getInstance().getCommonDaoCaller();
+    public UserNativeCaller getUserNativeCaller() {
+        return CallerManager.getInstance().getUserNativeCaller();
     }
 
-    public UserDaoCaller getUserDaoCaller() {
-        return CallerManager.getInstance().getUserDaoCaller();
+    public PlanNativeCaller getPlanNativeCaller() {
+        return CallerManager.getInstance().getPlanNativeCaller();
     }
 
-    public PlanDaoCaller getPlanDaoCaller() {
-        return CallerManager.getInstance().getPlanDaoCaller();
-    }
-
-    public RecordDaoCaller getRecordDaoCaller() {
-        return CallerManager.getInstance().getRecordDaoCaller();
+    public RecordNativeCaller getRecordNativeCaller() {
+        return CallerManager.getInstance().getRecordNativeCaller();
     }
 
     // ===================================================
@@ -308,7 +302,7 @@ public final class AdlService {
     public <T> long executeSyncOnIo(RequestScope scope,
                                     Callable<T> callable,
                                     RequestCallback<T> callback) {
-        return RxCallbackScheduler.schedule(scope, Single.fromCallable(callable), callback);
+        return RxCallbackScheduler.scheduleAsync(scope, Single.fromCallable(callable), callback);
     }
 
     public void build() {

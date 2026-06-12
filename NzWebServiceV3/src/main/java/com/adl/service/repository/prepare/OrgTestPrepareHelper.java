@@ -1,5 +1,6 @@
 package com.adl.service.repository.prepare;
 
+import com.adl.service.callback.ResponseResult;
 import com.adl.service.data.PlanStudentData;
 import com.adl.service.db.DaoManagerProxy;
 import com.adl.service.http.request.PlanStudentPageRequest;
@@ -14,7 +15,7 @@ public final class OrgTestPrepareHelper {
     public OrgTestPrepareHelper() {
     }
 
-    public Function<PlanStudentPageRequest, Single<List<PlanStudentData>>> createPreparePlanStudentPagesAllFunc() {
+    public Function<PlanStudentPageRequest, Single<ResponseResult<List<PlanStudentData>>>> createPreparePlanStudentPagesAllFunc() {
         return (request) -> {
             DaoManagerProxy.getInstance().getPlanStudentDao().clearByPlanId(request.getPlanId());
             return null;

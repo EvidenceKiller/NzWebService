@@ -2,6 +2,7 @@ package com.adl.service.repository.fetch;
 
 import android.text.TextUtils;
 
+import com.adl.service.callback.ResponseResult;
 import com.adl.service.data.LoginData;
 import com.adl.service.http.request.LoginRequest;
 import com.adl.service.http.request.LogoutRequest;
@@ -28,11 +29,11 @@ public final class LoginAuthFetchHelper {
         return loginAuthService;
     }
 
-    public Function<LoginRequest, Single<LoginData>> createLoginFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(getService().login(request), LoginData.class);
+    public Function<LoginRequest, Single<ResponseResult<LoginData>>> createLoginFunc() {
+        return (request) -> BaseFetchUtil.scheduleResponse(getService().login(request));
     }
 
-    public Function<LogoutRequest, Single<String>> createLogoutFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(getService().logout(request), String.class);
+    public Function<LogoutRequest, Single<ResponseResult<String>>> createLogoutFunc() {
+        return (request) -> BaseFetchUtil.scheduleResponse(getService().logout(request));
     }
 }

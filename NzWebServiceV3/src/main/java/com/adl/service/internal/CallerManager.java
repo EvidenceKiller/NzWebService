@@ -3,40 +3,37 @@ package com.adl.service.internal;
 import com.adl.service.caller.BigScreenH5Caller;
 import com.adl.service.caller.BigScreenStatsCaller;
 import com.adl.service.caller.BusinessCaller;
-import com.adl.service.caller.CommonDaoCaller;
+import com.adl.service.caller.CommonNativeCaller;
 import com.adl.service.caller.CommonInfoCaller;
 import com.adl.service.caller.DownloadFileCaller;
-import com.adl.service.caller.DownloadFileDaoCaller;
 import com.adl.service.caller.LoginAuthCaller;
 import com.adl.service.caller.OperationCaller;
 import com.adl.service.caller.OpsMaintCaller;
 import com.adl.service.caller.OrgTestCaller;
-import com.adl.service.caller.PlanDaoCaller;
-import com.adl.service.caller.RecordDaoCaller;
+import com.adl.service.caller.PlanNativeCaller;
+import com.adl.service.caller.RecordNativeCaller;
 import com.adl.service.caller.SportInfoCaller;
 import com.adl.service.caller.UploadOssCaller;
 import com.adl.service.caller.UploadQiNiuYunCaller;
 import com.adl.service.caller.UploadRecordCaller;
-import com.adl.service.caller.UserDaoCaller;
+import com.adl.service.caller.UserNativeCaller;
 import com.adl.service.caller.impl.BigScreenH5CallerImpl;
 import com.adl.service.caller.impl.BigScreenStatsCallerImpl;
 import com.adl.service.caller.impl.BusinessCallerImpl;
-import com.adl.service.caller.impl.CommonDaoCallerImpl;
+import com.adl.service.caller.impl.CommonNativeCallerImpl;
 import com.adl.service.caller.impl.CommonInfoCallerImpl;
 import com.adl.service.caller.impl.DownloadFileCallerImpl;
-import com.adl.service.caller.impl.DownloadFileDaoCallerImpl;
 import com.adl.service.caller.impl.LoginAuthCallerImpl;
 import com.adl.service.caller.impl.OperationCallerImpl;
 import com.adl.service.caller.impl.OpsMaintCallerImpl;
 import com.adl.service.caller.impl.OrgTestCallerImpl;
-import com.adl.service.caller.impl.PlanDaoCallerImpl;
-import com.adl.service.caller.impl.RecordDaoCallerImpl;
+import com.adl.service.caller.impl.PlanNativeCallerImpl;
+import com.adl.service.caller.impl.RecordNativeCallerImpl;
 import com.adl.service.caller.impl.SportInfoCallerImpl;
 import com.adl.service.caller.impl.UploadOssCallerImpl;
 import com.adl.service.caller.impl.UploadQiNiuYunCallerImpl;
 import com.adl.service.caller.impl.UploadRecordCallerImpl;
-import com.adl.service.caller.impl.UserDaoCallerImpl;
-import com.adl.service.log.NzLog;
+import com.adl.service.caller.impl.UserNativeCallerImpl;
 
 import androidx.annotation.RestrictTo;
 import lombok.Getter;
@@ -76,15 +73,13 @@ public final class CallerManager {
     @Getter
     private DownloadFileCaller downloadFileCaller;
     @Getter
-    private DownloadFileDaoCaller downloadFileDaoCaller;
+    private CommonNativeCaller commonNativeCaller;
     @Getter
-    private CommonDaoCaller commonDaoCaller;
+    private UserNativeCaller userNativeCaller;
     @Getter
-    private UserDaoCaller userDaoCaller;
+    private PlanNativeCaller planNativeCaller;
     @Getter
-    private PlanDaoCaller planDaoCaller;
-    @Getter
-    private RecordDaoCaller recordDaoCaller;
+    private RecordNativeCaller recordNativeCaller;
 
     private CallerManager() {
         this.commonInfoCaller = CallerProxy.wrap(CommonInfoCaller.class, new CommonInfoCallerImpl());
@@ -100,11 +95,10 @@ public final class CallerManager {
         this.uploadOssCaller = CallerProxy.wrap(UploadOssCaller.class, new UploadOssCallerImpl());
         this.uploadRecordCaller = CallerProxy.wrap(UploadRecordCaller.class, new UploadRecordCallerImpl());
         this.downloadFileCaller = CallerProxy.wrap(DownloadFileCaller.class, new DownloadFileCallerImpl());
-        this.downloadFileDaoCaller = CallerProxy.wrap(DownloadFileDaoCaller.class, new DownloadFileDaoCallerImpl());
-        this.commonDaoCaller = CallerProxy.wrap(CommonDaoCaller.class, new CommonDaoCallerImpl());
-        this.userDaoCaller = CallerProxy.wrap(UserDaoCaller.class, new UserDaoCallerImpl());
-        this.planDaoCaller = CallerProxy.wrap(PlanDaoCaller.class, new PlanDaoCallerImpl());
-        this.recordDaoCaller = CallerProxy.wrap(RecordDaoCaller.class, new RecordDaoCallerImpl());
+        this.commonNativeCaller = CallerProxy.wrap(CommonNativeCaller.class, new CommonNativeCallerImpl());
+        this.userNativeCaller = CallerProxy.wrap(UserNativeCaller.class, new UserNativeCallerImpl());
+        this.planNativeCaller = CallerProxy.wrap(PlanNativeCaller.class, new PlanNativeCallerImpl());
+        this.recordNativeCaller = CallerProxy.wrap(RecordNativeCaller.class, new RecordNativeCallerImpl());
     }
 
     public static CallerManager getInstance() {
@@ -132,11 +126,10 @@ public final class CallerManager {
         if (this.uploadOssCaller == null) this.uploadOssCaller = CallerProxy.wrap(UploadOssCaller.class, new UploadOssCallerImpl());
         if (this.uploadRecordCaller == null) this.uploadRecordCaller = CallerProxy.wrap(UploadRecordCaller.class, new UploadRecordCallerImpl());
         if (this.downloadFileCaller == null) this.downloadFileCaller = CallerProxy.wrap(DownloadFileCaller.class, new DownloadFileCallerImpl());
-        if (this.downloadFileDaoCaller == null) this.downloadFileDaoCaller = CallerProxy.wrap(DownloadFileDaoCaller.class, new DownloadFileDaoCallerImpl());
-        if (this.commonDaoCaller == null) this.commonDaoCaller = CallerProxy.wrap(CommonDaoCaller.class, new CommonDaoCallerImpl());
-        if (this.userDaoCaller == null) this.userDaoCaller = CallerProxy.wrap(UserDaoCaller.class, new UserDaoCallerImpl());
-        if (this.planDaoCaller == null) this.planDaoCaller = CallerProxy.wrap(PlanDaoCaller.class, new PlanDaoCallerImpl());
-        if (this.recordDaoCaller == null) this.recordDaoCaller = CallerProxy.wrap(RecordDaoCaller.class, new RecordDaoCallerImpl());
+        if (this.commonNativeCaller == null) this.commonNativeCaller = CallerProxy.wrap(CommonNativeCaller.class, new CommonNativeCallerImpl());
+        if (this.userNativeCaller == null) this.userNativeCaller = CallerProxy.wrap(UserNativeCaller.class, new UserNativeCallerImpl());
+        if (this.planNativeCaller == null) this.planNativeCaller = CallerProxy.wrap(PlanNativeCaller.class, new PlanNativeCallerImpl());
+        if (this.recordNativeCaller == null) this.recordNativeCaller = CallerProxy.wrap(RecordNativeCaller.class, new RecordNativeCallerImpl());
     }
 
     public synchronized void release() {
@@ -157,10 +150,9 @@ public final class CallerManager {
         uploadRecordCaller = null;
         downloadFileCaller = null;
 
-        downloadFileDaoCaller = null;
-        commonDaoCaller = null;
-        userDaoCaller = null;
-        planDaoCaller = null;
-        recordDaoCaller = null;
+        commonNativeCaller = null;
+        userNativeCaller = null;
+        planNativeCaller = null;
+        recordNativeCaller = null;
     }
 }

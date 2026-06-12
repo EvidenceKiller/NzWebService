@@ -5,9 +5,9 @@ import com.adl.service.db.DaoManagerProxy;
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.functions.Function;
 
-public final class PlanDaoPersistHelper {
+public final class PlanNativePersistHelper {
 
-    public PlanDaoPersistHelper() {
+    public PlanNativePersistHelper() {
     }
 
     public Function<Void, Single<Boolean>> createPrepareStandardConfigDataFunc() {

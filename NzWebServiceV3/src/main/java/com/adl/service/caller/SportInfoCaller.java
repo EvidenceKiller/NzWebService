@@ -1,6 +1,7 @@
 package com.adl.service.caller;
 
 import com.adl.service.callback.RequestCallback;
+import com.adl.service.callback.ResponseResult;
 import com.adl.service.data.AccountRecordData;
 import com.adl.service.data.OrgRecordData;
 import com.adl.service.data.ReportSportStudentAllData;
@@ -32,7 +33,7 @@ public interface SportInfoCaller {
      * 通用修改学生运动成绩
      * <p>同步调用。</p>
      */
-    Boolean updateStudentSportSync(ReportSportStudentAllData request);
+    ResponseResult<Boolean> updateStudentSportSync(ReportSportStudentAllData request);
 
     /**
      * 上报教师普通运动成绩
@@ -44,7 +45,7 @@ public interface SportInfoCaller {
      * 上报教师普通运动成绩
      * <p>同步调用。</p>
      */
-    Boolean reportTeacherSportSync(ReportSportTeacherData request);
+    ResponseResult<Boolean> reportTeacherSportSync(ReportSportTeacherData request);
 
     /**
      * 上报学生特训成绩
@@ -56,7 +57,7 @@ public interface SportInfoCaller {
      * 上报学生特训成绩
      * <p>同步调用。</p>
      */
-    Boolean reportStudentTrainSync(ReportSportStudentTrainData request);
+    ResponseResult<Boolean> reportStudentTrainSync(ReportSportStudentTrainData request);
 
     /**
      * 上报学生普通运动成绩
@@ -68,7 +69,7 @@ public interface SportInfoCaller {
      * 上报学生普通运动成绩
      * <p>同步调用。</p>
      */
-    Boolean reportStudentSportSync(ReportSportStudentData request);
+    ResponseResult<Boolean> reportStudentSportSync(ReportSportStudentData request);
 
     /**
      * 上报学生组织测试成绩
@@ -80,7 +81,7 @@ public interface SportInfoCaller {
      * 上报学生组织测试成绩
      * <p>同步调用。</p>
      */
-    Boolean reportStudentPlanSync(ReportSportStudentPlanData request);
+    ResponseResult<Boolean> reportStudentPlanSync(ReportSportStudentPlanData request);
 
     /**
      * 上报学生运动会成绩
@@ -92,7 +93,7 @@ public interface SportInfoCaller {
      * 上报学生运动会成绩
      * <p>同步调用。</p>
      */
-    Boolean reportStudentMeetSync(ReportSportStudentMeetData request);
+    ResponseResult<Boolean> reportStudentMeetSync(ReportSportStudentMeetData request);
 
     /**
      * 上报学生竞技赛成绩
@@ -104,7 +105,7 @@ public interface SportInfoCaller {
      * 上报学生竞技赛成绩
      * <p>同步调用。</p>
      */
-    Boolean reportStudentCompetitionSync(ReportSportStudentCompetitionData request);
+    ResponseResult<Boolean> reportStudentCompetitionSync(ReportSportStudentCompetitionData request);
 
     /**
      * 通用上报学生运动成绩接口
@@ -116,7 +117,7 @@ public interface SportInfoCaller {
      * 通用上报学生运动成绩接口
      * <p>同步调用。</p>
      */
-    Boolean reportStudentAllSportSync(ReportSportStudentAllData request);
+    ResponseResult<Boolean> reportStudentAllSportSync(ReportSportStudentAllData request);
 
     /**
      * 获取机构/年级运动记录分页
@@ -128,7 +129,7 @@ public interface SportInfoCaller {
      * 获取机构/年级运动记录分页
      * <p>同步调用。</p>
      */
-    List<OrgRecordData> getOrgRecordPageSync(OrgRecordPageRequest request);
+    ResponseResult<List<OrgRecordData>> getOrgRecordPageSync(OrgRecordPageRequest request);
 
     /**
      * 获取班级/个人运动记录分页
@@ -140,5 +141,5 @@ public interface SportInfoCaller {
      * 获取班级/个人运动记录分页
      * <p>同步调用。</p>
      */
-    List<AccountRecordData> getAccountRecordPageSync(AccountRecordPageRequest request);
+    ResponseResult<List<AccountRecordData>> getAccountRecordPageSync(AccountRecordPageRequest request);
 }

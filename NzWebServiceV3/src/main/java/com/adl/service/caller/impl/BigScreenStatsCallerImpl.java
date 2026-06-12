@@ -2,6 +2,7 @@ package com.adl.service.caller.impl;
 
 import com.adl.service.AdlService;
 import com.adl.service.callback.RequestCallback;
+import com.adl.service.callback.ResponseResult;
 import com.adl.service.caller.BigScreenStatsCaller;
 import com.adl.service.data.BestRankTopData;
 import com.adl.service.data.CompetitionRankData;
@@ -13,7 +14,6 @@ import com.adl.service.data.SportRankKingData;
 import com.adl.service.data.SportSkuRankData;
 import com.adl.service.data.SumScoreRankData;
 import com.adl.service.data.WarRecordRankData;
-import com.adl.service.exception.NzBaseException;
 import com.adl.service.http.request.BestRankTopRequest;
 import com.adl.service.http.request.CompetitionRankRequest;
 import com.adl.service.http.request.MorePeopleRecordRankRequest;
@@ -42,121 +42,121 @@ public final class BigScreenStatsCallerImpl implements BigScreenStatsCaller {
 
     @Override
     public long getWarRecordRankAsync(RequestScope scope, WarRecordRankRequest request, RequestCallback<List<WarRecordRankData>> callback) {
-        return RxCallbackScheduler.schedule(scope, bigScreenStatsRepository.getWarRecordRank(request), callback);
+        return RxCallbackScheduler.scheduleResultAsync(scope, bigScreenStatsRepository.getWarRecordRank(request), callback);
     }
 
     @Override
-    public List<WarRecordRankData> getWarRecordRankSync(WarRecordRankRequest request) {
-        return RxCallbackScheduler.blockingGetNoThrow(bigScreenStatsRepository.getWarRecordRank(request));
+    public ResponseResult<List<WarRecordRankData>> getWarRecordRankSync(WarRecordRankRequest request) {
+        return RxCallbackScheduler.scheduleResultSync(bigScreenStatsRepository.getWarRecordRank(request));
     }
 
     @Override
     public long getPersonRankAsync(RequestScope scope, PersonRankRequest request, RequestCallback<PersonRankData> callback) {
-        return RxCallbackScheduler.schedule(scope, bigScreenStatsRepository.getPersonRank(request), callback);
+        return RxCallbackScheduler.scheduleResultAsync(scope, bigScreenStatsRepository.getPersonRank(request), callback);
     }
 
     @Override
-    public PersonRankData getPersonRankSync(PersonRankRequest request) {
-        return RxCallbackScheduler.blockingGetNoThrow(bigScreenStatsRepository.getPersonRank(request));
+    public ResponseResult<PersonRankData> getPersonRankSync(PersonRankRequest request) {
+        return RxCallbackScheduler.scheduleResultSync(bigScreenStatsRepository.getPersonRank(request));
     }
 
     @Override
     public long getMorePeopleVictoryRankAsync(RequestScope scope, MorePeopleVictoryRankRequest request, RequestCallback<List<MorePeopleVictoryRankData>> callback) {
-        return RxCallbackScheduler.schedule(scope, bigScreenStatsRepository.getMorePeopleVictoryRank(request), callback);
+        return RxCallbackScheduler.scheduleResultAsync(scope, bigScreenStatsRepository.getMorePeopleVictoryRank(request), callback);
     }
 
     @Override
-    public List<MorePeopleVictoryRankData> getMorePeopleVictoryRankSync(MorePeopleVictoryRankRequest request) {
-        return RxCallbackScheduler.blockingGetNoThrow(bigScreenStatsRepository.getMorePeopleVictoryRank(request));
+    public ResponseResult<List<MorePeopleVictoryRankData>> getMorePeopleVictoryRankSync(MorePeopleVictoryRankRequest request) {
+        return RxCallbackScheduler.scheduleResultSync(bigScreenStatsRepository.getMorePeopleVictoryRank(request));
     }
 
     @Override
     public long getMorePeopleRecordRankAsync(RequestScope scope, MorePeopleRecordRankRequest request, RequestCallback<List<MorePeopleRecordRankData>> callback) {
-        return RxCallbackScheduler.schedule(scope, bigScreenStatsRepository.getMorePeopleRecordRank(request), callback);
+        return RxCallbackScheduler.scheduleResultAsync(scope, bigScreenStatsRepository.getMorePeopleRecordRank(request), callback);
     }
 
     @Override
-    public List<MorePeopleRecordRankData> getMorePeopleRecordRankSync(MorePeopleRecordRankRequest request) {
-        return RxCallbackScheduler.blockingGetNoThrow(bigScreenStatsRepository.getMorePeopleRecordRank(request));
+    public ResponseResult<List<MorePeopleRecordRankData>> getMorePeopleRecordRankSync(MorePeopleRecordRankRequest request) {
+        return RxCallbackScheduler.scheduleResultSync(bigScreenStatsRepository.getMorePeopleRecordRank(request));
     }
 
     @Override
     public long getOverviewAsync(RequestScope scope, OverviewRequest request, RequestCallback<OverviewData> callback) {
-        return RxCallbackScheduler.schedule(scope, bigScreenStatsRepository.getOverview(request), callback);
+        return RxCallbackScheduler.scheduleResultAsync(scope, bigScreenStatsRepository.getOverview(request), callback);
     }
 
     @Override
-    public OverviewData getOverviewSync(OverviewRequest request) {
-        return RxCallbackScheduler.blockingGetNoThrow(bigScreenStatsRepository.getOverview(request));
+    public ResponseResult<OverviewData> getOverviewSync(OverviewRequest request) {
+        return RxCallbackScheduler.scheduleResultSync(bigScreenStatsRepository.getOverview(request));
     }
 
     @Override
     public long getCompetitionRankAsync(RequestScope scope, CompetitionRankRequest request, RequestCallback<CompetitionRankData> callback) {
-        return RxCallbackScheduler.schedule(scope, bigScreenStatsRepository.getCompetitionRank(request), callback);
+        return RxCallbackScheduler.scheduleResultAsync(scope, bigScreenStatsRepository.getCompetitionRank(request), callback);
     }
 
     @Override
-    public CompetitionRankData getCompetitionRankSync(CompetitionRankRequest request) {
-        return RxCallbackScheduler.blockingGetNoThrow(bigScreenStatsRepository.getCompetitionRank(request));
+    public ResponseResult<CompetitionRankData> getCompetitionRankSync(CompetitionRankRequest request) {
+        return RxCallbackScheduler.scheduleResultSync(bigScreenStatsRepository.getCompetitionRank(request));
     }
 
     @Override
     public long sumScoreRankAsync(RequestScope scope, SumScoreRankRequest request, RequestCallback<List<SumScoreRankData>> callback) {
-        return RxCallbackScheduler.schedule(scope, bigScreenStatsRepository.sumScoreRank(request), callback);
+        return RxCallbackScheduler.scheduleResultAsync(scope, bigScreenStatsRepository.sumScoreRank(request), callback);
     }
 
     @Override
-    public List<SumScoreRankData> sumScoreRankSync(SumScoreRankRequest request) {
-        return RxCallbackScheduler.blockingGetNoThrow(bigScreenStatsRepository.sumScoreRank(request));
+    public ResponseResult<List<SumScoreRankData>> sumScoreRankSync(SumScoreRankRequest request) {
+        return RxCallbackScheduler.scheduleResultSync(bigScreenStatsRepository.sumScoreRank(request));
     }
 
     @Override
     public long getSportSkuRankAsync(RequestScope scope, SportRankRequest request, RequestCallback<List<SportSkuRankData>> callback) {
-        return RxCallbackScheduler.schedule(scope, bigScreenStatsRepository.getSportSkuRank(request), callback);
+        return RxCallbackScheduler.scheduleResultAsync(scope, bigScreenStatsRepository.getSportSkuRank(request), callback);
     }
 
     @Override
-    public List<SportSkuRankData> getSportSkuRankSync(SportRankRequest request) {
-        return RxCallbackScheduler.blockingGetNoThrow(bigScreenStatsRepository.getSportSkuRank(request));
+    public ResponseResult<List<SportSkuRankData>> getSportSkuRankSync(SportRankRequest request) {
+        return RxCallbackScheduler.scheduleResultSync(bigScreenStatsRepository.getSportSkuRank(request));
     }
 
     @Override
     public long getSportRankKingAsync(RequestScope scope, SportRankRequest request, RequestCallback<List<SportRankKingData>> callback) {
-        return RxCallbackScheduler.schedule(scope, bigScreenStatsRepository.getSportRankKing(request), callback);
+        return RxCallbackScheduler.scheduleResultAsync(scope, bigScreenStatsRepository.getSportRankKing(request), callback);
     }
 
     @Override
-    public List<SportRankKingData> getSportRankKingSync(SportRankRequest request) {
-        return RxCallbackScheduler.blockingGetNoThrow(bigScreenStatsRepository.getSportRankKing(request));
+    public ResponseResult<List<SportRankKingData>> getSportRankKingSync(SportRankRequest request) {
+        return RxCallbackScheduler.scheduleResultSync(bigScreenStatsRepository.getSportRankKing(request));
     }
 
     @Override
     public long getPhysicalTrainingRankAsync(RequestScope scope, SportRankRequest request, RequestCallback<List<SportRankKingData>> callback) {
-        return RxCallbackScheduler.schedule(scope, bigScreenStatsRepository.getPhysicalTrainingRank(request), callback);
+        return RxCallbackScheduler.scheduleResultAsync(scope, bigScreenStatsRepository.getPhysicalTrainingRank(request), callback);
     }
 
     @Override
-    public List<SportRankKingData> getPhysicalTrainingRankSync(SportRankRequest request) {
-        return RxCallbackScheduler.blockingGetNoThrow(bigScreenStatsRepository.getPhysicalTrainingRank(request));
+    public ResponseResult<List<SportRankKingData>> getPhysicalTrainingRankSync(SportRankRequest request) {
+        return RxCallbackScheduler.scheduleResultSync(bigScreenStatsRepository.getPhysicalTrainingRank(request));
     }
 
     @Override
     public long getExerciseSumTimeRankAsync(RequestScope scope, SportRankRequest request, RequestCallback<List<SportRankKingData>> callback) {
-        return RxCallbackScheduler.schedule(scope, bigScreenStatsRepository.getExerciseSumTimeRank(request), callback);
+        return RxCallbackScheduler.scheduleResultAsync(scope, bigScreenStatsRepository.getExerciseSumTimeRank(request), callback);
     }
 
     @Override
-    public List<SportRankKingData> getExerciseSumTimeRankSync(SportRankRequest request) {
-        return RxCallbackScheduler.blockingGetNoThrow(bigScreenStatsRepository.getExerciseSumTimeRank(request));
+    public ResponseResult<List<SportRankKingData>> getExerciseSumTimeRankSync(SportRankRequest request) {
+        return RxCallbackScheduler.scheduleResultSync(bigScreenStatsRepository.getExerciseSumTimeRank(request));
     }
 
     @Override
     public long getBestRankTopAsync(RequestScope scope, BestRankTopRequest request, RequestCallback<List<BestRankTopData>> callback) {
-        return RxCallbackScheduler.schedule(scope, bigScreenStatsRepository.getBestRankTop(request), callback);
+        return RxCallbackScheduler.scheduleResultAsync(scope, bigScreenStatsRepository.getBestRankTop(request), callback);
     }
 
     @Override
-    public List<BestRankTopData> getBestRankTopSync(BestRankTopRequest request) {
-        return RxCallbackScheduler.blockingGetNoThrow(bigScreenStatsRepository.getBestRankTop(request));
+    public ResponseResult<List<BestRankTopData>> getBestRankTopSync(BestRankTopRequest request) {
+        return RxCallbackScheduler.scheduleResultSync(bigScreenStatsRepository.getBestRankTop(request));
     }
 }

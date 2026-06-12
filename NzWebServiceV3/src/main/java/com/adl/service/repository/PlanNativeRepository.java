@@ -1,24 +1,24 @@
 package com.adl.service.repository;
 
-import com.adl.service.repository.persist.PlanDaoPersistHelper;
+import com.adl.service.repository.persist.PlanNativePersistHelper;
 
 import androidx.annotation.RestrictTo;
 import io.reactivex.rxjava3.core.Single;
 
 @RestrictTo(RestrictTo.Scope.LIBRARY)
-public final class PlanDaoRepository {
-    private final PlanDaoPersistHelper persistHelper = new PlanDaoPersistHelper();
+public final class PlanNativeRepository {
+    private final PlanNativePersistHelper persistHelper = new PlanNativePersistHelper();
 
-    private static volatile PlanDaoRepository instance;
+    private static volatile PlanNativeRepository instance;
 
-    private PlanDaoRepository() {
+    private PlanNativeRepository() {
     }
 
-    public static PlanDaoRepository getInstance() {
+    public static PlanNativeRepository getInstance() {
         if (instance == null) {
-            synchronized (PlanDaoRepository.class) {
+            synchronized (PlanNativeRepository.class) {
                 if (instance == null) {
-                    instance = new PlanDaoRepository();
+                    instance = new PlanNativeRepository();
                 }
             }
         }

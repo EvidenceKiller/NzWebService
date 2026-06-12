@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import com.adl.service.AdlService;
 import com.adl.service.callback.RequestCallback;
+import com.adl.service.callback.ResponseResult;
+import com.adl.service.common.NzResponseCode;
 import com.adl.service.http.request.LoginRequest;
 import com.adl.service.http.request.LogoutRequest;
 import com.adl.service.http.request.RequestScope;
@@ -63,45 +65,22 @@ public class V3LoginAuthCallerTestActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFail(int code, String msg) {
-                Log.d(TAG, "LoginAuthCallerTestActivity::loginAsync::onFail : code : " + code + ", msg : " + msg);
+            public void onError(int code, String msg) {
+                Log.d(TAG, "LoginAuthCallerTestActivity::loginAsync::onError : code : " + code + ", msg : " + msg);
                 resultView.setText(msg);
-            }
-
-            @Override
-            public void onError(String error) {
-                Log.d(TAG, "LoginAuthCallerTestActivity::loginAsync::onError : error : " + error);
-                resultView.setText(error);
             }
         });
     }
 
     private void loginSync() {
-        AdlService.getService().executeSyncOnIo(RequestScope.of(this),
-                () -> AdlService.getService().getLoginAuthCaller().loginSync(buildLoginRequest()),
-                new RequestCallback<LoginData>() {
-                    @Override
-                    public void onSuccess(LoginData data) {
-                        if (data != null) {
-                            Log.d(TAG, "LoginAuthCallerTestActivity::loginSync::onSuccess : data : " + data);
-                            resultView.setText(data.toString());
-                        } else {
-                            Log.d(TAG, "LoginAuthCallerTestActivity::loginSync::onSuccess : data is null");
-                        }
-                    }
-
-                    @Override
-                    public void onFail(int code, String msg) {
-                        Log.d(TAG, "LoginAuthCallerTestActivity::loginSync::onFail : code : " + code + ", msg : " + msg);
-                        resultView.setText(msg);
-                    }
-
-                    @Override
-                    public void onError(String error) {
-                        Log.d(TAG, "LoginAuthCallerTestActivity::loginSync::onError : error : " + error);
-                        resultView.setText(error);
-                    }
-                });
+        ResponseResult<LoginData> result = AdlService.getService().getLoginAuthCaller().loginSync(buildLoginRequest());
+        if (result.getCode() == NzResponseCode.NZ_SUCCESS) {
+            Log.d(TAG, "LoginAuthCallerTestActivity::loginSync::onSuccess : data : " + result.getData());
+            resultView.setText(result.getData().toString());
+        } else {
+            Log.d(TAG, "LoginAuthCallerTestActivity::loginSync::onError : code : " + result.getCode() + ", msg : " + result.getMsg());
+            resultView.setText(result.getMsg());
+        }
     }
 
     private void logoutAsync() {
@@ -114,41 +93,22 @@ public class V3LoginAuthCallerTestActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFail(int code, String msg) {
-                Log.d(TAG, "LoginAuthCallerTestActivity::logoutAsync::onFail : code : " + code + ", msg : " + msg);
+            public void onError(int code, String msg) {
+                Log.d(TAG, "LoginAuthCallerTestActivity::logoutAsync::onError : code : " + code + ", msg : " + msg);
                 resultView.setText(msg);
-            }
-
-            @Override
-            public void onError(String error) {
-                Log.d(TAG, "LoginAuthCallerTestActivity::logoutAsync::onError : error : " + error);
-                resultView.setText(error);
             }
         });
     }
 
     private void logoutSync() {
-        AdlService.getService().executeSyncOnIo(RequestScope.of(this),
-                () -> AdlService.getService().getLoginAuthCaller().logoutSync(buildLogoutRequest()),
-                new RequestCallback<String>() {
-                    @Override
-                    public void onSuccess(String data) {
-                        Log.d(TAG, "LoginAuthCallerTestActivity::logoutSync::onSuccess : data : " + data);
-                        resultView.setText(String.valueOf(data));
-                    }
-
-                    @Override
-                    public void onFail(int code, String msg) {
-                        Log.d(TAG, "LoginAuthCallerTestActivity::logoutSync::onFail : code : " + code + ", msg : " + msg);
-                        resultView.setText(msg);
-                    }
-
-                    @Override
-                    public void onError(String error) {
-                        Log.d(TAG, "LoginAuthCallerTestActivity::logoutSync::onError : error : " + error);
-                        resultView.setText(error);
-                    }
-                });
+        ResponseResult<String> result = AdlService.getService().getLoginAuthCaller().logoutSync(buildLogoutRequest());
+        if (result.getCode() == NzResponseCode.NZ_SUCCESS) {
+            Log.d(TAG, "LoginAuthCallerTestActivity::logoutSync::onSuccess : data : " + result.getData());
+            resultView.setText(String.valueOf(result.getData()));
+        } else {
+            Log.d(TAG, "LoginAuthCallerTestActivity::logoutSync::onError : code : " + result.getCode() + ", msg : " + result.getMsg());
+            resultView.setText(result.getMsg());
+        }
     }
 
     private Button createButton(String text) {

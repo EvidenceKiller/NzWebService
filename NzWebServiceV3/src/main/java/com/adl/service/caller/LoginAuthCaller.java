@@ -1,6 +1,7 @@
 package com.adl.service.caller;
 
 import com.adl.service.callback.RequestCallback;
+import com.adl.service.callback.ResponseResult;
 import com.adl.service.data.LoginData;
 import com.adl.service.exception.NzBaseException;
 import com.adl.service.http.request.LoginRequest;
@@ -22,7 +23,7 @@ public interface LoginAuthCaller {
      * 设备登录
      * <p>同步调用。</p>
      */
-    LoginData loginSync(LoginRequest request);
+    ResponseResult<LoginData> loginSync(LoginRequest request);
 
     /**
      * 退出登录
@@ -34,6 +35,6 @@ public interface LoginAuthCaller {
      * 退出登录
      * <p>同步调用。</p>
      */
-    String logoutSync(LogoutRequest request);
+    ResponseResult<String> logoutSync(LogoutRequest request);
 
 }

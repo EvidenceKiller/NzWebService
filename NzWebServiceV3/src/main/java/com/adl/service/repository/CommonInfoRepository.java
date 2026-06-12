@@ -1,6 +1,7 @@
 package com.adl.service.repository;
 
-import com.adl.service.callback.GetPageResult;
+import com.adl.service.callback.ResponseResult;
+import com.adl.service.data.PageSummaryData;
 import com.adl.service.callback.RequestUserCallback;
 import com.adl.service.data.AcayearData;
 import com.adl.service.data.ClassData;
@@ -49,51 +50,51 @@ public final class CommonInfoRepository {
         return instance;
     }
 
-    public Single<Boolean> loadCommonInfo(boolean forceUpdate, int faceType, long pageSize, RequestUserCallback callback) {
-        return BaseRepositoryUtil.repositoryAsSingle(persistHelper.createLoadCommonInfoFunc(forceUpdate, faceType, pageSize, callback));
+    public Single<ResponseResult<Boolean>> loadCommonInfo(boolean forceUpdate, int faceType, long pageSize, RequestUserCallback callback) {
+        return BaseRepositoryUtil.repositoryAsSingle(EmptyRequest.builder().build(), prepareHelper.createLoadCommonInfoFunc(forceUpdate, faceType, pageSize, callback));
     }
 
-    public Single<List<GradeTreeData>> getGradeTree(EmptyRequest request) {
+    public Single<ResponseResult<List<GradeTreeData>>> getGradeTree(EmptyRequest request) {
         return BaseRepositoryUtil.repositoryAsSingle(request, fetchHelper.createGetGradeTreeFunc());
     }
 
-    public Single<List<GradeChineseNameData>> getGradeChineseNameList(EmptyRequest request) {
+    public Single<ResponseResult<List<GradeChineseNameData>>> getGradeChineseNameList(EmptyRequest request) {
         return BaseRepositoryUtil.repositoryAsSingle(request, fetchHelper.createGetGradeChineseNameListFunc());
     }
 
-    public Single<List<ClassData>> getClassPage(ClassPageRequest request) {
+    public Single<ResponseResult<List<ClassData>>> getClassPage(ClassPageRequest request) {
         return BaseRepositoryUtil.repositoryAsSingle(request, fetchHelper.createGetClassPageFunc());
     }
 
-    public Single<ClassInfoData> getClassInfo(ClassInfoRequest request) {
+    public Single<ResponseResult<ClassInfoData>> getClassInfo(ClassInfoRequest request) {
         return BaseRepositoryUtil.repositoryAsSingle(request, fetchHelper.createGetClassInfoFunc());
     }
 
-    public Single<LoginInfoData> getLoginInfo(EmptyRequest request) {
+    public Single<ResponseResult<LoginInfoData>> getLoginInfo(EmptyRequest request) {
         return BaseRepositoryUtil.repositoryAsSingle(request,
                 prepareHelper.createPrepareLoginInfoFunc(),
                 fetchHelper.createGetLoginInfoFunc(),
                 persistHelper.createPersistLoginInfoFunc(request));
     }
 
-    public Single<List<AcayearData>> getAcayearList(EmptyRequest request) {
+    public Single<ResponseResult<List<AcayearData>>> getAcayearList(EmptyRequest request) {
         return BaseRepositoryUtil.repositoryAsSingle(request, fetchHelper.createGetAcayearListFunc());
     }
 
-    public Single<GetPageResult> getTeacherPagesAll(TeacherPageRequest request, RequestUserCallback callback) {
+    public Single<ResponseResult<PageSummaryData>> getTeacherPagesAll(TeacherPageRequest request, RequestUserCallback callback) {
         return BaseRepositoryUtil.repositoryListsAsSingle(request,
                 prepareHelper.createPrepareTeacherPagesAllFunc(),
                 fetchHelper.createGetTeacherPagesAllFunc(request),
                 persistHelper.createPersistTeacherPageFunc(callback));
     }
 
-    public Single<List<TeacherData>> getTeacherPage(TeacherPageRequest request) {
+    public Single<ResponseResult<List<TeacherData>>> getTeacherPage(TeacherPageRequest request) {
         return BaseRepositoryUtil.repositoryAsSingle(request,
                 fetchHelper.createGetTeacherPageFunc(),
                 persistHelper.createPersistTeacherPageFunc(null));
     }
 
-    public Single<GetPageResult> getStudentPagesAll(StudentPageRequest request, RequestUserCallback callback) {
+    public Single<ResponseResult<PageSummaryData>> getStudentPagesAll(StudentPageRequest request, RequestUserCallback callback) {
         return BaseRepositoryUtil.repositoryPagesAsSingle(request,
                 prepareHelper.createPrepareStudentPagesAllFunc(),
                 fetchHelper.createGetStudentPagesAllFunc(request),
@@ -101,24 +102,24 @@ public final class CommonInfoRepository {
         );
     }
 
-    public Single<List<StudentData>> getStudentPage(StudentPageRequest request) {
+    public Single<ResponseResult<List<StudentData>>> getStudentPage(StudentPageRequest request) {
         return BaseRepositoryUtil.repositoryPageAsSingle(request,
                 fetchHelper.createGetStudentPageFunc(),
                 persistHelper.createPersistStudentPageFunc(null));
     }
 
-    public Single<List<DictData>> getDictList(DictRequest request) {
+    public Single<ResponseResult<List<DictData>>> getDictList(DictRequest request) {
         return BaseRepositoryUtil.repositoryAsSingle(request,
                 prepareHelper.createPrepareDictListFunc(),
                 fetchHelper.createGetDictListFunc(),
                 persistHelper.createPersistDictListFunc(request));
     }
 
-    public Single<Boolean> deviceActive(DeviceActiveRequest request) {
+    public Single<ResponseResult<Boolean>> deviceActive(DeviceActiveRequest request) {
         return BaseRepositoryUtil.repositoryAsSingle(request, fetchHelper.createGetDeviceActiveFunc());
     }
 
-    public Single<Long> getServerTime() {
-        return BaseRepositoryUtil.repositoryAsSingle(fetchHelper.createGetServerTimeFunc());
+    public Single<ResponseResult<Long>> getServerTime() {
+        return BaseRepositoryUtil.repositoryAsSingle(EmptyRequest.builder().build(), fetchHelper.createGetServerTimeFunc());
     }
 }

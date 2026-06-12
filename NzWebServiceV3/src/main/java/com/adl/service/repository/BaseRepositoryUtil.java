@@ -1,15 +1,17 @@
 package com.adl.service.repository;
 
-import com.adl.service.callback.GetPageResult;
+import com.adl.service.data.PageSummaryData;
+import com.adl.service.callback.ResponseResult;
+import com.adl.service.common.NzResponseCode;
 import com.adl.service.data.BasePageData;
 import com.adl.service.exception.NzCommonException;
+import com.adl.service.exception.NzExceptionMapper;
 import com.adl.service.exception.NzGetPageException;
 import com.adl.service.exception.NzHttpException;
 import com.adl.service.http.request.BasePageRequest;
 import com.adl.service.http.request.BaseRequest;
 import com.adl.service.log.NzLog;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -49,7 +51,7 @@ class BaseRepositoryUtil {
         if (q == null) {
             return Single.error(new NzCommonException("request is null"));
         }
-        return applyFunc(func, q);
+        return Single.defer(() -> applyFunc(func, q));
     }
 
     /**
@@ -63,7 +65,7 @@ class BaseRepositoryUtil {
      * @return 异步结果的 Single 包装
      */
     public static <R> Single<R> repositoryAsSingle(Function<Void, Single<R>> func) {
-        return applyFunc(func);
+        return Single.defer(() -> applyFunc(func));
     }
 
     /**
@@ -136,62 +138,90 @@ class BaseRepositoryUtil {
         if (request == null) {
             return Single.error(new NzCommonException("request is null"));
         }
+        return Single.defer(() -> repositoryAsSingleInternal(request, prepareFunc, fetchFunc, persistFunc));
+    }
+
+    private static <Q extends BaseRequest, R> Single<R> repositoryAsSingleInternal(Q request,
+                                                                                   Function<Q, Single<R>> prepareFunc,
+                                                                                   Function<Q, Single<R>> fetchFunc,
+                                                                                   Function<R, Single<R>> persistFunc) {
         if (prepareFunc != null) {
             Single<R> prepareData = applyFunc(prepareFunc, request);
             if (prepareData != null && !request.getForceUpdate()) {
                 return prepareData;
             }
         }
-        return applyFunc(fetchFunc, request)
-                .flatMap(networkData -> {
-                    if (networkData == null) {
-                        return Single.error(new NzHttpException(-1, "network data is null"));
-                    }
-                    if (persistFunc == null) {
-                        return Single.just(networkData);
-                    }
-                    return applyFunc(persistFunc, networkData);
-                });
+        Single<R> fetchSingle = applyFunc(fetchFunc, request);
+        if (fetchSingle == null) {
+            return Single.error(new NzHttpException(NzResponseCode.NZ_NO_DATA_ERROR, "fetch single is null"));
+        }
+        return fetchSingle.flatMap(networkData -> {
+            if (networkData == null) {
+                return Single.error(new NzHttpException(NzResponseCode.NZ_NO_DATA_ERROR, "network data is null"));
+            }
+            if (persistFunc == null) {
+                return Single.just(networkData);
+            }
+            return applyFunc(persistFunc, networkData);
+        });
     }
 
-    public static <Q extends BasePageRequest, R> Single<List<R>> repositoryPageAsSingle(Q request,
-                                                                                        Function<Q, Single<BasePageData<R>>> fetchFunc) {
+    public static <Q extends BasePageRequest, R> Single<ResponseResult<List<R>>> repositoryPageAsSingle(Q request,
+                                                                                                        Function<Q, Single<ResponseResult<BasePageData<R>>>> fetchFunc) {
         return repositoryPageAsSingle(request, null, fetchFunc, null);
     }
 
-    public static <Q extends BasePageRequest, R> Single<List<R>> repositoryPageAsSingle(Q request,
-                                                                                        Function<Q, Single<BasePageData<R>>> fetchFunc,
-                                                                                        Function<List<R>, Single<List<R>>> persistFunc) {
+    public static <Q extends BasePageRequest, R> Single<ResponseResult<List<R>>> repositoryPageAsSingle(Q request,
+                                                                                                        Function<Q, Single<ResponseResult<BasePageData<R>>>> fetchFunc,
+                                                                                                        Function<ResponseResult<List<R>>, Single<ResponseResult<List<R>>>> persistFunc) {
         return repositoryPageAsSingle(request, null, fetchFunc, persistFunc);
     }
 
-    public static <Q extends BasePageRequest, R> Single<List<R>> repositoryPageAsSingle(Q request,
-                                                                                        Function<Q, Single<List<R>>> prepareFunc,
-                                                                                        Function<Q, Single<BasePageData<R>>> fetchFunc,
-                                                                                        Function<List<R>, Single<List<R>>> persistFunc) {
+    public static <Q extends BasePageRequest, R> Single<ResponseResult<List<R>>> repositoryPageAsSingle(Q request,
+                                                                                                        Function<Q, Single<ResponseResult<List<R>>>> prepareFunc,
+                                                                                                        Function<Q, Single<ResponseResult<BasePageData<R>>>> fetchFunc,
+                                                                                                        Function<ResponseResult<List<R>>, Single<ResponseResult<List<R>>>> persistFunc) {
         if (request == null) {
             return Single.error(new NzCommonException("request is null"));
         }
         if (request.getCurrent() == null) {
             return Single.error(new NzCommonException("must set page request current"));
         }
+        return Single.defer(() -> repositoryPageAsSingleInternal(request, prepareFunc, fetchFunc, persistFunc));
+    }
+
+    private static <Q extends BasePageRequest, R> Single<ResponseResult<List<R>>> repositoryPageAsSingleInternal(Q request,
+                                                                                                                   Function<Q, Single<ResponseResult<List<R>>>> prepareFunc,
+                                                                                                                   Function<Q, Single<ResponseResult<BasePageData<R>>>> fetchFunc,
+                                                                                                                   Function<ResponseResult<List<R>>, Single<ResponseResult<List<R>>>> persistFunc) {
         if (prepareFunc != null) {
-            Single<List<R>> prepareData = applyFunc(prepareFunc, request);
+            Single<ResponseResult<List<R>>> prepareData = applyFunc(prepareFunc, request);
             if (prepareData != null && !request.getForceUpdate()) {
                 return prepareData;
             }
         }
-        return applyFunc(fetchFunc, request)
-                .flatMap(pageData -> {
-                    if (pageData == null || pageData.getRecords() == null || pageData.getRecords().isEmpty()) {
-                        return Single.just(Collections.emptyList());
-                    }
-                    List<R> pageList = pageData.getRecords();
-                    if (persistFunc == null) {
-                        return Single.just(pageList);
-                    }
-                    return applyFunc(persistFunc, pageList);
-                });
+        Single<ResponseResult<BasePageData<R>>> fetchSingle = applyFunc(fetchFunc, request);
+        if (fetchSingle == null) {
+            return Single.error(new NzHttpException(NzResponseCode.NZ_NO_DATA_ERROR, "fetch single is null"));
+        }
+        return fetchSingle.flatMap(responseResult -> {
+            if (responseResult == null) {
+                return Single.error(new NzHttpException(NzResponseCode.NZ_NO_DATA_ERROR, "response result is null"));
+            }
+
+            ResponseResult<List<R>> result = new ResponseResult<>();
+            result.setCode(responseResult.getCode());
+            result.setMsg(responseResult.getMsg());
+            BasePageData pageData = responseResult.getData();
+            if (pageData == null || pageData.getRecords() == null || pageData.getRecords().isEmpty()) {
+                return Single.just(result);
+            }
+            result.setData(responseResult.getData().getRecords());
+            if (persistFunc == null) {
+                return Single.just(result);
+            }
+            return applyFunc(persistFunc, result);
+        });
     }
 
     /**
@@ -207,9 +237,9 @@ class BaseRepositoryUtil {
      * @param <R>         列表元素类型
      * @return 分页结果的统计信息（总页数、成功页数、拉取数量、持久化数量等）
      */
-    public static <Q extends BasePageRequest, R> Single<GetPageResult> repositoryListsAsSingle(Q request,
-                                                                                               Function<Long, Single<List<R>>> fetchFunc,
-                                                                                               Function<List<R>, Single<List<R>>> persistFunc) {
+    public static <Q extends BasePageRequest, R> Single<ResponseResult<PageSummaryData>> repositoryListsAsSingle(Q request,
+                                                                                                                 Function<Long, Single<ResponseResult<List<R>>>> fetchFunc,
+                                                                                                                 Function<ResponseResult<List<R>>, Single<ResponseResult<List<R>>>> persistFunc) {
         return repositoryListsAsSingle(request, null, fetchFunc, persistFunc);
     }
 
@@ -238,46 +268,67 @@ class BaseRepositoryUtil {
      * @param <R>         列表元素类型
      * @return 分页结果的统计信息（uuId、总页数、成功页数、拉取数量、持久化数量等）
      */
-    public static <Q extends BasePageRequest, R> Single<GetPageResult> repositoryListsAsSingle(Q request,
-                                                                                               Function<Q, Single<List<R>>> prepareFunc,
-                                                                                               Function<Long, Single<List<R>>> fetchFunc,
-                                                                                               Function<List<R>, Single<List<R>>> persistFunc) {
+    public static <Q extends BasePageRequest, R> Single<ResponseResult<PageSummaryData>> repositoryListsAsSingle(Q request,
+                                                                                                                 Function<Q, Single<ResponseResult<List<R>>>> prepareFunc,
+                                                                                                                 Function<Long, Single<ResponseResult<List<R>>>> fetchFunc,
+                                                                                                                 Function<ResponseResult<List<R>>, Single<ResponseResult<List<R>>>> persistFunc) {
         NzLog.d("BaseRepositoryUtil : repositoryListsAsSingle");
         if (request == null) {
-            return Single.error(new NzCommonException("request is null"));
+            return Single.just(wrapPageSummaryError(new NzCommonException("request is null")));
         }
         if (request.getCurrent() != null && request.getCurrent() != 1) {
-            return Single.error(new NzCommonException("get all pages must set current is 1"));
+            return Single.just(wrapPageSummaryError(new NzCommonException("get all lists must set current is 1")));
         }
+        return Single.defer(() -> repositoryListsAsSingleInternal(request, prepareFunc, fetchFunc, persistFunc));
+    }
+
+    private static <Q extends BasePageRequest, R> Single<ResponseResult<PageSummaryData>> repositoryListsAsSingleInternal(Q request,
+                                                                                                                          Function<Q, Single<ResponseResult<List<R>>>> prepareFunc,
+                                                                                                                          Function<Long, Single<ResponseResult<List<R>>>> fetchFunc,
+                                                                                                                          Function<ResponseResult<List<R>>, Single<ResponseResult<List<R>>>> persistFunc) {
         if (prepareFunc != null) {
             applyFunc(prepareFunc, request);
         }
         final String uuId = UUID.randomUUID().toString();
         return Flowable.<Long, Long>generate(() -> 1L, (current, emitter) -> {
-                    NzLog.d("BaseRepositoryUtil : repositoryListsAsSingle : generate : currentPage : " + current);
                     emitter.onNext(current);
                     return current + 1L;
                 })
                 .concatMapSingle(currentPage -> applyFunc(fetchFunc, currentPage)
-                        .flatMap(pageList -> {
-                            NzLog.d("BaseRepositoryUtil : repositoryListsAsSingle : execute : currentPage : " + currentPage);
-                            GetPageResult pageResult = new GetPageResult();
+                        .flatMap(pageResponseResult -> {
+                            if (pageResponseResult == null) {
+                                return Single.error(new NzGetPageException(createFailedPageResult(uuId, "request page " + currentPage + " response is empty")));
+                            }
+                            if (pageResponseResult.getCode() != NzResponseCode.NZ_SUCCESS) {
+                                return Single.error(new NzGetPageException(createFailedPageResult(uuId, "request page " + currentPage + " response is not success")));
+                            }
+
+                            PageSummaryData pageResult = new PageSummaryData();
                             pageResult.setUuId(uuId);
                             pageResult.setTotalPages(currentPage);
+
+                            List<R> pageList = pageResponseResult.getData();
                             if (pageList == null || pageList.isEmpty()) {
                                 return Single.just(createCurrentPageResult(pageResult, 0L, 0L));
                             }
-                            NzLog.d("BaseRepositoryUtil : repositoryListsAsSingle : concatMap : page size : " + pageList.size());
-                            return applyFunc(persistFunc, pageList)
-                                    .flatMap(persistedList -> {
-                                        NzLog.d("BaseRepositoryUtil : repositoryListsAsSingle : persisted : persisted size : " + persistedList.size());
+                            NzLog.d("BaseRepositoryUtil : repositoryListsAsSingle : page " + currentPage + " : page size : " + pageList.size());
+                            return applyFunc(persistFunc, pageResponseResult)
+                                    .flatMap(persistedResult -> {
+                                        List<R> persistedList = persistedResult == null ? null : persistedResult.getData();
                                         long fetchedCount = pageList == null ? 0 : pageList.size();
                                         long persistedCount = persistedList == null ? 0 : persistedList.size();
                                         return Single.just(createCurrentPageResult(pageResult, fetchedCount, persistedCount));
                                     });
                         }))
                 .takeWhile(stat -> stat.getFetchedCount() > 0)
-                .collect(GetPageResult::new, (lastResult, currentResult) -> accumulatePageResult(uuId, lastResult, currentResult));
+                .collect(PageSummaryData::new, (lastResult, currentResult) -> accumulatePageResult(uuId, lastResult, currentResult))
+                .map(BaseRepositoryUtil::wrapPageSummarySuccess)
+                .onErrorResumeNext(err -> {
+                    if (NzExceptionMapper.isCatchException(err)) {
+                        return Single.just(wrapPageSummaryError(err));
+                    }
+                    return Single.error(err);
+                });
     }
 
     /**
@@ -298,9 +349,9 @@ class BaseRepositoryUtil {
      * @param <R>         列表元素类型
      * @return 分页结果的统计信息
      */
-    public static <Q extends BasePageRequest, R> Single<GetPageResult> repositoryPagesAsSingle(Q request,
-                                                                                               Function<Long, Single<BasePageData<R>>> fetchFunc,
-                                                                                               Function<List<R>, Single<List<R>>> persistFunc) {
+    public static <Q extends BasePageRequest, R> Single<ResponseResult<PageSummaryData>> repositoryPagesAsSingle(Q request,
+                                                                                                                 Function<Long, Single<ResponseResult<BasePageData<R>>>> fetchFunc,
+                                                                                                                 Function<ResponseResult<List<R>>, Single<ResponseResult<List<R>>>> persistFunc) {
         return repositoryPagesAsSingle(request, null, fetchFunc, persistFunc);
     }
 
@@ -336,31 +387,49 @@ class BaseRepositoryUtil {
      * @param <R>         列表元素类型
      * @return 分页结果的统计信息（uuId、总页数、成功页数、拉取数量、持久化数量等）
      */
-    public static <Q extends BasePageRequest, R> Single<GetPageResult> repositoryPagesAsSingle(Q request,
-                                                                                               Function<Q, Single<List<R>>> prepareFunc,
-                                                                                               Function<Long, Single<BasePageData<R>>> fetchFunc,
-                                                                                               Function<List<R>, Single<List<R>>> persistFunc) {
+    public static <Q extends BasePageRequest, R> Single<ResponseResult<PageSummaryData>> repositoryPagesAsSingle(Q request,
+                                                                                                                 Function<Q, Single<ResponseResult<List<R>>>> prepareFunc,
+                                                                                                                 Function<Long, Single<ResponseResult<BasePageData<R>>>> fetchFunc,
+                                                                                                                 Function<ResponseResult<List<R>>, Single<ResponseResult<List<R>>>> persistFunc) {
         NzLog.d("BaseRepositoryUtil : repositoryPagesAsSingle");
         if (request == null) {
-            return Single.error(new NzCommonException("request is null"));
+            return Single.just(wrapPageSummaryError(new NzCommonException("request is null")));
         }
         if (request.getCurrent() != null && request.getCurrent() != 1) {
-            return Single.error(new NzCommonException("get all pages must set current is 1"));
+            return Single.just(wrapPageSummaryError(new NzCommonException("get all pages must set current is 1")));
         }
+        return Single.defer(() -> repositoryPagesAsSingleInternal(request, prepareFunc, fetchFunc, persistFunc));
+    }
+
+    private static <Q extends BasePageRequest, R> Single<ResponseResult<PageSummaryData>> repositoryPagesAsSingleInternal(Q request,
+                                                                                                                          Function<Q, Single<ResponseResult<List<R>>>> prepareFunc,
+                                                                                                                          Function<Long, Single<ResponseResult<BasePageData<R>>>> fetchFunc,
+                                                                                                                          Function<ResponseResult<List<R>>, Single<ResponseResult<List<R>>>> persistFunc) {
         if (prepareFunc != null) {
             applyFunc(prepareFunc, request);
         }
         final String uuId = UUID.randomUUID().toString();
         return applyFunc(fetchFunc, 1L)
-                .flatMap(firstPageData -> {
-                    if (firstPageData == null || firstPageData.getRecords() == null || firstPageData.getRecords().isEmpty()) {
-                        return Single.error(new NzGetPageException(createFailedPageResult(uuId, "request page 1 is empty")));
+                .flatMap(firstResponseResult -> {
+                    if (firstResponseResult == null) {
+                        return Single.error(new NzGetPageException(createFailedPageResult(uuId, "request page 1 response is empty")));
+                    }
+                    if (firstResponseResult.getCode() != NzResponseCode.NZ_SUCCESS) {
+                        return Single.error(new NzGetPageException(createFailedPageResult(uuId, "request page 1 response is not success")));
                     }
 
-                    List<R> firstPageList = firstPageData.getRecords();
-                    NzLog.d("BaseRepositoryUtil : repositoryPagesAsSingle : first page : page size : " + firstPageList.size());
+                    BasePageData firstPageData = firstResponseResult.getData();
+                    if (firstPageData == null || firstPageData.getRecords() == null || firstPageData.getRecords().isEmpty()) {
+                        return Single.error(new NzGetPageException(createFailedPageResult(uuId, "request page 1 response data is empty")));
+                    }
 
-                    GetPageResult firstResult = new GetPageResult();
+                    ResponseResult<List<R>> responseResult = new ResponseResult<>();
+                    responseResult.setCode(firstResponseResult.getCode());
+                    responseResult.setMsg(firstResponseResult.getMsg());
+                    responseResult.setData(firstPageData.getRecords());
+                    NzLog.d("BaseRepositoryUtil : repositoryPagesAsSingle : page 1 : page size : " + firstPageData.getRecords().size());
+
+                    PageSummaryData firstResult = new PageSummaryData();
                     firstResult.setUuId(uuId);
                     firstResult.setSuccess(true);
                     firstResult.setMessage("success");
@@ -369,8 +438,9 @@ class BaseRepositoryUtil {
                     firstResult.setSuccessedPages(1L);
                     firstResult.setFetchedCount(firstPageData.getRecords() == null ? 0 : firstPageData.getRecords().size());
 
-                    return applyFunc(persistFunc, firstPageList)
-                            .flatMap(firstPersistedPageList -> {
+                    return applyFunc(persistFunc, responseResult)
+                            .flatMap(firstPersistedResultList -> {
+                                List<R> firstPersistedPageList = firstPersistedResultList == null ? null : firstPersistedResultList.getData();
                                 firstResult.setPersistedCount(firstPersistedPageList == null ? 0 : firstPersistedPageList.size());
 
                                 if (firstResult.getTotalPages() <= 1L) {
@@ -379,6 +449,13 @@ class BaseRepositoryUtil {
                                 return persistAndAccumulateRemainingPages(fetchFunc, persistFunc, firstResult, 2L, firstResult.getTotalPages() - 1L);
                             });
 
+                })
+                .map(BaseRepositoryUtil::wrapPageSummarySuccess)
+                .onErrorResumeNext(err -> {
+                    if (NzExceptionMapper.isCatchException(err)) {
+                        return Single.just(wrapPageSummaryError(err));
+                    }
+                    return Single.error(err);
                 });
     }
 
@@ -396,25 +473,39 @@ class BaseRepositoryUtil {
      * @param <R>         列表元素类型
      * @return 累积所有页后的最终统计结果
      */
-    private static <R> Single<GetPageResult> persistAndAccumulateRemainingPages(
-            Function<Long, Single<BasePageData<R>>> fetchFunc,
-            Function<List<R>, Single<List<R>>> persistFunc,
-            GetPageResult firstResult,
-            Long startPage,
-            Long pageCount) {
+    private static <R> Single<PageSummaryData> persistAndAccumulateRemainingPages(Function<Long, Single<ResponseResult<BasePageData<R>>>> fetchFunc,
+                                                                                  Function<ResponseResult<List<R>>, Single<ResponseResult<List<R>>>> persistFunc,
+                                                                                  PageSummaryData firstResult,
+                                                                                  Long startPage,
+                                                                                  Long pageCount) {
         return Flowable.rangeLong(startPage, pageCount)
                 .concatMapSingle(currentPage -> applyFunc(fetchFunc, currentPage)
-                        .flatMap(pageData -> {
+                        .flatMap(pageResponseResult -> {
+                            if (pageResponseResult == null) {
+                                return Single.error(new NzGetPageException(createFailedPageResult(firstResult.getUuId(), "request page " + currentPage + " response is empty")));
+                            }
+                            if (pageResponseResult.getCode() != NzResponseCode.NZ_SUCCESS) {
+                                return Single.error(new NzGetPageException(createFailedPageResult(firstResult.getUuId(), "request page " + currentPage + " response is not success")));
+                            }
                             // 检查数据有效性
+                            BasePageData<R> pageData = pageResponseResult.getData();
                             if (pageData == null || pageData.getRecords() == null || pageData.getRecords().isEmpty()) {
-                                throw new NzGetPageException(createFailedPageResult(firstResult.getUuId(), "request page " + currentPage + " is empty"));
+                                return Single.error(new NzGetPageException(createFailedPageResult(firstResult.getUuId(), "request page " + currentPage + " response data is empty")));
                             }
                             // 检查分页一致性
                             if (pageData.getCurrent() != currentPage || pageData.getPages() != firstResult.getTotalPages() || pageData.getTotal() != firstResult.getServerCount()) {
-                                throw new NzGetPageException(createFailedPageResult(firstResult.getUuId(), "request current page " + currentPage + " does not match the pagination data on the server side "));
+                                return Single.error(new NzGetPageException(createFailedPageResult(firstResult.getUuId(), "request page " + currentPage + " does not match the pagination data on the server side")));
                             }
-                            return applyFunc(persistFunc, pageData.getRecords())
-                                    .flatMap(persistedPageList -> {
+
+                            ResponseResult<List<R>> responseResult = new ResponseResult<>();
+                            responseResult.setCode(pageResponseResult.getCode());
+                            responseResult.setMsg(pageResponseResult.getMsg());
+                            responseResult.setData(pageData.getRecords());
+                            NzLog.d("BaseRepositoryUtil : repositoryPagesAsSingle : page " + currentPage + " : page size : " + pageData.getRecords().size());
+
+                            return applyFunc(persistFunc, responseResult)
+                                    .flatMap(persistedResultList -> {
+                                        List<R> persistedPageList = persistedResultList == null ? null : persistedResultList.getData();
                                         long fetchedCount = pageData.getRecords() == null ? 0 : pageData.getRecords().size();
                                         long persistedCount = persistedPageList == null ? 0 : persistedPageList.size();
                                         return Single.just(createCurrentPageResult(firstResult, fetchedCount, persistedCount));
@@ -431,8 +522,8 @@ class BaseRepositoryUtil {
      * @param persistedCount  本页持久化的数据数量
      * @return 本页的统计结果
      */
-    private static GetPageResult createCurrentPageResult(GetPageResult firstPageResult, long fetchedCount, long persistedCount) {
-        GetPageResult thisResult = new GetPageResult();
+    private static PageSummaryData createCurrentPageResult(PageSummaryData firstPageResult, long fetchedCount, long persistedCount) {
+        PageSummaryData thisResult = new PageSummaryData();
         thisResult.setSuccess(true);
         thisResult.setMessage("success");
         thisResult.setServerCount(firstPageResult.getServerCount());
@@ -449,8 +540,8 @@ class BaseRepositoryUtil {
      * @param message 错误消息
      * @return 失败的页面结果
      */
-    private static GetPageResult createFailedPageResult(String uuId, String message) {
-        GetPageResult result = new GetPageResult();
+    private static PageSummaryData createFailedPageResult(String uuId, String message) {
+        PageSummaryData result = new PageSummaryData();
         result.setUuId(uuId);
         result.setSuccess(false);
         result.setMessage(message);
@@ -469,7 +560,7 @@ class BaseRepositoryUtil {
      * @return 累积后的结果
      * @throws NzGetPageException 如果当前页失败则抛出异常
      */
-    private static GetPageResult accumulatePageResult(String uuId, GetPageResult lastResult, GetPageResult currentResult) throws NzGetPageException {
+    private static PageSummaryData accumulatePageResult(String uuId, PageSummaryData lastResult, PageSummaryData currentResult) throws NzGetPageException {
         NzLog.d("BaseRepositoryUtil : accumulatePageResult : lastResult : " + lastResult.getFetchedCount() + ", currentResult : " + currentResult.getFetchedCount());
         if (!currentResult.isSuccess()) {
             throw new NzGetPageException(createFailedPageResult(currentResult.getUuId(), "accumulate page meet some error"));
@@ -484,6 +575,38 @@ class BaseRepositoryUtil {
         }
         lastResult.setTotalPages(Math.max(lastResult.getTotalPages(), currentResult.getTotalPages()));
         return lastResult;
+    }
+
+    private static ResponseResult<PageSummaryData> wrapPageSummarySuccess(PageSummaryData summary) {
+        ResponseResult<PageSummaryData> result = new ResponseResult<>();
+        result.setCode(NzResponseCode.NZ_SUCCESS);
+        result.setMsg(summary != null ? summary.getMessage() : "success");
+        result.setData(summary);
+        return result;
+    }
+
+    private static ResponseResult<PageSummaryData> wrapPageSummaryError(Throwable throwable) {
+        ResponseResult<PageSummaryData> result = new ResponseResult<>();
+
+        if (throwable instanceof NzGetPageException) {
+            PageSummaryData failed = ((NzGetPageException) throwable).getResult();
+            result.setCode(NzResponseCode.NZ_FETCH_PAGE_ERROR);
+            result.setMsg(failed != null ? failed.getMessage() : throwable.getMessage());
+            result.setData(failed);
+            return result;
+        }
+
+        ResponseResult<?> mappedResult = NzExceptionMapper.createExceptioResult(throwable);
+        if (mappedResult != null) {
+            result.setCode(mappedResult.getCode());
+            result.setMsg(mappedResult.getMsg());
+            result.setData(createFailedPageResult(UUID.randomUUID().toString(), mappedResult.getMsg()));
+        } else {
+            result.setCode(NzResponseCode.NZ_UNKNOWN_ERROR);
+            result.setMsg(throwable.getMessage());
+            result.setData(createFailedPageResult(UUID.randomUUID().toString(), throwable.getMessage()));
+        }
+        return result;
     }
 
     /**

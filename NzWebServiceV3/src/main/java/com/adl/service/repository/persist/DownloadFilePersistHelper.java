@@ -1,89 +1,65 @@
 package com.adl.service.repository.persist;
 
-import com.adl.service.log.NzLog;
-import com.adl.service.callback.DownloadFileTask;
-import com.adl.service.callback.FileDownCallback;
+import android.text.TextUtils;
+
+import com.adl.service.AdlService;
+import com.adl.service.caller.impl.DownloadFileCallerImpl;
+import com.adl.service.common.IDefine;
+import com.adl.service.db.DaoManagerProxy;
+import com.adl.service.utils.FileUtil;
 import com.adl.service.utils.InnerUtil;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.functions.Function;
-import okhttp3.MediaType;
-import okhttp3.ResponseBody;
 
 public final class DownloadFilePersistHelper {
 
     public DownloadFilePersistHelper() {
     }
 
-    public Function<ResponseBody, Single<ResponseBody>> createPersistDownloadFileFunc(DownloadFileTask task, FileDownCallback callback) {
-        return (respBody) -> {
-            MediaType mediaType = respBody.contentType();
-            if (mediaType == null) {
-                NzLog.d("文件下载失败：mediaType is null");
-                return null;
+    public Function<Void, Single<Boolean>> createClearByUrlsFunc(List<String> urls) {
+        return (v) -> {
+            if (urls == null || urls.isEmpty()) return Single.just(Boolean.FALSE);
+
+            List<String> fileNames = new ArrayList<>();
+            for (String url : urls) {
+                if (TextUtils.isEmpty(url)) continue;
+                fileNames.add(InnerUtil.md5(InnerUtil.formatFaceUrl(url)));
             }
 
-            long length = respBody.contentLength();
-            InputStream input = respBody.byteStream();
-
-            File file = task.localFile;
-            task.contentLength = length;
-
-            // 文件是否存在
-            if (file.exists()) {
-                file.delete();
-            }
-
-            long totalRead = 0L;
-            try (OutputStream out = new FileOutputStream(file)) {
-                int read = -1;
-                byte[] buffer = new byte[64 * 1024];
-                while ((read = input.read(buffer)) > 0) {
-                    out.write(buffer, 0, read);
-                    out.flush();
-                    totalRead += read;
-                    if (callback != null) {
-                        callback.onProgress(length, totalRead);
-                    }
-                }
-            } catch (FileNotFoundException e) {
-                NzLog.d("文件下载失败：FileNotFoundException : " + e.getMessage());
-            } catch (IOException e) {
-                NzLog.d("文件下载失败：IOException : " + e.getMessage());
-            }
-            InnerUtil.close(input);
-            closeResponseBody(respBody);
-
-            // 是否读完
-            if (totalRead != length) {
-                file.delete();
-                NzLog.d("文件下载失败：长度不一致 : totalRead : " + totalRead + " length : " + length);
-                if (callback != null) {
-                    callback.onError("文件下载失败");
-                }
-                return null;
-            }
-
-            NzLog.d("文件下载完成");
-
-            return Single.just(respBody);
+            if (fileNames.isEmpty()) return Single.just(Boolean.FALSE);
+            DaoManagerProxy.getInstance().getFileDownDao().clearByFileNames(fileNames);
+            return Single.just(Boolean.TRUE);
         };
     }
 
-    private static void closeResponseBody(ResponseBody body) {
-        try {
-            if (body != null) {
-                body.close();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public Function<Void, Single<Boolean>> createClearStudentFaceFunc() {
+        return (v) -> {
+            //  清空数据库
+            DaoManagerProxy.getInstance().getFileDownDao().clearAllByType(IDefine.FileDownloadTypeStudentHead);
+            //  清空文件
+            File dataDir = AdlService.getService().getContext().getDataDir();
+            //  清空人脸文件
+            File studentFaceDir = new File(dataDir, DownloadFileCallerImpl.STUDENT_FACE_DIR_NAME);
+            FileUtil.deleteFileDir(studentFaceDir);
+            return Single.just(Boolean.TRUE);
+        };
+    }
+
+    public Function<Void, Single<Boolean>> createClearTeacherFaceFunc() {
+        return (v) -> {
+            //  清空数据库
+            DaoManagerProxy.getInstance().getFileDownDao().clearAllByType(IDefine.FileDownloadTypeTeacherHead);
+            //  清空文件
+            File dataDir = AdlService.getService().getContext().getDataDir();
+            //  清空人脸文件
+            File teacherFaceDir = new File(dataDir, DownloadFileCallerImpl.TEACHER_FACE_DIR_NAME);
+            FileUtil.deleteFileDir(teacherFaceDir);
+            return Single.just(Boolean.TRUE);
+        };
     }
 }

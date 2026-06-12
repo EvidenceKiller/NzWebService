@@ -16,18 +16,12 @@ public interface RequestCallback<T> {
      * @param data 响应数据
      */
     void onSuccess(T data);
-    
+
     /**
      * 请求失败时的回调
      *
-     * @param error 错误信息
-     */
-    void onError(String error);
-
-    /**
-     * 业务失败回调（当响应是 {@code BaseResponse} 且 {@code isSuccess()==false} 时触发）。
-     *
      * @param code 业务错误码
+     * @param msg 业务错误描述
      */
-    void onFail(int code, String msg);
+    void onError(int code, String msg);
 }

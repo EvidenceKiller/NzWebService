@@ -2,6 +2,7 @@ package com.adl.service.repository.prepare;
 
 import android.text.TextUtils;
 
+import com.adl.service.callback.ResponseResult;
 import com.adl.service.data.CompetitionData;
 import com.adl.service.data.SportMeetData;
 import com.adl.service.db.DaoManagerProxy;
@@ -18,14 +19,14 @@ public final class BusinessPrepareHelper {
     public BusinessPrepareHelper() {
     }
 
-    public Function<CompetitionPageRequest, Single<List<CompetitionData>>> createPrepareCompetitionPageFunc() {
+    public Function<CompetitionPageRequest, Single<ResponseResult<List<CompetitionData>>>> createPrepareCompetitionPageFunc() {
         return (request) -> {
             DaoManagerProxy.getInstance().getCompetitionDao().clearAll();
             return null;
         };
     }
 
-    public Function<SportMeetPageRequest, Single<List<SportMeetData>>> createPrepareSportMeetPageFunc() {
+    public Function<SportMeetPageRequest, Single<ResponseResult<List<SportMeetData>>>> createPrepareSportMeetPageFunc() {
         return (request) -> {
             if (TextUtils.isEmpty(request.getAppCode())) {
                 DaoManagerProxy.getInstance().getSportMeetDao().clearAll();

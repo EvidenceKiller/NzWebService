@@ -8,8 +8,10 @@ import android.widget.GridLayout;
 import android.widget.TextView;
 
 import com.adl.service.AdlService;
-import com.adl.service.callback.GetPageResult;
+import com.adl.service.data.PageSummaryData;
 import com.adl.service.callback.RequestCallback;
+import com.adl.service.callback.ResponseResult;
+import com.adl.service.common.NzResponseCode;
 import com.adl.service.http.request.BannerDetailListRequest;
 import com.adl.service.http.request.DeviceFocusListRequest;
 import com.adl.service.http.request.DictMapRequest;
@@ -136,54 +138,29 @@ public class V3OperationCallerTestActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFail(int code, String msg) {
-                Log.d(TAG, "OperationCallerTestActivity::getDetailListAsync::onFail : code : " + code + ", msg : " + msg);
+            public void onError(int code, String msg) {
+                Log.d(TAG, "OperationCallerTestActivity::getDetailListAsync::onError : code : " + code + ", msg : " + msg);
                 resultView.setText(msg);
-            }
-
-            @Override
-            public void onError(String error) {
-                Log.d(TAG, "OperationCallerTestActivity::getDetailListAsync::onError : error : " + error);
-                resultView.setText(error);
             }
         });
     }
 
     private void getBannerDetailListSync() {
-        AdlService.getService().executeSyncOnIo(RequestScope.of(this), () -> {
-            BannerDetailListRequest request = buildBannerDetailListRequest();
-            return AdlService.getService().getOperationCaller().getBannerDetailListSync(request);
-        }, new RequestCallback<List<BannerDetailData>>() {
-            @Override
-            public void onSuccess(List<BannerDetailData> data) {
-                if (data != null) {
-                    Log.d(TAG, "OperationCallerTestActivity::getDetailListSync::onSuccess : data size : " + data.size());
-                    Log.d(TAG, "OperationCallerTestActivity::getDetailListSync::onSuccess : data : " + data);
-                    resultView.setText(data.toString());
-                } else {
-                    Log.d(TAG, "OperationCallerTestActivity::getDetailListSync::onSuccess : data is null");
-                }
-            }
-
-            @Override
-            public void onFail(int code, String msg) {
-                Log.d(TAG, "OperationCallerTestActivity::getDetailListSync::onFail : code : " + code + ", msg : " + msg);
-                resultView.setText(msg);
-            }
-
-            @Override
-            public void onError(String error) {
-                Log.d(TAG, "OperationCallerTestActivity::getDetailListSync::onError : error : " + error);
-                resultView.setText(error);
-            }
-        });
+        ResponseResult<List<BannerDetailData>> result = AdlService.getService().getOperationCaller().getBannerDetailListSync(buildBannerDetailListRequest());
+        if (result.getCode() == NzResponseCode.NZ_SUCCESS) {
+            Log.d(TAG, "OperationCallerTestActivity::getBannerDetailListSync::onSuccess : data : " + result.getData());
+            resultView.setText(result.getData().toString());
+        } else {
+            Log.d(TAG, "OperationCallerTestActivity::getBannerDetailListSync::onError : code : " + result.getCode() + ", msg : " + result.getMsg());
+            resultView.setText(result.getMsg());
+        }
     }
 
     private void getSportSkuPagesAllAsync() {
         SportSkuPageRequest request = buildSportSkuPageRequest();
-        AdlService.getService().getOperationCaller().getSportSkuPagesAllAsync(RequestScope.of(this), request, new RequestCallback<GetPageResult>() {
+        AdlService.getService().getOperationCaller().getSportSkuPagesAllAsync(RequestScope.of(this), request, new RequestCallback<PageSummaryData>() {
             @Override
-            public void onSuccess(GetPageResult data) {
+            public void onSuccess(PageSummaryData data) {
                 if (data != null) {
                     Log.d(TAG, "OperationCallerTestActivity::getSportSkuPagesAllAsync::onSuccess : data : " + data);
                     resultView.setText(data.toString());
@@ -193,46 +170,22 @@ public class V3OperationCallerTestActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFail(int code, String msg) {
-                Log.d(TAG, "OperationCallerTestActivity::getSportSkuPagesAllAsync::onFail : code : " + code + ", msg : " + msg);
+            public void onError(int code, String msg) {
+                Log.d(TAG, "OperationCallerTestActivity::getSportSkuPagesAllAsync::onError : code : " + code + ", msg : " + msg);
                 resultView.setText(msg);
-            }
-
-            @Override
-            public void onError(String error) {
-                Log.d(TAG, "OperationCallerTestActivity::getSportSkuPagesAllAsync::onError : error : " + error);
-                resultView.setText(error);
             }
         });
     }
 
     private void getSportSkuPagesAllSync() {
-        AdlService.getService().executeSyncOnIo(RequestScope.of(this), () -> {
-            SportSkuPageRequest request = buildSportSkuPageRequest();
-            return AdlService.getService().getOperationCaller().getSportSkuPagesAllSync(request);
-        }, new RequestCallback<GetPageResult>() {
-            @Override
-            public void onSuccess(GetPageResult data) {
-                if (data != null) {
-                    Log.d(TAG, "OperationCallerTestActivity::getSportSkuPagesAllSync::onSuccess : data : " + data);
-                    resultView.setText(data.toString());
-                } else {
-                    Log.d(TAG, "OperationCallerTestActivity::getSportSkuPagesAllSync::onSuccess : data is null");
-                }
-            }
-
-            @Override
-            public void onFail(int code, String msg) {
-                Log.d(TAG, "OperationCallerTestActivity::getSportSkuPagesAllSync::onFail : code : " + code + ", msg : " + msg);
-                resultView.setText(msg);
-            }
-
-            @Override
-            public void onError(String error) {
-                Log.d(TAG, "OperationCallerTestActivity::getSportSkuPagesAllSync::onError : error : " + error);
-                resultView.setText(error);
-            }
-        });
+        ResponseResult<PageSummaryData> result = AdlService.getService().getOperationCaller().getSportSkuPagesAllSync(buildSportSkuPageRequest());
+        if (result.getCode() == NzResponseCode.NZ_SUCCESS) {
+            Log.d(TAG, "OperationCallerTestActivity::getSportSkuPagesAllSync::onSuccess : data : " + result.getData());
+            resultView.setText(result.getData().toString());
+        } else {
+            Log.d(TAG, "OperationCallerTestActivity::getSportSkuPagesAllSync::onError : code : " + result.getCode() + ", msg : " + result.getMsg());
+            resultView.setText(result.getMsg());
+        }
     }
 
     private void getSportSkuPageAsync() {
@@ -249,46 +202,22 @@ public class V3OperationCallerTestActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFail(int code, String msg) {
-                Log.d(TAG, "OperationCallerTestActivity::getSportSkuPageAsync::onFail : code : " + code + ", msg : " + msg);
+            public void onError(int code, String msg) {
+                Log.d(TAG, "OperationCallerTestActivity::getSportSkuPageAsync::onError : code : " + code + ", msg : " + msg);
                 resultView.setText(msg);
-            }
-
-            @Override
-            public void onError(String error) {
-                Log.d(TAG, "OperationCallerTestActivity::getSportSkuPageAsync::onError : error : " + error);
-                resultView.setText(error);
             }
         });
     }
 
     private void getSportSkuPageSync() {
-        AdlService.getService().executeSyncOnIo(RequestScope.of(this), () -> {
-            SportSkuPageRequest request = buildSportSkuPageRequest();
-            return AdlService.getService().getOperationCaller().getSportSkuPageSync(request);
-        }, new RequestCallback<List<SportSkuData>>() {
-            @Override
-            public void onSuccess(List<SportSkuData> data) {
-                if (data != null) {
-                    Log.d(TAG, "OperationCallerTestActivity::getSportSkuPageSync::onSuccess : data : " + data);
-                    resultView.setText(data.toString());
-                } else {
-                    Log.d(TAG, "OperationCallerTestActivity::getSportSkuPageSync::onSuccess : data is null");
-                }
-            }
-
-            @Override
-            public void onFail(int code, String msg) {
-                Log.d(TAG, "OperationCallerTestActivity::getSportSkuPageSync::onFail : code : " + code + ", msg : " + msg);
-                resultView.setText(msg);
-            }
-
-            @Override
-            public void onError(String error) {
-                Log.d(TAG, "OperationCallerTestActivity::getSportSkuPageSync::onError : error : " + error);
-                resultView.setText(error);
-            }
-        });
+        ResponseResult<List<SportSkuData>> result = AdlService.getService().getOperationCaller().getSportSkuPageSync(buildSportSkuPageRequest());
+        if (result.getCode() == NzResponseCode.NZ_SUCCESS) {
+            Log.d(TAG, "OperationCallerTestActivity::getSportSkuPageSync::onSuccess : data : " + result.getData());
+            resultView.setText(result.getData().toString());
+        } else {
+            Log.d(TAG, "OperationCallerTestActivity::getSportSkuPageSync::onError : code : " + result.getCode() + ", msg : " + result.getMsg());
+            resultView.setText(result.getMsg());
+        }
     }
 
     private void getSportSkuDetailAsync() {
@@ -305,46 +234,22 @@ public class V3OperationCallerTestActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFail(int code, String msg) {
-                Log.d(TAG, "OperationCallerTestActivity::getSportSkuDetailAsync::onFail : code : " + code + ", msg : " + msg);
+            public void onError(int code, String msg) {
+                Log.d(TAG, "OperationCallerTestActivity::getSportSkuDetailAsync::onError : code : " + code + ", msg : " + msg);
                 resultView.setText(msg);
-            }
-
-            @Override
-            public void onError(String error) {
-                Log.d(TAG, "OperationCallerTestActivity::getSportSkuDetailAsync::onError : error : " + error);
-                resultView.setText(error);
             }
         });
     }
 
     private void getSportSkuDetailSync() {
-        AdlService.getService().executeSyncOnIo(RequestScope.of(this), () -> {
-            SportSkuDetailRequest request = buildSportSkuDetailRequest();
-            return AdlService.getService().getOperationCaller().getSportSkuDetailSync(request);
-        }, new RequestCallback<SportSkuDetailData>() {
-            @Override
-            public void onSuccess(SportSkuDetailData data) {
-                if (data != null) {
-                    Log.d(TAG, "OperationCallerTestActivity::getSportSkuDetailSync::onSuccess : data : " + data);
-                    resultView.setText(data.toString());
-                } else {
-                    Log.d(TAG, "OperationCallerTestActivity::getSportSkuDetailSync::onSuccess : data is null");
-                }
-            }
-
-            @Override
-            public void onFail(int code, String msg) {
-                Log.d(TAG, "OperationCallerTestActivity::getSportSkuDetailSync::onFail : code : " + code + ", msg : " + msg);
-                resultView.setText(msg);
-            }
-
-            @Override
-            public void onError(String error) {
-                Log.d(TAG, "OperationCallerTestActivity::getSportSkuDetailSync::onError : error : " + error);
-                resultView.setText(error);
-            }
-        });
+        ResponseResult<SportSkuDetailData> result = AdlService.getService().getOperationCaller().getSportSkuDetailSync(buildSportSkuDetailRequest());
+        if (result.getCode() == NzResponseCode.NZ_SUCCESS) {
+            Log.d(TAG, "OperationCallerTestActivity::getSportSkuDetailSync::onSuccess : data : " + result.getData());
+            resultView.setText(result.getData().toString());
+        } else {
+            Log.d(TAG, "OperationCallerTestActivity::getSportSkuDetailSync::onError : code : " + result.getCode() + ", msg : " + result.getMsg());
+            resultView.setText(result.getMsg());
+        }
     }
 
     private void getDictMapAsync() {
@@ -362,47 +267,22 @@ public class V3OperationCallerTestActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFail(int code, String msg) {
-                Log.d(TAG, "OperationCallerTestActivity::getDictMapAsync::onFail : code : " + code + ", msg : " + msg);
+            public void onError(int code, String msg) {
+                Log.d(TAG, "OperationCallerTestActivity::getDictMapAsync::onError : code : " + code + ", msg : " + msg);
                 resultView.setText(msg);
-            }
-
-            @Override
-            public void onError(String error) {
-                Log.d(TAG, "OperationCallerTestActivity::getDictMapAsync::onError : error : " + error);
-                resultView.setText(error);
             }
         });
     }
 
     private void getDictMapSync() {
-        AdlService.getService().executeSyncOnIo(RequestScope.of(this), () -> {
-            DictMapRequest request = DictMapRequest.builder("9901060001").forceUpdate(true).build();
-            return AdlService.getService().getOperationCaller().getDictMapSync(request);
-        }, new RequestCallback<List<DictMapData>>() {
-            @Override
-            public void onSuccess(List<DictMapData> data) {
-                if (data != null) {
-                    Log.d(TAG, "OperationCallerTestActivity::getDictMapSync::onSuccess : data size : " + data.size());
-                    Log.d(TAG, "OperationCallerTestActivity::getDictMapSync::onSuccess : data : " + data);
-                    resultView.setText(data.toString());
-                } else {
-                    Log.d(TAG, "OperationCallerTestActivity::getDictMapSync::onSuccess : data is null");
-                }
-            }
-
-            @Override
-            public void onFail(int code, String msg) {
-                Log.d(TAG, "OperationCallerTestActivity::getDictMapSync::onFail : code : " + code + ", msg : " + msg);
-                resultView.setText(msg);
-            }
-
-            @Override
-            public void onError(String error) {
-                Log.d(TAG, "OperationCallerTestActivity::getDictMapSync::onError : error : " + error);
-                resultView.setText(error);
-            }
-        });
+        ResponseResult<List<DictMapData>> result = AdlService.getService().getOperationCaller().getDictMapSync(DictMapRequest.builder("9901060001").forceUpdate(true).build());
+        if (result.getCode() == NzResponseCode.NZ_SUCCESS) {
+            Log.d(TAG, "OperationCallerTestActivity::getDictMapSync::onSuccess : data : " + result.getData());
+            resultView.setText(result.getData().toString());
+        } else {
+            Log.d(TAG, "OperationCallerTestActivity::getDictMapSync::onError : code : " + result.getCode() + ", msg : " + result.getMsg());
+            resultView.setText(result.getMsg());
+        }
     }
 
     private void getSceneListAsync() {
@@ -420,47 +300,22 @@ public class V3OperationCallerTestActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFail(int code, String msg) {
-                Log.d(TAG, "OperationCallerTestActivity::getSceneListAsync::onFail : code : " + code + ", msg : " + msg);
+            public void onError(int code, String msg) {
+                Log.d(TAG, "OperationCallerTestActivity::getSceneListAsync::onError : code : " + code + ", msg : " + msg);
                 resultView.setText(msg);
-            }
-
-            @Override
-            public void onError(String error) {
-                Log.d(TAG, "OperationCallerTestActivity::getSceneListAsync::onError : error : " + error);
-                resultView.setText(error);
             }
         });
     }
 
     private void getSceneListSync() {
-        AdlService.getService().executeSyncOnIo(RequestScope.of(this), () -> {
-            SceneListRequest request = buildSceneListRequest();
-            return AdlService.getService().getOperationCaller().getSceneListSync(request);
-        }, new RequestCallback<List<SceneData>>() {
-            @Override
-            public void onSuccess(List<SceneData> data) {
-                if (data != null) {
-                    Log.d(TAG, "OperationCallerTestActivity::getSceneListSync::onSuccess : data size : " + data.size());
-                    Log.d(TAG, "OperationCallerTestActivity::getSceneListSync::onSuccess : data : " + data);
-                    resultView.setText(data.toString());
-                } else {
-                    Log.d(TAG, "OperationCallerTestActivity::getSceneListSync::onSuccess : data is null");
-                }
-            }
-
-            @Override
-            public void onFail(int code, String msg) {
-                Log.d(TAG, "OperationCallerTestActivity::getSceneListSync::onFail : code : " + code + ", msg : " + msg);
-                resultView.setText(msg);
-            }
-
-            @Override
-            public void onError(String error) {
-                Log.d(TAG, "OperationCallerTestActivity::getSceneListSync::onError : error : " + error);
-                resultView.setText(error);
-            }
-        });
+        ResponseResult<List<SceneData>> result = AdlService.getService().getOperationCaller().getSceneListSync(buildSceneListRequest());
+        if (result.getCode() == NzResponseCode.NZ_SUCCESS) {
+            Log.d(TAG, "OperationCallerTestActivity::getSceneListSync::onSuccess : data : " + result.getData());
+            resultView.setText(result.getData().toString());
+        } else {
+            Log.d(TAG, "OperationCallerTestActivity::getSceneListSync::onError : code : " + result.getCode() + ", msg : " + result.getMsg());
+            resultView.setText(result.getMsg());
+        }
     }
 
     private void uploadDeviceNameAsync() {
@@ -473,42 +328,22 @@ public class V3OperationCallerTestActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFail(int code, String msg) {
-                Log.d(TAG, "OperationCallerTestActivity::uploadDeviceNameAsync::onFail : code : " + code + ", msg : " + msg);
+            public void onError(int code, String msg) {
+                Log.d(TAG, "OperationCallerTestActivity::uploadDeviceNameAsync::onError : code : " + code + ", msg : " + msg);
                 resultView.setText(msg);
-            }
-
-            @Override
-            public void onError(String error) {
-                Log.d(TAG, "OperationCallerTestActivity::uploadDeviceNameAsync::onError : error : " + error);
-                resultView.setText(error);
             }
         });
     }
 
     private void uploadDeviceNameSync() {
-        AdlService.getService().executeSyncOnIo(RequestScope.of(this), () -> {
-            UploadDeviceNameRequest request = buildUploadDeviceNameRequest();
-            return AdlService.getService().getOperationCaller().uploadDeviceNameSync(request);
-        }, new RequestCallback<Boolean>() {
-            @Override
-            public void onSuccess(Boolean data) {
-                Log.d(TAG, "OperationCallerTestActivity::uploadDeviceNameSync::onSuccess : data : " + data);
-                resultView.setText(String.valueOf(data));
-            }
-
-            @Override
-            public void onFail(int code, String msg) {
-                Log.d(TAG, "OperationCallerTestActivity::uploadDeviceNameSync::onFail : code : " + code + ", msg : " + msg);
-                resultView.setText(msg);
-            }
-
-            @Override
-            public void onError(String error) {
-                Log.d(TAG, "OperationCallerTestActivity::uploadDeviceNameSync::onError : error : " + error);
-                resultView.setText(error);
-            }
-        });
+        ResponseResult<Boolean> result = AdlService.getService().getOperationCaller().uploadDeviceNameSync(buildUploadDeviceNameRequest());
+        if (result.getCode() == NzResponseCode.NZ_SUCCESS) {
+            Log.d(TAG, "OperationCallerTestActivity::uploadDeviceNameSync::onSuccess : data : " + result.getData());
+            resultView.setText(String.valueOf(result.getData()));
+        } else {
+            Log.d(TAG, "OperationCallerTestActivity::uploadDeviceNameSync::onError : code : " + result.getCode() + ", msg : " + result.getMsg());
+            resultView.setText(result.getMsg());
+        }
     }
 
     private void getDeviceFocusListAsync() {
@@ -526,47 +361,22 @@ public class V3OperationCallerTestActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFail(int code, String msg) {
-                Log.d(TAG, "OperationCallerTestActivity::getDeviceFocusListAsync::onFail : code : " + code + ", msg : " + msg);
+            public void onError(int code, String msg) {
+                Log.d(TAG, "OperationCallerTestActivity::getDeviceFocusListAsync::onError : code : " + code + ", msg : " + msg);
                 resultView.setText(msg);
-            }
-
-            @Override
-            public void onError(String error) {
-                Log.d(TAG, "OperationCallerTestActivity::getDeviceFocusListAsync::onError : error : " + error);
-                resultView.setText(error);
             }
         });
     }
 
     private void getDeviceFocusListSync() {
-        AdlService.getService().executeSyncOnIo(RequestScope.of(this), () -> {
-            DeviceFocusListRequest request = buildDeviceFocusListRequest();
-            return AdlService.getService().getOperationCaller().getDeviceFocusListSync(request);
-        }, new RequestCallback<List<DeviceFocusData>>() {
-            @Override
-            public void onSuccess(List<DeviceFocusData> data) {
-                if (data != null) {
-                    Log.d(TAG, "OperationCallerTestActivity::getDeviceFocusListSync::onSuccess : data size : " + data.size());
-                    Log.d(TAG, "OperationCallerTestActivity::getDeviceFocusListSync::onSuccess : data : " + data);
-                    resultView.setText(data.toString());
-                } else {
-                    Log.d(TAG, "OperationCallerTestActivity::getDeviceFocusListSync::onSuccess : data is null");
-                }
-            }
-
-            @Override
-            public void onFail(int code, String msg) {
-                Log.d(TAG, "OperationCallerTestActivity::getDeviceFocusListSync::onFail : code : " + code + ", msg : " + msg);
-                resultView.setText(msg);
-            }
-
-            @Override
-            public void onError(String error) {
-                Log.d(TAG, "OperationCallerTestActivity::getDeviceFocusListSync::onError : error : " + error);
-                resultView.setText(error);
-            }
-        });
+        ResponseResult<List<DeviceFocusData>> result = AdlService.getService().getOperationCaller().getDeviceFocusListSync(buildDeviceFocusListRequest());
+        if (result.getCode() == NzResponseCode.NZ_SUCCESS) {
+            Log.d(TAG, "OperationCallerTestActivity::getDeviceFocusListSync::onSuccess : data : " + result.getData());
+            resultView.setText(result.getData().toString());
+        } else {
+            Log.d(TAG, "OperationCallerTestActivity::getDeviceFocusListSync::onError : code : " + result.getCode() + ", msg : " + result.getMsg());
+            resultView.setText(result.getMsg());
+        }
     }
 
 

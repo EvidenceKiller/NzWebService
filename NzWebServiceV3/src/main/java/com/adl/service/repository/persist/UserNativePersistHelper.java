@@ -3,23 +3,14 @@ package com.adl.service.repository.persist;
 import android.text.TextUtils;
 
 import com.adl.service.common.IDefine;
-import com.adl.service.data.DictData;
 import com.adl.service.data.LoginInfoData;
 import com.adl.service.data.StudentData;
 import com.adl.service.data.TeacherData;
 import com.adl.service.db.DaoManagerProxy;
-import com.adl.service.db.entity.DictEntity;
 import com.adl.service.db.entity.LoginInfoEntity;
 import com.adl.service.db.entity.StudentEntity;
 import com.adl.service.db.entity.TeacherEntity;
 import com.adl.service.exception.NzCommonException;
-import com.adl.service.http.request.DictRequest;
-import com.adl.service.http.request.StudentPageRequest;
-import com.adl.service.http.request.TeacherPageRequest;
-import com.adl.service.log.NzLog;
-import com.adl.service.repository.cache.CacheTag;
-import com.adl.service.repository.cache.MemoryCacheManager;
-import com.adl.service.utils.InnerUtil;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,20 +18,9 @@ import java.util.stream.Collectors;
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.functions.Function;
 
-public final class UserDaoPersistHelper {
+public final class UserNativePersistHelper {
 
-    public UserDaoPersistHelper() {
-    }
-
-    public Function<Void, Single<LoginInfoData>> createPrepareLoginInfoFunc() {
-        return (v) -> {
-            LoginInfoEntity entity = DaoManagerProxy.getInstance().getLoginInfoDao().getLoginInfo();
-            if (entity == null) {
-                return Single.error(new NzCommonException("login info data is null"));
-            } else {
-                return Single.just(LoginInfoEntity.convertToData(entity));
-            }
-        };
+    public UserNativePersistHelper() {
     }
 
     public Function<Void, Single<List<TeacherData>>> createPrepareTeacherListFunc() {

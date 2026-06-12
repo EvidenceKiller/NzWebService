@@ -2,6 +2,7 @@ package com.adl.service.repository.fetch;
 
 import android.text.TextUtils;
 
+import com.adl.service.callback.ResponseResult;
 import com.adl.service.data.BannerDetailData;
 import com.adl.service.data.UpgradePlanByDeviceData;
 import com.adl.service.http.request.DeviceQrcodeRequest;
@@ -37,38 +38,31 @@ public final class OpsMaintFetchHelper {
         return opsMaintService;
     }
 
-    @SuppressWarnings("unchecked")
-    public Function<UploadDeviceInfoRequest, Single<Boolean>> createUploadDeviceInfoFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(getService().uploadDeviceInfo(request), Boolean.class);
+    public Function<UploadDeviceInfoRequest, Single<ResponseResult<Boolean>>> createUploadDeviceInfoFunc() {
+        return (request) -> BaseFetchUtil.scheduleResponse(getService().uploadDeviceInfo(request));
     }
 
-    @SuppressWarnings("unchecked")
-    public Function<UploadUpgradeLogRequest, Single<Object>> createUploadUpgradeLogFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(getService().uploadUpgradeLog(request), Object.class);
+    public Function<UploadUpgradeLogRequest, Single<ResponseResult<Object>>> createUploadUpgradeLogFunc() {
+        return (request) -> BaseFetchUtil.scheduleResponse(getService().uploadUpgradeLog(request));
     }
 
-    @SuppressWarnings("unchecked")
-    public Function<UpgradePlanByDeviceRequest, Single<List<UpgradePlanByDeviceData>>> createGetUpgradePlanByDeviceFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(getService().getUpgradePlanByDevice(request), (Class<List< UpgradePlanByDeviceData >>) (Class<?>) List.class);
+    public Function<UpgradePlanByDeviceRequest, Single<ResponseResult<List<UpgradePlanByDeviceData>>>> createGetUpgradePlanByDeviceFunc() {
+        return (request) -> BaseFetchUtil.scheduleResponse(getService().getUpgradePlanByDevice(request));
     }
 
-    @SuppressWarnings("unchecked")
-    public Function<UpgradePlanByDeviceWithOutLoginRequest, Single<String>> createGetUpgradePlanByDeviceWithOutLoginFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(getService().getUpgradePlanByDeviceWithOutLogin(request), String.class);
+    public Function<UpgradePlanByDeviceWithOutLoginRequest, Single<ResponseResult<String>>> createGetUpgradePlanByDeviceWithOutLoginFunc() {
+        return (request) -> BaseFetchUtil.scheduleResponse(getService().getUpgradePlanByDeviceWithOutLogin(request));
     }
 
-    @SuppressWarnings("unchecked")
-    public Function<SoftwareReportRequest, Single<Boolean>> createSoftwareReportFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(getService().softwareReport(request), Boolean.class);
+    public Function<SoftwareReportRequest, Single<ResponseResult<Boolean>>> createSoftwareReportFunc() {
+        return (request) -> BaseFetchUtil.scheduleResponse(getService().softwareReport(request));
     }
 
-    @SuppressWarnings("unchecked")
-    public Function<DeviceQrcodeRequest, Single<String>> createGetDeviceQrcodeFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(getService().getDeviceQrcode(request), String.class);
+    public Function<DeviceQrcodeRequest, Single<ResponseResult<String>>> createGetDeviceQrcodeFunc() {
+        return (request) -> BaseFetchUtil.scheduleResponse(getService().getDeviceQrcode(request));
     }
 
-    @SuppressWarnings("unchecked")
-    public Function<LogAddBatchRequest, Single<Object>> createLogAddBatchFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(getService().logAddBatch(request), Object.class);
+    public Function<LogAddBatchRequest, Single<ResponseResult<Object>>> createLogAddBatchFunc() {
+        return (request) -> BaseFetchUtil.scheduleResponse(getService().logAddBatch(request));
     }
 }

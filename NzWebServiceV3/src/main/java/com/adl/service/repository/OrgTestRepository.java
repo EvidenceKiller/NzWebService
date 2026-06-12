@@ -1,6 +1,7 @@
 package com.adl.service.repository;
 
-import com.adl.service.callback.GetPageResult;
+import com.adl.service.callback.ResponseResult;
+import com.adl.service.data.PageSummaryData;
 import com.adl.service.data.PlanClassData;
 import com.adl.service.data.PlanData;
 import com.adl.service.data.PlanInfoData;
@@ -43,52 +44,52 @@ public final class OrgTestRepository {
         return instance;
     }
 
-    public Single<GetPageResult> getStandardConfigPagesAll(StandardConfigPageRequest request) {
+    public Single<ResponseResult<PageSummaryData>> getStandardConfigPagesAll(StandardConfigPageRequest request) {
         return BaseRepositoryUtil.repositoryListsAsSingle(request,
                 fetchHelper.createGetStandardConfigPagesAllFunc(request),
                 persistHelper.createPersistStandardConfigPageFunc());
     }
 
-    public Single<List<StandardConfigData>> getStandardConfigPage(StandardConfigPageRequest request) {
+    public Single<ResponseResult<List<StandardConfigData>>> getStandardConfigPage(StandardConfigPageRequest request) {
         return BaseRepositoryUtil.repositoryAsSingle(request,
                 fetchHelper.createGetStandardConfigPageFunc(),
                 persistHelper.createPersistStandardConfigPageFunc());
     }
 
-    public Single<GetPageResult> getPlanStudentPagesAll(PlanStudentPageRequest request) {
+    public Single<ResponseResult<PageSummaryData>> getPlanStudentPagesAll(PlanStudentPageRequest request) {
         return BaseRepositoryUtil.repositoryPagesAsSingle(request,
                 prepareHelper.createPreparePlanStudentPagesAllFunc(),
                 fetchHelper.createGetPlanStudentPagesAllFunc(request),
                 persistHelper.createPersistPlanStudentPageFunc(request));
     }
 
-    public Single<List<PlanStudentData>> getPlanStudentPage(PlanStudentPageRequest request) {
+    public Single<ResponseResult<List<PlanStudentData>>> getPlanStudentPage(PlanStudentPageRequest request) {
         return BaseRepositoryUtil.repositoryPageAsSingle(request,
                 fetchHelper.createGetPlanStudentPageFunc(),
                 persistHelper.createPersistPlanStudentPageFunc(request));
     }
 
-    public Single<GetPageResult> getPlanPagesAll(PlanPageRequest request) {
+    public Single<ResponseResult<PageSummaryData>> getPlanPagesAll(PlanPageRequest request) {
         return BaseRepositoryUtil.repositoryPagesAsSingle(request,
                 fetchHelper.createGetPlanPagesAllFunc(request),
                 persistHelper.createPersistPlanPageFunc(request));
     }
 
-    public Single<List<PlanData>> getPlanPage(PlanPageRequest request) {
+    public Single<ResponseResult<List<PlanData>>> getPlanPage(PlanPageRequest request) {
         return BaseRepositoryUtil.repositoryPageAsSingle(request,
                 fetchHelper.createGetPlanPageFunc(),
                 persistHelper.createPersistPlanPageFunc(request));
     }
 
-    public Single<PlanInfoData> getPlanInfo(PlanInfoRequest request) {
+    public Single<ResponseResult<PlanInfoData>> getPlanInfo(PlanInfoRequest request) {
         return BaseRepositoryUtil.repositoryAsSingle(request, fetchHelper.createGetPlanInfoFunc());
     }
 
-    public Single<List<PlanClassData>> getPlanClassPage(PlanClassPageRequest request) {
+    public Single<ResponseResult<List<PlanClassData>>> getPlanClassPage(PlanClassPageRequest request) {
         return BaseRepositoryUtil.repositoryAsSingle(request, fetchHelper.createGetPlanClassPageFunc());
     }
 
-    public Single<Boolean> checkStudentInPlan(CheckStudentInPlanRequest request) {
+    public Single<ResponseResult<Boolean>> checkStudentInPlan(CheckStudentInPlanRequest request) {
         return BaseRepositoryUtil.repositoryAsSingle(request, fetchHelper.createCheckStudentInPlanFunc());
     }
 }

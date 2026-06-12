@@ -167,17 +167,10 @@ public final class CallerProxy {
             }
 
             @Override
-            public void onError(String error) {
+            public void onError(int code, String msg) {
                 long total = System.currentTimeMillis() - start;
-                NzLog.e("[CALLER-CB ][%s] %s : onError total=%dms err=%s", traceId, methodName, total, error);
-                origin.onError(error);
-            }
-
-            @Override
-            public void onFail(int code, String msg) {
-                long total = System.currentTimeMillis() - start;
-                NzLog.e("[CALLER-CB ][%s] %s : onFail total=%dms code=%d msg=%s", traceId, methodName, total, code, msg);
-                origin.onFail(code, msg);
+                NzLog.e("[CALLER-CB ][%s] %s : onError total=%dms code=%d msg=%s", traceId, methodName, total, code, msg);
+                origin.onError(code, msg);
             }
         };
     }

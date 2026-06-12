@@ -1,9 +1,13 @@
 package com.adl.service.exception;
 
+import com.adl.service.callback.ResponseResult;
+import com.adl.service.common.NzResponseCode;
 import com.adl.service.log.NzLog;
 import com.google.gson.JsonParseException;
 
 import java.io.IOException;
+import java.net.ConnectException;
+import java.net.UnknownHostException;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.TimeoutException;
 
@@ -70,6 +74,82 @@ public final class NzExceptionMapper {
         return false;
     }
 
+    public static ResponseResult createExceptioResult(Throwable throwable) {
+        Throwable current = throwable;
+        ResponseResult result = createExceptioResultInner(current);
+        while (result == null && current.getCause() != null && current.getCause() != current) {
+            current = current.getCause();
+            result = createExceptioResultInner(current);
+            if (result != null) {
+                break;
+            }
+        }
+        return result;
+    }
+
+    private static ResponseResult createExceptioResultInner(Throwable throwable) {
+        if (throwable == null) {
+            return null;
+        }
+        ResponseResult result = new ResponseResult();
+        if (throwable instanceof NzHttpException) {
+            result.setCode(((NzHttpException) throwable).getHttpCode());
+            result.setMsg(throwable.getMessage());
+            return result;
+        }
+        if (throwable instanceof NzDownloadFileException) {
+            result.setCode(((NzDownloadFileException) throwable).getCode());
+            result.setMsg(throwable.getMessage());
+            return result;
+        }
+        if (throwable instanceof NzPersistException) {
+            result.setCode(((NzPersistException) throwable).getCode());
+            result.setMsg(throwable.getMessage());
+            return result;
+        }
+        if (throwable instanceof NzBaseException) {
+            result.setCode(NzResponseCode.NZ_UNKNOWN_ERROR);
+            result.setMsg(throwable.getMessage());
+            return result;
+        }
+        if (throwable instanceof IOException) {
+            result.setCode(NzResponseCode.NZ_IO_ERROR);
+            result.setMsg(throwable.getMessage());
+            return result;
+        }
+        if (throwable instanceof UnknownHostException) {
+            result.setCode(NzResponseCode.NZ_NETWORK_ERROR);
+            result.setMsg(throwable.getMessage());
+            return result;
+        }
+        if (throwable instanceof ConnectException) {
+            result.setCode(NzResponseCode.NZ_CONNECT_ERROR);
+            result.setMsg(throwable.getMessage());
+            return result;
+        }
+        if (throwable instanceof HttpException) {
+            result.setCode(((HttpException) throwable).code());
+            result.setMsg(throwable.getMessage());
+            return result;
+        }
+        if (throwable instanceof CancellationException || throwable instanceof InterruptedException) {
+            result.setCode(NzResponseCode.NZ_INTERRUPTED_ERROR);
+            result.setMsg(throwable.getMessage());
+            return result;
+        }
+        if (throwable instanceof TimeoutException) {
+            result.setCode(NzResponseCode.NZ_TIMEOUT_ERROR);
+            result.setMsg(throwable.getMessage());
+            return result;
+        }
+        if (throwable instanceof JsonParseException) {
+            result.setCode(NzResponseCode.NZ_JSON_PARSE_ERROR);
+            result.setMsg(throwable.getMessage());
+            return result;
+        }
+        return null;
+    }
+
     public static NzBaseException map(Throwable throwable) {
         if (throwable == null) {
             return new NzUnknownException("unknown error", null);
@@ -106,11 +186,7 @@ public final class NzExceptionMapper {
         throwable.printStackTrace();
         NzBaseException ex = map(throwable);
         String msg = ex.getMessage();
-        String safeMsg = throwable.getClass().getSimpleName() + ": " + (msg != null ? msg : ex.toString());
-        if (ex.getErrorCode() == null || ex.getErrorCode().isEmpty()) {
-            return safeMsg;
-        }
-        return "[" + ex.getErrorCode() + "] " + safeMsg;
+        return throwable.getClass().getSimpleName() + ": " + (msg != null ? msg : ex.toString());
     }
 }
 

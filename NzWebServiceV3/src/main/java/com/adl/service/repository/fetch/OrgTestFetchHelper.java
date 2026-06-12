@@ -2,6 +2,7 @@ package com.adl.service.repository.fetch;
 
 import android.text.TextUtils;
 
+import com.adl.service.callback.ResponseResult;
 import com.adl.service.data.BasePageData;
 import com.adl.service.data.PlanClassData;
 import com.adl.service.data.PlanData;
@@ -39,8 +40,7 @@ public final class OrgTestFetchHelper {
         return orgTestService;
     }
 
-    @SuppressWarnings("unchecked")
-    public Function<Long, Single<List<StandardConfigData>>> createGetStandardConfigPagesAllFunc(StandardConfigPageRequest request) {
+    public Function<Long, Single<ResponseResult<List<StandardConfigData>>>> createGetStandardConfigPagesAllFunc(StandardConfigPageRequest request) {
         return (page) -> {
             StandardConfigPageRequest pageReq = StandardConfigPageRequest.builder(request.getStandardType())
                     .current(page)
@@ -48,17 +48,15 @@ public final class OrgTestFetchHelper {
                     .standardId(request.getStandardId())
                     .sportProjectCode(request.getSportProjectCode())
                     .build();
-            return BaseFetchUtil.scheduleResponse(getService().getStandardConfigPage(pageReq), (Class<List<StandardConfigData>>) (Class<?>) List.class);
+            return BaseFetchUtil.scheduleResponse(getService().getStandardConfigPage(pageReq));
         };
     }
 
-    @SuppressWarnings("unchecked")
-    public Function<StandardConfigPageRequest, Single<List<StandardConfigData>>> createGetStandardConfigPageFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(getService().getStandardConfigPage(request), (Class<List<StandardConfigData>>) (Class<?>) List.class);
+    public Function<StandardConfigPageRequest, Single<ResponseResult<List<StandardConfigData>>>> createGetStandardConfigPageFunc() {
+        return (request) -> BaseFetchUtil.scheduleResponse(getService().getStandardConfigPage(request));
     }
 
-    @SuppressWarnings("unchecked")
-    public Function<Long, Single<BasePageData<PlanStudentData>>> createGetPlanStudentPagesAllFunc(PlanStudentPageRequest request) {
+    public Function<Long, Single<ResponseResult<BasePageData<PlanStudentData>>>> createGetPlanStudentPagesAllFunc(PlanStudentPageRequest request) {
         return (page) -> {
             PlanStudentPageRequest pageReq = PlanStudentPageRequest.builder(request.getPlanId())
                     .current(page)
@@ -67,17 +65,15 @@ public final class OrgTestFetchHelper {
                     .classId(request.getClassId())
                     .keyword(request.getKeyword())
                     .build();
-            return BaseFetchUtil.scheduleResponse(getService().getPlanStudentPage(pageReq), (Class<BasePageData<PlanStudentData>>) (Class<?>) BasePageData.class);
+            return BaseFetchUtil.scheduleResponse(getService().getPlanStudentPage(pageReq));
         };
     }
 
-    @SuppressWarnings("unchecked")
-    public Function<PlanStudentPageRequest, Single<BasePageData<PlanStudentData>>> createGetPlanStudentPageFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(getService().getPlanStudentPage(request), (Class<BasePageData<PlanStudentData>>) (Class<?>) BasePageData.class);
+    public Function<PlanStudentPageRequest, Single<ResponseResult<BasePageData<PlanStudentData>>>> createGetPlanStudentPageFunc() {
+        return (request) -> BaseFetchUtil.scheduleResponse(getService().getPlanStudentPage(request));
     }
 
-    @SuppressWarnings("unchecked")
-    public Function<Long, Single<BasePageData<PlanData>>> createGetPlanPagesAllFunc(PlanPageRequest request) {
+    public Function<Long, Single<ResponseResult<BasePageData<PlanData>>>> createGetPlanPagesAllFunc(PlanPageRequest request) {
         return (page) -> {
             PlanPageRequest pageReq = PlanPageRequest.builder()
                     .current(page)
@@ -89,25 +85,23 @@ public final class OrgTestFetchHelper {
                     .showStatistic(request.getShowStatistic())
                     .planId(request.getPlanId())
                     .build();
-            return BaseFetchUtil.scheduleResponse(getService().getPlanPage(pageReq), (Class<BasePageData<PlanData>>) (Class<?>) BasePageData.class);
+            return BaseFetchUtil.scheduleResponse(getService().getPlanPage(pageReq));
         };
     }
 
-    @SuppressWarnings("unchecked")
-    public Function<PlanPageRequest, Single<BasePageData<PlanData>>> createGetPlanPageFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(getService().getPlanPage(request), (Class<BasePageData<PlanData>>) (Class<?>) BasePageData.class);
+    public Function<PlanPageRequest, Single<ResponseResult<BasePageData<PlanData>>>> createGetPlanPageFunc() {
+        return (request) -> BaseFetchUtil.scheduleResponse(getService().getPlanPage(request));
     }
 
-    public Function<PlanInfoRequest, Single<PlanInfoData>> createGetPlanInfoFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(getService().getPlanInfo(request), PlanInfoData.class);
+    public Function<PlanInfoRequest, Single<ResponseResult<PlanInfoData>>> createGetPlanInfoFunc() {
+        return (request) -> BaseFetchUtil.scheduleResponse(getService().getPlanInfo(request));
     }
 
-    @SuppressWarnings("unchecked")
-    public Function<PlanClassPageRequest, Single<List<PlanClassData>>> createGetPlanClassPageFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(getService().getPlanClassPage(request), (Class<List<PlanClassData>>) (Class<?>) List.class);
+    public Function<PlanClassPageRequest, Single<ResponseResult<List<PlanClassData>>>> createGetPlanClassPageFunc() {
+        return (request) -> BaseFetchUtil.scheduleResponse(getService().getPlanClassPage(request));
     }
 
-    public Function<CheckStudentInPlanRequest, Single<Boolean>> createCheckStudentInPlanFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(getService().checkStudentInPlan(request), Boolean.class);
+    public Function<CheckStudentInPlanRequest, Single<ResponseResult<Boolean>>> createCheckStudentInPlanFunc() {
+        return (request) -> BaseFetchUtil.scheduleResponse(getService().checkStudentInPlan(request));
     }
 }

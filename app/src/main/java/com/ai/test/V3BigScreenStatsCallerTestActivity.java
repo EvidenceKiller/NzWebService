@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import com.adl.service.AdlService;
 import com.adl.service.callback.RequestCallback;
+import com.adl.service.callback.ResponseResult;
+import com.adl.service.common.NzResponseCode;
 import com.adl.service.http.request.BestRankTopRequest;
 import com.adl.service.http.request.CompetitionRankRequest;
 import com.adl.service.http.request.MorePeopleRecordRankRequest;
@@ -179,43 +181,22 @@ public class V3BigScreenStatsCallerTestActivity extends AppCompatActivity {
                 }
             }
             @Override
-            public void onFail(int code, String msg) {
-                Log.d(TAG, "BigScreenStatsCallerTestActivity::getWarRecordRankAsync::onFail : code : " + code + ", msg : " + msg);
+            public void onError(int code, String msg) {
+                Log.d(TAG, "BigScreenStatsCallerTestActivity::getWarRecordRankAsync::onError : code : " + code + ", msg : " + msg);
                 resultView.setText(msg);
-            }
-            @Override
-            public void onError(String error) {
-                Log.d(TAG, "BigScreenStatsCallerTestActivity::getWarRecordRankAsync::onError : error : " + error);
-                resultView.setText(error);
             }
         });
     }
 
     private void getWarRecordRankSync() {
-        AdlService.getService().executeSyncOnIo(RequestScope.of(this),
-                () -> AdlService.getService().getBigScreenStatsCaller().getWarRecordRankSync(buildWarRecordRankRequest()),
-                new RequestCallback<List<WarRecordRankData>>() {
-                    @Override
-                    public void onSuccess(List<WarRecordRankData> data) {
-                        if (data != null) {
-                            Log.d(TAG, "BigScreenStatsCallerTestActivity::getWarRecordRankSync::onSuccess : data size : " + data.size());
-                            Log.d(TAG, "BigScreenStatsCallerTestActivity::getWarRecordRankSync::onSuccess : data : " + data);
-                            resultView.setText(data.toString());
-                        } else {
-                            Log.d(TAG, "BigScreenStatsCallerTestActivity::getWarRecordRankSync::onSuccess : data is null");
-                        }
-                    }
-                    @Override
-                    public void onFail(int code, String msg) {
-                        Log.d(TAG, "BigScreenStatsCallerTestActivity::getWarRecordRankSync::onFail : code : " + code + ", msg : " + msg);
-                        resultView.setText(msg);
-                    }
-                    @Override
-                    public void onError(String error) {
-                        Log.d(TAG, "BigScreenStatsCallerTestActivity::getWarRecordRankSync::onError : error : " + error);
-                        resultView.setText(error);
-                    }
-                });
+        ResponseResult<List<WarRecordRankData>> result = AdlService.getService().getBigScreenStatsCaller().getWarRecordRankSync(buildWarRecordRankRequest());
+        if (result.getCode() == NzResponseCode.NZ_SUCCESS) {
+            Log.d(TAG, "BigScreenStatsCallerTestActivity::getWarRecordRankSync::onSuccess : data : " + result.getData());
+            resultView.setText(result.getData().toString());
+        } else {
+            Log.d(TAG, "BigScreenStatsCallerTestActivity::getWarRecordRankSync::onError : code : " + result.getCode() + ", msg : " + result.getMsg());
+            resultView.setText(result.getMsg());
+        }
     }
 
     private void getPersonRankAsync() {
@@ -231,42 +212,22 @@ public class V3BigScreenStatsCallerTestActivity extends AppCompatActivity {
                 }
             }
             @Override
-            public void onFail(int code, String msg) {
-                Log.d(TAG, "BigScreenStatsCallerTestActivity::getPersonRankAsync::onFail : code : " + code + ", msg : " + msg);
+            public void onError(int code, String msg) {
+                Log.d(TAG, "BigScreenStatsCallerTestActivity::getPersonRankAsync::onError : code : " + code + ", msg : " + msg);
                 resultView.setText(msg);
-            }
-            @Override
-            public void onError(String error) {
-                Log.d(TAG, "BigScreenStatsCallerTestActivity::getPersonRankAsync::onError : error : " + error);
-                resultView.setText(error);
             }
         });
     }
 
     private void getPersonRankSync() {
-        AdlService.getService().executeSyncOnIo(RequestScope.of(this),
-                () -> AdlService.getService().getBigScreenStatsCaller().getPersonRankSync(buildPersonRankRequest()),
-                new RequestCallback<PersonRankData>() {
-                    @Override
-                    public void onSuccess(PersonRankData data) {
-                        if (data != null) {
-                            Log.d(TAG, "BigScreenStatsCallerTestActivity::getPersonRankSync::onSuccess : data : " + data);
-                            resultView.setText(data.toString());
-                        } else {
-                            Log.d(TAG, "BigScreenStatsCallerTestActivity::getPersonRankSync::onSuccess : data is null");
-                        }
-                    }
-                    @Override
-                    public void onFail(int code, String msg) {
-                        Log.d(TAG, "BigScreenStatsCallerTestActivity::getPersonRankSync::onFail : code : " + code + ", msg : " + msg);
-                        resultView.setText(msg);
-                    }
-                    @Override
-                    public void onError(String error) {
-                        Log.d(TAG, "BigScreenStatsCallerTestActivity::getPersonRankSync::onError : error : " + error);
-                        resultView.setText(error);
-                    }
-                });
+        ResponseResult<PersonRankData> result = AdlService.getService().getBigScreenStatsCaller().getPersonRankSync(buildPersonRankRequest());
+        if (result.getCode() == NzResponseCode.NZ_SUCCESS) {
+            Log.d(TAG, "BigScreenStatsCallerTestActivity::getPersonRankSync::onSuccess : data : " + result.getData());
+            resultView.setText(result.getData().toString());
+        } else {
+            Log.d(TAG, "BigScreenStatsCallerTestActivity::getPersonRankSync::onError : code : " + result.getCode() + ", msg : " + result.getMsg());
+            resultView.setText(result.getMsg());
+        }
     }
 
     private void getMorePeopleVictoryRankAsync() {
@@ -283,43 +244,22 @@ public class V3BigScreenStatsCallerTestActivity extends AppCompatActivity {
                 }
             }
             @Override
-            public void onFail(int code, String msg) {
-                Log.d(TAG, "BigScreenStatsCallerTestActivity::getMorePeopleVictoryRankAsync::onFail : code : " + code + ", msg : " + msg);
+            public void onError(int code, String msg) {
+                Log.d(TAG, "BigScreenStatsCallerTestActivity::getMorePeopleVictoryRankAsync::onError : code : " + code + ", msg : " + msg);
                 resultView.setText(msg);
-            }
-            @Override
-            public void onError(String error) {
-                Log.d(TAG, "BigScreenStatsCallerTestActivity::getMorePeopleVictoryRankAsync::onError : error : " + error);
-                resultView.setText(error);
             }
         });
     }
 
     private void getMorePeopleVictoryRankSync() {
-        AdlService.getService().executeSyncOnIo(RequestScope.of(this),
-                () -> AdlService.getService().getBigScreenStatsCaller().getMorePeopleVictoryRankSync(buildMorePeopleVictoryRankRequest()),
-                new RequestCallback<List<MorePeopleVictoryRankData>>() {
-                    @Override
-                    public void onSuccess(List<MorePeopleVictoryRankData> data) {
-                        if (data != null) {
-                            Log.d(TAG, "BigScreenStatsCallerTestActivity::getMorePeopleVictoryRankSync::onSuccess : data size : " + data.size());
-                            Log.d(TAG, "BigScreenStatsCallerTestActivity::getMorePeopleVictoryRankSync::onSuccess : data : " + data);
-                            resultView.setText(data.toString());
-                        } else {
-                            Log.d(TAG, "BigScreenStatsCallerTestActivity::getMorePeopleVictoryRankSync::onSuccess : data is null");
-                        }
-                    }
-                    @Override
-                    public void onFail(int code, String msg) {
-                        Log.d(TAG, "BigScreenStatsCallerTestActivity::getMorePeopleVictoryRankSync::onFail : code : " + code + ", msg : " + msg);
-                        resultView.setText(msg);
-                    }
-                    @Override
-                    public void onError(String error) {
-                        Log.d(TAG, "BigScreenStatsCallerTestActivity::getMorePeopleVictoryRankSync::onError : error : " + error);
-                        resultView.setText(error);
-                    }
-                });
+        ResponseResult<List<MorePeopleVictoryRankData>> result = AdlService.getService().getBigScreenStatsCaller().getMorePeopleVictoryRankSync(buildMorePeopleVictoryRankRequest());
+        if (result.getCode() == NzResponseCode.NZ_SUCCESS) {
+            Log.d(TAG, "BigScreenStatsCallerTestActivity::getMorePeopleVictoryRankSync::onSuccess : data : " + result.getData());
+            resultView.setText(result.getData().toString());
+        } else {
+            Log.d(TAG, "BigScreenStatsCallerTestActivity::getMorePeopleVictoryRankSync::onError : code : " + result.getCode() + ", msg : " + result.getMsg());
+            resultView.setText(result.getMsg());
+        }
     }
 
     private void getMorePeopleRecordRankAsync() {
@@ -336,43 +276,22 @@ public class V3BigScreenStatsCallerTestActivity extends AppCompatActivity {
                 }
             }
             @Override
-            public void onFail(int code, String msg) {
-                Log.d(TAG, "BigScreenStatsCallerTestActivity::getMorePeopleRecordRankAsync::onFail : code : " + code + ", msg : " + msg);
+            public void onError(int code, String msg) {
+                Log.d(TAG, "BigScreenStatsCallerTestActivity::getMorePeopleRecordRankAsync::onError : code : " + code + ", msg : " + msg);
                 resultView.setText(msg);
-            }
-            @Override
-            public void onError(String error) {
-                Log.d(TAG, "BigScreenStatsCallerTestActivity::getMorePeopleRecordRankAsync::onError : error : " + error);
-                resultView.setText(error);
             }
         });
     }
 
     private void getMorePeopleRecordRankSync() {
-        AdlService.getService().executeSyncOnIo(RequestScope.of(this),
-                () -> AdlService.getService().getBigScreenStatsCaller().getMorePeopleRecordRankSync(buildMorePeopleRecordRankRequest()),
-                new RequestCallback<List<MorePeopleRecordRankData>>() {
-                    @Override
-                    public void onSuccess(List<MorePeopleRecordRankData> data) {
-                        if (data != null) {
-                            Log.d(TAG, "BigScreenStatsCallerTestActivity::getMorePeopleRecordRankSync::onSuccess : data size : " + data.size());
-                            Log.d(TAG, "BigScreenStatsCallerTestActivity::getMorePeopleRecordRankSync::onSuccess : data : " + data);
-                            resultView.setText(data.toString());
-                        } else {
-                            Log.d(TAG, "BigScreenStatsCallerTestActivity::getMorePeopleRecordRankSync::onSuccess : data is null");
-                        }
-                    }
-                    @Override
-                    public void onFail(int code, String msg) {
-                        Log.d(TAG, "BigScreenStatsCallerTestActivity::getMorePeopleRecordRankSync::onFail : code : " + code + ", msg : " + msg);
-                        resultView.setText(msg);
-                    }
-                    @Override
-                    public void onError(String error) {
-                        Log.d(TAG, "BigScreenStatsCallerTestActivity::getMorePeopleRecordRankSync::onError : error : " + error);
-                        resultView.setText(error);
-                    }
-                });
+        ResponseResult<List<MorePeopleRecordRankData>> result = AdlService.getService().getBigScreenStatsCaller().getMorePeopleRecordRankSync(buildMorePeopleRecordRankRequest());
+        if (result.getCode() == NzResponseCode.NZ_SUCCESS) {
+            Log.d(TAG, "BigScreenStatsCallerTestActivity::getMorePeopleRecordRankSync::onSuccess : data : " + result.getData());
+            resultView.setText(result.getData().toString());
+        } else {
+            Log.d(TAG, "BigScreenStatsCallerTestActivity::getMorePeopleRecordRankSync::onError : code : " + result.getCode() + ", msg : " + result.getMsg());
+            resultView.setText(result.getMsg());
+        }
     }
 
     private void getOverviewAsync() {
@@ -388,42 +307,22 @@ public class V3BigScreenStatsCallerTestActivity extends AppCompatActivity {
                 }
             }
             @Override
-            public void onFail(int code, String msg) {
-                Log.d(TAG, "BigScreenStatsCallerTestActivity::getOverviewAsync::onFail : code : " + code + ", msg : " + msg);
+            public void onError(int code, String msg) {
+                Log.d(TAG, "BigScreenStatsCallerTestActivity::getOverviewAsync::onError : code : " + code + ", msg : " + msg);
                 resultView.setText(msg);
-            }
-            @Override
-            public void onError(String error) {
-                Log.d(TAG, "BigScreenStatsCallerTestActivity::getOverviewAsync::onError : error : " + error);
-                resultView.setText(error);
             }
         });
     }
 
     private void getOverviewSync() {
-        AdlService.getService().executeSyncOnIo(RequestScope.of(this),
-                () -> AdlService.getService().getBigScreenStatsCaller().getOverviewSync(buildOverviewRequest()),
-                new RequestCallback<OverviewData>() {
-                    @Override
-                    public void onSuccess(OverviewData data) {
-                        if (data != null) {
-                            Log.d(TAG, "BigScreenStatsCallerTestActivity::getOverviewSync::onSuccess : data : " + data);
-                            resultView.setText(data.toString());
-                        } else {
-                            Log.d(TAG, "BigScreenStatsCallerTestActivity::getOverviewSync::onSuccess : data is null");
-                        }
-                    }
-                    @Override
-                    public void onFail(int code, String msg) {
-                        Log.d(TAG, "BigScreenStatsCallerTestActivity::getOverviewSync::onFail : code : " + code + ", msg : " + msg);
-                        resultView.setText(msg);
-                    }
-                    @Override
-                    public void onError(String error) {
-                        Log.d(TAG, "BigScreenStatsCallerTestActivity::getOverviewSync::onError : error : " + error);
-                        resultView.setText(error);
-                    }
-                });
+        ResponseResult<OverviewData> result = AdlService.getService().getBigScreenStatsCaller().getOverviewSync(buildOverviewRequest());
+        if (result.getCode() == NzResponseCode.NZ_SUCCESS) {
+            Log.d(TAG, "BigScreenStatsCallerTestActivity::getOverviewSync::onSuccess : data : " + result.getData());
+            resultView.setText(result.getData().toString());
+        } else {
+            Log.d(TAG, "BigScreenStatsCallerTestActivity::getOverviewSync::onError : code : " + result.getCode() + ", msg : " + result.getMsg());
+            resultView.setText(result.getMsg());
+        }
     }
 
     private void getCompetitionRankAsync() {
@@ -439,42 +338,22 @@ public class V3BigScreenStatsCallerTestActivity extends AppCompatActivity {
                 }
             }
             @Override
-            public void onFail(int code, String msg) {
-                Log.d(TAG, "BigScreenStatsCallerTestActivity::getCompetitionRankAsync::onFail : code : " + code + ", msg : " + msg);
+            public void onError(int code, String msg) {
+                Log.d(TAG, "BigScreenStatsCallerTestActivity::getCompetitionRankAsync::onError : code : " + code + ", msg : " + msg);
                 resultView.setText(msg);
-            }
-            @Override
-            public void onError(String error) {
-                Log.d(TAG, "BigScreenStatsCallerTestActivity::getCompetitionRankAsync::onError : error : " + error);
-                resultView.setText(error);
             }
         });
     }
 
     private void getCompetitionRankSync() {
-        AdlService.getService().executeSyncOnIo(RequestScope.of(this),
-                () -> AdlService.getService().getBigScreenStatsCaller().getCompetitionRankSync(buildCompetitionRankRequest()),
-                new RequestCallback<CompetitionRankData>() {
-                    @Override
-                    public void onSuccess(CompetitionRankData data) {
-                        if (data != null) {
-                            Log.d(TAG, "BigScreenStatsCallerTestActivity::getCompetitionRankSync::onSuccess : data : " + data);
-                            resultView.setText(data.toString());
-                        } else {
-                            Log.d(TAG, "BigScreenStatsCallerTestActivity::getCompetitionRankSync::onSuccess : data is null");
-                        }
-                    }
-                    @Override
-                    public void onFail(int code, String msg) {
-                        Log.d(TAG, "BigScreenStatsCallerTestActivity::getCompetitionRankSync::onFail : code : " + code + ", msg : " + msg);
-                        resultView.setText(msg);
-                    }
-                    @Override
-                    public void onError(String error) {
-                        Log.d(TAG, "BigScreenStatsCallerTestActivity::getCompetitionRankSync::onError : error : " + error);
-                        resultView.setText(error);
-                    }
-                });
+        ResponseResult<CompetitionRankData> result = AdlService.getService().getBigScreenStatsCaller().getCompetitionRankSync(buildCompetitionRankRequest());
+        if (result.getCode() == NzResponseCode.NZ_SUCCESS) {
+            Log.d(TAG, "BigScreenStatsCallerTestActivity::getCompetitionRankSync::onSuccess : data : " + result.getData());
+            resultView.setText(result.getData().toString());
+        } else {
+            Log.d(TAG, "BigScreenStatsCallerTestActivity::getCompetitionRankSync::onError : code : " + result.getCode() + ", msg : " + result.getMsg());
+            resultView.setText(result.getMsg());
+        }
     }
 
     private void sumScoreRankAsync() {
@@ -491,43 +370,22 @@ public class V3BigScreenStatsCallerTestActivity extends AppCompatActivity {
                 }
             }
             @Override
-            public void onFail(int code, String msg) {
-                Log.d(TAG, "BigScreenStatsCallerTestActivity::sumScoreRankAsync::onFail : code : " + code + ", msg : " + msg);
+            public void onError(int code, String msg) {
+                Log.d(TAG, "BigScreenStatsCallerTestActivity::sumScoreRankAsync::onError : code : " + code + ", msg : " + msg);
                 resultView.setText(msg);
-            }
-            @Override
-            public void onError(String error) {
-                Log.d(TAG, "BigScreenStatsCallerTestActivity::sumScoreRankAsync::onError : error : " + error);
-                resultView.setText(error);
             }
         });
     }
 
     private void sumScoreRankSync() {
-        AdlService.getService().executeSyncOnIo(RequestScope.of(this),
-                () -> AdlService.getService().getBigScreenStatsCaller().sumScoreRankSync(buildSumScoreRankRequest()),
-                new RequestCallback<List<SumScoreRankData>>() {
-                    @Override
-                    public void onSuccess(List<SumScoreRankData> data) {
-                        if (data != null) {
-                            Log.d(TAG, "BigScreenStatsCallerTestActivity::sumScoreRankSync::onSuccess : data size : " + data.size());
-                            Log.d(TAG, "BigScreenStatsCallerTestActivity::sumScoreRankSync::onSuccess : data : " + data);
-                            resultView.setText(data.toString());
-                        } else {
-                            Log.d(TAG, "BigScreenStatsCallerTestActivity::sumScoreRankSync::onSuccess : data is null");
-                        }
-                    }
-                    @Override
-                    public void onFail(int code, String msg) {
-                        Log.d(TAG, "BigScreenStatsCallerTestActivity::sumScoreRankSync::onFail : code : " + code + ", msg : " + msg);
-                        resultView.setText(msg);
-                    }
-                    @Override
-                    public void onError(String error) {
-                        Log.d(TAG, "BigScreenStatsCallerTestActivity::sumScoreRankSync::onError : error : " + error);
-                        resultView.setText(error);
-                    }
-                });
+        ResponseResult<List<SumScoreRankData>> result = AdlService.getService().getBigScreenStatsCaller().sumScoreRankSync(buildSumScoreRankRequest());
+        if (result.getCode() == NzResponseCode.NZ_SUCCESS) {
+            Log.d(TAG, "BigScreenStatsCallerTestActivity::sumScoreRankSync::onSuccess : data : " + result.getData());
+            resultView.setText(result.getData().toString());
+        } else {
+            Log.d(TAG, "BigScreenStatsCallerTestActivity::sumScoreRankSync::onError : code : " + result.getCode() + ", msg : " + result.getMsg());
+            resultView.setText(result.getMsg());
+        }
     }
 
     private void getSportSkuRankAsync() {
@@ -544,43 +402,22 @@ public class V3BigScreenStatsCallerTestActivity extends AppCompatActivity {
                 }
             }
             @Override
-            public void onFail(int code, String msg) {
-                Log.d(TAG, "BigScreenStatsCallerTestActivity::getSportSkuRankAsync::onFail : code : " + code + ", msg : " + msg);
+            public void onError(int code, String msg) {
+                Log.d(TAG, "BigScreenStatsCallerTestActivity::getSportSkuRankAsync::onError : code : " + code + ", msg : " + msg);
                 resultView.setText(msg);
-            }
-            @Override
-            public void onError(String error) {
-                Log.d(TAG, "BigScreenStatsCallerTestActivity::getSportSkuRankAsync::onError : error : " + error);
-                resultView.setText(error);
             }
         });
     }
 
     private void getSportSkuRankSync() {
-        AdlService.getService().executeSyncOnIo(RequestScope.of(this),
-                () -> AdlService.getService().getBigScreenStatsCaller().getSportSkuRankSync(buildSportRankRequest()),
-                new RequestCallback<List<SportSkuRankData>>() {
-                    @Override
-                    public void onSuccess(List<SportSkuRankData> data) {
-                        if (data != null) {
-                            Log.d(TAG, "BigScreenStatsCallerTestActivity::getSportSkuRankSync::onSuccess : data size : " + data.size());
-                            Log.d(TAG, "BigScreenStatsCallerTestActivity::getSportSkuRankSync::onSuccess : data : " + data);
-                            resultView.setText(data.toString());
-                        } else {
-                            Log.d(TAG, "BigScreenStatsCallerTestActivity::getSportSkuRankSync::onSuccess : data is null");
-                        }
-                    }
-                    @Override
-                    public void onFail(int code, String msg) {
-                        Log.d(TAG, "BigScreenStatsCallerTestActivity::getSportSkuRankSync::onFail : code : " + code + ", msg : " + msg);
-                        resultView.setText(msg);
-                    }
-                    @Override
-                    public void onError(String error) {
-                        Log.d(TAG, "BigScreenStatsCallerTestActivity::getSportSkuRankSync::onError : error : " + error);
-                        resultView.setText(error);
-                    }
-                });
+        ResponseResult<List<SportSkuRankData>> result = AdlService.getService().getBigScreenStatsCaller().getSportSkuRankSync(buildSportRankRequest());
+        if (result.getCode() == NzResponseCode.NZ_SUCCESS) {
+            Log.d(TAG, "BigScreenStatsCallerTestActivity::getSportSkuRankSync::onSuccess : data : " + result.getData());
+            resultView.setText(result.getData().toString());
+        } else {
+            Log.d(TAG, "BigScreenStatsCallerTestActivity::getSportSkuRankSync::onError : code : " + result.getCode() + ", msg : " + result.getMsg());
+            resultView.setText(result.getMsg());
+        }
     }
 
     private void getSportRankKingAsync() {
@@ -597,43 +434,22 @@ public class V3BigScreenStatsCallerTestActivity extends AppCompatActivity {
                 }
             }
             @Override
-            public void onFail(int code, String msg) {
-                Log.d(TAG, "BigScreenStatsCallerTestActivity::getSportRankKingAsync::onFail : code : " + code + ", msg : " + msg);
+            public void onError(int code, String msg) {
+                Log.d(TAG, "BigScreenStatsCallerTestActivity::getSportRankKingAsync::onError : code : " + code + ", msg : " + msg);
                 resultView.setText(msg);
-            }
-            @Override
-            public void onError(String error) {
-                Log.d(TAG, "BigScreenStatsCallerTestActivity::getSportRankKingAsync::onError : error : " + error);
-                resultView.setText(error);
             }
         });
     }
 
     private void getSportRankKingSync() {
-        AdlService.getService().executeSyncOnIo(RequestScope.of(this),
-                () -> AdlService.getService().getBigScreenStatsCaller().getSportRankKingSync(buildSportRankKing()),
-                new RequestCallback<List<SportRankKingData>>() {
-                    @Override
-                    public void onSuccess(List<SportRankKingData> data) {
-                        if (data != null) {
-                            Log.d(TAG, "BigScreenStatsCallerTestActivity::getSportRankKingSync::onSuccess : data size : " + data.size());
-                            Log.d(TAG, "BigScreenStatsCallerTestActivity::getSportRankKingSync::onSuccess : data : " + data);
-                            resultView.setText(data.toString());
-                        } else {
-                            Log.d(TAG, "BigScreenStatsCallerTestActivity::getSportRankKingSync::onSuccess : data is null");
-                        }
-                    }
-                    @Override
-                    public void onFail(int code, String msg) {
-                        Log.d(TAG, "BigScreenStatsCallerTestActivity::getSportRankKingSync::onFail : code : " + code + ", msg : " + msg);
-                        resultView.setText(msg);
-                    }
-                    @Override
-                    public void onError(String error) {
-                        Log.d(TAG, "BigScreenStatsCallerTestActivity::getSportRankKingSync::onError : error : " + error);
-                        resultView.setText(error);
-                    }
-                });
+        ResponseResult<List<SportRankKingData>> result = AdlService.getService().getBigScreenStatsCaller().getSportRankKingSync(buildSportRankKing());
+        if (result.getCode() == NzResponseCode.NZ_SUCCESS) {
+            Log.d(TAG, "BigScreenStatsCallerTestActivity::getSportRankKingSync::onSuccess : data : " + result.getData());
+            resultView.setText(result.getData().toString());
+        } else {
+            Log.d(TAG, "BigScreenStatsCallerTestActivity::getSportRankKingSync::onError : code : " + result.getCode() + ", msg : " + result.getMsg());
+            resultView.setText(result.getMsg());
+        }
     }
 
     private void getPhysicalTrainingRankAsync() {
@@ -650,43 +466,22 @@ public class V3BigScreenStatsCallerTestActivity extends AppCompatActivity {
                 }
             }
             @Override
-            public void onFail(int code, String msg) {
-                Log.d(TAG, "BigScreenStatsCallerTestActivity::getPhysicalTrainingRankAsync::onFail : code : " + code + ", msg : " + msg);
+            public void onError(int code, String msg) {
+                Log.d(TAG, "BigScreenStatsCallerTestActivity::getPhysicalTrainingRankAsync::onError : code : " + code + ", msg : " + msg);
                 resultView.setText(msg);
-            }
-            @Override
-            public void onError(String error) {
-                Log.d(TAG, "BigScreenStatsCallerTestActivity::getPhysicalTrainingRankAsync::onError : error : " + error);
-                resultView.setText(error);
             }
         });
     }
 
     private void getPhysicalTrainingRankSync() {
-        AdlService.getService().executeSyncOnIo(RequestScope.of(this),
-                () -> AdlService.getService().getBigScreenStatsCaller().getPhysicalTrainingRankSync(buildPhysicalTrainingRankRequest()),
-                new RequestCallback<List<SportRankKingData>>() {
-                    @Override
-                    public void onSuccess(List<SportRankKingData> data) {
-                        if (data != null) {
-                            Log.d(TAG, "BigScreenStatsCallerTestActivity::getPhysicalTrainingRankSync::onSuccess : data size : " + data.size());
-                            Log.d(TAG, "BigScreenStatsCallerTestActivity::getPhysicalTrainingRankSync::onSuccess : data : " + data);
-                            resultView.setText(data.toString());
-                        } else {
-                            Log.d(TAG, "BigScreenStatsCallerTestActivity::getPhysicalTrainingRankSync::onSuccess : data is null");
-                        }
-                    }
-                    @Override
-                    public void onFail(int code, String msg) {
-                        Log.d(TAG, "BigScreenStatsCallerTestActivity::getPhysicalTrainingRankSync::onFail : code : " + code + ", msg : " + msg);
-                        resultView.setText(msg);
-                    }
-                    @Override
-                    public void onError(String error) {
-                        Log.d(TAG, "BigScreenStatsCallerTestActivity::getPhysicalTrainingRankSync::onError : error : " + error);
-                        resultView.setText(error);
-                    }
-                });
+        ResponseResult<List<SportRankKingData>> result = AdlService.getService().getBigScreenStatsCaller().getPhysicalTrainingRankSync(buildPhysicalTrainingRankRequest());
+        if (result.getCode() == NzResponseCode.NZ_SUCCESS) {
+            Log.d(TAG, "BigScreenStatsCallerTestActivity::getPhysicalTrainingRankSync::onSuccess : data : " + result.getData());
+            resultView.setText(result.getData().toString());
+        } else {
+            Log.d(TAG, "BigScreenStatsCallerTestActivity::getPhysicalTrainingRankSync::onError : code : " + result.getCode() + ", msg : " + result.getMsg());
+            resultView.setText(result.getMsg());
+        }
     }
 
     private void getExerciseSumTimeRankAsync() {
@@ -703,43 +498,22 @@ public class V3BigScreenStatsCallerTestActivity extends AppCompatActivity {
                 }
             }
             @Override
-            public void onFail(int code, String msg) {
-                Log.d(TAG, "BigScreenStatsCallerTestActivity::getExerciseSumTimeRankAsync::onFail : code : " + code + ", msg : " + msg);
+            public void onError(int code, String msg) {
+                Log.d(TAG, "BigScreenStatsCallerTestActivity::getExerciseSumTimeRankAsync::onError : code : " + code + ", msg : " + msg);
                 resultView.setText(msg);
-            }
-            @Override
-            public void onError(String error) {
-                Log.d(TAG, "BigScreenStatsCallerTestActivity::getExerciseSumTimeRankAsync::onError : error : " + error);
-                resultView.setText(error);
             }
         });
     }
 
     private void getExerciseSumTimeRankSync() {
-        AdlService.getService().executeSyncOnIo(RequestScope.of(this),
-                () -> AdlService.getService().getBigScreenStatsCaller().getExerciseSumTimeRankSync(buildExerciseSumTimeRankRequest()),
-                new RequestCallback<List<SportRankKingData>>() {
-                    @Override
-                    public void onSuccess(List<SportRankKingData> data) {
-                        if (data != null) {
-                            Log.d(TAG, "BigScreenStatsCallerTestActivity::getExerciseSumTimeRankSync::onSuccess : data size : " + data.size());
-                            Log.d(TAG, "BigScreenStatsCallerTestActivity::getExerciseSumTimeRankSync::onSuccess : data : " + data);
-                            resultView.setText(data.toString());
-                        } else {
-                            Log.d(TAG, "BigScreenStatsCallerTestActivity::getExerciseSumTimeRankSync::onSuccess : data is null");
-                        }
-                    }
-                    @Override
-                    public void onFail(int code, String msg) {
-                        Log.d(TAG, "BigScreenStatsCallerTestActivity::getExerciseSumTimeRankSync::onFail : code : " + code + ", msg : " + msg);
-                        resultView.setText(msg);
-                    }
-                    @Override
-                    public void onError(String error) {
-                        Log.d(TAG, "BigScreenStatsCallerTestActivity::getExerciseSumTimeRankSync::onError : error : " + error);
-                        resultView.setText(error);
-                    }
-                });
+        ResponseResult<List<SportRankKingData>> result = AdlService.getService().getBigScreenStatsCaller().getExerciseSumTimeRankSync(buildExerciseSumTimeRankRequest());
+        if (result.getCode() == NzResponseCode.NZ_SUCCESS) {
+            Log.d(TAG, "BigScreenStatsCallerTestActivity::getExerciseSumTimeRankSync::onSuccess : data : " + result.getData());
+            resultView.setText(result.getData().toString());
+        } else {
+            Log.d(TAG, "BigScreenStatsCallerTestActivity::getExerciseSumTimeRankSync::onError : code : " + result.getCode() + ", msg : " + result.getMsg());
+            resultView.setText(result.getMsg());
+        }
     }
 
     private void getBestRankTopAsync() {
@@ -756,43 +530,22 @@ public class V3BigScreenStatsCallerTestActivity extends AppCompatActivity {
                 }
             }
             @Override
-            public void onFail(int code, String msg) {
-                Log.d(TAG, "BigScreenStatsCallerTestActivity::getBestRankTopAsync::onFail : code : " + code + ", msg : " + msg);
+            public void onError(int code, String msg) {
+                Log.d(TAG, "BigScreenStatsCallerTestActivity::getBestRankTopAsync::onError : code : " + code + ", msg : " + msg);
                 resultView.setText(msg);
-            }
-            @Override
-            public void onError(String error) {
-                Log.d(TAG, "BigScreenStatsCallerTestActivity::getBestRankTopAsync::onError : error : " + error);
-                resultView.setText(error);
             }
         });
     }
 
     private void getBestRankTopSync() {
-        AdlService.getService().executeSyncOnIo(RequestScope.of(this),
-                () -> AdlService.getService().getBigScreenStatsCaller().getBestRankTopSync(buildBestRankTopRequest()),
-                new RequestCallback<List<BestRankTopData>>() {
-                    @Override
-                    public void onSuccess(List<BestRankTopData> data) {
-                        if (data != null) {
-                            Log.d(TAG, "BigScreenStatsCallerTestActivity::getBestRankTopSync::onSuccess : data size : " + data.size());
-                            Log.d(TAG, "BigScreenStatsCallerTestActivity::getBestRankTopSync::onSuccess : data : " + data);
-                            resultView.setText(data.toString());
-                        } else {
-                            Log.d(TAG, "BigScreenStatsCallerTestActivity::getBestRankTopSync::onSuccess : data is null");
-                        }
-                    }
-                    @Override
-                    public void onFail(int code, String msg) {
-                        Log.d(TAG, "BigScreenStatsCallerTestActivity::getBestRankTopSync::onFail : code : " + code + ", msg : " + msg);
-                        resultView.setText(msg);
-                    }
-                    @Override
-                    public void onError(String error) {
-                        Log.d(TAG, "BigScreenStatsCallerTestActivity::getBestRankTopSync::onError : error : " + error);
-                        resultView.setText(error);
-                    }
-                });
+        ResponseResult<List<BestRankTopData>> result = AdlService.getService().getBigScreenStatsCaller().getBestRankTopSync(buildBestRankTopRequest());
+        if (result.getCode() == NzResponseCode.NZ_SUCCESS) {
+            Log.d(TAG, "BigScreenStatsCallerTestActivity::getBestRankTopSync::onSuccess : data : " + result.getData());
+            resultView.setText(result.getData().toString());
+        } else {
+            Log.d(TAG, "BigScreenStatsCallerTestActivity::getBestRankTopSync::onError : code : " + result.getCode() + ", msg : " + result.getMsg());
+            resultView.setText(result.getMsg());
+        }
     }
 
     private Button createButton(String text) {

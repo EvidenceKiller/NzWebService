@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import com.adl.service.AdlService;
 import com.adl.service.callback.RequestCallback;
+import com.adl.service.callback.ResponseResult;
+import com.adl.service.common.NzResponseCode;
 import com.adl.service.data.ResInfoData;
 import com.adl.service.http.request.BaseGroup;
 import com.adl.service.http.request.BaseGroupAccountInfo;
@@ -169,38 +171,22 @@ public class V3BusinessCallerTestActivity extends AppCompatActivity {
                 resultView.setText(String.valueOf(data));
             }
             @Override
-            public void onFail(int code, String msg) {
-                Log.d(TAG, "BusinessCallerTestActivity::saveGroupAsync::onFail : code : " + code + ", msg : " + msg);
+            public void onError(int code, String msg) {
+                Log.d(TAG, "BusinessCallerTestActivity::saveGroupAsync::onError : code : " + code + ", msg : " + msg);
                 resultView.setText(msg);
-            }
-            @Override
-            public void onError(String error) {
-                Log.d(TAG, "BusinessCallerTestActivity::saveGroupAsync::onError : error : " + error);
-                resultView.setText(error);
             }
         });
     }
 
     private void saveGroupSync() {
-        AdlService.getService().executeSyncOnIo(RequestScope.of(this),
-                () -> AdlService.getService().getBusinessCaller().saveGroupSync(buildSaveGroupRequest()),
-                new RequestCallback<Boolean>() {
-                    @Override
-                    public void onSuccess(Boolean data) {
-                        Log.d(TAG, "BusinessCallerTestActivity::saveGroupSync::onSuccess : data : " + data);
-                        resultView.setText(String.valueOf(data));
-                    }
-                    @Override
-                    public void onFail(int code, String msg) {
-                        Log.d(TAG, "BusinessCallerTestActivity::saveGroupSync::onFail : code : " + code + ", msg : " + msg);
-                        resultView.setText(msg);
-                    }
-                    @Override
-                    public void onError(String error) {
-                        Log.d(TAG, "BusinessCallerTestActivity::saveGroupSync::onError : error : " + error);
-                        resultView.setText(error);
-                    }
-                });
+        ResponseResult<Boolean> result = AdlService.getService().getBusinessCaller().saveGroupSync(buildSaveGroupRequest());
+        if (result.getCode() == NzResponseCode.NZ_SUCCESS) {
+            Log.d(TAG, "BusinessCallerTestActivity::saveGroupSync::onSuccess : data : " + result.getData());
+            resultView.setText(String.valueOf(result.getData()));
+        } else {
+            Log.d(TAG, "BusinessCallerTestActivity::saveGroupSync::onError : code : " + result.getCode() + ", msg : " + result.getMsg());
+            resultView.setText(result.getMsg());
+        }
     }
 
     private void getGroupAsync() {
@@ -216,42 +202,22 @@ public class V3BusinessCallerTestActivity extends AppCompatActivity {
                 }
             }
             @Override
-            public void onFail(int code, String msg) {
-                Log.d(TAG, "BusinessCallerTestActivity::getGroupAsync::onFail : code : " + code + ", msg : " + msg);
+            public void onError(int code, String msg) {
+                Log.d(TAG, "BusinessCallerTestActivity::getGroupAsync::onError : code : " + code + ", msg : " + msg);
                 resultView.setText(msg);
-            }
-            @Override
-            public void onError(String error) {
-                Log.d(TAG, "BusinessCallerTestActivity::getGroupAsync::onError : error : " + error);
-                resultView.setText(error);
             }
         });
     }
 
     private void getGroupSync() {
-        AdlService.getService().executeSyncOnIo(RequestScope.of(this),
-                () -> AdlService.getService().getBusinessCaller().getGroupSync(buildGetGroupRequest()),
-                new RequestCallback<GroupData>() {
-                    @Override
-                    public void onSuccess(GroupData data) {
-                        if (data != null) {
-                            Log.d(TAG, "BusinessCallerTestActivity::getGroupSync::onSuccess : data : " + data);
-                            resultView.setText(data.toString());
-                        } else {
-                            Log.d(TAG, "BusinessCallerTestActivity::getGroupSync::onSuccess : data is null");
-                        }
-                    }
-                    @Override
-                    public void onFail(int code, String msg) {
-                        Log.d(TAG, "BusinessCallerTestActivity::getGroupSync::onFail : code : " + code + ", msg : " + msg);
-                        resultView.setText(msg);
-                    }
-                    @Override
-                    public void onError(String error) {
-                        Log.d(TAG, "BusinessCallerTestActivity::getGroupSync::onError : error : " + error);
-                        resultView.setText(error);
-                    }
-                });
+        ResponseResult<GroupData> result = AdlService.getService().getBusinessCaller().getGroupSync(buildGetGroupRequest());
+        if (result.getCode() == NzResponseCode.NZ_SUCCESS) {
+            Log.d(TAG, "BusinessCallerTestActivity::getGroupSync::onSuccess : data : " + result.getData());
+            resultView.setText(result.getData().toString());
+        } else {
+            Log.d(TAG, "BusinessCallerTestActivity::getGroupSync::onError : code : " + result.getCode() + ", msg : " + result.getMsg());
+            resultView.setText(result.getMsg());
+        }
     }
 
     private void getTrainPlanOneDayProjectListAsync() {
@@ -268,43 +234,22 @@ public class V3BusinessCallerTestActivity extends AppCompatActivity {
                 }
             }
             @Override
-            public void onFail(int code, String msg) {
-                Log.d(TAG, "BusinessCallerTestActivity::getTrainPlanOneDayProjectListAsync::onFail : code : " + code + ", msg : " + msg);
+            public void onError(int code, String msg) {
+                Log.d(TAG, "BusinessCallerTestActivity::getTrainPlanOneDayProjectListAsync::onError : code : " + code + ", msg : " + msg);
                 resultView.setText(msg);
-            }
-            @Override
-            public void onError(String error) {
-                Log.d(TAG, "BusinessCallerTestActivity::getTrainPlanOneDayProjectListAsync::onError : error : " + error);
-                resultView.setText(error);
             }
         });
     }
 
     private void getTrainPlanOneDayProjectListSync() {
-        AdlService.getService().executeSyncOnIo(RequestScope.of(this),
-                () -> AdlService.getService().getBusinessCaller().getTrainPlanOneDayProjectListSync(buildTrainPlanOneDayProjectListRequest()),
-                new RequestCallback<List<TrainPlanOneDayProjectData>>() {
-                    @Override
-                    public void onSuccess(List<TrainPlanOneDayProjectData> data) {
-                        if (data != null) {
-                            Log.d(TAG, "BusinessCallerTestActivity::getTrainPlanOneDayProjectListSync::onSuccess : data size : " + data.size());
-                            Log.d(TAG, "BusinessCallerTestActivity::getTrainPlanOneDayProjectListSync::onSuccess : data : " + data);
-                            resultView.setText(data.toString());
-                        } else {
-                            Log.d(TAG, "BusinessCallerTestActivity::getTrainPlanOneDayProjectListSync::onSuccess : data is null");
-                        }
-                    }
-                    @Override
-                    public void onFail(int code, String msg) {
-                        Log.d(TAG, "BusinessCallerTestActivity::getTrainPlanOneDayProjectListSync::onFail : code : " + code + ", msg : " + msg);
-                        resultView.setText(msg);
-                    }
-                    @Override
-                    public void onError(String error) {
-                        Log.d(TAG, "BusinessCallerTestActivity::getTrainPlanOneDayProjectListSync::onError : error : " + error);
-                        resultView.setText(error);
-                    }
-                });
+        ResponseResult<List<TrainPlanOneDayProjectData>> result = AdlService.getService().getBusinessCaller().getTrainPlanOneDayProjectListSync(buildTrainPlanOneDayProjectListRequest());
+        if (result.getCode() == NzResponseCode.NZ_SUCCESS) {
+            Log.d(TAG, "BusinessCallerTestActivity::getTrainPlanOneDayProjectListSync::onSuccess : data : " + result.getData());
+            resultView.setText(result.getData().toString());
+        } else {
+            Log.d(TAG, "BusinessCallerTestActivity::getTrainPlanOneDayProjectListSync::onError : code : " + result.getCode() + ", msg : " + result.getMsg());
+            resultView.setText(result.getMsg());
+        }
     }
 
     private void getTrainPlanInfoPageAsync() {
@@ -320,42 +265,22 @@ public class V3BusinessCallerTestActivity extends AppCompatActivity {
                 }
             }
             @Override
-            public void onFail(int code, String msg) {
-                Log.d(TAG, "BusinessCallerTestActivity::getTrainPlanInfoPageAsync::onFail : code : " + code + ", msg : " + msg);
+            public void onError(int code, String msg) {
+                Log.d(TAG, "BusinessCallerTestActivity::getTrainPlanInfoPageAsync::onError : code : " + code + ", msg : " + msg);
                 resultView.setText(msg);
-            }
-            @Override
-            public void onError(String error) {
-                Log.d(TAG, "BusinessCallerTestActivity::getTrainPlanInfoPageAsync::onError : error : " + error);
-                resultView.setText(error);
             }
         });
     }
 
     private void getTrainPlanInfoPageSync() {
-        AdlService.getService().executeSyncOnIo(RequestScope.of(this),
-                () -> AdlService.getService().getBusinessCaller().getTrainPlanInfoPageSync(buildTrainPlanInfoPageRequest()),
-                new RequestCallback<List<TrainPlanInfoData>>() {
-                    @Override
-                    public void onSuccess(List<TrainPlanInfoData> data) {
-                        if (data != null) {
-                            Log.d(TAG, "BusinessCallerTestActivity::getTrainPlanInfoPageSync::onSuccess : data : " + data);
-                            resultView.setText(data.toString());
-                        } else {
-                            Log.d(TAG, "BusinessCallerTestActivity::getTrainPlanInfoPageSync::onSuccess : data is null");
-                        }
-                    }
-                    @Override
-                    public void onFail(int code, String msg) {
-                        Log.d(TAG, "BusinessCallerTestActivity::getTrainPlanInfoPageSync::onFail : code : " + code + ", msg : " + msg);
-                        resultView.setText(msg);
-                    }
-                    @Override
-                    public void onError(String error) {
-                        Log.d(TAG, "BusinessCallerTestActivity::getTrainPlanInfoPageSync::onError : error : " + error);
-                        resultView.setText(error);
-                    }
-                });
+        ResponseResult<List<TrainPlanInfoData>> result = AdlService.getService().getBusinessCaller().getTrainPlanInfoPageSync(buildTrainPlanInfoPageRequest());
+        if (result.getCode() == NzResponseCode.NZ_SUCCESS) {
+            Log.d(TAG, "BusinessCallerTestActivity::getTrainPlanInfoPageSync::onSuccess : data : " + result.getData());
+            resultView.setText(result.getData().toString());
+        } else {
+            Log.d(TAG, "BusinessCallerTestActivity::getTrainPlanInfoPageSync::onError : code : " + result.getCode() + ", msg : " + result.getMsg());
+            resultView.setText(result.getMsg());
+        }
     }
 
     private void joinCompetitionRankAsync() {
@@ -367,38 +292,22 @@ public class V3BusinessCallerTestActivity extends AppCompatActivity {
                 resultView.setText(String.valueOf(data));
             }
             @Override
-            public void onFail(int code, String msg) {
-                Log.d(TAG, "BusinessCallerTestActivity::joinCompetitionRankAsync::onFail : code : " + code + ", msg : " + msg);
+            public void onError(int code, String msg) {
+                Log.d(TAG, "BusinessCallerTestActivity::joinCompetitionRankAsync::onError : code : " + code + ", msg : " + msg);
                 resultView.setText(msg);
-            }
-            @Override
-            public void onError(String error) {
-                Log.d(TAG, "BusinessCallerTestActivity::joinCompetitionRankAsync::onError : error : " + error);
-                resultView.setText(error);
             }
         });
     }
 
     private void joinCompetitionRankSync() {
-        AdlService.getService().executeSyncOnIo(RequestScope.of(this),
-                () -> AdlService.getService().getBusinessCaller().joinCompetitionRankSync(buildJoinCompetitionRankRequest()),
-                new RequestCallback<Boolean>() {
-                    @Override
-                    public void onSuccess(Boolean data) {
-                        Log.d(TAG, "BusinessCallerTestActivity::joinCompetitionRankSync::onSuccess : data : " + data);
-                        resultView.setText(String.valueOf(data));
-                    }
-                    @Override
-                    public void onFail(int code, String msg) {
-                        Log.d(TAG, "BusinessCallerTestActivity::joinCompetitionRankSync::onFail : code : " + code + ", msg : " + msg);
-                        resultView.setText(msg);
-                    }
-                    @Override
-                    public void onError(String error) {
-                        Log.d(TAG, "BusinessCallerTestActivity::joinCompetitionRankSync::onError : error : " + error);
-                        resultView.setText(error);
-                    }
-                });
+        ResponseResult<Boolean> result = AdlService.getService().getBusinessCaller().joinCompetitionRankSync(buildJoinCompetitionRankRequest());
+        if (result.getCode() == NzResponseCode.NZ_SUCCESS) {
+            Log.d(TAG, "BusinessCallerTestActivity::joinCompetitionRankSync::onSuccess : data : " + result.getData());
+            resultView.setText(String.valueOf(result.getData()));
+        } else {
+            Log.d(TAG, "BusinessCallerTestActivity::joinCompetitionRankSync::onError : code : " + result.getCode() + ", msg : " + result.getMsg());
+            resultView.setText(result.getMsg());
+        }
     }
 
     private void getCompetitionRankDetailAsync() {
@@ -414,42 +323,22 @@ public class V3BusinessCallerTestActivity extends AppCompatActivity {
                 }
             }
             @Override
-            public void onFail(int code, String msg) {
-                Log.d(TAG, "BusinessCallerTestActivity::getCompetitionRankDetailAsync::onFail : code : " + code + ", msg : " + msg);
+            public void onError(int code, String msg) {
+                Log.d(TAG, "BusinessCallerTestActivity::getCompetitionRankDetailAsync::onError : code : " + code + ", msg : " + msg);
                 resultView.setText(msg);
-            }
-            @Override
-            public void onError(String error) {
-                Log.d(TAG, "BusinessCallerTestActivity::getCompetitionRankDetailAsync::onError : error : " + error);
-                resultView.setText(error);
             }
         });
     }
 
     private void getCompetitionRankDetailSync() {
-        AdlService.getService().executeSyncOnIo(RequestScope.of(this),
-                () -> AdlService.getService().getBusinessCaller().getCompetitionRankDetailSync(buildCompetitionRankDetailRequest()),
-                new RequestCallback<CompetitionRankDetailData>() {
-                    @Override
-                    public void onSuccess(CompetitionRankDetailData data) {
-                        if (data != null) {
-                            Log.d(TAG, "BusinessCallerTestActivity::getCompetitionRankDetailSync::onSuccess : data : " + data);
-                            resultView.setText(data.toString());
-                        } else {
-                            Log.d(TAG, "BusinessCallerTestActivity::getCompetitionRankDetailSync::onSuccess : data is null");
-                        }
-                    }
-                    @Override
-                    public void onFail(int code, String msg) {
-                        Log.d(TAG, "BusinessCallerTestActivity::getCompetitionRankDetailSync::onFail : code : " + code + ", msg : " + msg);
-                        resultView.setText(msg);
-                    }
-                    @Override
-                    public void onError(String error) {
-                        Log.d(TAG, "BusinessCallerTestActivity::getCompetitionRankDetailSync::onError : error : " + error);
-                        resultView.setText(error);
-                    }
-                });
+        ResponseResult<CompetitionRankDetailData> result = AdlService.getService().getBusinessCaller().getCompetitionRankDetailSync(buildCompetitionRankDetailRequest());
+        if (result.getCode() == NzResponseCode.NZ_SUCCESS) {
+            Log.d(TAG, "BusinessCallerTestActivity::getCompetitionRankDetailSync::onSuccess : data : " + result.getData());
+            resultView.setText(result.getData().toString());
+        } else {
+            Log.d(TAG, "BusinessCallerTestActivity::getCompetitionRankDetailSync::onError : code : " + result.getCode() + ", msg : " + result.getMsg());
+            resultView.setText(result.getMsg());
+        }
     }
 
     private void getCompetitionPageAsync() {
@@ -465,42 +354,22 @@ public class V3BusinessCallerTestActivity extends AppCompatActivity {
                 }
             }
             @Override
-            public void onFail(int code, String msg) {
-                Log.d(TAG, "BusinessCallerTestActivity::getCompetitionPageAsync::onFail : code : " + code + ", msg : " + msg);
+            public void onError(int code, String msg) {
+                Log.d(TAG, "BusinessCallerTestActivity::getCompetitionPageAsync::onError : code : " + code + ", msg : " + msg);
                 resultView.setText(msg);
-            }
-            @Override
-            public void onError(String error) {
-                Log.d(TAG, "BusinessCallerTestActivity::getCompetitionPageAsync::onError : error : " + error);
-                resultView.setText(error);
             }
         });
     }
 
     private void getCompetitionPageSync() {
-        AdlService.getService().executeSyncOnIo(RequestScope.of(this),
-                () -> AdlService.getService().getBusinessCaller().getCompetitionPageSync(buildCompetitionPageRequest()),
-                new RequestCallback<List<CompetitionData>>() {
-                    @Override
-                    public void onSuccess(List<CompetitionData> data) {
-                        if (data != null) {
-                            Log.d(TAG, "BusinessCallerTestActivity::getCompetitionPageSync::onSuccess : data : " + data);
-                            resultView.setText(data.toString());
-                        } else {
-                            Log.d(TAG, "BusinessCallerTestActivity::getCompetitionPageSync::onSuccess : data is null");
-                        }
-                    }
-                    @Override
-                    public void onFail(int code, String msg) {
-                        Log.d(TAG, "BusinessCallerTestActivity::getCompetitionPageSync::onFail : code : " + code + ", msg : " + msg);
-                        resultView.setText(msg);
-                    }
-                    @Override
-                    public void onError(String error) {
-                        Log.d(TAG, "BusinessCallerTestActivity::getCompetitionPageSync::onError : error : " + error);
-                        resultView.setText(error);
-                    }
-                });
+        ResponseResult<List<CompetitionData>> result = AdlService.getService().getBusinessCaller().getCompetitionPageSync(buildCompetitionPageRequest());
+        if (result.getCode() == NzResponseCode.NZ_SUCCESS) {
+            Log.d(TAG, "BusinessCallerTestActivity::getCompetitionPageSync::onSuccess : data : " + result.getData());
+            resultView.setText(result.getData().toString());
+        } else {
+            Log.d(TAG, "BusinessCallerTestActivity::getCompetitionPageSync::onError : code : " + result.getCode() + ", msg : " + result.getMsg());
+            resultView.setText(result.getMsg());
+        }
     }
 
     private void getSportMeetPageAsync() {
@@ -516,42 +385,22 @@ public class V3BusinessCallerTestActivity extends AppCompatActivity {
                 }
             }
             @Override
-            public void onFail(int code, String msg) {
-                Log.d(TAG, "BusinessCallerTestActivity::getSportMeetPageAsync::onFail : code : " + code + ", msg : " + msg);
+            public void onError(int code, String msg) {
+                Log.d(TAG, "BusinessCallerTestActivity::getSportMeetPageAsync::onError : code : " + code + ", msg : " + msg);
                 resultView.setText(msg);
-            }
-            @Override
-            public void onError(String error) {
-                Log.d(TAG, "BusinessCallerTestActivity::getSportMeetPageAsync::onError : error : " + error);
-                resultView.setText(error);
             }
         });
     }
 
     private void getSportMeetPageSync() {
-        AdlService.getService().executeSyncOnIo(RequestScope.of(this),
-                () -> AdlService.getService().getBusinessCaller().getSportMeetPageSync(buildSportMeetPageRequest()),
-                new RequestCallback<List<SportMeetData>>() {
-                    @Override
-                    public void onSuccess(List<SportMeetData> data) {
-                        if (data != null) {
-                            Log.d(TAG, "BusinessCallerTestActivity::getSportMeetPageSync::onSuccess : data : " + data);
-                            resultView.setText(data.toString());
-                        } else {
-                            Log.d(TAG, "BusinessCallerTestActivity::getSportMeetPageSync::onSuccess : data is null");
-                        }
-                    }
-                    @Override
-                    public void onFail(int code, String msg) {
-                        Log.d(TAG, "BusinessCallerTestActivity::getSportMeetPageSync::onFail : code : " + code + ", msg : " + msg);
-                        resultView.setText(msg);
-                    }
-                    @Override
-                    public void onError(String error) {
-                        Log.d(TAG, "BusinessCallerTestActivity::getSportMeetPageSync::onError : error : " + error);
-                        resultView.setText(error);
-                    }
-                });
+        ResponseResult<List<SportMeetData>> result = AdlService.getService().getBusinessCaller().getSportMeetPageSync(buildSportMeetPageRequest());
+        if (result.getCode() == NzResponseCode.NZ_SUCCESS) {
+            Log.d(TAG, "BusinessCallerTestActivity::getSportMeetPageSync::onSuccess : data : " + result.getData());
+            resultView.setText(result.getData().toString());
+        } else {
+            Log.d(TAG, "BusinessCallerTestActivity::getSportMeetPageSync::onError : code : " + result.getCode() + ", msg : " + result.getMsg());
+            resultView.setText(result.getMsg());
+        }
     }
 
     private void downloadGroupTeamPageAsync() {
@@ -568,43 +417,22 @@ public class V3BusinessCallerTestActivity extends AppCompatActivity {
                 }
             }
             @Override
-            public void onFail(int code, String msg) {
-                Log.d(TAG, "BusinessCallerTestActivity::downloadGroupTeamPageAsync::onFail : code : " + code + ", msg : " + msg);
+            public void onError(int code, String msg) {
+                Log.d(TAG, "BusinessCallerTestActivity::downloadGroupTeamPageAsync::onError : code : " + code + ", msg : " + msg);
                 resultView.setText(msg);
-            }
-            @Override
-            public void onError(String error) {
-                Log.d(TAG, "BusinessCallerTestActivity::downloadGroupTeamPageAsync::onError : error : " + error);
-                resultView.setText(error);
             }
         });
     }
 
     private void downloadGroupTeamPageSync() {
-        AdlService.getService().executeSyncOnIo(RequestScope.of(this),
-                () -> AdlService.getService().getBusinessCaller().downloadGroupTeamPageSync(buildDownloadGroupTeamPageRequest()),
-                new RequestCallback<List<GroupTeamData>>() {
-                    @Override
-                    public void onSuccess(List<GroupTeamData> data) {
-                        if (data != null) {
-                            Log.d(TAG, "BusinessCallerTestActivity::downloadGroupTeamPageSync::onSuccess : data size : " + data.size());
-                            Log.d(TAG, "BusinessCallerTestActivity::downloadGroupTeamPageSync::onSuccess : data : " + data);
-                            resultView.setText(data.toString());
-                        } else {
-                            Log.d(TAG, "BusinessCallerTestActivity::downloadGroupTeamPageSync::onSuccess : data is null");
-                        }
-                    }
-                    @Override
-                    public void onFail(int code, String msg) {
-                        Log.d(TAG, "BusinessCallerTestActivity::downloadGroupTeamPageSync::onFail : code : " + code + ", msg : " + msg);
-                        resultView.setText(msg);
-                    }
-                    @Override
-                    public void onError(String error) {
-                        Log.d(TAG, "BusinessCallerTestActivity::downloadGroupTeamPageSync::onError : error : " + error);
-                        resultView.setText(error);
-                    }
-                });
+        ResponseResult<List<GroupTeamData>> result = AdlService.getService().getBusinessCaller().downloadGroupTeamPageSync(buildDownloadGroupTeamPageRequest());
+        if (result.getCode() == NzResponseCode.NZ_SUCCESS) {
+            Log.d(TAG, "BusinessCallerTestActivity::downloadGroupTeamPageSync::onSuccess : data : " + result.getData());
+            resultView.setText(result.getData().toString());
+        } else {
+            Log.d(TAG, "BusinessCallerTestActivity::downloadGroupTeamPageSync::onError : code : " + result.getCode() + ", msg : " + result.getMsg());
+            resultView.setText(result.getMsg());
+        }
     }
 
     private void downloadGroupTeamDetailPageAsync() {
@@ -621,43 +449,22 @@ public class V3BusinessCallerTestActivity extends AppCompatActivity {
                 }
             }
             @Override
-            public void onFail(int code, String msg) {
-                Log.d(TAG, "BusinessCallerTestActivity::downloadGroupTeamDetailPageAsync::onFail : code : " + code + ", msg : " + msg);
+            public void onError(int code, String msg) {
+                Log.d(TAG, "BusinessCallerTestActivity::downloadGroupTeamDetailPageAsync::onError : code : " + code + ", msg : " + msg);
                 resultView.setText(msg);
-            }
-            @Override
-            public void onError(String error) {
-                Log.d(TAG, "BusinessCallerTestActivity::downloadGroupTeamDetailPageAsync::onError : error : " + error);
-                resultView.setText(error);
             }
         });
     }
 
     private void downloadGroupTeamDetailPageSync() {
-        AdlService.getService().executeSyncOnIo(RequestScope.of(this),
-                () -> AdlService.getService().getBusinessCaller().downloadGroupTeamDetailPageSync(buildDownloadGroupTeamDetailPageRequest()),
-                new RequestCallback<List<GroupTeamDetailData>>() {
-                    @Override
-                    public void onSuccess(List<GroupTeamDetailData> data) {
-                        if (data != null) {
-                            Log.d(TAG, "BusinessCallerTestActivity::downloadGroupTeamDetailPageSync::onSuccess : data size : " + data.size());
-                            Log.d(TAG, "BusinessCallerTestActivity::downloadGroupTeamDetailPageSync::onSuccess : data : " + data);
-                            resultView.setText(data.toString());
-                        } else {
-                            Log.d(TAG, "BusinessCallerTestActivity::downloadGroupTeamDetailPageSync::onSuccess : data is null");
-                        }
-                    }
-                    @Override
-                    public void onFail(int code, String msg) {
-                        Log.d(TAG, "BusinessCallerTestActivity::downloadGroupTeamDetailPageSync::onFail : code : " + code + ", msg : " + msg);
-                        resultView.setText(msg);
-                    }
-                    @Override
-                    public void onError(String error) {
-                        Log.d(TAG, "BusinessCallerTestActivity::downloadGroupTeamDetailPageSync::onError : error : " + error);
-                        resultView.setText(error);
-                    }
-                });
+        ResponseResult<List<GroupTeamDetailData>> result = AdlService.getService().getBusinessCaller().downloadGroupTeamDetailPageSync(buildDownloadGroupTeamDetailPageRequest());
+        if (result.getCode() == NzResponseCode.NZ_SUCCESS) {
+            Log.d(TAG, "BusinessCallerTestActivity::downloadGroupTeamDetailPageSync::onSuccess : data : " + result.getData());
+            resultView.setText(result.getData().toString());
+        } else {
+            Log.d(TAG, "BusinessCallerTestActivity::downloadGroupTeamDetailPageSync::onError : code : " + result.getCode() + ", msg : " + result.getMsg());
+            resultView.setText(result.getMsg());
+        }
     }
 
     private void getResTypeListAsync() {
@@ -674,43 +481,22 @@ public class V3BusinessCallerTestActivity extends AppCompatActivity {
                 }
             }
             @Override
-            public void onFail(int code, String msg) {
-                Log.d(TAG, "BusinessCallerTestActivity::getResTypeListAsync::onFail : code : " + code + ", msg : " + msg);
+            public void onError(int code, String msg) {
+                Log.d(TAG, "BusinessCallerTestActivity::getResTypeListAsync::onError : code : " + code + ", msg : " + msg);
                 resultView.setText(msg);
-            }
-            @Override
-            public void onError(String error) {
-                Log.d(TAG, "BusinessCallerTestActivity::getResTypeListAsync::onError : error : " + error);
-                resultView.setText(error);
             }
         });
     }
 
     private void getResTypeListSync() {
-        AdlService.getService().executeSyncOnIo(RequestScope.of(this),
-                () -> AdlService.getService().getBusinessCaller().getResTypeListSync(buildResTypeListRequest()),
-                new RequestCallback<List<ResTypeData>>() {
-                    @Override
-                    public void onSuccess(List<ResTypeData> data) {
-                        if (data != null) {
-                            Log.d(TAG, "BusinessCallerTestActivity::getResTypeListSync::onSuccess : data size : " + data.size());
-                            Log.d(TAG, "BusinessCallerTestActivity::getResTypeListSync::onSuccess : data : " + data);
-                            resultView.setText(data.toString());
-                        } else {
-                            Log.d(TAG, "BusinessCallerTestActivity::getResTypeListSync::onSuccess : data is null");
-                        }
-                    }
-                    @Override
-                    public void onFail(int code, String msg) {
-                        Log.d(TAG, "BusinessCallerTestActivity::getResTypeListSync::onFail : code : " + code + ", msg : " + msg);
-                        resultView.setText(msg);
-                    }
-                    @Override
-                    public void onError(String error) {
-                        Log.d(TAG, "BusinessCallerTestActivity::getResTypeListSync::onError : error : " + error);
-                        resultView.setText(error);
-                    }
-                });
+        ResponseResult<List<ResTypeData>> result = AdlService.getService().getBusinessCaller().getResTypeListSync(buildResTypeListRequest());
+        if (result.getCode() == NzResponseCode.NZ_SUCCESS) {
+            Log.d(TAG, "BusinessCallerTestActivity::getResTypeListSync::onSuccess : data : " + result.getData());
+            resultView.setText(result.getData().toString());
+        } else {
+            Log.d(TAG, "BusinessCallerTestActivity::getResTypeListSync::onError : code : " + result.getCode() + ", msg : " + result.getMsg());
+            resultView.setText(result.getMsg());
+        }
     }
 
     private void getResPageAsync() {
@@ -726,42 +512,22 @@ public class V3BusinessCallerTestActivity extends AppCompatActivity {
                 }
             }
             @Override
-            public void onFail(int code, String msg) {
-                Log.d(TAG, "BusinessCallerTestActivity::getResPageAsync::onFail : code : " + code + ", msg : " + msg);
+            public void onError(int code, String msg) {
+                Log.d(TAG, "BusinessCallerTestActivity::getResPageAsync::onError : code : " + code + ", msg : " + msg);
                 resultView.setText(msg);
-            }
-            @Override
-            public void onError(String error) {
-                Log.d(TAG, "BusinessCallerTestActivity::getResPageAsync::onError : error : " + error);
-                resultView.setText(error);
             }
         });
     }
 
     private void getResPageSync() {
-        AdlService.getService().executeSyncOnIo(RequestScope.of(this),
-                () -> AdlService.getService().getBusinessCaller().getResPageSync(buildResPageRequest()),
-                new RequestCallback<List<ResData>>() {
-                    @Override
-                    public void onSuccess(List<ResData> data) {
-                        if (data != null) {
-                            Log.d(TAG, "BusinessCallerTestActivity::getResPageSync::onSuccess : data : " + data);
-                            resultView.setText(data.toString());
-                        } else {
-                            Log.d(TAG, "BusinessCallerTestActivity::getResPageSync::onSuccess : data is null");
-                        }
-                    }
-                    @Override
-                    public void onFail(int code, String msg) {
-                        Log.d(TAG, "BusinessCallerTestActivity::getResPageSync::onFail : code : " + code + ", msg : " + msg);
-                        resultView.setText(msg);
-                    }
-                    @Override
-                    public void onError(String error) {
-                        Log.d(TAG, "BusinessCallerTestActivity::getResPageSync::onError : error : " + error);
-                        resultView.setText(error);
-                    }
-                });
+        ResponseResult<List<ResData>> result = AdlService.getService().getBusinessCaller().getResPageSync(buildResPageRequest());
+        if (result.getCode() == NzResponseCode.NZ_SUCCESS) {
+            Log.d(TAG, "BusinessCallerTestActivity::getResPageSync::onSuccess : data : " + result.getData());
+            resultView.setText(result.getData().toString());
+        } else {
+            Log.d(TAG, "BusinessCallerTestActivity::getResPageSync::onError : code : " + result.getCode() + ", msg : " + result.getMsg());
+            resultView.setText(result.getMsg());
+        }
     }
 
     private void getResInfoAsync() {
@@ -777,42 +543,22 @@ public class V3BusinessCallerTestActivity extends AppCompatActivity {
                 }
             }
             @Override
-            public void onFail(int code, String msg) {
-                Log.d(TAG, "BusinessCallerTestActivity::getResInfoAsync::onFail : code : " + code + ", msg : " + msg);
+            public void onError(int code, String msg) {
+                Log.d(TAG, "BusinessCallerTestActivity::getResInfoAsync::onError : code : " + code + ", msg : " + msg);
                 resultView.setText(msg);
-            }
-            @Override
-            public void onError(String error) {
-                Log.d(TAG, "BusinessCallerTestActivity::getResInfoAsync::onError : error : " + error);
-                resultView.setText(error);
             }
         });
     }
 
     private void getResInfoSync() {
-        AdlService.getService().executeSyncOnIo(RequestScope.of(this),
-                () -> AdlService.getService().getBusinessCaller().getResInfoSync(buildResInfoRequest()),
-                new RequestCallback<ResInfoData>() {
-                    @Override
-                    public void onSuccess(ResInfoData data) {
-                        if (data != null) {
-                            Log.d(TAG, "BusinessCallerTestActivity::getResInfoSync::onSuccess : data : " + data);
-                            resultView.setText(data.toString());
-                        } else {
-                            Log.d(TAG, "BusinessCallerTestActivity::getResInfoSync::onSuccess : data is null");
-                        }
-                    }
-                    @Override
-                    public void onFail(int code, String msg) {
-                        Log.d(TAG, "BusinessCallerTestActivity::getResInfoSync::onFail : code : " + code + ", msg : " + msg);
-                        resultView.setText(msg);
-                    }
-                    @Override
-                    public void onError(String error) {
-                        Log.d(TAG, "BusinessCallerTestActivity::getResInfoSync::onError : error : " + error);
-                        resultView.setText(error);
-                    }
-                });
+        ResponseResult<ResInfoData> result = AdlService.getService().getBusinessCaller().getResInfoSync(buildResInfoRequest());
+        if (result.getCode() == NzResponseCode.NZ_SUCCESS) {
+            Log.d(TAG, "BusinessCallerTestActivity::getResInfoSync::onSuccess : data : " + result.getData());
+            resultView.setText(result.getData().toString());
+        } else {
+            Log.d(TAG, "BusinessCallerTestActivity::getResInfoSync::onError : code : " + result.getCode() + ", msg : " + result.getMsg());
+            resultView.setText(result.getMsg());
+        }
     }
 
     private Button createButton(String text) {

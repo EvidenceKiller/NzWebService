@@ -2,6 +2,7 @@ package com.adl.service.repository.fetch;
 
 import android.text.TextUtils;
 
+import com.adl.service.callback.ResponseResult;
 import com.adl.service.data.BasePageData;
 import com.adl.service.data.ClassroomCompetitionRecordData;
 import com.adl.service.data.SunshineRunningSportDetailData;
@@ -36,43 +37,27 @@ public final class BigScreenH5FetchHelper {
         return bigScreenH5Service;
     }
 
-    @SuppressWarnings("unchecked")
-    public Function<TeachCourseRequest, Single<List<TeachCourseDetailData>>> createGetTeachCourseDetailListFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(
-                getService().getTeachCourseDetailList(request),
-                (Class<List<TeachCourseDetailData>>) (Class<?>) List.class
-        );
+    public Function<TeachCourseRequest, Single<ResponseResult<List<TeachCourseDetailData>>>> createGetTeachCourseDetailListFunc() {
+        return (request) -> BaseFetchUtil.scheduleResponse(getService().getTeachCourseDetailList(request));
     }
 
-    @SuppressWarnings("unchecked")
-    public Function<TeachCourseDataDatesRequest, Single<List<String>>> createGetTeachCourseDataDatesFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(
-                getService().getTeachCourseDataDates(request),
-                (Class<List<String>>) (Class<?>) List.class
-        );
+    public Function<TeachCourseDataDatesRequest, Single<ResponseResult<List<String>>>> createGetTeachCourseDataDatesFunc() {
+        return (request) -> BaseFetchUtil.scheduleResponse(getService().getTeachCourseDataDates(request));
     }
 
-    public Function<TeachCourseRequest, Single<Integer>> createGetTeachCourseTimesFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(getService().getTeachCourseTimes(request), Integer.class);
+    public Function<TeachCourseRequest, Single<ResponseResult<Integer>>> createGetTeachCourseTimesFunc() {
+        return (request) -> BaseFetchUtil.scheduleResponse(getService().getTeachCourseTimes(request));
     }
 
-    public Function<TeachCourseButtonClickCountRequest, Single<Boolean>> createGetTeachCourseButtonClickableFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(getService().getTeachCourseButtonClickable(request), Boolean.class);
+    public Function<TeachCourseButtonClickCountRequest, Single<ResponseResult<Boolean>>> createGetTeachCourseButtonClickableFunc() {
+        return (request) -> BaseFetchUtil.scheduleResponse(getService().getTeachCourseButtonClickable(request));
     }
 
-    @SuppressWarnings("unchecked")
-    public Function<SunshineRunningSportDetailPageRequest, Single<BasePageData<SunshineRunningSportDetailData>>> createGetSunshineRunningSportDetailPageFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(
-                getService().getSunshineRunningSportDetailPage(request),
-                (Class<BasePageData<SunshineRunningSportDetailData>>) (Class<?>) BasePageData.class
-        );
+    public Function<SunshineRunningSportDetailPageRequest, Single<ResponseResult<BasePageData<SunshineRunningSportDetailData>>>> createGetSunshineRunningSportDetailPageFunc() {
+        return (request) -> BaseFetchUtil.scheduleResponse(getService().getSunshineRunningSportDetailPage(request));
     }
 
-    @SuppressWarnings("unchecked")
-    public Function<SunshineRunningCompetitionRecordPageRequest, Single<BasePageData<ClassroomCompetitionRecordData>>> createGetSunshineRunningCompetitionRecordPageFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(
-                getService().getSunshineRunningCompetitionRecordPage(request),
-                (Class<BasePageData<ClassroomCompetitionRecordData>>) (Class<?>) BasePageData.class
-        );
+    public Function<SunshineRunningCompetitionRecordPageRequest, Single<ResponseResult<BasePageData<ClassroomCompetitionRecordData>>>> createGetSunshineRunningCompetitionRecordPageFunc() {
+        return (request) -> BaseFetchUtil.scheduleResponse(getService().getSunshineRunningCompetitionRecordPage(request));
     }
 }

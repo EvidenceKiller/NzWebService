@@ -21,7 +21,7 @@ public class StartActivity extends BaseActivity {
     private String testAuthHost_V2 = "http://172.16.2.102:18005/gateway/api/device/auth";
     private String testBusHost_V2 = "http://172.16.0.206:8082/gateway/api";
     // v3 host
-    private String testBusHost_V3 = "http://172.16.2.102:9082/v3/gateway/api/";
+    private String testBusHost_V3 = "http://172.16.2.102:9088/v3/gateway/api/";
 
 //    private static String testHost = "http://112.19.167.50:18005/gateway/api/device/auth";
 //    private static String testBusHost = "http://112.19.167.50:18082/gateway/api";
@@ -58,12 +58,7 @@ public class StartActivity extends BaseActivity {
             }
 
             @Override
-            public void onError(String error) {
-
-            }
-
-            @Override
-            public void onFail(int code, String msg) {
+            public void onError(int code, String msg) {
 
             }
         });
@@ -96,7 +91,8 @@ public class StartActivity extends BaseActivity {
                         .setQiNiuHost("http://172.16.0.206:8082/gateway/api")
                         .setQiNiuBucket("adl-publicres")
                         .setFacePrefix("https://f.nezhasport.com/")
-                        .setDeviceToken(token)
+//                        .setDeviceToken(token)
+                        .setDeviceToken("RsSO_TuLJryiJtRlf2N-xixtqzPSJt3l5V0p-5_yaWsxQYkQdSemD-25SWqMgZ_Hnt2Ount6sjwnZM1gsvQCDW738CiF-wiTEI2WOdYyuOEKZ8cJdwZyOrJPVWa5I3Au")
                         .setDebug(debug)
                         .setReadConfig(readConfig)
                         .build();

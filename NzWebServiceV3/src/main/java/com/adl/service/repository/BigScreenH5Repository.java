@@ -1,5 +1,6 @@
 package com.adl.service.repository;
 
+import com.adl.service.callback.ResponseResult;
 import com.adl.service.data.ClassroomCompetitionRecordData;
 import com.adl.service.data.SunshineRunningSportDetailData;
 import com.adl.service.data.TeachCourseDetailData;
@@ -39,27 +40,27 @@ public final class BigScreenH5Repository {
         return instance;
     }
 
-    public Single<List<TeachCourseDetailData>> getTeachCourseDetailList(TeachCourseRequest request) {
+    public Single<ResponseResult<List<TeachCourseDetailData>>> getTeachCourseDetailList(TeachCourseRequest request) {
         return BaseRepositoryUtil.repositoryAsSingle(request, fetchHelper.createGetTeachCourseDetailListFunc());
     }
 
-    public Single<List<String>> getTeachCourseDataDates(TeachCourseDataDatesRequest request) {
+    public Single<ResponseResult<List<String>>> getTeachCourseDataDates(TeachCourseDataDatesRequest request) {
         return BaseRepositoryUtil.repositoryAsSingle(request, fetchHelper.createGetTeachCourseDataDatesFunc());
     }
 
-    public Single<Integer> getTeachCourseTimes(TeachCourseRequest request) {
+    public Single<ResponseResult<Integer>> getTeachCourseTimes(TeachCourseRequest request) {
         return BaseRepositoryUtil.repositoryAsSingle(request, fetchHelper.createGetTeachCourseTimesFunc());
     }
 
-    public Single<Boolean> getTeachCourseButtonClickable(TeachCourseButtonClickCountRequest request) {
+    public Single<ResponseResult<Boolean>> getTeachCourseButtonClickable(TeachCourseButtonClickCountRequest request) {
         return BaseRepositoryUtil.repositoryAsSingle(request, fetchHelper.createGetTeachCourseButtonClickableFunc());
     }
 
-    public Single<List<SunshineRunningSportDetailData>> getSunshineRunningSportDetailPage(SunshineRunningSportDetailPageRequest request) {
+    public Single<ResponseResult<List<SunshineRunningSportDetailData>>> getSunshineRunningSportDetailPage(SunshineRunningSportDetailPageRequest request) {
         return BaseRepositoryUtil.repositoryPageAsSingle(request, fetchHelper.createGetSunshineRunningSportDetailPageFunc());
     }
 
-    public Single<List<ClassroomCompetitionRecordData>> getSunshineRunningCompetitionRecordPage(SunshineRunningCompetitionRecordPageRequest request) {
+    public Single<ResponseResult<List<ClassroomCompetitionRecordData>>> getSunshineRunningCompetitionRecordPage(SunshineRunningCompetitionRecordPageRequest request) {
         return BaseRepositoryUtil.repositoryPageAsSingle(request, fetchHelper.createGetSunshineRunningCompetitionRecordPageFunc());
     }
 }

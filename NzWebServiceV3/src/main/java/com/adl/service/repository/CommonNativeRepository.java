@@ -1,26 +1,25 @@
 package com.adl.service.repository;
 
 import com.adl.service.data.LoginInfoData;
-import com.adl.service.repository.persist.CommonDaoPersistHelper;
-import com.adl.service.repository.persist.PlanDaoPersistHelper;
+import com.adl.service.repository.persist.CommonNativePersistHelper;
 
 import androidx.annotation.RestrictTo;
 import io.reactivex.rxjava3.core.Single;
 
 @RestrictTo(RestrictTo.Scope.LIBRARY)
-public final class CommonDaoRepository {
-    private final CommonDaoPersistHelper persistHelper = new CommonDaoPersistHelper();
+public final class CommonNativeRepository {
+    private final CommonNativePersistHelper persistHelper = new CommonNativePersistHelper();
 
-    private static volatile CommonDaoRepository instance;
+    private static volatile CommonNativeRepository instance;
 
-    private CommonDaoRepository() {
+    private CommonNativeRepository() {
     }
 
-    public static CommonDaoRepository getInstance() {
+    public static CommonNativeRepository getInstance() {
         if (instance == null) {
-            synchronized (CommonDaoRepository.class) {
+            synchronized (CommonNativeRepository.class) {
                 if (instance == null) {
-                    instance = new CommonDaoRepository();
+                    instance = new CommonNativeRepository();
                 }
             }
         }

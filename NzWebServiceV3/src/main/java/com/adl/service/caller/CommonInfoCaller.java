@@ -1,6 +1,7 @@
 package com.adl.service.caller;
 
-import com.adl.service.callback.GetPageResult;
+import com.adl.service.callback.ResponseResult;
+import com.adl.service.data.PageSummaryData;
 import com.adl.service.callback.RequestCallback;
 import com.adl.service.callback.RequestUserCallback;
 import com.adl.service.data.AcayearData;
@@ -12,7 +13,6 @@ import com.adl.service.data.GradeTreeData;
 import com.adl.service.data.LoginInfoData;
 import com.adl.service.data.StudentData;
 import com.adl.service.data.TeacherData;
-import com.adl.service.exception.NzBaseException;
 import com.adl.service.http.request.ClassInfoRequest;
 import com.adl.service.http.request.ClassPageRequest;
 import com.adl.service.http.request.DeviceActiveRequest;
@@ -54,7 +54,7 @@ public interface CommonInfoCaller {
      * 获取机构年级树
      * <p>同步调用。</p>
      */
-    List<GradeTreeData> getGradeTreeSync(EmptyRequest request);
+    ResponseResult<List<GradeTreeData>> getGradeTreeSync(EmptyRequest request);
 
     /**
      * 获取年级列表
@@ -66,7 +66,7 @@ public interface CommonInfoCaller {
      * 获取年级列表
      * <p>同步调用。</p>
      */
-    List<GradeChineseNameData> getGradeChineseNameListSync(EmptyRequest request);
+    ResponseResult<List<GradeChineseNameData>> getGradeChineseNameListSync(EmptyRequest request);
 
     /**
      * 获取班级列表
@@ -78,7 +78,7 @@ public interface CommonInfoCaller {
      * 获取班级列表
      * <p>同步调用。</p>
      */
-    List<ClassData> getClassPageSync(ClassPageRequest request);
+    ResponseResult<List<ClassData>> getClassPageSync(ClassPageRequest request);
 
     /**
      * 获取班级信息
@@ -90,7 +90,7 @@ public interface CommonInfoCaller {
      * 获取班级信息
      * <p>同步调用。</p>
      */
-    ClassInfoData getClassInfoSync(ClassInfoRequest request);
+    ResponseResult<ClassInfoData> getClassInfoSync(ClassInfoRequest request);
 
     /**
      * 获取登录用户信息
@@ -102,7 +102,7 @@ public interface CommonInfoCaller {
      * 获取登录用户信息
      * <p>同步调用。</p>
      */
-    LoginInfoData getLoginInfoSync(EmptyRequest request);
+    ResponseResult<LoginInfoData> getLoginInfoSync(EmptyRequest request);
 
     /**
      * 获取学年学期列表
@@ -114,13 +114,13 @@ public interface CommonInfoCaller {
      * 获取学年学期列表
      * <p>同步调用。</p>
      */
-    List<AcayearData> getAcayearListSync(EmptyRequest request);
+    ResponseResult<List<AcayearData>> getAcayearListSync(EmptyRequest request);
 
-    long getTeacherPagesAllAsync(RequestScope scope, TeacherPageRequest request, RequestCallback<GetPageResult> callback);
+    long getTeacherPagesAllAsync(RequestScope scope, TeacherPageRequest request, RequestCallback<PageSummaryData> callback);
 
-    GetPageResult getTeacherPagesAllSync(TeacherPageRequest request, RequestUserCallback callback);
+    ResponseResult<PageSummaryData> getTeacherPagesAllSync(TeacherPageRequest request, RequestUserCallback callback);
 
-    GetPageResult getTeacherPagesAllSync(TeacherPageRequest request);
+    ResponseResult<PageSummaryData> getTeacherPagesAllSync(TeacherPageRequest request);
 
     /**
      * 获取教师用户列表（全量）
@@ -132,13 +132,13 @@ public interface CommonInfoCaller {
      * 获取教师用户列表（全量）
      * <p>同步调用。</p>
      */
-    List<TeacherData> getTeacherPageSync(TeacherPageRequest request);
+    ResponseResult<List<TeacherData>> getTeacherPageSync(TeacherPageRequest request);
 
-    long getStudentPagesAllAsync(RequestScope scope, StudentPageRequest request, RequestCallback<GetPageResult> callback);
+    long getStudentPagesAllAsync(RequestScope scope, StudentPageRequest request, RequestCallback<PageSummaryData> callback);
 
-    GetPageResult getStudentPagesAllSync(StudentPageRequest request, RequestUserCallback callback);
+    ResponseResult<PageSummaryData> getStudentPagesAllSync(StudentPageRequest request, RequestUserCallback callback);
 
-    GetPageResult getStudentPagesAllSync(StudentPageRequest request);
+    ResponseResult<PageSummaryData> getStudentPagesAllSync(StudentPageRequest request);
 
     /**
      * 获取学生增量数据
@@ -150,7 +150,7 @@ public interface CommonInfoCaller {
      * 获取学生增量数据
      * <p>同步调用。</p>
      */
-    List<StudentData> getStudentPageSync(StudentPageRequest request);
+    ResponseResult<List<StudentData>> getStudentPageSync(StudentPageRequest request);
 
     /**
      * 获取系统字典
@@ -162,7 +162,7 @@ public interface CommonInfoCaller {
      * 获取系统字典
      * <p>同步调用。</p>
      */
-    List<DictData> getDictListSync(DictRequest request);
+    ResponseResult<List<DictData>> getDictListSync(DictRequest request);
 
     /**
      * 设备激活
@@ -174,7 +174,7 @@ public interface CommonInfoCaller {
      * 设备激活
      * <p>同步调用。</p>
      */
-    Boolean deviceActiveSync(DeviceActiveRequest request);
+    ResponseResult<Boolean> deviceActiveSync(DeviceActiveRequest request);
 
     /**
      * 获取服务端时间
@@ -186,5 +186,5 @@ public interface CommonInfoCaller {
      * 获取服务端时间
      * <p>同步调用。</p>
      */
-    Long getServerTimeSync();
+    ResponseResult<Long> getServerTimeSync();
 }

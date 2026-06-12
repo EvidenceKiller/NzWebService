@@ -2,6 +2,7 @@ package com.adl.service.repository.fetch;
 
 import android.text.TextUtils;
 
+import com.adl.service.callback.ResponseResult;
 import com.adl.service.data.BasePageData;
 import com.adl.service.data.CompetitionData;
 import com.adl.service.data.CompetitionRankDetailData;
@@ -54,34 +55,31 @@ public final class BusinessFetchHelper {
         return businessService;
     }
 
-    public Function<SaveGroupRequest, Single<Boolean>> createSaveGroupFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(getService().saveGroup(request), Boolean.class);
+    public Function<SaveGroupRequest, Single<ResponseResult<Boolean>>> createSaveGroupFunc() {
+        return (request) -> BaseFetchUtil.scheduleResponse(getService().saveGroup(request));
     }
 
-    public Function<GetGroupRequest, Single<GroupData>> createGetGroupFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(getService().getGroup(request), GroupData.class);
+    public Function<GetGroupRequest, Single<ResponseResult<GroupData>>> createGetGroupFunc() {
+        return (request) -> BaseFetchUtil.scheduleResponse(getService().getGroup(request));
     }
 
-    @SuppressWarnings("unchecked")
-    public Function<TrainPlanOneDayProjectListRequest, Single<List<TrainPlanOneDayProjectData>>> createGetTrainPlanOneDayProjectListFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(getService().getTrainPlanOneDayProjectList(request), (Class<List<TrainPlanOneDayProjectData>>) (Class<?>) List.class);
+    public Function<TrainPlanOneDayProjectListRequest, Single<ResponseResult<List<TrainPlanOneDayProjectData>>>> createGetTrainPlanOneDayProjectListFunc() {
+        return (request) -> BaseFetchUtil.scheduleResponse(getService().getTrainPlanOneDayProjectList(request));
     }
 
-    @SuppressWarnings("unchecked")
-    public Function<TrainPlanInfoPageRequest, Single<BasePageData<TrainPlanInfoData>>> createGetTrainPlanInfoPageFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(getService().getTrainPlanInfoPage(request), (Class<BasePageData<TrainPlanInfoData>>) (Class<?>) BasePageData.class);
+    public Function<TrainPlanInfoPageRequest, Single<ResponseResult<BasePageData<TrainPlanInfoData>>>> createGetTrainPlanInfoPageFunc() {
+        return (request) -> BaseFetchUtil.scheduleResponse(getService().getTrainPlanInfoPage(request));
     }
 
-    public Function<JoinCompetitionRankRequest, Single<Boolean>> createJoinCompetitionRankFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(getService().joinCompetitionRank(request), Boolean.class);
+    public Function<JoinCompetitionRankRequest, Single<ResponseResult<Boolean>>> createJoinCompetitionRankFunc() {
+        return (request) -> BaseFetchUtil.scheduleResponse(getService().joinCompetitionRank(request));
     }
 
-    public Function<CompetitionRankDetailRequest, Single<CompetitionRankDetailData>> createGetCompetitionRankDetailFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(getService().getCompetitionRankDetail(request), CompetitionRankDetailData.class);
+    public Function<CompetitionRankDetailRequest, Single<ResponseResult<CompetitionRankDetailData>>> createGetCompetitionRankDetailFunc() {
+        return (request) -> BaseFetchUtil.scheduleResponse(getService().getCompetitionRankDetail(request));
     }
 
-    @SuppressWarnings("unchecked")
-    public Function<Long, Single<BasePageData<CompetitionData>>> createGetCompetitionPagesAllFunc(CompetitionPageRequest request) {
+    public Function<Long, Single<ResponseResult<BasePageData<CompetitionData>>>> createGetCompetitionPagesAllFunc(CompetitionPageRequest request) {
         return (page) -> {
             CompetitionPageRequest pageReq = CompetitionPageRequest.builder()
                     .current(page)
@@ -100,17 +98,15 @@ public final class BusinessFetchHelper {
                     .accountId(request.getAccountId())
                     .sortField(request.getSortField())
                     .build();
-            return BaseFetchUtil.scheduleResponse(getService().getCompetitionPage(pageReq), (Class<BasePageData<CompetitionData>>) (Class<?>) BasePageData.class);
+            return BaseFetchUtil.scheduleResponse(getService().getCompetitionPage(pageReq));
         };
     }
 
-    @SuppressWarnings("unchecked")
-    public Function<CompetitionPageRequest, Single<BasePageData<CompetitionData>>> createGetCompetitionPageFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(getService().getCompetitionPage(request), (Class<BasePageData<CompetitionData>>) (Class<?>) BasePageData.class);
+    public Function<CompetitionPageRequest, Single<ResponseResult<BasePageData<CompetitionData>>>> createGetCompetitionPageFunc() {
+        return (request) -> BaseFetchUtil.scheduleResponse(getService().getCompetitionPage(request));
     }
 
-    @SuppressWarnings("unchecked")
-    public Function<Long, Single<BasePageData<SportMeetData>>> createGetSportMeetPagesAllFunc(SportMeetPageRequest request) {
+    public Function<Long, Single<ResponseResult<BasePageData<SportMeetData>>>> createGetSportMeetPagesAllFunc(SportMeetPageRequest request) {
         return (page) -> {
             SportMeetPageRequest pageReq = SportMeetPageRequest.builder()
                     .current(page)
@@ -126,41 +122,35 @@ public final class BusinessFetchHelper {
                     .orderByField(request.getOrderByField())
                     .lastUpdateTime(request.getLastUpdateTime())
                     .build();
-            return BaseFetchUtil.scheduleResponse(getService().getSportMeetPage(pageReq), (Class<BasePageData<SportMeetData>>) (Class<?>) BasePageData.class);
+            return BaseFetchUtil.scheduleResponse(getService().getSportMeetPage(pageReq));
         };
     }
 
-    @SuppressWarnings("unchecked")
-    public Function<SportMeetPageRequest, Single<BasePageData<SportMeetData>>> createGetSportMeetPageFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(getService().getSportMeetPage(request), (Class<BasePageData<SportMeetData>>) (Class<?>) BasePageData.class);
+    public Function<SportMeetPageRequest, Single<ResponseResult<BasePageData<SportMeetData>>>> createGetSportMeetPageFunc() {
+        return (request) -> BaseFetchUtil.scheduleResponse(getService().getSportMeetPage(request));
     }
 
-    @SuppressWarnings("unchecked")
-    public Function<DownloadGroupTeamPageRequest, Single<List<GroupTeamData>>> createDownloadGroupTeamPageFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(getService().downloadGroupTeamPage(request), (Class<List<GroupTeamData>>) (Class<?>) List.class);
+    public Function<DownloadGroupTeamPageRequest, Single<ResponseResult<List<GroupTeamData>>>> createDownloadGroupTeamPageFunc() {
+        return (request) -> BaseFetchUtil.scheduleResponse(getService().downloadGroupTeamPage(request));
     }
 
-    @SuppressWarnings("unchecked")
-    public Function<DownloadGroupTeamDetailPageRequest, Single<List<GroupTeamDetailData>>> createDownloadGroupTeamDetailPageFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(getService().downloadGroupTeamDetailPage(request), (Class<List<GroupTeamDetailData>>) (Class<?>) List.class);
+    public Function<DownloadGroupTeamDetailPageRequest, Single<ResponseResult<List<GroupTeamDetailData>>>> createDownloadGroupTeamDetailPageFunc() {
+        return (request) -> BaseFetchUtil.scheduleResponse(getService().downloadGroupTeamDetailPage(request));
     }
 
-    @SuppressWarnings("unchecked")
-    public Function<EmptyRequest, Single<List<ResTabData>>> createGetResTabListFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(getService().getResTabList(), (Class<List<ResTabData>>) (Class<?>) List.class);
+    public Function<EmptyRequest, Single<ResponseResult<List<ResTabData>>>> createGetResTabListFunc() {
+        return (request) -> BaseFetchUtil.scheduleResponse(getService().getResTabList());
     }
 
-    @SuppressWarnings("unchecked")
-    public Function<ResTypeListRequest, Single<List<ResTypeData>>> createGetResTypeListFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(getService().getResTypeList(request), (Class<List<ResTypeData>>) (Class<?>) List.class);
+    public Function<ResTypeListRequest, Single<ResponseResult<List<ResTypeData>>>> createGetResTypeListFunc() {
+        return (request) -> BaseFetchUtil.scheduleResponse(getService().getResTypeList(request));
     }
 
-    @SuppressWarnings("unchecked")
-    public Function<ResPageRequest, Single<BasePageData<ResData>>> createGetResPageFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(getService().getResPage(request), (Class<BasePageData<ResData>>) (Class<?>) BasePageData.class);
+    public Function<ResPageRequest, Single<ResponseResult<BasePageData<ResData>>>> createGetResPageFunc() {
+        return (request) -> BaseFetchUtil.scheduleResponse(getService().getResPage(request));
     }
 
-    public Function<ResInfoRequest, Single<ResInfoData>> createGetResInfoFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(getService().getResInfo(request), ResInfoData.class);
+    public Function<ResInfoRequest, Single<ResponseResult<ResInfoData>>> createGetResInfoFunc() {
+        return (request) -> BaseFetchUtil.scheduleResponse(getService().getResInfo(request));
     }
 }

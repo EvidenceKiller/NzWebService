@@ -2,6 +2,7 @@ package com.adl.service.repository.fetch;
 
 import android.text.TextUtils;
 
+import com.adl.service.callback.ResponseResult;
 import com.adl.service.data.BannerDetailData;
 import com.adl.service.data.BasePageData;
 import com.adl.service.data.DeviceFocusData;
@@ -48,13 +49,11 @@ public final class OperationFetchHelper {
         return operationService;
     }
 
-    @SuppressWarnings("unchecked")
-    public Function<BannerDetailListRequest, Single<List<BannerDetailData>>> createGetBannerDetailListFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(getService().getBannerDetailList(request), (Class<List<BannerDetailData>>) (Class<?>) List.class);
+    public Function<BannerDetailListRequest, Single<ResponseResult<List<BannerDetailData>>>> createGetBannerDetailListFunc() {
+        return (request) -> BaseFetchUtil.scheduleResponse(getService().getBannerDetailList(request));
     }
 
-    @SuppressWarnings("unchecked")
-    public Function<Long, Single<BasePageData<SportSkuData>>> createGetSportSkuPagesAllFunc(SportSkuPageRequest request) {
+    public Function<Long, Single<ResponseResult<BasePageData<SportSkuData>>>> createGetSportSkuPagesAllFunc(SportSkuPageRequest request) {
         return (page) -> {
             SportSkuPageRequest pageReq = SportSkuPageRequest.builder()
                     .current(page)
@@ -70,52 +69,47 @@ public final class OperationFetchHelper {
                     .delFlag(request.getDelFlag())
                     .enabled(request.getEnabled())
                     .build();
-            return BaseFetchUtil.scheduleResponse(getService().getSportSkuPage(pageReq), (Class<BasePageData<SportSkuData>>) (Class<?>) BasePageData.class);
+            return BaseFetchUtil.scheduleResponse(getService().getSportSkuPage(pageReq));
         };
     }
 
-    @SuppressWarnings("unchecked")
-    public Function<SportSkuPageRequest, Single<BasePageData<SportSkuData>>> createGetSportSkuPageFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(getService().getSportSkuPage(request), (Class<BasePageData<SportSkuData>>) (Class<?>) BasePageData.class);
+    public Function<SportSkuPageRequest, Single<ResponseResult<BasePageData<SportSkuData>>>> createGetSportSkuPageFunc() {
+        return (request) -> BaseFetchUtil.scheduleResponse(getService().getSportSkuPage(request));
     }
 
-    public Function<SportSkuDetailRequest, Single<SportSkuDetailData>> createGetSportSkuDetailFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(getService().getSportSkuDetail(request), SportSkuDetailData.class);
+    public Function<SportSkuDetailRequest, Single<ResponseResult<SportSkuDetailData>>> createGetSportSkuDetailFunc() {
+        return (request) -> BaseFetchUtil.scheduleResponse(getService().getSportSkuDetail(request));
     }
 
-    @SuppressWarnings("unchecked")
-    public Function<DictMapRequest, Single<List<DictMapData>>> createGetDictMapFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(getService().getDictMap(request), (Class<List<DictMapData>>) (Class<?>) List.class);
+    public Function<DictMapRequest, Single<ResponseResult<List<DictMapData>>>> createGetDictMapFunc() {
+        return (request) -> BaseFetchUtil.scheduleResponse(getService().getDictMap(request));
     }
 
-    @SuppressWarnings("unchecked")
-    public Function<SceneListRequest, Single<List<SceneData>>> createGetSceneListFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(getService().getSceneList(request), (Class<List<SceneData>>) (Class<?>) List.class);
+    public Function<SceneListRequest, Single<ResponseResult<List<SceneData>>>> createGetSceneListFunc() {
+        return (request) -> BaseFetchUtil.scheduleResponse(getService().getSceneList(request));
     }
 
-    public Function<WikiTypePageRequest, Single<BasePageData<WikiTypeData>>> createGetWikiTypePageFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(getService().getWikiTypePage(request), (Class<BasePageData<WikiTypeData>>) (Class<?>) BasePageData.class);
+    public Function<WikiTypePageRequest, Single<ResponseResult<BasePageData<WikiTypeData>>>> createGetWikiTypePageFunc() {
+        return (request) -> BaseFetchUtil.scheduleResponse(getService().getWikiTypePage(request));
     }
 
-    public Function<WikiPageRequest, Single<BasePageData<WikiData>>> createGetWikiPageFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(getService().getWikiPage(request), (Class<BasePageData<WikiData>>) (Class<?>) BasePageData.class);
+    public Function<WikiPageRequest, Single<ResponseResult<BasePageData<WikiData>>>> createGetWikiPageFunc() {
+        return (request) -> BaseFetchUtil.scheduleResponse(getService().getWikiPage(request));
     }
 
-    public Function<WikiDetailRequest, Single<WikiDetailData>> createGetWikiDetailFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(getService().getWikiDetail(request), WikiDetailData.class);
+    public Function<WikiDetailRequest, Single<ResponseResult<WikiDetailData>>> createGetWikiDetailFunc() {
+        return (request) -> BaseFetchUtil.scheduleResponse(getService().getWikiDetail(request));
     }
 
-    public Function<UploadDeviceNameRequest, Single<Boolean>> createUploadDeviceNameFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(getService().uploadDeviceName(request), Boolean.class);
+    public Function<UploadDeviceNameRequest, Single<ResponseResult<Boolean>>> createUploadDeviceNameFunc() {
+        return (request) -> BaseFetchUtil.scheduleResponse(getService().uploadDeviceName(request));
     }
 
-    @SuppressWarnings("unchecked")
-    public Function<DeviceFocusListRequest, Single<List<DeviceFocusData>>> createGetDeviceFocusListFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(getService().getDeviceFocusList(request), (Class<List<DeviceFocusData>>) (Class<?>) List.class);
+    public Function<DeviceFocusListRequest, Single<ResponseResult<List<DeviceFocusData>>>> createGetDeviceFocusListFunc() {
+        return (request) -> BaseFetchUtil.scheduleResponse(getService().getDeviceFocusList(request));
     }
 
-    @SuppressWarnings("unchecked")
-    public Function<PointRuleDetailRequest, Single<PointRuleDetailData>> createGetPointRuleDetailFunc() {
-        return (request) -> BaseFetchUtil.scheduleResponse(getService().getPointRuleDetail(request), PointRuleDetailData.class);
+    public Function<PointRuleDetailRequest, Single<ResponseResult<PointRuleDetailData>>> createGetPointRuleDetailFunc() {
+        return (request) -> BaseFetchUtil.scheduleResponse(getService().getPointRuleDetail(request));
     }
 }

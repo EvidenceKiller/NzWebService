@@ -3,10 +3,12 @@ package com.adl.service.caller.impl;
 import android.text.TextUtils;
 
 import com.adl.service.AdlService;
+import com.adl.service.callback.ResponseResult;
 import com.adl.service.caller.UploadQiNiuYunCaller;
 import com.adl.service.common.AdlConfig;
 import com.adl.service.common.AdlConfigService;
 import com.adl.service.common.IDefine;
+import com.adl.service.common.NzResponseCode;
 import com.adl.service.data.FileUploadInfoData;
 import com.adl.service.db.DaoManagerProxy;
 import com.adl.service.db.FileUploadDao;
@@ -233,7 +235,12 @@ public final class UploadQiNiuYunCallerImpl implements UploadQiNiuYunCaller {
     }
 
     private String getQiNiuYunTokenSync(QiNiuYunTokenRequest request) {
-        return RxCallbackScheduler.blockingGetNoThrow(uploadQiNiuYunRepository.getQiNiuYunToken(request), String.class);
+        ResponseResult<String> tokenResult = RxCallbackScheduler.scheduleResultSync(uploadQiNiuYunRepository.getQiNiuYunToken(request));
+        String token = "";
+        if (tokenResult.getCode() == NzResponseCode.NZ_SUCCESS && tokenResult.getData() != null) {
+            token = tokenResult.getData();
+        }
+        return token;
     }
 
     private String syncUploadFileToQiNiuYun(File file, String name, String token, UploadOptions options) {

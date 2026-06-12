@@ -1,23 +1,24 @@
 package com.adl.service.repository.persist;
 
+import com.adl.service.common.NzResponseCode;
 import com.adl.service.data.LoginInfoData;
 import com.adl.service.db.DaoManagerProxy;
 import com.adl.service.db.entity.LoginInfoEntity;
-import com.adl.service.exception.NzCommonException;
+import com.adl.service.exception.NzPersistException;
 
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.functions.Function;
 
-public final class CommonDaoPersistHelper {
+public final class CommonNativePersistHelper {
 
-    public CommonDaoPersistHelper() {
+    public CommonNativePersistHelper() {
     }
 
     public Function<Void, Single<String>> createQueryDictLabelFunc(String dictCode, String dictValue) {
         return (v) -> {
             String label = DaoManagerProxy.getInstance().getDictDao().queryDictLabel(dictCode, dictValue);
             if (label == null) {
-                return Single.error(new NzCommonException("dict label not found"));
+                return Single.error(new NzPersistException(NzResponseCode.NZ_PERSIST_ERROR, "dict label not found"));
             } else {
                 return Single.just(label);
             }
@@ -28,7 +29,7 @@ public final class CommonDaoPersistHelper {
         return (v) -> {
             LoginInfoEntity entity = DaoManagerProxy.getInstance().getLoginInfoDao().getLoginInfo();
             if (entity == null) {
-                return Single.error(new NzCommonException("login info data is null"));
+                return Single.error(new NzPersistException(NzResponseCode.NZ_PERSIST_ERROR, "login info data is null"));
             } else {
                 return Single.just(LoginInfoEntity.convertToData(entity));
             }

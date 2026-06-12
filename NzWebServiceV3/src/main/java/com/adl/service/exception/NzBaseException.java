@@ -5,20 +5,21 @@ package com.adl.service.exception;
  */
 public abstract class NzBaseException extends Exception {
 
-    private final String errorCode;
+    private final String errorTag;
 
-    protected NzBaseException(String errorCode, String message) {
+    protected NzBaseException(String errorTag, String message) {
         super(message);
-        this.errorCode = errorCode;
+        this.errorTag = errorTag;
     }
 
-    protected NzBaseException(String errorCode, String message, Throwable cause) {
+    protected NzBaseException(String errorTag, String message, Throwable cause) {
         super(message, cause);
-        this.errorCode = errorCode;
+        this.errorTag = errorTag;
     }
 
-    public String getErrorCode() {
-        return errorCode;
+    @Override
+    public String getMessage() {
+        return "[" + errorTag + "] " + super.getMessage();
     }
 }
 

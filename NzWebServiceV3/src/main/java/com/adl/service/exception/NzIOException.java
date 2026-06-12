@@ -5,14 +5,14 @@ package com.adl.service.exception;
  */
 public final class NzIOException extends NzBaseException {
 
-    private static final String CODE = "NZ_IO_EXCEPTION";
+    private static final String TAG = "NZ_IO_EXCEPTION";
 
     public NzIOException(String message) {
-        super(CODE, message);
+        super(TAG, message);
     }
 
     public NzIOException(String message, Throwable cause) {
-        super(CODE, message, cause);
+        super(TAG, message, cause);
     }
 }
 
