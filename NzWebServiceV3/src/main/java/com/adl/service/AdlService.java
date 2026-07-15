@@ -313,9 +313,6 @@ public final class AdlService {
         // 根目录
         FileUtil.setSportRoot(AdlFileHelper.SportRoot);
 
-        RetrofitManager.getInstance().init(mContext, mConfig.getHost());
-        CallerManager.getInstance().init();
-
         new Thread(() -> {
 
             // TODO 读取本地配置, add by wei.zhou, 2026.02.02
@@ -367,10 +364,13 @@ public final class AdlService {
                     }
 
                     setDebug(business.isEnableDebug());
-                    setHost(busHost);
+                    setHost(busV3Host);
                 }
                 NzLog.d("~~~~~~~~~ 本地化配置 ~~~~~~~~~~");
             }
+
+            RetrofitManager.getInstance().init(mContext, mConfig.getHost());
+            CallerManager.getInstance().init();
 
             // 如果oss 配置未空, 使用测试环境
             if (TextUtils.isEmpty(getOssConfigHost())) {
