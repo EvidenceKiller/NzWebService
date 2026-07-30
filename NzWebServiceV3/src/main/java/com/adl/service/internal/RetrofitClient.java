@@ -46,6 +46,12 @@ final class RetrofitClient {
         if (TextUtils.isEmpty(baseUrl)) {
             NzLog.e("RetorfitClient::init : baseUrl is empty!!!");
         }
+        String url = "";
+        if (baseUrl.endsWith("/")) {
+            url = baseUrl;
+        } else {
+            url = baseUrl + "/";
+        }
         if (okHttpClient == null) {
             // 1. OkHttpClient
             okHttpClient = new OkHttpClient.Builder()
@@ -59,17 +65,17 @@ final class RetrofitClient {
                     .build();
         }
 
-        if (!TextUtils.equals(this.baseUrl, baseUrl)) {
-            this.baseUrl = baseUrl;
+        if (!TextUtils.equals(this.baseUrl, url)) {
+            this.baseUrl = url;
 
             Gson gson = new GsonBuilder()
                     .setExclusionStrategies(new SerializedNameExclusionStrategy())
                     .create();
 
-            NzLog.i("RetorfitClient::init : setBaseUrl : " + baseUrl);
+            NzLog.i("RetorfitClient::init : setBaseUrl : " + url);
             // 2. Retrofit（支持 RxJava3）
             retrofit = new Retrofit.Builder()
-                    .baseUrl(baseUrl)
+                    .baseUrl(url)
                     .client(okHttpClient)
                     .addConverterFactory(GsonConverterFactory.create(gson))
                     .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
